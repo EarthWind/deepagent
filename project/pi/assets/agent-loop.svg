@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Pi Agent 循环与工具执行时序</title>
+  <desc id="desc">展示一次提示从 AgentSession 进入模型、流式生成、工具预检与并行执行、顺序入上下文，以及 steering 和 follow-up 的处理时机。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#121b31"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9bb0cf"/></marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5eead4"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity=".25"/></filter>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#9fb0cc}
+      .actor{font:700 17px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.txt{font:500 15px Inter,"Noto Sans SC",sans-serif;fill:#d4deed}.note{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#aabbd4}
+      .life{stroke:#3b5374;stroke-width:2;stroke-dasharray:7 7}.flow{stroke:#9bb0cf;stroke-width:2;fill:none;marker-end:url(#arrow)}.green{stroke:#5eead4;stroke-width:2.4;fill:none;marker-end:url(#arrowGreen)}
+    </style>
+  </defs>
+  <rect width="1400" height="900" rx="28" fill="url(#bg)"/>
+  <text x="65" y="68" class="title">一次 Turn 如何流过 Pi</text>
+  <text x="65" y="100" class="sub">Turn = 一条 assistant 响应 + 它产生的全部 tool call / tool result；一个 prompt 可以包含多个 turn。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="140" width="240" height="62" rx="16" fill="#19324f" stroke="#345475"/><text x="190" y="178" text-anchor="middle" class="actor">AgentSession</text>
+    <rect x="390" y="140" width="240" height="62" rx="16" fill="#19324f" stroke="#345475"/><text x="510" y="178" text-anchor="middle" class="actor">Agent / agentLoop</text>
+    <rect x="740" y="140" width="240" height="62" rx="16" fill="#19324f" stroke="#345475"/><text x="860" y="178" text-anchor="middle" class="actor">Model / Stream</text>
+    <rect x="1090" y="140" width="240" height="62" rx="16" fill="#19324f" stroke="#345475"/><text x="1210" y="178" text-anchor="middle" class="actor">Tools</text>
+  </g>
+  <line x1="190" y1="202" x2="190" y2="826" class="life"/><line x1="510" y1="202" x2="510" y2="826" class="life"/><line x1="860" y1="202" x2="860" y2="826" class="life"/><line x1="1210" y1="202" x2="1210" y2="826" class="life"/>
+
+  <path d="M190 244H500" class="green"/><text x="345" y="235" text-anchor="middle" class="txt">prompt / continue</text>
+  <rect x="418" y="258" width="184" height="54" rx="12" fill="#132944"/><text x="510" y="281" text-anchor="middle" class="note">transformContext</text><text x="510" y="301" text-anchor="middle" class="note">convertToLlm + auth</text>
+  <path d="M520 330H850" class="flow"/><text x="685" y="321" text-anchor="middle" class="txt">stream(Context)</text>
+  <rect x="756" y="350" width="208" height="74" rx="12" fill="#15344a" stroke="#2a706e"/><text x="860" y="377" text-anchor="middle" class="note">text / thinking / toolcall</text><text x="860" y="399" text-anchor="middle" class="note">start → delta* → end</text>
+  <path d="M850 442H520" class="flow"/><text x="685" y="433" text-anchor="middle" class="txt">assistant message + stopReason</text>
+
+  <g>
+    <rect x="410" y="468" width="800" height="92" rx="16" fill="#151f37" stroke="#344868"/>
+    <text x="438" y="494" class="txt">工具批次预检（始终顺序）</text>
+    <text x="438" y="520" class="note">schema validate → beforeToolCall → block / transform → prepareArguments</text>
+    <text x="438" y="544" class="note">若模型因 length 截断：整批调用直接生成错误结果，避免执行不完整参数。</text>
+  </g>
+
+  <path d="M520 584H1200" class="green"/><text x="860" y="575" text-anchor="middle" class="txt">默认并行执行可执行项（Promise.all）</text>
+  <g>
+    <rect x="1107" y="606" width="206" height="96" rx="14" fill="#17304c"/>
+    <text x="1210" y="632" text-anchor="middle" class="note">read / bash / edit / write</text>
+    <text x="1210" y="656" text-anchor="middle" class="note">完成事件按真实完成顺序</text>
+    <text x="1210" y="680" text-anchor="middle" class="note">异常转成 error ToolResult</text>
+  </g>
+  <path d="M1200 720H520" class="flow"/><text x="860" y="712" text-anchor="middle" class="txt">afterToolCall → 结果按原 tool-call 顺序写入上下文</text>
+
+  <rect x="405" y="744" width="210" height="62" rx="14" fill="#163a3f" stroke="#36a89a"/><text x="510" y="770" text-anchor="middle" class="note">有 steering？立即进入</text><text x="510" y="791" text-anchor="middle" class="note">下一 turn</text>
+  <path d="M510 744C510 720 600 700 690 680C760 664 796 636 796 602" class="green"/>
+
+  <rect x="85" y="744" width="210" height="62" rx="14" fill="#282448" stroke="#7865ad"/><text x="190" y="770" text-anchor="middle" class="note">无工具且循环将结束：</text><text x="190" y="791" text-anchor="middle" class="note">消费 follow-up</text>
+  <path d="M500 820H200" class="flow"/>
+
+  <text x="65" y="864" class="sub">关键并发约束：任何一个工具声明 sequential，整批就串行；同一路径的 edit/write 还会由文件变更队列再次串行化。</text>
+</svg>

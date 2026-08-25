@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+  <title id="title">Pi 实现成熟度与安全边界</title>
+  <desc id="desc">左侧用三条泳道区分稳定、实验性和设计中的组件，右侧说明项目信任与执行沙箱不是同一概念。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#141c2f"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-opacity=".27"/></filter>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#9fb0cc}.head{font:700 21px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.txt{font:600 15px Inter,"Noto Sans SC",sans-serif;fill:#e2e8f0}.note{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#a9bad2}.badge{font:700 13px Inter,"Noto Sans SC",sans-serif}
+    </style>
+  </defs>
+  <rect width="1400" height="860" rx="28" fill="url(#bg)"/>
+  <text x="65" y="68" class="title">读源码时最重要的两条边界</text>
+  <text x="65" y="100" class="sub">成熟度标签回答“现在能不能依赖”；安全边界回答“代码最终在哪里、以谁的权限执行”。</text>
+
+  <g filter="url(#shadow)"><rect x="65" y="140" width="780" height="630" rx="22" fill="#111f34" stroke="#2b415e"/></g>
+  <text x="95" y="180" class="head">实现成熟度：不要把同仓库代码都当成同一承诺</text>
+
+  <g>
+    <rect x="95" y="218" width="720" height="148" rx="18" fill="#153638" stroke="#2c8279"/>
+    <rect x="118" y="240" width="90" height="27" rx="14" fill="#5eead4"/><text x="163" y="258" text-anchor="middle" class="badge" fill="#06231f">稳定主链</text>
+    <text x="118" y="301" class="txt">coding-agent · AgentSession · Agent loop · pi-ai · TUI</text>
+    <text x="118" y="329" class="note">默认四工具、JSONL session tree、compaction、extensions、skills</text>
+    <text x="118" y="351" class="note">README 与 CLI / SDK 的日常使用路径均落在这里。</text>
+
+    <rect x="95" y="388" width="720" height="145" rx="18" fill="#2c2940" stroke="#7462a4"/>
+    <rect x="118" y="410" width="90" height="27" rx="14" fill="#a78bfa"/><text x="163" y="428" text-anchor="middle" class="badge" fill="#160d2b">实验性</text>
+    <text x="118" y="471" class="txt">pi-protocol · pi-client · pi-server · SQLite backend</text>
+    <text x="118" y="499" class="note">协议严谨，但 server 仍需宿主提供 service，不是稳定 CLI RPC 的同义词。</text>
+
+    <rect x="95" y="555" width="720" height="185" rx="18" fill="#3a2825" stroke="#a26654"/>
+    <rect x="118" y="577" width="104" height="27" rx="14" fill="#fb923c"/><text x="170" y="595" text-anchor="middle" class="badge" fill="#321409">设计 / 施工中</text>
+    <text x="118" y="638" class="txt">durable AgentHarness facade</text>
+    <text x="118" y="666" class="note">规范提出 entries / registers / usage、lane、effect sandwich、崩溃恢复。</text>
+    <text x="118" y="691" class="note">但 main 上 prompt、compact、resume、queue、watch 等入口仍返回</text>
+    <text x="118" y="714" class="note">HarnessNotImplemented；不能当作已交付能力。</text>
+  </g>
+
+  <g filter="url(#shadow)"><rect x="875" y="140" width="460" height="630" rx="22" fill="#111f34" stroke="#2b415e"/></g>
+  <text x="905" y="180" class="head">安全边界：Trust ≠ Sandbox</text>
+
+  <rect x="915" y="225" width="380" height="106" rx="16" fill="#1a3350" stroke="#42678d"/>
+  <text x="1105" y="257" text-anchor="middle" class="txt">Project Trust</text>
+  <text x="1105" y="285" text-anchor="middle" class="note">只决定是否加载项目级 settings、</text>
+  <text x="1105" y="307" text-anchor="middle" class="note">packages、extensions 等资源</text>
+
+  <text x="1105" y="373" text-anchor="middle" class="head">≠</text>
+
+  <rect x="915" y="410" width="380" height="116" rx="16" fill="#3a2825" stroke="#a26654"/>
+  <text x="1105" y="443" text-anchor="middle" class="txt">执行授权 / 隔离</text>
+  <text x="1105" y="471" text-anchor="middle" class="note">内置工具与 extension 默认继承</text>
+  <text x="1105" y="493" text-anchor="middle" class="note">Pi 进程的完整用户权限</text>
+
+  <rect x="915" y="570" width="380" height="143" rx="16" fill="#153638" stroke="#2c8279"/>
+  <text x="1105" y="604" text-anchor="middle" class="txt">不受信任 / 无人值守场景</text>
+  <text x="1105" y="633" text-anchor="middle" class="note">把 OS / container / VM 当边界：</text>
+  <text x="1105" y="660" text-anchor="middle" class="note">Gondolin · Docker · OpenShell 等</text>
+  <text x="1105" y="687" text-anchor="middle" class="note">而不是把提示词确认框当沙箱。</text>
+
+  <text x="65" y="818" class="sub">工程判断：Pi 的“少”是清晰的机制选择，不是能力缺失的遮羞布；代价是宿主必须主动承担策略、隔离与产品治理。</text>
+</svg>
