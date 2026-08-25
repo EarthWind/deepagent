@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaw 会话与记忆双层持久化</title>
+  <desc id="desc">左侧展示 SQLite 会话窗口与 transcript 事件，右侧展示文件记忆、检索与 dreaming 晋升流程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131d"/><stop offset="1" stop-color="#132238"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#67e8f9"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf8}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#93a4ba}.h2{font-size:25px;font-weight:800}.label{font-size:18px;font-weight:700}.s{font-size:15px;fill:#cbd5e1}.n{font-size:13px;fill:#99a9bd}.line{stroke:#67e8f9;stroke-width:2.5;fill:none;marker-end:url(#a)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:7 7;fill:none}
+    </style>
+  </defs>
+  <rect width="1600" height="1080" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">会话是执行账本，记忆是受治理的知识层</text>
+  <text x="70" y="100" class="sub">OpenClaw 没把全部状态塞进聊天数组：会话负责可恢复执行，memory-core 负责可搜索、可审查、带来源的长期知识。</text>
+
+  <rect x="70" y="140" width="700" height="870" rx="24" fill="#0b2635" stroke="#22d3ee" stroke-width="2"/>
+  <text x="110" y="190" class="h2" fill="#67e8f9">A. 每 Agent SQLite 会话域</text>
+  <text x="110" y="220" class="s">~/.openclaw/agents/&lt;agentId&gt;/agent/openclaw-agent.sqlite</text>
+  <rect x="110" y="255" width="620" height="98" rx="16" fill="#123647" stroke="#22d3ee"/>
+  <text x="140" y="287" class="label">session_nodes</text><text x="140" y="315" class="s">逻辑 SessionKey → 当前 sessionId + entry_json</text><text x="140" y="338" class="n">owner / parent / status / archive / activity 等投影列用于查询</text>
+  <path d="M420 353V385" class="line"/>
+  <rect x="110" y="395" width="620" height="98" rx="16" fill="#14304d" stroke="#60a5fa"/>
+  <text x="140" y="427" class="label">session_windows</text><text x="140" y="455" class="s">一次 reset / fork / compaction 对应一个 transcript generation</text><text x="140" y="478" class="n">同一逻辑会话可以滚动到新的 window，而不是覆写旧身份</text>
+  <path d="M420 493V525" class="line"/>
+  <rect x="110" y="535" width="620" height="122" rx="16" fill="#29265a" stroke="#a78bfa"/>
+  <text x="140" y="567" class="label">transcript_events + identities</text><text x="140" y="595" class="s">append-only 事件树：message / compaction / label / leaf control</text><text x="140" y="621" class="n">seq 排序；eventId、parentId、idempotency key 单独索引</text><text x="140" y="644" class="n">JSONL 已退居迁移、导入导出与支持场景</text>
+  <rect x="110" y="697" width="295" height="125" rx="16" fill="#3b1930" stroke="#f472b6"/>
+  <text x="257" y="728" text-anchor="middle" class="label">并发围栏</text><text x="257" y="757" text-anchor="middle" class="s">sessionId</text><text x="257" y="781" text-anchor="middle" class="s">lifecycleRevision</text><text x="257" y="805" text-anchor="middle" class="s">activeWriterRunId</text>
+  <rect x="435" y="697" width="295" height="125" rx="16" fill="#3b2b12" stroke="#fbbf24"/>
+  <text x="582" y="728" text-anchor="middle" class="label">写入串行化</text><text x="582" y="757" text-anchor="middle" class="s">进程内 writer queue</text><text x="582" y="781" text-anchor="middle" class="s">SQLite BEGIN IMMEDIATE</text><text x="582" y="805" text-anchor="middle" class="s">事务内重新读取围栏</text>
+  <path d="M405 760H425" class="line"/>
+  <rect x="110" y="860" width="620" height="105" rx="16" fill="#152b36" stroke="#34d399"/>
+  <text x="140" y="894" class="label">安全压缩</text><text x="140" y="923" class="s">旧 turn → 结构化摘要；工具调用与结果保持成对</text><text x="140" y="948" class="n">摘要审计失败则不落盘；manual / overflow / recovery 走不同入口</text>
+
+  <rect x="830" y="140" width="700" height="870" rx="24" fill="#21143d" stroke="#c084fc" stroke-width="2"/>
+  <text x="870" y="190" class="h2" fill="#d8b4fe">B. memory-core 长期记忆域</text>
+  <text x="870" y="220" class="s">文件是用户可读真相；SQLite 负责索引、来源和插件状态</text>
+  <g>
+    <rect x="870" y="260" width="190" height="94" rx="15" fill="#312e5f" stroke="#a78bfa"/><text x="965" y="290" text-anchor="middle" class="label">USER.md</text><text x="965" y="318" text-anchor="middle" class="s">稳定偏好 / 指令</text><text x="965" y="340" text-anchor="middle" class="n">长期有效</text>
+    <rect x="1085" y="260" width="190" height="94" rx="15" fill="#312e5f" stroke="#a78bfa"/><text x="1180" y="290" text-anchor="middle" class="label">MEMORY.md</text><text x="1180" y="318" text-anchor="middle" class="s">精选长期事实</text><text x="1180" y="340" text-anchor="middle" class="n">可审查 / 可编辑</text>
+    <rect x="1300" y="260" width="190" height="94" rx="15" fill="#312e5f" stroke="#a78bfa"/><text x="1395" y="290" text-anchor="middle" class="label">memory/*.md</text><text x="1395" y="318" text-anchor="middle" class="s">每日情节笔记</text><text x="1395" y="340" text-anchor="middle" class="n">搜索语料</text>
+  </g>
+  <path d="M965 365V407 M1180 365V407 M1395 365V407" class="line"/>
+  <rect x="870" y="420" width="620" height="108" rx="16" fill="#26355a" stroke="#60a5fa"/>
+  <text x="900" y="452" class="label">混合检索</text><text x="900" y="480" class="s">SQLite FTS / keyword + embeddings / vector + MMR / temporal decay</text><text x="900" y="505" class="n">memory_search 返回引用，memory_get 做窄范围读取；失败不阻塞正常回复</text>
+  <path d="M1180 528V566" class="line"/>
+  <rect x="870" y="580" width="620" height="112" rx="16" fill="#3c234a" stroke="#f472b6"/>
+  <text x="900" y="612" class="label">短期 recall 统计与确定性筛选</text><text x="900" y="640" class="s">recall 次数 · 独立 query · score · recency · project key</text><text x="900" y="666" class="n">先排除 untrusted / system，再把有界候选交给模型；评分不能洗白来源</text>
+  <path d="M1180 692V730" class="line"/>
+  <rect x="870" y="744" width="620" height="124" rx="16" fill="#183b33" stroke="#34d399"/>
+  <text x="900" y="776" class="label">Dreaming：light → REM → deep</text><text x="900" y="804" class="s">发现、反思、合并 / 替换，要求每个候选保留 Source 引用</text><text x="900" y="830" class="n">校验条目丢失比例、候选覆盖、预算与 lineage；失败走 append-only fallback</text><text x="900" y="852" class="n">写入采用 hash 乐观检查 + 临时文件原子替换，避免覆盖人工修改</text>
+  <rect x="870" y="902" width="620" height="64" rx="14" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="1180" y="927" text-anchor="middle" class="label">已知边界</text><text x="1180" y="951" text-anchor="middle" class="n">owner turn 内的 web/tool 内容来源不会自动细粒度传播；“可信用户触发”不等于“所有上下文可信”。</text>
+  <path d="M770 600H820" class="dash"/>
+  <text x="800" y="580" text-anchor="middle" class="n" transform="rotate(-90 800 580)">compaction 前 memory flush</text>
+</svg>

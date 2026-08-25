@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaw 单轮消息执行时序</title>
+  <desc id="desc">从消息渠道入站到 Gateway 路由、Agent Runtime、模型和工具，再到回复投递的关键时序。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07121f"/><stop offset="1" stop-color="#10172a"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#67e8f9"/></marker>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#f9a8d4"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e2e8f0}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.lane{font-size:20px;font-weight:750}.s{font-size:15px}.n{font-size:14px;fill:#a8b5c7}.life{stroke:#53657c;stroke-width:2;stroke-dasharray:8 8}.req{stroke:#67e8f9;stroke-width:2.5;fill:none;marker-end:url(#a)}.ret{stroke:#f9a8d4;stroke-width:2.5;fill:none;stroke-dasharray:7 5;marker-end:url(#b)}
+    </style>
+  </defs>
+  <rect width="1600" height="1120" fill="url(#bg)"/>
+  <text x="70" y="62" class="h1">一条消息如何变成一次可恢复的 Agent Run</text>
+  <text x="70" y="95" class="sub">关键不只是“调用模型”：入站授权、会话认领、队列、工具执行和可见副作用共同决定正确性。</text>
+  <g>
+    <rect x="70" y="130" width="220" height="62" rx="16" fill="#172554" stroke="#60a5fa"/><text x="180" y="169" text-anchor="middle" class="lane">Channel Plugin</text>
+    <rect x="330" y="130" width="220" height="62" rx="16" fill="#083344" stroke="#22d3ee"/><text x="440" y="169" text-anchor="middle" class="lane">Gateway</text>
+    <rect x="590" y="130" width="220" height="62" rx="16" fill="#312e81" stroke="#a78bfa"/><text x="700" y="169" text-anchor="middle" class="lane">Session / Queue</text>
+    <rect x="850" y="130" width="220" height="62" rx="16" fill="#3b1764" stroke="#c084fc"/><text x="960" y="169" text-anchor="middle" class="lane">Agent Runtime</text>
+    <rect x="1110" y="130" width="180" height="62" rx="16" fill="#3f1d2e" stroke="#f472b6"/><text x="1200" y="169" text-anchor="middle" class="lane">LLM</text>
+    <rect x="1330" y="130" width="200" height="62" rx="16" fill="#10352d" stroke="#34d399"/><text x="1430" y="169" text-anchor="middle" class="lane">Tool / Delivery</text>
+    <line x1="180" y1="192" x2="180" y2="1060" class="life"/><line x1="440" y1="192" x2="440" y2="1060" class="life"/><line x1="700" y1="192" x2="700" y2="1060" class="life"/><line x1="960" y1="192" x2="960" y2="1060" class="life"/><line x1="1200" y1="192" x2="1200" y2="1060" class="life"/><line x1="1430" y1="192" x2="1430" y2="1060" class="life"/>
+  </g>
+  <g class="s">
+    <path d="M180 235H430" class="req"/><text x="305" y="225" text-anchor="middle">① 已通过 pairing / allowlist 的入站事件</text>
+    <rect x="350" y="255" width="180" height="70" rx="12" fill="#0e2d37" stroke="#22d3ee"/><text x="440" y="282" text-anchor="middle">规范化上下文</text><text x="440" y="306" text-anchor="middle" class="n">附件 · 去重 · 审计</text>
+    <path d="M440 350H690" class="req"/><text x="565" y="340" text-anchor="middle">② bindings → agentId + sessionKey</text>
+    <rect x="610" y="370" width="180" height="94" rx="12" fill="#27266b" stroke="#a78bfa"/><text x="700" y="397" text-anchor="middle">Admission</text><text x="700" y="420" text-anchor="middle" class="n">session 是否当前</text><text x="700" y="442" text-anchor="middle" class="n">持久化 writer claim</text>
+    <path d="M700 488H950" class="req"/><text x="825" y="478" text-anchor="middle">③ 进入 session lane，再进入 global lane</text>
+    <path d="M960 533H1190" class="req"/><text x="1075" y="522" text-anchor="middle">④ model / auth / prompt / tools 快照</text>
+    <path d="M1200 582H970" class="ret"/><text x="1085" y="570" text-anchor="middle">assistant delta + tool calls</text>
+    <path d="M960 625H1420" class="req"/><text x="1190" y="614" text-anchor="middle">⑤ before_tool_call → 审批 / 策略 → execute</text>
+    <rect x="1338" y="645" width="184" height="100" rx="12" fill="#123a31" stroke="#34d399"/><text x="1430" y="674" text-anchor="middle">Tool Batch</text><text x="1430" y="698" text-anchor="middle" class="n">默认并行，结果有序</text><text x="1430" y="721" text-anchor="middle" class="n">steering 前检查点</text>
+    <path d="M1430 770H970" class="ret"/><text x="1200" y="758" text-anchor="middle">ToolResult（含可解释失败）</text>
+    <path d="M960 817H1190" class="req"/><text x="1075" y="806" text-anchor="middle">⑥ 继续 turn，直到无 tool / follow-up</text>
+    <path d="M1200 862H970" class="ret"/><text x="1085" y="850" text-anchor="middle">final assistant message</text>
+    <path d="M960 907H1420" class="req"/><text x="1190" y="896" text-anchor="middle">⑦ message tool 或 reply dispatcher 投递</text>
+    <path d="M1430 950H450" class="ret"/><text x="940" y="939" text-anchor="middle">delivery evidence + lifecycle end</text>
+    <path d="M440 998H190" class="ret"/><text x="315" y="986" text-anchor="middle">流式预览 / 最终回复</text>
+  </g>
+  <rect x="70" y="1035" width="1460" height="55" rx="14" fill="#182033" stroke="#64748b"/>
+  <text x="800" y="1069" text-anchor="middle" class="s">关键防重：一旦已有用户可见副作用，fallback 不再盲目重放；每次 transcript 写入还要同时通过 sessionId、lifecycleRevision 与 writerRunId 围栏。</text>
+</svg>
