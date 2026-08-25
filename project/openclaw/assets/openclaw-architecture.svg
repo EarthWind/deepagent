@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaw 总体架构</title>
+  <desc id="desc">展示渠道、Gateway、路由与策略、Agent Runtime、模型工具插件和持久化之间的关系。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/><stop offset="1" stop-color="#101d34"/>
+    </linearGradient>
+    <linearGradient id="gateway" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e7490"/><stop offset="1" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="runtime" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d28d9"/><stop offset="1" stop-color="#4338ca"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#7dd3fc"/>
+    </marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5eefb}
+      .h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.label{font-size:22px;font-weight:750}
+      .small{font-size:16px;fill:#cbd5e1}.tiny{font-size:14px;fill:#9fb0c6}.box{rx:18;filter:url(#shadow)}
+      .line{stroke:#7dd3fc;stroke-width:3;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#64748b;stroke-width:2;stroke-dasharray:8 8;fill:none}.bus{stroke:#7dd3fc;stroke-width:3;fill:none}
+    </style>
+  </defs>
+  <rect width="1600" height="1050" fill="url(#bg)"/>
+  <text x="80" y="70" class="h1">OpenClaw：一个 Gateway 驱动的个人 Agent 操作平面</text>
+  <text x="80" y="104" class="sub">渠道是入口，Gateway 是控制面，内建 Runtime 才是推理与工具循环；插件贯穿而不接管核心所有权。</text>
+
+  <text x="80" y="162" class="label" fill="#7dd3fc">① 外部表面</text>
+  <g>
+    <rect x="80" y="185" width="215" height="105" fill="#172554" stroke="#3b82f6" class="box"/>
+    <text x="188" y="226" text-anchor="middle" class="label">消息渠道</text><text x="188" y="257" text-anchor="middle" class="small">WhatsApp · Telegram</text><text x="188" y="280" text-anchor="middle" class="tiny">Slack · Discord · …</text>
+    <rect x="320" y="185" width="215" height="105" fill="#172554" stroke="#3b82f6" class="box"/>
+    <text x="428" y="226" text-anchor="middle" class="label">操作端</text><text x="428" y="257" text-anchor="middle" class="small">CLI · TUI · Control UI</text><text x="428" y="280" text-anchor="middle" class="tiny">macOS / iOS / Android</text>
+    <rect x="560" y="185" width="215" height="105" fill="#172554" stroke="#3b82f6" class="box"/>
+    <text x="668" y="226" text-anchor="middle" class="label">节点 / 设备</text><text x="668" y="257" text-anchor="middle" class="small">浏览器 · 相机 · 屏幕</text><text x="668" y="280" text-anchor="middle" class="tiny">远端命令与本地能力</text>
+  </g>
+
+  <rect x="835" y="160" width="685" height="182" fill="url(#gateway)" stroke="#67e8f9" stroke-width="2" class="box"/>
+  <text x="875" y="205" class="label">② 长驻 Gateway（默认 127.0.0.1:18789）</text>
+  <text x="875" y="239" class="small">HTTP / WebSocket · TypeBox 协议 · challenge / device pairing · RPC 鉴权</text>
+  <rect x="870" y="260" width="190" height="55" rx="12" fill="#083344" stroke="#22d3ee"/><text x="965" y="294" text-anchor="middle" class="small">渠道生命周期</text>
+  <rect x="1080" y="260" width="190" height="55" rx="12" fill="#083344" stroke="#22d3ee"/><text x="1175" y="294" text-anchor="middle" class="small">配置 / Secret 快照</text>
+  <rect x="1290" y="260" width="190" height="55" rx="12" fill="#083344" stroke="#22d3ee"/><text x="1385" y="294" text-anchor="middle" class="small">事件 / 审计 / 健康</text>
+
+  <path d="M188 290V330 M428 290V330 M668 290V330 M188 330H810" class="bus"/>
+  <path d="M810 330H825" class="line"/>
+
+  <rect x="80" y="380" width="1440" height="140" fill="#102a43" stroke="#38bdf8" stroke-width="2" class="box"/>
+  <text x="120" y="424" class="label">③ 入站编排与授权</text>
+  <g class="small">
+    <rect x="120" y="446" width="210" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="225" y="476" text-anchor="middle">去重 / 审计 / 附件</text>
+    <rect x="355" y="446" width="210" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="460" y="476" text-anchor="middle">绑定与 SessionKey</text>
+    <rect x="590" y="446" width="210" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="695" y="476" text-anchor="middle">Run Admission</text>
+    <rect x="825" y="446" width="210" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="930" y="476" text-anchor="middle">Writer Claim</text>
+    <rect x="1060" y="446" width="210" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="1165" y="476" text-anchor="middle">Lane / Queue</text>
+    <rect x="1295" y="446" width="185" height="48" rx="11" fill="#12324a" stroke="#38bdf8"/><text x="1387" y="476" text-anchor="middle">策略上下文</text>
+  </g>
+  <path d="M225 495 H345 M460 495 H580 M695 495 H815 M930 495 H1050 M1165 495 H1285" class="line"/>
+
+  <rect x="80" y="565" width="925" height="318" fill="url(#runtime)" stroke="#c4b5fd" stroke-width="2" class="box"/>
+  <text x="120" y="610" class="label">④ OpenClaw 内建 Agent Runtime</text>
+  <text x="120" y="640" class="small">embedded-agent-runner（产品编排） + @openclaw/agent-core（可复用循环）</text>
+  <g>
+    <rect x="120" y="670" width="250" height="82" rx="14" fill="#312e81" stroke="#a78bfa"/>
+    <text x="245" y="704" text-anchor="middle" class="small">准备 Attempt</text><text x="245" y="730" text-anchor="middle" class="tiny">workspace · skills · prompt</text>
+    <rect x="405" y="670" width="250" height="82" rx="14" fill="#312e81" stroke="#a78bfa"/>
+    <text x="530" y="704" text-anchor="middle" class="small">Model Stream</text><text x="530" y="730" text-anchor="middle" class="tiny">provider-neutral messages</text>
+    <rect x="690" y="670" width="270" height="82" rx="14" fill="#312e81" stroke="#a78bfa"/>
+    <text x="825" y="704" text-anchor="middle" class="small">Tool Batch</text><text x="825" y="730" text-anchor="middle" class="tiny">parallel · steering checkpoint</text>
+    <path d="M370 711 H395 M655 711 H680" class="line"/>
+    <path d="M825 762 C825 825 530 825 530 765" class="line"/>
+    <rect x="120" y="790" width="840" height="55" rx="12" fill="#23175a" stroke="#8b5cf6"/>
+    <text x="540" y="824" text-anchor="middle" class="small">重试预算 · 认证 profile 轮换 · 模型 fallback · 压缩恢复 · 空响应/卡死诊断</text>
+  </g>
+
+  <rect x="1045" y="565" width="475" height="318" fill="#11263d" stroke="#60a5fa" stroke-width="2" class="box"/>
+  <text x="1085" y="610" class="label">⑤ 能力与扩展</text>
+  <g class="small">
+    <rect x="1085" y="650" width="180" height="64" rx="12" fill="#172554" stroke="#60a5fa"/><text x="1175" y="678" text-anchor="middle">LLM Runtime</text><text x="1175" y="700" text-anchor="middle" class="tiny">多 provider / model</text>
+    <rect x="1290" y="650" width="190" height="64" rx="12" fill="#172554" stroke="#60a5fa"/><text x="1385" y="678" text-anchor="middle">工具面</text><text x="1385" y="700" text-anchor="middle" class="tiny">FS · Shell · Web · Node</text>
+    <rect x="1085" y="738" width="180" height="64" rx="12" fill="#172554" stroke="#60a5fa"/><text x="1175" y="766" text-anchor="middle">Plugin SDK</text><text x="1175" y="788" text-anchor="middle" class="tiny">hook / channel / tool</text>
+    <rect x="1290" y="738" width="190" height="64" rx="12" fill="#172554" stroke="#60a5fa"/><text x="1385" y="766" text-anchor="middle">Harness</text><text x="1385" y="788" text-anchor="middle" class="tiny">openclaw / plugin runtime</text>
+    <rect x="1085" y="826" width="395" height="34" rx="10" fill="#0f3352" stroke="#60a5fa"/><text x="1282" y="849" text-anchor="middle" class="tiny">manifest 发现 → 启用校验 → 按需加载 → surface 消费</text>
+  </g>
+  <path d="M1005 710 H1035" class="line"/>
+
+  <rect x="80" y="925" width="1440" height="82" fill="#0f2631" stroke="#34d399" stroke-width="2" class="box"/>
+  <text x="120" y="960" class="label">⑥ 持久化底座</text>
+  <text x="120" y="988" class="small">每 Agent SQLite：session_nodes / session_windows / transcript_events / auth / trajectory　｜　共享 SQLite：设备、审批、审计、session state events</text>
+  <path d="M540 883 V914" class="line"/><path d="M1282 883 V914" class="line"/>
+</svg>
