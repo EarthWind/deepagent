@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920" role="img" aria-labelledby="title desc">
+  <title id="title">Pi 稳定主链路架构</title>
+  <desc id="desc">从交互入口、Coding Agent 编排层、Agent 循环、模型适配到外部模型，并展示会话、扩展、技能、TUI 和遥测等横切能力。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/>
+      <stop offset="1" stop-color="#111d33"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8ba3c7"/>
+    </marker>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}
+      .subtitle{font:400 17px Inter,"Noto Sans SC",sans-serif;fill:#9fb0cc}
+      .box-title{font:700 20px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}
+      .box-text{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#c7d2e5}
+      .tag{font:600 13px Inter,"Noto Sans SC",sans-serif;fill:#06131e}
+      .label{font:600 14px Inter,"Noto Sans SC",sans-serif;fill:#93a9c9}
+      .arrow{stroke:#8ba3c7;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1400" height="920" rx="28" fill="url(#bg)"/>
+  <circle cx="1250" cy="120" r="190" fill="#22d3ee" opacity=".055"/>
+  <circle cx="130" cy="800" r="240" fill="#8b5cf6" opacity=".045"/>
+
+  <text x="70" y="70" class="title">Pi 的稳定执行主链路</text>
+  <text x="70" y="104" class="subtitle">入口只是适配器；真正的产品语义集中在 AgentSession，循环与模型层保持可复用。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="150" width="1260" height="112" rx="20" fill="#13243c" stroke="#284161"/>
+    <text x="100" y="184" class="label">交互入口</text>
+    <g>
+      <rect x="100" y="200" width="220" height="42" rx="12" fill="#1b3352"/>
+      <text x="210" y="227" text-anchor="middle" class="box-text">Interactive TUI</text>
+      <rect x="345" y="200" width="220" height="42" rx="12" fill="#1b3352"/>
+      <text x="455" y="227" text-anchor="middle" class="box-text">Print / JSON</text>
+      <rect x="590" y="200" width="220" height="42" rx="12" fill="#1b3352"/>
+      <text x="700" y="227" text-anchor="middle" class="box-text">stdin/stdout RPC</text>
+      <rect x="835" y="200" width="220" height="42" rx="12" fill="#1b3352"/>
+      <text x="945" y="227" text-anchor="middle" class="box-text">TypeScript SDK</text>
+      <rect x="1080" y="200" width="220" height="42" rx="12" fill="#1b3352"/>
+      <text x="1190" y="227" text-anchor="middle" class="box-text">实验性 Client / Server</text>
+    </g>
+  </g>
+
+  <path d="M700 262 L700 305" class="arrow"/>
+
+  <g filter="url(#shadow)">
+    <rect x="310" y="310" width="780" height="150" rx="22" fill="#16354a" stroke="#33d1c6" stroke-width="2"/>
+    <rect x="338" y="336" width="112" height="28" rx="14" fill="url(#hero)"/>
+    <text x="394" y="355" text-anchor="middle" class="tag">产品中枢</text>
+    <text x="338" y="400" class="box-title">@earendil-works/pi-coding-agent · AgentSession</text>
+    <text x="338" y="430" class="box-text">提示词与工具集 · 队列 · 扩展钩子 · 自动重试 · 压缩 · 会话持久化 · 模式切换</text>
+  </g>
+
+  <path d="M530 460 L530 516" class="arrow"/>
+  <path d="M870 460 L870 516" class="arrow"/>
+
+  <g filter="url(#shadow)">
+    <rect x="140" y="522" width="520" height="152" rx="22" fill="#17263f" stroke="#3a5275"/>
+    <text x="172" y="561" class="box-title">pi-agent · Agent + agentLoop</text>
+    <text x="172" y="592" class="box-text">消息状态机、流式事件、工具调用、steering / follow-up</text>
+    <text x="172" y="621" class="box-text">工具默认并行；校验、拦截、执行、结果按调用顺序入上下文</text>
+    <rect x="172" y="638" width="158" height="24" rx="12" fill="#213959"/>
+    <text x="251" y="655" text-anchor="middle" class="label">可独立复用的循环</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="740" y="522" width="520" height="152" rx="22" fill="#17263f" stroke="#3a5275"/>
+    <text x="772" y="561" class="box-title">pi-ai · provider-neutral model API</text>
+    <text x="772" y="592" class="box-text">统一消息 / 工具 / usage / stop reason / 流式事件</text>
+    <text x="772" y="621" class="box-text">认证、动态模型目录、跨 provider 历史归一化、惰性错误入流</text>
+    <rect x="772" y="638" width="166" height="24" rx="12" fill="#213959"/>
+    <text x="855" y="655" text-anchor="middle" class="label">约 38 个 provider 工厂</text>
+  </g>
+
+  <path d="M660 598 L740 598" class="arrow"/>
+  <path d="M1000 674 L1000 722" class="arrow"/>
+
+  <g filter="url(#shadow)">
+    <rect x="740" y="730" width="520" height="104" rx="20" fill="#13243c" stroke="#284161"/>
+    <text x="772" y="768" class="box-title">外部模型与认证系统</text>
+    <text x="772" y="800" class="box-text">OpenAI · Anthropic · Google · Bedrock · Azure · 本地 / 兼容端点…</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="730" width="600" height="104" rx="20" fill="#13243c" stroke="#284161"/>
+    <text x="100" y="768" class="box-title">横切能力</text>
+    <text x="100" y="800" class="box-text">Session JSONL 树 · Compaction · Extensions · Skills · TUI · Telemetry</text>
+  </g>
+  <path d="M400 674 L400 730" class="arrow"/>
+
+  <text x="70" y="880" class="subtitle">阅读提示：durable AgentHarness 是另一条“施工中”的下一代路径，不应与上图稳定链路混为一谈。</text>
+</svg>

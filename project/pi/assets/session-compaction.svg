@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="880" viewBox="0 0 1400 880" role="img" aria-labelledby="title desc">
+  <title id="title">Pi 会话树与上下文压缩</title>
+  <desc id="desc">左侧展示 append-only JSONL 条目形成的父子树与分支，右侧展示压缩后由摘要、保留消息和后续消息重建模型上下文。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#131c30"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-opacity=".28"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9eb2cf"/></marker>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#9fb0cc}.head{font:700 21px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.txt{font:500 15px Inter,"Noto Sans SC",sans-serif;fill:#d5dfed}.note{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#a9bad2}.small{font:600 13px Inter,"Noto Sans SC",sans-serif;fill:#dbe5f3}
+      .edge{stroke:#6982a5;stroke-width:2.5;fill:none}.arrow{stroke:#9eb2cf;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1400" height="880" rx="28" fill="url(#bg)"/>
+  <text x="65" y="68" class="title">Session 不是一条数组，而是一棵可导航的事件树</text>
+  <text x="65" y="100" class="sub">经典稳定实现：append-only JSONL + parentId。切换分支只移动 leaf 指针，不删除历史。</text>
+
+  <g filter="url(#shadow)"><rect x="65" y="135" width="600" height="650" rx="22" fill="#111f34" stroke="#2b415e"/></g>
+  <text x="95" y="178" class="head">① 持久化树</text>
+  <text x="95" y="207" class="note">每个节点都有 id、parentId、timestamp 和类型化 payload</text>
+
+  <g>
+    <path d="M190 285V352" class="edge"/><path d="M190 418V482" class="edge"/><path d="M190 548V612" class="edge"/>
+    <path d="M190 418C190 452 408 442 408 482" class="edge"/><path d="M408 548V612" class="edge"/>
+    <rect x="110" y="235" width="160" height="52" rx="14" fill="#1d3856" stroke="#42678d"/><text x="190" y="267" text-anchor="middle" class="small">header</text>
+    <rect x="100" y="352" width="180" height="66" rx="14" fill="#173e4a" stroke="#32a99d"/><text x="190" y="380" text-anchor="middle" class="small">user message · A</text><text x="190" y="402" text-anchor="middle" class="note">root entry</text>
+    <rect x="100" y="482" width="180" height="66" rx="14" fill="#1a3350" stroke="#42678d"/><text x="190" y="510" text-anchor="middle" class="small">assistant · B</text><text x="190" y="532" text-anchor="middle" class="note">parent = A</text>
+    <rect x="100" y="612" width="180" height="66" rx="14" fill="#1a3350" stroke="#42678d"/><text x="190" y="640" text-anchor="middle" class="small">tool result · C</text><text x="190" y="662" text-anchor="middle" class="note">当前 leaf</text>
+    <circle cx="190" cy="707" r="6" fill="#5eead4"/><text x="210" y="712" class="note">当前分支：A → B → C</text>
+
+    <rect x="318" y="482" width="180" height="66" rx="14" fill="#30274d" stroke="#8b72c6"/><text x="408" y="510" text-anchor="middle" class="small">assistant · D</text><text x="408" y="532" text-anchor="middle" class="note">从 A 派生</text>
+    <rect x="318" y="612" width="180" height="66" rx="14" fill="#30274d" stroke="#8b72c6"/><text x="408" y="640" text-anchor="middle" class="small">user · E</text><text x="408" y="662" text-anchor="middle" class="note">另一条 branch</text>
+    <text x="520" y="515" class="note">/tree、/fork</text><text x="520" y="537" class="note">只是选择路径</text>
+  </g>
+
+  <path d="M665 460H730" class="arrow"/>
+
+  <g filter="url(#shadow)"><rect x="735" y="135" width="600" height="650" rx="22" fill="#111f34" stroke="#2b415e"/></g>
+  <text x="765" y="178" class="head">② 长上下文压缩与重建</text>
+  <text x="765" y="207" class="note">触发条件：contextTokens &gt; contextWindow − reserveTokens</text>
+
+  <g>
+    <rect x="780" y="242" width="510" height="58" rx="14" fill="#1a3350"/><text x="805" y="278" class="txt">旧消息：目标、约束、决策、文件操作、工具结果…</text>
+    <path d="M1035 300V343" class="arrow"/>
+    <rect x="780" y="350" width="510" height="122" rx="16" fill="#163b44" stroke="#32a99d"/>
+    <text x="805" y="381" class="txt">结构化摘要（新的 compaction entry）</text>
+    <text x="805" y="408" class="note">Goal · Constraints · Progress · Key Decisions</text>
+    <text x="805" y="431" class="note">Next Steps · Critical Context · 读写文件轨迹</text>
+    <text x="805" y="455" class="note">重复压缩时，把上一份摘要也纳入下一次总结。</text>
+
+    <text x="780" y="520" class="small">发送给模型的下一份 Context</text>
+    <rect x="780" y="540" width="510" height="55" rx="12" fill="#24434d"/><text x="805" y="574" class="txt">1. compaction summary</text>
+    <rect x="780" y="605" width="510" height="55" rx="12" fill="#203654"/><text x="805" y="639" class="txt">2. 切点之后保留的最近消息 / 完整 turn</text>
+    <rect x="780" y="670" width="510" height="55" rx="12" fill="#30274d"/><text x="805" y="704" class="txt">3. 压缩条目之后新追加的消息</text>
+    <path d="M1307 570V700" stroke="#5eead4" stroke-width="3"/><path d="M1296 570H1318M1296 700H1318" stroke="#5eead4" stroke-width="3"/>
+    <text x="1220" y="750" class="note">逻辑上下文 ≠ 整个物理日志</text>
+  </g>
+
+  <text x="65" y="832" class="sub">可靠性细节：恢复性压缩会从活动状态移除失败响应、压缩后最多重试一次；日志中的失败响应仍被保留，便于审计。</text>
+</svg>
