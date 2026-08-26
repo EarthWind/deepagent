@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1060" viewBox="0 0 1600 1060" role="img" aria-labelledby="title desc">
+  <title id="title">Cherry Studio 总体架构</title>
+  <desc id="desc">展示 Renderer、Preload IPC、Main 编排层、普通聊天和 Agent Session 双运行时、数据与外部服务。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090f1d"/><stop offset="1" stop-color="#171225"/></linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fb7185"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#000" flood-opacity=".3"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.h1{font-size:36px;font-weight:800;fill:#f8fafc}.sub{font-size:17px;fill:#a5b4cf}.title{font-size:21px;font-weight:750;fill:#f8fafc}.body{font-size:15px;fill:#d5deec}.label{font-size:14px;font-weight:650;fill:#aabbd3}.tag{font-size:13px;font-weight:750;fill:#fff}.arrow{stroke:#94a3b8;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.dash{stroke:#64748b;stroke-width:2;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="1060" rx="28" fill="url(#bg)"/>
+  <circle cx="1430" cy="100" r="220" fill="#fb7185" opacity=".05"/><circle cx="90" cy="950" r="260" fill="#22d3ee" opacity=".04"/>
+  <text x="70" y="66" class="h1">Cherry Studio：本地桌面壳里的双运行时 AI 平台</text>
+  <text x="70" y="101" class="sub">Electron 负责可信边界与生命周期；Main 持有流、审批和数据；普通 Chat 与 Agent Session 共享 UI 协议但不共享循环所有权。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="145" width="1460" height="140" rx="22" fill="#172238" stroke="#334765"/>
+    <rect x="94" y="166" width="108" height="26" rx="13" fill="url(#hero)"/><text x="148" y="184" text-anchor="middle" class="tag">Renderer</text>
+    <text x="94" y="223" class="title">React 19 · TanStack Router · AI SDK useChat · Redux/Query 状态</text>
+    <text x="94" y="254" class="body">会话、Agent、知识库、设置、翻译、绘画、MiniApp；只消费流与提交意图，不拥有模型进程、审批真值或终态持久化</text>
+    <rect x="1120" y="184" width="360" height="66" rx="16" fill="#22314b" stroke="#4b607f"/>
+    <text x="1300" y="211" text-anchor="middle" class="label">IpcChatTransport + TopicStreamSubscription</text>
+    <text x="1300" y="236" text-anchor="middle" class="body">open · attach · detach · abort · approval</text>
+  </g>
+
+  <path d="M800 285V337" class="arrow"/>
+  <g filter="url(#shadow)">
+    <rect x="430" y="340" width="740" height="95" rx="20" fill="#211a35" stroke="#c084fc"/>
+    <text x="800" y="377" text-anchor="middle" class="title">Preload / IpcApi / DataApi</text>
+    <text x="800" y="407" text-anchor="middle" class="body">Schema 校验 · senderFrame 信任校验 · 定向事件 · 请求/响应适配</text>
+  </g>
+
+  <path d="M800 435V486" class="arrow"/>
+  <g filter="url(#shadow)">
+    <rect x="70" y="490" width="1460" height="205" rx="24" fill="#151f32" stroke="#334765"/>
+    <text x="100" y="527" class="label">MAIN PROCESS：进程级所有权</text>
+    <rect x="100" y="550" width="330" height="112" rx="18" fill="#1b2d45" stroke="#3b82f6"/>
+    <text x="124" y="582" class="title">AiStreamManager</text><text x="124" y="610" class="body">topic → active stream</text><text x="124" y="636" class="body">多模型 · 重连 · fan-out · 终态</text>
+    <rect x="458" y="550" width="330" height="112" rx="18" fill="#25304a" stroke="#8b5cf6"/>
+    <text x="482" y="582" class="title">AiService / Params Pipeline</text><text x="482" y="610" class="body">Provider · 模型参数 · 附件 · Retry</text><text x="482" y="636" class="body">Tool Registry · MCP · Hook</text>
+    <rect x="816" y="550" width="330" height="112" rx="18" fill="#243344" stroke="#22d3ee"/>
+    <text x="840" y="582" class="title">AgentSessionRuntimeService</text><text x="840" y="610" class="body">Session Host · 队列 · steer · resume</text><text x="840" y="636" class="body">审批 · compaction · delivery</text>
+    <rect x="1174" y="550" width="326" height="112" rx="18" fill="#2b2839" stroke="#f59e0b"/>
+    <text x="1198" y="582" class="title">Lifecycle / Job / Data</text><text x="1198" y="610" class="body">依赖图 · 三阶段启动 · 持久任务</text><text x="1198" y="636" class="body">SQLite/Drizzle · Cache · Backup</text>
+  </g>
+
+  <path d="M265 695V748" class="arrow"/><path d="M625 695V748" class="arrow"/><path d="M980 695V748" class="arrow"/><path d="M1337 695V748" class="arrow"/>
+  <g filter="url(#shadow)">
+    <rect x="70" y="754" width="680" height="164" rx="22" fill="#16273b" stroke="#38bdf8"/>
+    <text x="100" y="790" class="label">普通聊天运行时</text>
+    <text x="100" y="827" class="title">@cherrystudio/ai-core → AI SDK ToolLoopAgent</text>
+    <text x="100" y="858" class="body">PluginEngine 解析 provider/model → 单次 stream → 工具循环由 AI SDK 驱动</text>
+    <text x="100" y="886" class="body">聊天 steering 在 StreamManager 的 step 边界排队、yield、再链式续跑</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="780" y="754" width="750" height="164" rx="22" fill="#251d36" stroke="#e879f9"/>
+    <text x="810" y="790" class="label">可恢复 Agent Session 运行时</text>
+    <text x="810" y="827" class="title">统一 Host → Claude Code / Pi / DeepSeek Harness Driver</text>
+    <text x="810" y="858" class="body">Driver 映射原生事件与工具；Host 统一消息、队列、审批、恢复与持久化</text>
+    <text x="810" y="886" class="body">同一能力描述符驱动 Runtime 选择、权限模式、MCP、Skill 与 UI</text>
+  </g>
+
+  <path d="M410 918V963" class="arrow"/><path d="M1155 918V963" class="arrow"/>
+  <g>
+    <rect x="70" y="970" width="680" height="58" rx="16" fill="#152b2c" stroke="#34d399"/>
+    <text x="410" y="1006" text-anchor="middle" class="body">模型 API / 本地模型 · Web · MCP Server · Channel · 文件处理</text>
+    <rect x="780" y="970" width="750" height="58" rx="16" fill="#2b2431" stroke="#fb7185"/>
+    <text x="1155" y="1006" text-anchor="middle" class="body">主库 SQLite · 每知识库 index.sqlite · Agent JSONL/运行时状态 · 本地文件</text>
+  </g>
+</svg>

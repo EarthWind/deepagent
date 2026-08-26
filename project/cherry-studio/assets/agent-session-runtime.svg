@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Cherry Studio Agent Session Host Driver 架构</title>
+  <desc id="desc">Agent Session Host 管理队列、持久化、审批和恢复，三个 Driver 隔离 Claude Code、Pi 与 DSH 的原生机制。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080f1c"/><stop offset="1" stop-color="#1b1325"/></linearGradient>
+    <linearGradient id="host" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e11d48"/><stop offset="1" stop-color="#9f1239"/></linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".3"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.h1{font-size:36px;font-weight:800;fill:#f8fafc}.sub{font-size:17px;fill:#a5b4c8}.title{font-size:21px;font-weight:750;fill:#f8fafc}.body{font-size:15px;fill:#d4deec}.label{font-size:14px;font-weight:700;fill:#b2c0d3}.tiny{font-size:13px;fill:#9fb0c5}.arrow{stroke:#94a3b8;stroke-width:2.5;fill:none;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1600" height="1100" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">Agent Session：Host 稳定产品语义，Driver 吸收运行时差异</text>
+  <text x="70" y="99" class="sub">Host 不关心底层是长驻 CLI、进程内 SDK 还是本地桥接进程；Driver 必须翻译成同一套事件与恢复契约。</text>
+
+  <g filter="url(#s)">
+    <rect x="210" y="145" width="1180" height="250" rx="26" fill="#1a2236" stroke="#fb7185" stroke-width="2"/>
+    <rect x="245" y="175" width="290" height="54" rx="16" fill="url(#host)"/><text x="390" y="209" text-anchor="middle" class="title">AgentSessionRuntimeService</text>
+    <text x="565" y="205" class="body">每 Session 一个 runtime entry；所有 UI 与数据语义由 Main 持有</text>
+    <g>
+      <rect x="245" y="255" width="250" height="100" rx="15" fill="#242d43" stroke="#475569"/><text x="370" y="285" text-anchor="middle" class="label">Turn 所有权</text><text x="370" y="311" text-anchor="middle" class="tiny">current turn · idle timer</text><text x="370" y="334" text-anchor="middle" class="tiny">pending UI queue</text>
+      <rect x="520" y="255" width="250" height="100" rx="15" fill="#242d43" stroke="#475569"/><text x="645" y="285" text-anchor="middle" class="label">持久与恢复</text><text x="645" y="311" text-anchor="middle" class="tiny">assistant placeholder</text><text x="645" y="334" text-anchor="middle" class="tiny">opaque resume token</text>
+      <rect x="795" y="255" width="250" height="100" rx="15" fill="#242d43" stroke="#475569"/><text x="920" y="285" text-anchor="middle" class="label">控制面</text><text x="920" y="311" text-anchor="middle" class="tiny">approval · reconcile</text><text x="920" y="334" text-anchor="middle" class="tiny">compaction · context usage</text>
+      <rect x="1070" y="255" width="285" height="100" rx="15" fill="#242d43" stroke="#475569"/><text x="1212" y="285" text-anchor="middle" class="label">调度与交付</text><text x="1212" y="311" text-anchor="middle" class="tiny">steer / follow-up FIFO</text><text x="1212" y="334" text-anchor="middle" class="tiny">durable cross-session delivery</text>
+    </g>
+  </g>
+
+  <path d="M800 395V453" class="arrow"/>
+  <g filter="url(#s)">
+    <rect x="410" y="458" width="780" height="120" rx="22" fill="#251d38" stroke="#c084fc"/>
+    <text x="800" y="497" text-anchor="middle" class="title">AgentSessionRuntimeDriver / Connection Contract</text>
+    <text x="800" y="529" text-anchor="middle" class="body">validate · connect · send · redirect? · reconcile · close · getContextUsage?</text>
+    <text x="800" y="554" text-anchor="middle" class="tiny">events: chunk · approval · usage · resume-token · steer-boundary · compaction · background work · terminal/error</text>
+  </g>
+
+  <path d="M530 578V640" class="arrow"/><path d="M800 578V640" class="arrow"/><path d="M1070 578V640" class="arrow"/>
+  <g filter="url(#s)">
+    <rect x="90" y="646" width="440" height="220" rx="22" fill="#1a2c43" stroke="#60a5fa"/>
+    <text x="120" y="684" class="title">Claude Code Driver</text><text x="120" y="715" class="body">@anthropic-ai/claude-agent-sdk</text>
+    <text x="120" y="747" class="tiny">长驻 query + async input queue；resume=session_id</text>
+    <text x="120" y="772" class="tiny">PreToolUse 注入 steer，PostToolUse 回传时延</text>
+    <text x="120" y="797" class="tiny">非原生模型可经本地 API Gateway 路由</text>
+    <text x="120" y="832" class="label">完整权限模式 · Heartbeat · 模型层级</text>
+
+    <rect x="580" y="646" width="440" height="220" rx="22" fill="#1d3037" stroke="#34d399"/>
+    <text x="610" y="684" class="title">Pi Driver</text><text x="610" y="715" class="body">@earendil-works/pi-coding-agent</text>
+    <text x="610" y="747" class="tiny">进程内 SDK；Cherry 独立 agentDir/sessionDir</text>
+    <text x="610" y="772" class="tiny">只信任工作区文本，禁自动发现扩展/Skill/Prompt</text>
+    <text x="610" y="797" class="tiny">MCP 经 code-mode 工具桥接并逐层重验审批</text>
+    <text x="610" y="832" class="label">无 plan · 有 Heartbeat · 无模型层级</text>
+
+    <rect x="1070" y="646" width="440" height="220" rx="22" fill="#30263a" stroke="#e879f9"/>
+    <text x="1100" y="684" class="title">DeepSeek Harness Driver</text><text x="1100" y="715" class="body">dsh SDK Client + 本地 Bridge</text>
+    <text x="1100" y="747" class="tiny">生成 Session composition 与一次性 socket/token</text>
+    <text x="1100" y="772" class="tiny">桥接 Cherry/MCP 工具、审批与 live policy</text>
+    <text x="1100" y="797" class="tiny">映射 plan、subagent、后台流、压缩与 usage</text>
+    <text x="1100" y="832" class="label">有 plan · 无 auto · 无 Heartbeat</text>
+  </g>
+
+  <path d="M310 866V918" class="arrow"/><path d="M800 866V918" class="arrow"/><path d="M1290 866V918" class="arrow"/>
+  <rect x="90" y="925" width="1420" height="98" rx="20" fill="#192338" stroke="#475569"/>
+  <text x="120" y="960" class="label">统一回到 Host</text>
+  <text x="120" y="990" class="body">原生事件 → UIMessageChunk；工具审批 → Main registry；resume token → assistant 终态行；steer boundary → A1 / User / A2 消息滚动</text>
+  <text x="120" y="1015" class="tiny">运行时配置变更通过 reconcile 热补丁或安全边界重建；live tightening 失败时 fail closed，而不是继续沿用旧权限。</text>
+
+  <rect x="90" y="1044" width="1420" height="35" rx="12" fill="#321c28"/>
+  <text x="800" y="1067" text-anchor="middle" class="tiny">关键判断：三套 Agent 并不是同一个 loop 的三种模型适配，而是三套原生 harness 被 Cherry 的 Session Host 统一产品化。</text>
+</svg>

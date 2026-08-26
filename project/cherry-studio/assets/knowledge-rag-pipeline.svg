@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030" role="img" aria-labelledby="title desc">
+  <title id="title">Cherry Studio 知识库 RAG 管线</title>
+  <desc id="desc">展示多源输入、后台任务、文档读取、结构化切块、嵌入去重、每知识库 SQLite、混合检索和 Agent 工具。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111e"/><stop offset="1" stop-color="#151526"/></linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#000" flood-opacity=".28"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.h1{font-size:36px;font-weight:800;fill:#f8fafc}.sub{font-size:17px;fill:#a6b4c8}.title{font-size:20px;font-weight:750;fill:#f8fafc}.body{font-size:15px;fill:#d4deeb}.small{font-size:13px;fill:#a8b7cb}.label{font-size:14px;font-weight:700;fill:#b8c5d7}.arrow{stroke:#94a3b8;stroke-width:2.5;fill:none;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1600" height="1030" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">知识库：不是“向量入库”，而是一条可恢复的本地 RAG 数据管线</text>
+  <text x="70" y="99" class="sub">写侧以每库队列和幂等任务驱动；读侧按 BM25 / Hybrid 动态选择，并把命中结果暴露为可追读的 Concept ID。</text>
+
+  <g filter="url(#s)">
+    <rect x="70" y="150" width="270" height="220" rx="22" fill="#172b43" stroke="#60a5fa"/>
+    <text x="100" y="188" class="title">① Sources</text>
+    <text x="100" y="224" class="body">文件 / 目录</text><text x="100" y="252" class="body">URL 快照 / Note 快照</text><text x="100" y="280" class="body">冲突检测 / 重命名 / 替换</text>
+    <rect x="100" y="310" width="210" height="34" rx="12" fill="#203b59"/><text x="205" y="332" text-anchor="middle" class="small">raw/ 保留原始材料</text>
+
+    <rect x="385" y="150" width="270" height="220" rx="22" fill="#222744" stroke="#a78bfa"/>
+    <text x="415" y="188" class="title">② Readers</text>
+    <text x="415" y="224" class="body">PDF / DOCX / PPTX / EPUB…</text><text x="415" y="252" class="body">统一转换为 Markdown / Document</text><text x="415" y="280" class="body">重转换任务走独立文件处理服务</text>
+    <rect x="415" y="310" width="210" height="34" rx="12" fill="#303157"/><text x="520" y="332" text-anchor="middle" class="small">重 I/O 不持有 base 锁</text>
+
+    <rect x="700" y="150" width="270" height="220" rx="22" fill="#20323b" stroke="#34d399"/>
+    <text x="730" y="188" class="title">③ Chunk + Embed</text>
+    <text x="730" y="224" class="body">结构感知切块 + overlap</text><text x="730" y="252" class="body">保留 charStart / charEnd</text><text x="730" y="280" class="body">内容 hash 复用已有 embedding</text>
+    <rect x="730" y="310" width="210" height="34" rx="12" fill="#25483f"/><text x="835" y="332" text-anchor="middle" class="small">云模型或本地 Qwen3</text>
+
+    <rect x="1015" y="150" width="515" height="220" rx="22" fill="#36252f" stroke="#fb7185"/>
+    <text x="1045" y="188" class="title">④ Per-base index.sqlite</text>
+    <text x="1045" y="224" class="body">better-sqlite3 · FTS5 trigram · sqlite-vec cosine</text>
+    <text x="1045" y="252" class="body">material / content / search_unit / search_text / embedding</text>
+    <text x="1045" y="280" class="body">rebuildMaterial 在一个事务内切换 material 当前版本</text>
+    <text x="1045" y="308" class="body">vector_blob = little-endian float32；当前为 brute-force scan</text>
+    <rect x="1045" y="326" width="450" height="25" rx="12" fill="#4a2b37"/><text x="1270" y="344" text-anchor="middle" class="small">一个知识库一个索引文件：隔离生命周期与模型维度</text>
+  </g>
+  <path d="M340 260H375" class="arrow"/><path d="M655 260H690" class="arrow"/><path d="M970 260H1005" class="arrow"/>
+
+  <g filter="url(#s)">
+    <rect x="70" y="420" width="1460" height="120" rx="22" fill="#161f33" stroke="#475569"/>
+    <text x="100" y="456" class="label">JobManager：每库 queue = base.{baseId}，idempotency key 防止重复入队</text>
+    <text x="100" y="488" class="body">prepare-root → index-documents → check-file-processing-result · delete-subtree · reindex-subtree</text>
+    <text x="100" y="516" class="small">重启不自动重放付费 embedding：中断的 indexing/reindex 进入 failed；删除任务可 retry。KeyedMutex 只包跨 DB/索引/文件系统的短事务段。</text>
+  </g>
+
+  <path d="M1270 370V595" class="arrow"/>
+  <g filter="url(#s)">
+    <rect x="70" y="605" width="290" height="250" rx="22" fill="#20263c" stroke="#818cf8"/>
+    <text x="100" y="643" class="title">查询输入</text><text x="100" y="679" class="body">query + baseId</text>
+    <text x="100" y="711" class="small">无 embedding 模型 → BM25</text><text x="100" y="735" class="small">有 embedding 模型 → Hybrid</text>
+    <text x="100" y="771" class="body">topK × 5 过取</text><text x="100" y="797" class="small">候选上限 200</text>
+
+    <rect x="405" y="605" width="330" height="250" rx="22" fill="#17303b" stroke="#22d3ee"/>
+    <text x="435" y="643" class="title">两条召回 Lane</text>
+    <text x="435" y="683" class="body">BM25：FTS5 MATCH</text><text x="435" y="709" class="small">短 CJK / 短词以 LIKE 兜底</text>
+    <text x="435" y="752" class="body">Vector：cosine distance</text><text x="435" y="778" class="small">过滤零范数 / NULL 距离</text>
+    <text x="435" y="820" class="label">同一 connection 顺序执行</text>
+
+    <rect x="780" y="605" width="330" height="250" rx="22" fill="#282940" stroke="#c084fc"/>
+    <text x="810" y="643" class="title">融合与精排</text>
+    <text x="810" y="683" class="body">RRF：K=60，默认 α=0.5</text><text x="810" y="709" class="small">避免直接归一化两种异构分数</text>
+    <text x="810" y="752" class="body">可选 Rerank 模型</text><text x="810" y="778" class="small">先精排完整过取集合，再截 topK</text>
+    <text x="810" y="820" class="label">可见性过滤 + threshold</text>
+
+    <rect x="1155" y="605" width="375" height="250" rx="22" fill="#35232d" stroke="#fb7185"/>
+    <text x="1185" y="643" class="title">面向模型的知识工具</text>
+    <text x="1185" y="683" class="body">kb_list · kb_search</text><text x="1185" y="711" class="body">kb_read · kb_manage</text>
+    <text x="1185" y="751" class="small">命中返回 Concept ID / title / score</text><text x="1185" y="776" class="small">模型可再深读全文，而非一次塞满上下文</text>
+    <text x="1185" y="820" class="label">聊天与三种 Agent Runtime 复用</text>
+  </g>
+  <path d="M360 730H395" class="arrow"/><path d="M735 730H770" class="arrow"/><path d="M1110 730H1145" class="arrow"/>
+
+  <rect x="70" y="905" width="1460" height="82" rx="18" fill="#192235" stroke="#64748b"/>
+  <text x="100" y="938" class="label">工程取舍</text>
+  <text x="100" y="966" class="body">本地、事务清晰、支持 BM25-only 与向量平滑升级；但 vector lane 是 O(N) 暴力扫描，更适合桌面级中等规模语料，不等同于服务端 ANN 集群。</text>
+</svg>
