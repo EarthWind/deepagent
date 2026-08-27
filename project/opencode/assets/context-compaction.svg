@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">OpenCode 上下文压缩</title><desc id="desc">数据库保留完整物理历史，模型上下文则用摘要和最近尾部组成逻辑窗口，并对旧工具输出做标记式裁剪。</desc>
+  <defs><linearGradient id="bg" x2="1"><stop stop-color="#f8f1e5"/><stop offset="1" stop-color="#eef4f1"/></linearGradient><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1b746d"/></marker><style>.h1{font:700 34px ui-sans-serif,system-ui;fill:#183532}.h2{font:700 20px ui-sans-serif,system-ui;fill:#183532}.t{font:500 15px ui-sans-serif,system-ui;fill:#37514e}.s{font:500 13px ui-sans-serif,system-ui;fill:#657b78}.light2{font:700 20px ui-sans-serif,system-ui;fill:#f5eee2}.light{font:500 15px ui-sans-serif,system-ui;fill:#d8e9e6}.lightS{font:500 13px ui-sans-serif,system-ui;fill:#a9c5c1}.box{fill:#fffaf2;stroke:#7f938f;stroke-width:1.5}.old{fill:#efe1ca;stroke:#bc8d47;stroke-width:1.5}.tail{fill:#dff3ef;stroke:#2d9288;stroke-width:1.8}.sum{fill:#173a39;stroke:#2d9288;stroke-width:2}.edge{fill:none;stroke:#1b746d;stroke-width:2.5;marker-end:url(#a)}</style></defs>
+  <rect width="1440" height="760" rx="28" fill="url(#bg)"/>
+  <text x="70" y="68" class="h1">压缩的是“模型视野”，不是“审计历史”</text><text x="70" y="98" class="s">SessionCompaction 在上下文超限前，把旧头部概括为摘要，同时保留近期尾部</text>
+  <text x="70" y="157" class="h2">SQLite 中的物理历史</text>
+  <g><rect x="70" y="180" width="150" height="108" rx="14" class="old"/><text x="92" y="216" class="t">Turn 1</text><text x="92" y="244" class="s">message + parts</text><text x="92" y="267" class="s">tool outputs</text></g>
+  <g><rect x="236" y="180" width="150" height="108" rx="14" class="old"/><text x="258" y="216" class="t">Turn 2</text><text x="258" y="244" class="s">message + parts</text><text x="258" y="267" class="s">reasoning</text></g>
+  <g><rect x="402" y="180" width="150" height="108" rx="14" class="old"/><text x="424" y="216" class="t">Turn …</text><text x="424" y="244" class="s">完整记录</text><text x="424" y="267" class="s">仍可回看</text></g>
+  <g><rect x="568" y="180" width="150" height="108" rx="14" class="tail"/><text x="590" y="216" class="t">Recent A</text><text x="590" y="244" class="s">近期尾部</text><text x="590" y="267" class="s">原样保留</text></g>
+  <g><rect x="734" y="180" width="150" height="108" rx="14" class="tail"/><text x="756" y="216" class="t">Recent B</text><text x="756" y="244" class="s">当前任务</text><text x="756" y="267" class="s">原样保留</text></g>
+  <g><rect x="900" y="180" width="150" height="108" rx="14" class="tail"/><text x="922" y="216" class="t">Current</text><text x="922" y="244" class="s">最新用户</text><text x="922" y="267" class="s">与工具回合</text></g>
+  <rect x="1082" y="180" width="288" height="108" rx="14" class="box"/><text x="1106" y="216" class="h2">触发条件</text><text x="1106" y="244" class="t">usage 接近 usable context</text><text x="1106" y="267" class="s">或 provider 返回 context overflow</text>
+  <path d="M720 310V384" class="edge"/>
+  <text x="765" y="352" class="t">选择 tail：默认可用上下文 25%，下限 2k、上限 15k tokens</text>
+
+  <text x="70" y="431" class="h2">下一次送给模型的逻辑上下文</text>
+  <rect x="70" y="456" width="250" height="136" rx="16" class="sum"/><text x="94" y="493" class="light2">Compaction User</text><text x="94" y="524" class="light">压缩指令与范围</text><text x="94" y="552" class="lightS">可由 plugin hook 扩展</text>
+  <rect x="338" y="456" width="300" height="136" rx="16" class="sum"/><text x="362" y="493" class="light2">Summary Assistant</text><text x="362" y="524" class="light">由隐藏 compaction agent 生成</text><text x="362" y="552" class="lightS">不开放工具</text>
+  <rect x="656" y="456" width="260" height="136" rx="16" class="tail"/><text x="680" y="493" class="h2">Retained Tail</text><text x="680" y="524" class="t">近期原始 turns</text><text x="680" y="552" class="s">必要时可从 turn 内切分</text>
+  <rect x="934" y="456" width="200" height="136" rx="16" class="box"/><text x="958" y="493" class="h2">Continue</text><text x="958" y="524" class="t">合成用户消息</text><text x="958" y="552" class="s">自动延续任务</text>
+  <rect x="1152" y="456" width="218" height="136" rx="16" class="box"/><text x="1176" y="493" class="h2">New Turns</text><text x="1176" y="524" class="t">后续继续追加</text><text x="1176" y="552" class="s">再次接近阈值可再压缩</text>
+  <path d="M320 524H336" class="edge"/><path d="M638 524H654" class="edge"/><path d="M916 524H932" class="edge"/><path d="M1134 524H1150" class="edge"/>
+  <rect x="70" y="635" width="1300" height="64" rx="14" class="old"/><text x="94" y="662" class="t">旧工具输出另有 prune：保护最近约 40k tokens，预计至少节省 20k 才执行；只打 compacted 标记，不删除记录，并永不裁剪 skill 结果。</text><text x="94" y="685" class="s">因此“可恢复性 / 可审计性”与“模型上下文成本”可以分开治理。</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">OpenCode Agent、Subagent、Skill 与 MCP 的协作关系</title><desc id="desc">主 Agent 通过 Task 工具创建子 Session；工具注册表组合内建、自定义、插件和 MCP 工具；Skill 先暴露目录后按需装载正文。</desc>
+  <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f7f0e4"/><stop offset="1" stop-color="#e7f1ef"/></linearGradient><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1d746d"/></marker><style>.h1{font:700 34px ui-sans-serif,system-ui;fill:#183532}.h2{font:700 20px ui-sans-serif,system-ui;fill:#183532}.t{font:500 15px ui-sans-serif,system-ui;fill:#39524f}.s{font:500 13px ui-sans-serif,system-ui;fill:#667c79}.box{fill:#fffaf2;stroke:#7f938f;stroke-width:1.5}.hot{fill:#dff3ef;stroke:#2d9288;stroke-width:2}.amber{fill:#f6e8cb;stroke:#bb8a3d;stroke-width:1.7}.edge{fill:none;stroke:#1d746d;stroke-width:2.5;marker-end:url(#a)}.dash{fill:none;stroke:#bb8a3d;stroke-width:2;stroke-dasharray:7 6;marker-end:url(#a)}</style></defs>
+  <rect width="1440" height="760" rx="28" fill="url(#bg)"/><text x="70" y="68" class="h1">Agent 不是类继承树，而是“提示词 + 权限 + 模型”的运行配置</text><text x="70" y="98" class="s">子 Agent 通过子 Session 隔离消息树；ToolRegistry 把不同扩展面收敛成统一调用协议</text>
+  <rect x="70" y="150" width="290" height="190" rx="20" class="hot"/><text x="98" y="190" class="h2">Primary Session</text><text x="98" y="225" class="t">build：默认主 Agent</text><text x="98" y="255" class="t">plan：限制编辑，只写计划</text><text x="98" y="290" class="s">同一 session runner 串行推进</text><text x="98" y="315" class="s">隐藏 agent：title / summary / compaction</text>
+  <path d="M360 245H470" class="edge"/><text x="386" y="224" class="s">Task tool</text>
+  <rect x="472" y="150" width="310" height="190" rx="20" class="amber"/><text x="500" y="190" class="h2">Child Session</text><text x="500" y="225" class="t">general：通用多步任务</text><text x="500" y="255" class="t">explore：只读检索型任务</text><text x="500" y="290" class="s">parentID 形成会话树；task_id 可续跑</text><text x="500" y="315" class="s">默认 subagent depth = 1</text>
+  <path d="M627 340V430" class="edge"/><text x="648" y="392" class="s">结果回注父 Session</text>
+  <rect x="472" y="432" width="310" height="118" rx="20" class="box"/><text x="500" y="470" class="h2">BackgroundJob</text><text x="500" y="502" class="t">前台等待或实验性后台运行</text><text x="500" y="527" class="s">子任务完成事件可促使父循环继续</text>
+
+  <rect x="856" y="142" width="514" height="408" rx="22" class="box"/><text x="886" y="184" class="h2">ToolRegistry / SessionTools</text>
+  <rect x="886" y="214" width="205" height="94" rx="14" class="hot"/><text x="910" y="246" class="h2">Built-ins</text><text x="910" y="274" class="s">read · grep · shell · edit</text><text x="910" y="296" class="s">task · skill · web · plan</text>
+  <rect x="1123" y="214" width="217" height="94" rx="14" class="box"/><text x="1147" y="246" class="h2">Custom / Plugin</text><text x="1147" y="274" class="s">.opencode/tools/*.ts</text><text x="1147" y="296" class="s">hook + tool definition</text>
+  <rect x="886" y="338" width="205" height="94" rx="14" class="amber"/><text x="910" y="370" class="h2">MCP</text><text x="910" y="398" class="s">stdio · HTTP · SSE</text><text x="910" y="420" class="s">tools / resources / prompts</text>
+  <rect x="1123" y="338" width="217" height="94" rx="14" class="box"/><text x="1147" y="370" class="h2">Code Mode（实验）</text><text x="1147" y="398" class="s">用单个 execute 包装</text><text x="1147" y="420" class="s">受限解释器内调用 MCP</text>
+  <rect x="886" y="462" width="454" height="62" rx="14" class="hot"/><text x="910" y="500" class="h2">统一变成 AI SDK ToolSet + Permission Context</text>
+  <path d="M782 245H854" class="edge"/>
+
+  <rect x="70" y="604" width="1300" height="100" rx="18" class="amber"/><text x="98" y="640" class="h2">Skill 的渐进披露</text><text x="98" y="670" class="t">系统提示只列 name / description / location → 模型确有需要时调用 skill(name) → 才把 SKILL.md 正文、基目录与少量文件样本放入上下文。</text><text x="98" y="693" class="s">这比启动时塞入所有技能正文更省 token，也让 agent 权限能按 skill 名称精确控制。</text>
+</svg>

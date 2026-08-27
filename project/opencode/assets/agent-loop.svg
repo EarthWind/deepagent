@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="920" viewBox="0 0 1440 920" role="img" aria-labelledby="title desc">
+  <title id="title">OpenCode Agent 回合与工具调用循环</title>
+  <desc id="desc">异步 Prompt 进入会话后，外层循环组装上下文并调用 LLM，AI SDK 执行工具，SessionProcessor 将流式事件转成持久化 Part，直到完成或触发压缩。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f7f1e6"/><stop offset="1" stop-color="#e9f1ef"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1b6f69"/></marker>
+    <style>.h1{font:700 34px ui-sans-serif,system-ui;fill:#17302f}.h2{font:700 20px ui-sans-serif,system-ui;fill:#17302f}.t{font:500 15px ui-sans-serif,system-ui;fill:#324a49}.s{font:500 13px ui-sans-serif,system-ui;fill:#607674}.box{fill:#fffaf2;stroke:#78908c;stroke-width:1.5}.hot{fill:#dff3ef;stroke:#258d83;stroke-width:2}.warn{fill:#fff0d0;stroke:#c38522;stroke-width:1.7}.edge{fill:none;stroke:#1b6f69;stroke-width:2.4;marker-end:url(#a)}.dash{fill:none;stroke:#be7f1e;stroke-width:2;stroke-dasharray:7 6;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1440" height="920" rx="28" fill="url(#bg)"/>
+  <text x="70" y="68" class="h1">一次 Prompt 如何变成可审计的 Agent 回合</text>
+  <text x="70" y="99" class="s">OpenCode 管外层多步循环；AI SDK 在单次 streamText 内负责模型流与工具 dispatch</text>
+
+  <rect x="70" y="142" width="238" height="102" rx="18" class="box"/><text x="94" y="176" class="h2">① prompt_async</text><text x="94" y="204" class="t">校验 Session 后 fork</text><text x="94" y="226" class="s">HTTP 立即返回 204</text>
+  <path d="M308 193H374" class="edge"/>
+  <rect x="376" y="142" width="258" height="102" rx="18" class="box"/><text x="400" y="176" class="h2">② 写入 User Message</text><text x="400" y="204" class="t">message + text/file/agent part</text><text x="400" y="226" class="s">SessionRunState 保证单 runner</text>
+  <path d="M634 193H700" class="edge"/>
+  <rect x="702" y="142" width="278" height="102" rx="18" class="hot"/><text x="726" y="176" class="h2">③ runLoop：判定是否继续</text><text x="726" y="204" class="t">完成态 / task / compact / retry</text><text x="726" y="226" class="s">while(true) 的外层控制器</text>
+  <path d="M980 193H1046" class="edge"/>
+  <rect x="1048" y="142" width="320" height="102" rx="18" class="box"/><text x="1072" y="176" class="h2">④ 解析 Agent 与 Model</text><text x="1072" y="204" class="t">build / plan / general / explore</text><text x="1072" y="226" class="s">变体、步数、权限、输出格式</text>
+
+  <path d="M1208 244V305" class="edge"/>
+  <rect x="1018" y="307" width="350" height="126" rx="18" class="box"/><text x="1042" y="341" class="h2">⑤ 上下文组装</text><text x="1042" y="370" class="t">provider prompt + environment</text><text x="1042" y="395" class="t">AGENTS.md + MCP instructions</text><text x="1042" y="418" class="s">Skill 目录只暴露元数据，按需加载正文</text>
+  <path d="M1018 370H948" class="edge"/>
+  <rect x="592" y="307" width="354" height="126" rx="18" class="box"/><text x="616" y="341" class="h2">⑥ 解析 Tools</text><text x="616" y="370" class="t">built-in + custom + plugin + MCP</text><text x="616" y="395" class="t">按 permission / model capability 过滤</text><text x="616" y="418" class="s">现代 GPT 倾向 apply_patch；其他模型 edit/write</text>
+  <path d="M592 370H522" class="edge"/>
+  <rect x="70" y="307" width="450" height="126" rx="18" class="hot"/><text x="94" y="341" class="h2">⑦ LLM.stream → ai.streamText</text><text x="94" y="370" class="t">maxRetries=0 · fullStream · activeTools · tool repair</text><text x="94" y="395" class="t">ProviderTransform 归一化 schema / options / history</text><text x="94" y="418" class="s">Native LLM runtime 当前是实验路径，默认仍是 AI SDK</text>
+
+  <path d="M295 433V494" class="edge"/>
+  <rect x="70" y="496" width="450" height="202" rx="18" class="hot"/><text x="94" y="530" class="h2">⑧ SessionProcessor：流事件 → Part 状态机</text>
+  <text x="94" y="565" class="t">text / reasoning：start → delta → end</text>
+  <text x="94" y="594" class="t">tool：pending → running → completed | error</text>
+  <text x="94" y="623" class="t">step：snapshot → usage/cost → patch → finish</text>
+  <text x="94" y="652" class="s">重复同一 tool + input 三次会询问 doom_loop</text>
+  <text x="94" y="677" class="s">中止时封口残缺 part，并将遗留工具标记 aborted</text>
+
+  <rect x="592" y="496" width="354" height="202" rx="18" class="warn"/><text x="616" y="530" class="h2">⑨ Tool 执行闸门</text>
+  <text x="616" y="565" class="t">permission：allow / ask / deny</text>
+  <text x="616" y="594" class="t">plugin before / after hook</text>
+  <text x="616" y="623" class="t">真实 I/O：shell / file / MCP / LSP</text>
+  <text x="616" y="652" class="s">输出限制 2,000 行 / 50 KB</text>
+  <text x="616" y="677" class="s">完整输出另存，摘要进入上下文</text>
+  <path d="M520 597H590" class="edge"/>
+  <path d="M946 597H1016" class="edge"/>
+  <rect x="1018" y="496" width="350" height="202" rx="18" class="box"/><text x="1042" y="530" class="h2">⑩ EventV2 双通路</text>
+  <text x="1042" y="565" class="t">projector → SQLite</text>
+  <text x="1042" y="594" class="t">GlobalBus → SSE → client reducer</text>
+  <text x="1042" y="623" class="s">消息、Part、状态、权限询问实时可见</text>
+  <text x="1042" y="652" class="s">UI 不轮询数据库，也不自行重跑 Agent</text>
+
+  <path d="M1193 698V770H842" class="edge"/>
+  <rect x="534" y="746" width="306" height="104" rx="18" class="box"/><text x="558" y="780" class="h2">继续？</text><text x="558" y="809" class="t">tool-calls / unknown / task</text><text x="558" y="833" class="s">是：回到 ③，重建下一步上下文</text>
+  <path d="M534 798H364V246H702" class="dash"/>
+  <path d="M840 798H1040" class="edge"/>
+  <text x="1060" y="792" class="h2">否：idle / stop</text><text x="1060" y="820" class="s">或先触发 compaction 再继续</text>
+</svg>
