@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="930" viewBox="0 0 1440 930" role="img" aria-labelledby="title desc">
+  <title id="title">Codex 工具与安全执行链</title>
+  <desc id="desc">工具从来源、规划、披露、路由到策略审批和操作系统沙箱的执行流程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07101f"/><stop offset="1" stop-color="#11192b"/></linearGradient>
+    <linearGradient id="flow" x1="0" x2="1"><stop stop-color="#22d3ee"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#fb923c"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#64748b"/></marker>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.h{font:700 19px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}
+      .box{fill:#111d31;stroke:#334155;stroke-width:1.5}.cyan{fill:#0c2933;stroke:#22d3ee}.green{fill:#0e2a25;stroke:#34d399}.purple{fill:#261d3b;stroke:#a78bfa}.orange{fill:#352415;stroke:#fb923c}.red{fill:#361b22;stroke:#fb7185}
+      .arr{fill:none;stroke:#64748b;stroke-width:2;marker-end:url(#a)}.dash{fill:none;stroke:#64748b;stroke-width:1.5;stroke-dasharray:6 6;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1440" height="930" rx="28" fill="url(#bg)"/>
+  <text x="65" y="63" class="title">Tool Runtime 与安全边界：审批不是沙箱</text>
+  <text x="65" y="94" class="sub">发现、模型可见性、dispatch 治理与 OS enforcement 是四个不同阶段</text>
+
+  <text x="65" y="145" class="tiny">CAPABILITY SOURCES</text>
+  <g>
+    <rect x="65" y="163" width="210" height="78" rx="13" class="box"/><text x="170" y="194" text-anchor="middle" class="h">Core tools</text><text x="170" y="219" text-anchor="middle" class="tiny">shell · patch · plan</text>
+    <rect x="295" y="163" width="210" height="78" rx="13" class="box"/><text x="400" y="194" text-anchor="middle" class="h">MCP</text><text x="400" y="219" text-anchor="middle" class="tiny">server binding · resources</text>
+    <rect x="525" y="163" width="210" height="78" rx="13" class="box"/><text x="630" y="194" text-anchor="middle" class="h">Skills / Plugins</text><text x="630" y="219" text-anchor="middle" class="tiny">指令 · apps · hooks</text>
+    <rect x="755" y="163" width="210" height="78" rx="13" class="box"/><text x="860" y="194" text-anchor="middle" class="h">Dynamic tools</text><text x="860" y="219" text-anchor="middle" class="tiny">App Server client</text>
+    <rect x="985" y="163" width="210" height="78" rx="13" class="box"/><text x="1090" y="194" text-anchor="middle" class="h">Hosted tools</text><text x="1090" y="219" text-anchor="middle" class="tiny">apps · web · image</text>
+    <rect x="1215" y="163" width="160" height="78" rx="13" class="box"/><text x="1295" y="194" text-anchor="middle" class="h">Agents</text><text x="1295" y="219" text-anchor="middle" class="tiny">spawn · wait</text>
+  </g>
+  <path d="M170 241V278H720M400 241V278H720M630 241V278H720M860 241V278H720M1090 241V278H720M1295 241V278H720" class="arr"/>
+
+  <rect x="170" y="278" width="1100" height="124" rx="19" class="cyan"/>
+  <text x="720" y="312" text-anchor="middle" class="h">Spec Plan → finalize ToolRouter</text>
+  <text x="720" y="339" text-anchor="middle" class="t">Feature gates · model capability · namespace · collision · guardian reduction · StepContext</text>
+  <g>
+    <rect x="255" y="357" width="175" height="30" rx="9" fill="#164e63"/><text x="342" y="377" text-anchor="middle" class="tiny" fill="#cffafe">Direct</text>
+    <rect x="472" y="357" width="175" height="30" rx="9" fill="#3b2a68"/><text x="559" y="377" text-anchor="middle" class="tiny" fill="#ede9fe">Deferred</text>
+    <rect x="689" y="357" width="175" height="30" rx="9" fill="#5b3516"/><text x="776" y="377" text-anchor="middle" class="tiny" fill="#ffedd5">Code Mode</text>
+    <rect x="906" y="357" width="175" height="30" rx="9" fill="#283548"/><text x="993" y="377" text-anchor="middle" class="tiny">Hidden</text>
+  </g>
+
+  <path d="M720 402V450" class="arr"/>
+  <rect x="170" y="450" width="1100" height="110" rx="18" class="purple"/>
+  <text x="720" y="481" text-anchor="middle" class="h">ToolRouter + ToolRegistry dispatch</text>
+  <text x="720" y="510" text-anchor="middle" class="t">parse output item → resolve runtime → pre-hook → lifecycle/telemetry → handler → post-hook → result</text>
+  <text x="720" y="538" text-anchor="middle" class="tiny">Code Mode 嵌套工具也回到同一 dispatch；不会绕过 StepContext、Hook 或审批</text>
+
+  <path d="M720 560V605" class="arr"/>
+  <text x="65" y="619" class="tiny">EXECUTION GOVERNANCE</text>
+  <rect x="65" y="638" width="240" height="110" rx="16" class="box"/>
+  <text x="185" y="670" text-anchor="middle" class="h">Permission profile</text><text x="185" y="698" text-anchor="middle" class="t">读 / 写 / 网络能力边界</text><text x="185" y="723" text-anchor="middle" class="tiny">managed constraints</text>
+  <path d="M305 693H335" class="arr"/>
+  <rect x="335" y="638" width="240" height="110" rx="16" class="green"/>
+  <text x="455" y="670" text-anchor="middle" class="h">Exec policy</text><text x="455" y="698" text-anchor="middle" class="t">命令分段与规则计算</text><text x="455" y="723" text-anchor="middle" class="tiny">skip / ask / forbid</text>
+  <path d="M575 693H605" class="arr"/>
+  <rect x="605" y="638" width="240" height="110" rx="16" class="orange"/>
+  <text x="725" y="670" text-anchor="middle" class="h">Approval</text><text x="725" y="698" text-anchor="middle" class="t">用户或 reviewer 授权</text><text x="725" y="723" text-anchor="middle" class="tiny">once / session cache</text>
+  <path d="M845 693H875" class="arr"/>
+  <rect x="875" y="638" width="240" height="110" rx="16" class="red"/>
+  <text x="995" y="670" text-anchor="middle" class="h">SandboxManager</text><text x="995" y="698" text-anchor="middle" class="t">选择并变换执行环境</text><text x="995" y="723" text-anchor="middle" class="tiny">initial → escalated retry</text>
+  <path d="M1115 693H1145" class="arr"/>
+  <rect x="1145" y="638" width="230" height="110" rx="16" class="cyan"/>
+  <text x="1260" y="670" text-anchor="middle" class="h">OS enforcement</text><text x="1260" y="698" text-anchor="middle" class="t">Seatbelt / bwrap</text><text x="1260" y="723" text-anchor="middle" class="tiny">Windows restricted token</text>
+
+  <rect x="170" y="796" width="1100" height="78" rx="15" fill="#0b2530" stroke="#22d3ee"/>
+  <text x="720" y="825" text-anchor="middle" class="h">安全不变量</text>
+  <text x="720" y="851" text-anchor="middle" class="t">审批允许越界 ≠ 取消所有限制；deny-read 在 unsandboxed retry 中仍需保留，网络通道另行治理</text>
+  <path d="M995 748V780H720V796" class="dash"/>
+  <text x="65" y="906" class="tiny">模型只看到本 Step 的可见工具；真正执行也使用同一 ToolRouter。</text>
+</svg>
