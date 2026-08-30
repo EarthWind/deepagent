@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent 上下文与记忆分层</title>
+  <desc id="desc">系统提示词按照稳定、项目上下文和易变尾部排序，常驻记忆与按需技能分离。</desc>
+  <defs>
+    <linearGradient id="b3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08121f"/><stop offset="1" stop-color="#121a29"/></linearGradient>
+    <marker id="a3" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#91a7c6"/></marker>
+    <style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e8eef7}.h{font-size:29px;font-weight:800}.s{font-size:14px;fill:#96a7bd}.t{font-size:19px;font-weight:800}.d{font-size:14px;fill:#cad5e5}.stable{fill:#17322d;stroke:#4a9b83}.context{fill:#172a40;stroke:#4c78a5}.volatile{fill:#30251b;stroke:#ce9a4a}.file{fill:#241e38;stroke:#7966a7}</style>
+  </defs>
+  <rect width="1200" height="760" rx="24" fill="url(#b3)"/>
+  <text x="56" y="58" class="h">上下文工程：把“经常用”与“偶尔用”分开</text>
+  <text x="56" y="84" class="s">系统提示词会话内冻结；发生压缩/恢复重建时，最稳定内容在前，最可能变化的内容在后，以保住最长可复用前缀。</text>
+
+  <rect x="70" y="130" width="690" height="140" rx="18" class="stable"/>
+  <text x="100" y="166" class="t">STABLE — 跨会话稳定前缀</text>
+  <text x="100" y="196" class="d">SOUL.md / 默认人格 · 工具行为约束 · 模型特定指导</text>
+  <text x="100" y="222" class="d">平台提示 · 编码工作准则 · 环境提示 · 并行调用策略</text>
+  <text x="100" y="249" class="s">变化最少，排在最前，优先命中 Provider 的 prefix cache</text>
+
+  <rect x="70" y="288" width="690" height="140" rx="18" class="context"/>
+  <text x="100" y="324" class="t">CONTEXT — 会话/工作区稳定层</text>
+  <text x="100" y="354" class="d">调用方 system_message · 工作区快照 · AGENTS.md</text>
+  <text x="100" y="380" class="d">.hermes.md / CLAUDE.md / .cursorrules · Git 与 CWD 信息</text>
+  <text x="100" y="407" class="s">对同一工作区稳定，但跨项目会变化</text>
+
+  <rect x="70" y="446" width="690" height="180" rx="18" class="volatile"/>
+  <text x="100" y="482" class="t">VOLATILE — 易变尾部（仍是冻结快照）</text>
+  <text x="100" y="512" class="d">技能索引（仅 name + description）</text>
+  <text x="100" y="538" class="d">MEMORY.md · USER.md · 外部记忆 Provider block</text>
+  <text x="100" y="564" class="d">日期 / Session / Model / Provider / Platform</text>
+  <text x="100" y="595" class="s">源码快照中 Skills 位于 volatile，而不是官方旧说明中的 stable</text>
+
+  <path d="M800 198H876" stroke="#91a7c6" stroke-width="2" marker-end="url(#a3)"/>
+  <rect x="878" y="125" width="260" height="146" rx="17" class="file"/>
+  <text x="1008" y="160" text-anchor="middle" class="t">Prompt Cache</text>
+  <text x="1008" y="190" text-anchor="middle" class="d">会话中不重建 system prompt</text>
+  <text x="1008" y="216" text-anchor="middle" class="d">技能/记忆写入立即落盘</text>
+  <text x="1008" y="242" text-anchor="middle" class="d">下一会话或压缩后才可见</text>
+
+  <path d="M800 505H876" stroke="#91a7c6" stroke-width="2" marker-end="url(#a3)"/>
+  <rect x="878" y="315" width="260" height="125" rx="17" class="file"/>
+  <text x="1008" y="350" text-anchor="middle" class="t">常驻事实：Memory</text>
+  <text x="1008" y="380" text-anchor="middle" class="d">MEMORY.md：2,200 字符</text>
+  <text x="1008" y="406" text-anchor="middle" class="d">USER.md：1,375 字符</text>
+  <text x="1008" y="428" text-anchor="middle" class="s">小、精选、每轮都值得携带</text>
+
+  <rect x="878" y="458" width="260" height="168" rx="17" class="file"/>
+  <text x="1008" y="493" text-anchor="middle" class="t">按需程序：Skills</text>
+  <text x="1008" y="523" text-anchor="middle" class="d">Tier 1：索引元数据</text>
+  <text x="1008" y="549" text-anchor="middle" class="d">Tier 2：skill_view(SKILL.md)</text>
+  <text x="1008" y="575" text-anchor="middle" class="d">Tier 3：references / scripts</text>
+  <text x="1008" y="606" text-anchor="middle" class="s">长流程只在任务匹配时付 token</text>
+  <path d="M1008 441V456" stroke="#91a7c6" stroke-width="2" marker-end="url(#a3)"/>
+
+  <rect x="70" y="660" width="1068" height="55" rx="14" fill="#121f30" stroke="#31475f"/>
+  <text x="604" y="693" text-anchor="middle" class="d">压缩是少数允许打破缓存的事件：保留头部与近期尾部，把中段变成结构化摘要，并保持 tool_call ↔ tool_result 成对。</text>
+</svg>
