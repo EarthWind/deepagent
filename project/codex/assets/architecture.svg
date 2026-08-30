@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Codex 总体架构</title>
+  <desc id="desc">展示产品入口、Thread 与 Session 窄腰、Agent 核心服务和外部边界。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07101f"/>
+      <stop offset="1" stop-color="#10192d"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".35"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 17px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}
+      .h{font:700 20px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.t{font:500 15px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.tiny{font:500 13px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}
+      .box{fill:#111c31;stroke:#2b3a55;stroke-width:1.5}.green{fill:#0c2b2a;stroke:#10b981}.blue{fill:#0d2338;stroke:#38bdf8}.purple{fill:#241b3a;stroke:#a78bfa}.orange{fill:#332313;stroke:#fb923c}
+      .line{fill:none;stroke:#64748b;stroke-width:2;marker-end:url(#arrow)}.dash{fill:none;stroke:#475569;stroke-width:1.5;stroke-dasharray:7 7}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="28" fill="url(#bg)"/>
+  <circle cx="1290" cy="80" r="190" fill="#0ea5e9" opacity=".05"/>
+  <circle cx="110" cy="820" r="220" fill="#10b981" opacity=".05"/>
+
+  <text x="70" y="68" class="title">Codex：同一 Agent Runtime，多种产品入口</text>
+  <text x="70" y="99" class="sub">架构窄腰 = ThreadManager → CodexThread → Session → Op / Event</text>
+
+  <text x="70" y="145" class="tiny">SURFACES / CLIENTS</text>
+  <g filter="url(#shadow)">
+    <rect x="70" y="165" width="230" height="86" rx="15" class="box"/>
+    <text x="185" y="201" text-anchor="middle" class="h">TUI</text><text x="185" y="227" text-anchor="middle" class="tiny">交互终端与审批 UI</text>
+    <rect x="320" y="165" width="230" height="86" rx="15" class="box"/>
+    <text x="435" y="201" text-anchor="middle" class="h">codex exec</text><text x="435" y="227" text-anchor="middle" class="tiny">CI / JSONL / 非交互</text>
+    <rect x="570" y="165" width="230" height="86" rx="15" class="box"/>
+    <text x="685" y="201" text-anchor="middle" class="h">App Server</text><text x="685" y="227" text-anchor="middle" class="tiny">JSON-RPC / SDK / IDE</text>
+    <rect x="820" y="165" width="230" height="86" rx="15" class="box"/>
+    <text x="935" y="201" text-anchor="middle" class="h">MCP Server</text><text x="935" y="227" text-anchor="middle" class="tiny">作为 coding specialist</text>
+    <rect x="1070" y="165" width="300" height="86" rx="15" class="box"/>
+    <text x="1220" y="201" text-anchor="middle" class="h">TypeScript / Python SDK</text><text x="1220" y="227" text-anchor="middle" class="tiny">Thread / Turn 编程接口</text>
+  </g>
+
+  <path d="M185 251 V292 H720" class="line"/><path d="M435 251 V292" class="line"/><path d="M685 251 V292" class="line"/><path d="M935 251 V292 H720" class="line"/><path d="M1220 251 V292 H720" class="line"/>
+
+  <rect x="250" y="292" width="940" height="164" rx="24" fill="#0a2630" stroke="url(#core)" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="720" y="328" text-anchor="middle" class="tiny" fill="#6ee7b7">CONTROL-PLANE NARROW WAIST</text>
+  <rect x="295" y="347" width="240" height="72" rx="14" class="green"/>
+  <text x="415" y="377" text-anchor="middle" class="h">ThreadManager</text><text x="415" y="400" text-anchor="middle" class="tiny">创建、恢复、注册、子线程</text>
+  <path d="M535 383 H585" class="line"/>
+  <rect x="585" y="347" width="270" height="72" rx="14" class="green"/>
+  <text x="720" y="377" text-anchor="middle" class="h">CodexThread</text><text x="720" y="400" text-anchor="middle" class="tiny">submit(Op) ⇄ EventMsg</text>
+  <path d="M855 383 H905" class="line"/>
+  <rect x="905" y="347" width="240" height="72" rx="14" class="green"/>
+  <text x="1025" y="377" text-anchor="middle" class="h">Session</text><text x="1025" y="400" text-anchor="middle" class="tiny">mailbox + active turn</text>
+
+  <path d="M720 456 V500" class="line"/>
+  <text x="70" y="517" class="tiny">RUNTIME SERVICES</text>
+  <g filter="url(#shadow)">
+    <rect x="70" y="535" width="300" height="130" rx="18" class="blue"/>
+    <text x="220" y="571" text-anchor="middle" class="h">Agent Loop</text>
+    <text x="95" y="602" class="t">submission loop · run_turn</text><text x="95" y="627" class="t">steering · cancel · hooks</text>
+    <rect x="390" y="535" width="300" height="130" rx="18" class="purple"/>
+    <text x="540" y="571" text-anchor="middle" class="h">StepContext</text>
+    <text x="415" y="602" class="t">模型 · 环境 · AGENTS.md</text><text x="415" y="627" class="t">MCP · 权限 · ToolRouter</text>
+    <rect x="710" y="535" width="300" height="130" rx="18" class="orange"/>
+    <text x="860" y="571" text-anchor="middle" class="h">Tool Runtime</text>
+    <text x="735" y="602" class="t">spec plan · registry · hooks</text><text x="735" y="627" class="t">approval · sandbox · results</text>
+    <rect x="1030" y="535" width="340" height="130" rx="18" class="box"/>
+    <text x="1200" y="571" text-anchor="middle" class="h">History / Thread Store</text>
+    <text x="1055" y="602" class="t">World State · compact · fork</text><text x="1055" y="627" class="t">rollout JSONL · SQLite projection</text>
+  </g>
+  <path d="M370 600 H390" class="line"/><path d="M690 600 H710" class="line"/><path d="M1010 600 H1030" class="line"/>
+
+  <text x="70" y="718" class="tiny">EXTERNAL / ENFORCEMENT BOUNDARIES</text>
+  <rect x="70" y="738" width="395" height="100" rx="16" class="box"/>
+  <text x="267" y="773" text-anchor="middle" class="h">Responses API</text><text x="267" y="802" text-anchor="middle" class="t">HTTP/SSE ⇄ WebSocket · auth · routing</text>
+  <rect x="522" y="738" width="395" height="100" rx="16" class="box"/>
+  <text x="720" y="773" text-anchor="middle" class="h">Local / Remote Executors</text><text x="720" y="802" text-anchor="middle" class="t">shell · patch · process · environment</text>
+  <rect x="975" y="738" width="395" height="100" rx="16" class="box"/>
+  <text x="1172" y="773" text-anchor="middle" class="h">OS Security Boundary</text><text x="1172" y="802" text-anchor="middle" class="t">Seatbelt · bubblewrap · Windows token</text>
+  <path d="M220 665 V738" class="dash"/><path d="M860 665 V700 H720 V738" class="dash"/><path d="M860 665 V700 H1172 V738" class="dash"/>
+  <text x="70" y="874" class="tiny">固定源码快照：openai/codex @ 88f7765 · 2026-08-30</text>
+</svg>

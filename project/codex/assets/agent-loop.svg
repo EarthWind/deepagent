@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="980" viewBox="0 0 1440 980" role="img" aria-labelledby="title desc">
+  <title id="title">Codex Agent Loop 时序</title>
+  <desc id="desc">从用户提交到 Session mailbox、StepContext、模型流、工具执行和下一次采样的完整时序。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#64748b"/></marker>
+    <style>
+      .title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.h{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#f1f5f9}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.n{font:700 13px Inter,sans-serif;fill:#07111f}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}
+      .lane{stroke:#334155;stroke-width:1.5;stroke-dasharray:6 8}.arr{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#a)}.back{stroke:#22c55e;stroke-width:2;fill:none;marker-end:url(#a)}
+      .card{fill:#111d31;stroke:#334155}.cyan{fill:#0c2933;stroke:#22d3ee}.green{fill:#0d2b25;stroke:#34d399}.purple{fill:#261d3b;stroke:#a78bfa}.orange{fill:#352415;stroke:#fb923c}
+    </style>
+  </defs>
+  <rect width="1440" height="980" rx="28" fill="url(#bg)"/>
+  <text x="64" y="62" class="title">一次 Turn 如何穿过 Codex Agent Runtime</text>
+  <text x="64" y="92" class="sub">关键不变量：同一 Step 的上下文、工具 schema 与实际 dispatch 共用一个冻结快照</text>
+
+  <g>
+    <rect x="50" y="130" width="190" height="56" rx="13" class="card"/><text x="145" y="165" text-anchor="middle" class="h">Client</text>
+    <rect x="280" y="130" width="210" height="56" rx="13" class="cyan"/><text x="385" y="165" text-anchor="middle" class="h">Session mailbox</text>
+    <rect x="530" y="130" width="210" height="56" rx="13" class="green"/><text x="635" y="165" text-anchor="middle" class="h">run_turn</text>
+    <rect x="780" y="130" width="210" height="56" rx="13" class="purple"/><text x="885" y="165" text-anchor="middle" class="h">Model stream</text>
+    <rect x="1030" y="130" width="210" height="56" rx="13" class="orange"/><text x="1135" y="165" text-anchor="middle" class="h">Tool runtime</text>
+    <rect x="1280" y="130" width="120" height="56" rx="13" class="card"/><text x="1340" y="165" text-anchor="middle" class="h">Rollout</text>
+    <path d="M145 186V925M385 186V925M635 186V925M885 186V925M1135 186V925M1340 186V925" class="lane"/>
+  </g>
+
+  <circle cx="76" cy="224" r="16" fill="#22d3ee"/><text x="76" y="229" text-anchor="middle" class="n">1</text>
+  <path d="M145 224H385" class="arr"/><text x="265" y="214" text-anchor="middle" class="t">submit TurnInput / start_or_steer</text>
+  <rect x="302" y="244" width="166" height="58" rx="10" class="cyan"/><text x="385" y="268" text-anchor="middle" class="t">空闲：Start</text><text x="385" y="289" text-anchor="middle" class="tiny">忙碌：Steer 入队</text>
+
+  <circle cx="510" cy="337" r="16" fill="#34d399"/><text x="510" y="342" text-anchor="middle" class="n">2</text>
+  <path d="M385 337H635" class="arr"/><text x="510" y="326" text-anchor="middle" class="t">RegularTask + TurnStarted</text>
+  <path d="M635 371H1340" class="arr"/><text x="988" y="360" text-anchor="middle" class="t">持久化用户输入、TurnContext、World State</text>
+
+  <circle cx="760" cy="419" r="16" fill="#a78bfa"/><text x="760" y="424" text-anchor="middle" class="n">3</text>
+  <rect x="535" y="398" width="200" height="106" rx="13" class="green"/>
+  <text x="635" y="425" text-anchor="middle" class="h">捕获 StepContext</text><text x="552" y="451" class="tiny">模型 / token budget</text><text x="552" y="472" class="tiny">环境 / MCP / AGENTS.md</text><text x="552" y="493" class="tiny">ToolRouter / permissions</text>
+  <path d="M735 451H885" class="arr"/><text x="810" y="440" text-anchor="middle" class="tiny">Prompt + tool specs</text>
+
+  <circle cx="1010" cy="546" r="16" fill="#fb923c"/><text x="1010" y="551" text-anchor="middle" class="n">4</text>
+  <rect x="800" y="520" width="170" height="66" rx="11" class="purple"/><text x="885" y="548" text-anchor="middle" class="t">ResponseEvent</text><text x="885" y="570" text-anchor="middle" class="tiny">delta / item done</text>
+  <path d="M970 553H1135" class="arr"/><text x="1052" y="541" text-anchor="middle" class="tiny">tool intent</text>
+  <path d="M1135 603H1340" class="arr"/><text x="1237" y="592" text-anchor="middle" class="t">先记录 completed tool-call</text>
+
+  <circle cx="1010" cy="661" r="16" fill="#fb923c"/><text x="1010" y="666" text-anchor="middle" class="n">5</text>
+  <rect x="1045" y="634" width="180" height="92" rx="12" class="orange"/>
+  <text x="1135" y="661" text-anchor="middle" class="h">有序并发执行</text><text x="1063" y="686" class="tiny">parallel → 读锁</text><text x="1063" y="707" class="tiny">serial → 写锁屏障</text>
+  <path d="M1225 680H1340" class="arr"/><text x="1282" y="669" text-anchor="middle" class="tiny">append result</text>
+
+  <circle cx="760" cy="768" r="16" fill="#22d3ee"/><text x="760" y="773" text-anchor="middle" class="n">6</text>
+  <path d="M1135 756H635" class="back"/><text x="885" y="745" text-anchor="middle" class="t">ordered tool outputs + usage + pending input</text>
+  <rect x="547" y="785" width="176" height="74" rx="12" class="green"/><text x="635" y="813" text-anchor="middle" class="t">needs follow-up?</text><text x="635" y="838" text-anchor="middle" class="tiny">超限则 inline compact</text>
+  <path d="M635 785C635 735 720 718 780 698C832 680 850 615 850 586" class="back"/><text x="720" y="713" class="tiny">是：新 Step / 继续采样</text>
+  <path d="M635 859V893H145" class="arr"/><text x="390" y="884" text-anchor="middle" class="t">否：stop hooks → TurnCompleted / Interrupted</text>
+
+  <rect x="64" y="931" width="1310" height="28" rx="8" fill="#0b2530"/>
+  <text x="719" y="950" text-anchor="middle" class="tiny">持久化因果顺序：模型意图 → 工具副作用 → 工具结果；取消时保留已发生的 terminal outcome</text>
+</svg>
