@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent 单轮执行时序</title>
+  <desc id="desc">从消息接入、会话锁、上下文构造到模型调用、工具执行、持久化、压缩和最终响应。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#091321"/><stop offset="1" stop-color="#121926"/></linearGradient>
+    <marker id="a2" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#91a7c6"/></marker>
+    <style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e8eef7}.h{font-size:29px;font-weight:800}.s{font-size:14px;fill:#93a4bd}.n{font-size:16px;font-weight:750}.d{font-size:13px;fill:#c2cde0}.step{fill:#14253a;stroke:#3a5878;stroke-width:1.4}.model{fill:#2c2415;stroke:#d4a549}.tool{fill:#112b2a;stroke:#3b8f81}.persist{fill:#241c34;stroke:#725ba0}.final{fill:#362519;stroke:#e7a34f}</style>
+  </defs>
+  <rect width="1200" height="820" rx="24" fill="url(#bg2)"/>
+  <text x="56" y="58" class="h">一条消息如何穿过 Hermes Agent</text>
+  <text x="56" y="84" class="s">重要细节：产生副作用之前先持久化 tool_call；结果无法持久化时不把仅存于内存的观察继续喂给模型。</text>
+  <path d="M150 120V760" stroke="#31465f" stroke-width="2" stroke-dasharray="6 8"/><path d="M600 120V760" stroke="#31465f" stroke-width="2" stroke-dasharray="6 8"/><path d="M1050 120V760" stroke="#31465f" stroke-width="2" stroke-dasharray="6 8"/>
+  <text x="150" y="122" text-anchor="middle" class="s">接入与会话</text><text x="600" y="122" text-anchor="middle" class="s">Agent / Model</text><text x="1050" y="122" text-anchor="middle" class="s">工具与存储</text>
+
+  <rect class="step" x="55" y="148" width="190" height="66" rx="13"/><text x="150" y="176" text-anchor="middle" class="n">1. 规范化输入</text><text x="150" y="198" text-anchor="middle" class="d">MessageEvent / CLI input</text>
+  <path d="M246 181H495" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <rect class="persist" x="495" y="148" width="210" height="66" rx="13"/><text x="600" y="176" text-anchor="middle" class="n">2. 会话互斥</text><text x="600" y="198" text-anchor="middle" class="d">进程内 guard + SQLite lease</text>
+
+  <path d="M600 215V250" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <rect class="step" x="470" y="252" width="260" height="76" rx="13"/><text x="600" y="280" text-anchor="middle" class="n">3. build_turn_context</text><text x="600" y="302" text-anchor="middle" class="d">历史 · 用户消息 · system prompt</text><text x="600" y="319" text-anchor="middle" class="d">预压缩 · memory prefetch · hooks</text>
+
+  <path d="M600 329V365" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <rect class="model" x="465" y="367" width="270" height="76" rx="13"/><text x="600" y="396" text-anchor="middle" class="n">4. 调用 Provider</text><text x="600" y="419" text-anchor="middle" class="d">interruptible API call</text><text x="600" y="436" text-anchor="middle" class="d">chat / responses / anthropic</text>
+
+  <path d="M600 444V482" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <polygon points="600,482 715,532 600,582 485,532" fill="#162a40" stroke="#4e6f91" stroke-width="1.5"/>
+  <text x="600" y="527" text-anchor="middle" class="n">有 tool_calls？</text><text x="600" y="549" text-anchor="middle" class="d">校验名称、ID 与 JSON 参数</text>
+
+  <path d="M715 532H934" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/><text x="810" y="518" class="s">是</text>
+  <rect class="persist" x="934" y="485" width="220" height="94" rx="13"/><text x="1044" y="514" text-anchor="middle" class="n">5. 先落 tool_call</text><text x="1044" y="536" text-anchor="middle" class="d">SessionDB append 成功后</text><text x="1044" y="554" text-anchor="middle" class="d">才允许副作用执行</text><text x="1044" y="571" text-anchor="middle" class="d">失败 → fail closed</text>
+  <path d="M1044 580V615" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <rect class="tool" x="934" y="617" width="220" height="92" rx="13"/><text x="1044" y="646" text-anchor="middle" class="n">6. 执行工具批次</text><text x="1044" y="668" text-anchor="middle" class="d">冲突感知：顺序 / 并行</text><text x="1044" y="687" text-anchor="middle" class="d">approval · hooks · guardrail</text><text x="1044" y="704" text-anchor="middle" class="d">结果增量持久化</text>
+  <path d="M933 663H780V404H737" fill="none" stroke="#6bc0ad" stroke-width="2" marker-end="url(#a2)"/><text x="790" y="645" class="s">压缩检查后继续循环</text>
+
+  <path d="M600 583V620" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/><text x="617" y="605" class="s">否</text>
+  <rect class="final" x="475" y="622" width="250" height="88" rx="13"/><text x="600" y="652" text-anchor="middle" class="n">7. 停止条件与验证</text><text x="600" y="675" text-anchor="middle" class="d">空响应 / 截断 / verify-on-stop</text><text x="600" y="695" text-anchor="middle" class="d">或形成最终文本</text>
+  <path d="M475 666H273" stroke="#91a7c6" stroke-width="2" marker-end="url(#a2)"/>
+  <rect class="persist" x="55" y="622" width="218" height="88" rx="13"/><text x="164" y="652" text-anchor="middle" class="n">8. Finalize</text><text x="164" y="675" text-anchor="middle" class="d">写入最终响应与用量</text><text x="164" y="695" text-anchor="middle" class="d">释放 lease · 回调客户端</text>
+  <text x="1144" y="786" text-anchor="end" class="s">黄色：模型边界 · 绿色：副作用边界 · 紫色：持久化边界</text>
+</svg>

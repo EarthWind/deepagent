@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent 系统架构</title>
+  <desc id="desc">多入口通过统一 AIAgent 窄腰连接提示词、模型路由、工具与上下文系统，再落到存储与执行后端。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#d59b36"/><stop offset="1" stop-color="#f4c86b"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".3"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8ba3c7"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf9}
+      .h1{font-size:30px;font-weight:750}.sub{font-size:14px;fill:#93a4bd}.label{font-size:17px;font-weight:700}.small{font-size:13px;fill:#b9c7da}.coreText{fill:#16120a;font-size:25px;font-weight:800}.coreSub{fill:#4d3a13;font-size:14px}.box{fill:#132238;stroke:#35506f;stroke-width:1.4}.edge{fill:#102a2b;stroke:#2f7a70;stroke-width:1.4}.store{fill:#241d36;stroke:#6d59a4;stroke-width:1.4}
+    </style>
+  </defs>
+  <rect width="1200" height="760" rx="24" fill="url(#bg)"/>
+  <text x="58" y="58" class="h1">Hermes Agent：统一内核，能力在边缘</text>
+  <text x="58" y="84" class="sub">同一套 Agent loop 服务 CLI、桌面、消息平台、IDE、API 与批处理；工具、模型和上下文管理均可替换。</text>
+
+  <text x="58" y="128" class="sub">入口层</text>
+  <g filter="url(#shadow)">
+    <rect class="box" x="58" y="146" width="160" height="72" rx="13"/><text x="138" y="178" text-anchor="middle" class="label">CLI / TUI</text><text x="138" y="200" text-anchor="middle" class="small">Rich · Ink · JSON-RPC</text>
+    <rect class="box" x="235" y="146" width="160" height="72" rx="13"/><text x="315" y="178" text-anchor="middle" class="label">Desktop</text><text x="315" y="200" text-anchor="middle" class="small">Electron · React</text>
+    <rect class="box" x="412" y="146" width="160" height="72" rx="13"/><text x="492" y="178" text-anchor="middle" class="label">Gateway</text><text x="492" y="200" text-anchor="middle" class="small">20+ 平台适配器</text>
+    <rect class="box" x="589" y="146" width="160" height="72" rx="13"/><text x="669" y="178" text-anchor="middle" class="label">ACP / IDE</text><text x="669" y="200" text-anchor="middle" class="small">stdio · JSON-RPC</text>
+    <rect class="box" x="766" y="146" width="160" height="72" rx="13"/><text x="846" y="178" text-anchor="middle" class="label">API Server</text><text x="846" y="200" text-anchor="middle" class="small">OpenAI-compatible</text>
+    <rect class="box" x="943" y="146" width="199" height="72" rx="13"/><text x="1042" y="178" text-anchor="middle" class="label">Batch / Cron</text><text x="1042" y="200" text-anchor="middle" class="small">轨迹生成 · 定时任务</text>
+  </g>
+
+  <path d="M138 220V250 M315 220V250 M492 220V250 M669 220V250 M846 220V250 M1042 220V250 M138 250H1042 M600 250V276" fill="none" stroke="#8ba3c7" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="225" y="278" width="750" height="105" rx="21" fill="url(#core)" filter="url(#shadow)"/>
+  <text x="600" y="320" text-anchor="middle" class="coreText">AIAgent / conversation_loop</text>
+  <text x="600" y="349" text-anchor="middle" class="coreSub">提示词组装 → Provider 调用 → Tool calls → 观察结果 → 继续 / 完成</text>
+  <text x="600" y="371" text-anchor="middle" class="coreSub">中断 · 重试 · 回退 · 预算 · 持久化 · 压缩 · 回调</text>
+
+  <path d="M600 383V424" fill="none" stroke="#8ba3c7" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="58" y="433" class="sub">可插拔子系统</text>
+  <g filter="url(#shadow)">
+    <rect class="edge" x="58" y="450" width="208" height="92" rx="14"/><text x="162" y="481" text-anchor="middle" class="label">Prompt System</text><text x="162" y="505" text-anchor="middle" class="small">stable / context / volatile</text><text x="162" y="525" text-anchor="middle" class="small">SOUL · Context Files</text>
+    <rect class="edge" x="278" y="450" width="208" height="92" rx="14"/><text x="382" y="481" text-anchor="middle" class="label">Provider Runtime</text><text x="382" y="505" text-anchor="middle" class="small">3+ API transports</text><text x="382" y="525" text-anchor="middle" class="small">凭据池 · fallback</text>
+    <rect class="edge" x="498" y="450" width="208" height="92" rx="14"/><text x="602" y="481" text-anchor="middle" class="label">Tool Runtime</text><text x="602" y="505" text-anchor="middle" class="small">Registry · Toolsets · MCP</text><text x="602" y="525" text-anchor="middle" class="small">Hooks · Approval</text>
+    <rect class="edge" x="718" y="450" width="208" height="92" rx="14"/><text x="822" y="481" text-anchor="middle" class="label">Context Engine</text><text x="822" y="505" text-anchor="middle" class="small">压缩 · Prompt Cache</text><text x="822" y="525" text-anchor="middle" class="small">可由插件替换</text>
+    <rect class="edge" x="938" y="450" width="204" height="92" rx="14"/><text x="1040" y="481" text-anchor="middle" class="label">Learning</text><text x="1040" y="505" text-anchor="middle" class="small">Memory · Skills</text><text x="1040" y="525" text-anchor="middle" class="small">Background Review</text>
+  </g>
+
+  <path d="M600 543V574" fill="none" stroke="#8ba3c7" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="58" y="591" class="sub">状态与执行边界</text>
+  <g filter="url(#shadow)">
+    <rect class="store" x="58" y="608" width="250" height="100" rx="14"/><text x="183" y="640" text-anchor="middle" class="label">SessionDB</text><text x="183" y="665" text-anchor="middle" class="small">SQLite · WAL · FTS5</text><text x="183" y="686" text-anchor="middle" class="small">消息 · 用量 · 锁 · 路由</text>
+    <rect class="store" x="329" y="608" width="250" height="100" rx="14"/><text x="454" y="640" text-anchor="middle" class="label">文件化知识</text><text x="454" y="665" text-anchor="middle" class="small">MEMORY.md · USER.md</text><text x="454" y="686" text-anchor="middle" class="small">SKILL.md · SOUL.md</text>
+    <rect class="store" x="600" y="608" width="250" height="100" rx="14"/><text x="725" y="640" text-anchor="middle" class="label">执行环境</text><text x="725" y="665" text-anchor="middle" class="small">Local · Docker · SSH</text><text x="725" y="686" text-anchor="middle" class="small">Modal · Daytona · Vercel…</text>
+    <rect class="store" x="871" y="608" width="271" height="100" rx="14"/><text x="1006" y="640" text-anchor="middle" class="label">外部服务</text><text x="1006" y="665" text-anchor="middle" class="small">Model APIs · Browser · Web</text><text x="1006" y="686" text-anchor="middle" class="small">MCP Servers · Messaging</text>
+  </g>
+  <text x="1142" y="737" text-anchor="end" class="sub">基于 5cc1369 源码快照绘制</text>
+</svg>

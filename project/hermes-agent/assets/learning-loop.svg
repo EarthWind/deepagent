@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Hermes Agent 自改进闭环</title>
+  <desc id="desc">前台任务结束后后台复盘，提取用户事实与可复用流程，经过安全和审批门进入记忆或技能，并在未来会话中使用。</desc>
+  <defs>
+    <linearGradient id="b4" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08121f"/><stop offset="1" stop-color="#151927"/></linearGradient>
+    <marker id="a4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#8fa6c6"/></marker>
+    <style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e7eef8}.h{font-size:29px;font-weight:800}.s{font-size:14px;fill:#96a7bd}.t{font-size:18px;font-weight:800}.d{font-size:13px;fill:#c6d2e2}.box{fill:#14263a;stroke:#3c5b7b;stroke-width:1.5}.learn{fill:#2e2417;stroke:#d19b48}.mem{fill:#1b2d27;stroke:#4c9a7e}.skill{fill:#251f39;stroke:#7967aa}.gate{fill:#351d24;stroke:#b75c72}</style>
+  </defs>
+  <rect width="1200" height="720" rx="24" fill="url(#b4)"/>
+  <text x="56" y="58" class="h">“自改进”不是训练权重，而是更新外部认知资产</text>
+  <text x="56" y="84" class="s">Hermes 把会话经验编译成两类可审阅、可删除的本地文件：短事实进入 Memory，长流程进入 Skills。</text>
+
+  <rect class="box" x="60" y="176" width="210" height="120" rx="18"/>
+  <text x="165" y="212" text-anchor="middle" class="t">1. 前台任务</text><text x="165" y="241" text-anchor="middle" class="d">用户指令 → 工具执行</text><text x="165" y="264" text-anchor="middle" class="d">纠错、失败恢复、验证结果</text><text x="165" y="284" text-anchor="middle" class="s">完整轨迹写入 SessionDB</text>
+  <path d="M270 236H355" stroke="#8fa6c6" stroke-width="2" marker-end="url(#a4)"/>
+
+  <rect class="learn" x="357" y="157" width="250" height="158" rx="18"/>
+  <text x="482" y="194" text-anchor="middle" class="t">2. Background Review</text><text x="482" y="223" text-anchor="middle" class="d">缓存对齐的 AIAgent fork</text><text x="482" y="247" text-anchor="middle" class="d">白名单：memory / skills</text><text x="482" y="269" text-anchor="middle" class="d">read_file / search_files</text><text x="482" y="295" text-anchor="middle" class="s">识别“谁是谁”与“如何做”</text>
+  <path d="M607 236H692" stroke="#8fa6c6" stroke-width="2" marker-end="url(#a4)"/>
+
+  <polygon class="gate" points="800,150 908,236 800,322 692,236"/>
+  <text x="800" y="221" text-anchor="middle" class="t">3. 写入门</text><text x="800" y="245" text-anchor="middle" class="d">威胁扫描 · 来源保护</text><text x="800" y="267" text-anchor="middle" class="d">可选人工审批</text>
+
+  <path d="M865 292L952 375" stroke="#8fa6c6" stroke-width="2" marker-end="url(#a4)"/><text x="900" y="324" class="s">程序</text>
+  <path d="M735 292L648 375" stroke="#8fa6c6" stroke-width="2" marker-end="url(#a4)"/><text x="675" y="324" class="s">事实</text>
+
+  <rect class="mem" x="505" y="377" width="260" height="144" rx="18"/>
+  <text x="635" y="414" text-anchor="middle" class="t">4a. Memory</text><text x="635" y="444" text-anchor="middle" class="d">用户偏好 · 环境事实</text><text x="635" y="468" text-anchor="middle" class="d">约定 · 长期状态</text><text x="635" y="497" text-anchor="middle" class="s">有字符上限，下一会话冻结注入</text>
+
+  <rect class="skill" x="835" y="377" width="290" height="144" rx="18"/>
+  <text x="980" y="414" text-anchor="middle" class="t">4b. Skill</text><text x="980" y="444" text-anchor="middle" class="d">可复用流程 · 修复路径</text><text x="980" y="468" text-anchor="middle" class="d">SKILL.md + references/scripts</text><text x="980" y="497" text-anchor="middle" class="s">相关任务出现时按需加载</text>
+
+  <path d="M635 522V595H328" fill="none" stroke="#66b49b" stroke-width="2" marker-end="url(#a4)"/>
+  <path d="M980 522V622H328" fill="none" stroke="#9988c9" stroke-width="2" marker-end="url(#a4)"/>
+  <rect class="box" x="60" y="555" width="268" height="112" rx="18"/>
+  <text x="194" y="592" text-anchor="middle" class="t">5. 下一次相关任务</text><text x="194" y="621" text-anchor="middle" class="d">Memory 常驻提醒</text><text x="194" y="645" text-anchor="middle" class="d">Skills 按相关性展开</text>
+  <path d="M60 611H34V236H58" fill="none" stroke="#8fa6c6" stroke-width="2" marker-end="url(#a4)"/>
+
+  <text x="1138" y="680" text-anchor="end" class="s">可观测、可回滚、可审批，但效果仍取决于复盘模型的判断质量</text>
+</svg>
