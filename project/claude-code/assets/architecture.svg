@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 可验证总体架构</title>
+  <desc id="desc">展示交互面、会话与上下文编排层、模型和工具循环、安全执行边界、状态与扩展系统。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101522"/><stop offset="1" stop-color="#21182a"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d97757"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="9" stdDeviation="13" flood-color="#000" flood-opacity=".3"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#6d7184"/></marker>
+    <style>
+      .title{font:700 35px Inter,"Noto Sans SC",sans-serif;fill:#fff7ed}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#a8a3b6}
+      .h{font:700 19px Inter,"Noto Sans SC",sans-serif;fill:#faf7ff}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#ddd6e6}.tiny{font:500 12.5px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}
+      .card{fill:#181c2a;stroke:#3b3f52;stroke-width:1.5}.coral{fill:#2b201d;stroke:#d97757}.purple{fill:#211d32;stroke:#a78bfa}.teal{fill:#17272a;stroke:#4fb8a8}.gold{fill:#2d2818;stroke:#d6a84f}
+      .line{fill:none;stroke:#6d7184;stroke-width:2;marker-end:url(#arrow)}.dash{fill:none;stroke:#55596b;stroke-width:1.5;stroke-dasharray:7 7}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="28" fill="url(#bg)"/>
+  <circle cx="1300" cy="55" r="210" fill="#d97757" opacity=".055"/><circle cx="100" cy="850" r="230" fill="#a78bfa" opacity=".055"/>
+  <text x="66" y="63" class="title">Claude Code：模型之外，是一套本地 Agent Harness</text>
+  <text x="66" y="94" class="sub">公开证据支持的结构：所有 Surface 共享会话、上下文、工具、安全与持久化语义；内部函数划分未公开。</text>
+
+  <text x="66" y="138" class="tiny">SURFACES</text>
+  <g filter="url(#shadow)">
+    <rect x="66" y="154" width="220" height="82" rx="16" class="card"/><text x="176" y="188" text-anchor="middle" class="h">Terminal / TUI</text><text x="176" y="213" text-anchor="middle" class="tiny">交互 · 审批 · Steering</text>
+    <rect x="308" y="154" width="220" height="82" rx="16" class="card"/><text x="418" y="188" text-anchor="middle" class="h">claude -p</text><text x="418" y="213" text-anchor="middle" class="tiny">JSON / stream-json / CI</text>
+    <rect x="550" y="154" width="220" height="82" rx="16" class="card"/><text x="660" y="188" text-anchor="middle" class="h">Agent SDK</text><text x="660" y="213" text-anchor="middle" class="tiny">Python / TypeScript host</text>
+    <rect x="792" y="154" width="220" height="82" rx="16" class="card"/><text x="902" y="188" text-anchor="middle" class="h">IDE / Desktop</text><text x="902" y="213" text-anchor="middle" class="tiny">本地 UI 与宿主策略</text>
+    <rect x="1034" y="154" width="340" height="82" rx="16" class="card"/><text x="1204" y="188" text-anchor="middle" class="h">Web / Remote Control / Cloud</text><text x="1204" y="213" text-anchor="middle" class="tiny">执行环境不同，Agent 语义一致</text>
+  </g>
+  <path d="M176 236V272H720" class="line"/><path d="M418 236V272" class="line"/><path d="M660 236V272" class="line"/><path d="M902 236V272" class="line"/><path d="M1204 236V272H720" class="line"/>
+
+  <rect x="192" y="272" width="1056" height="190" rx="26" fill="#211c29" stroke="url(#core)" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="720" y="308" text-anchor="middle" class="tiny">SESSION ORCHESTRATION / CONTEXT ASSEMBLY</text>
+  <rect x="228" y="330" width="225" height="98" rx="16" class="coral"/><text x="340" y="365" text-anchor="middle" class="h">Session / Turn</text><text x="340" y="390" text-anchor="middle" class="t">resume · fork · interrupt</text><text x="340" y="412" text-anchor="middle" class="tiny">JSONL transcript</text>
+  <rect x="480" y="330" width="225" height="98" rx="16" class="purple"/><text x="592" y="365" text-anchor="middle" class="h">Prompt Assembly</text><text x="592" y="390" text-anchor="middle" class="t">system · project · history</text><text x="592" y="412" text-anchor="middle" class="tiny">prefix cache-aware ordering</text>
+  <rect x="732" y="330" width="225" height="98" rx="16" class="teal"/><text x="844" y="365" text-anchor="middle" class="h">Context Budget</text><text x="844" y="390" text-anchor="middle" class="t">lazy load · outputs · compact</text><text x="844" y="412" text-anchor="middle" class="tiny">/context · auto memory</text>
+  <rect x="984" y="330" width="225" height="98" rx="16" class="gold"/><text x="1096" y="365" text-anchor="middle" class="h">Extension Registry</text><text x="1096" y="390" text-anchor="middle" class="t">Skills · Agents · MCP</text><text x="1096" y="412" text-anchor="middle" class="tiny">Hooks · Plugins · LSP</text>
+
+  <path d="M720 462V502" class="line"/>
+  <text x="66" y="520" class="tiny">AGENTIC EXECUTION LOOP</text>
+  <g filter="url(#shadow)">
+    <rect x="66" y="538" width="300" height="135" rx="20" class="coral"/>
+    <text x="216" y="574" text-anchor="middle" class="h">Claude Model API</text>
+    <text x="91" y="606" class="t">streaming response · thinking</text><text x="91" y="632" class="t">text / tool_use / usage</text>
+    <rect x="392" y="538" width="300" height="135" rx="20" class="purple"/>
+    <text x="542" y="574" text-anchor="middle" class="h">Agent Loop Controller</text>
+    <text x="417" y="606" class="t">gather → act → verify</text><text x="417" y="632" class="t">queue · retry · stop · steer</text>
+    <rect x="718" y="538" width="300" height="135" rx="20" class="teal"/>
+    <text x="868" y="574" text-anchor="middle" class="h">Tool Dispatcher</text>
+    <text x="743" y="606" class="t">Schema → permission → execute</text><text x="743" y="632" class="t">result → context → next step</text>
+    <rect x="1044" y="538" width="330" height="135" rx="20" class="gold"/>
+    <text x="1209" y="574" text-anchor="middle" class="h">Deterministic Side Effects</text>
+    <text x="1069" y="606" class="t">Read/Edit · Bash · Web · MCP</text><text x="1069" y="632" class="t">Subagent · Worktree · Tasks</text>
+  </g>
+  <path d="M366 605H392" class="line"/><path d="M692 605H718" class="line"/><path d="M1018 605H1044" class="line"/><path d="M868 673V702H216V673" class="dash"/>
+
+  <text x="66" y="732" class="tiny">ENFORCEMENT &amp; RECOVERY</text>
+  <rect x="66" y="748" width="300" height="98" rx="17" class="card"/><text x="216" y="782" text-anchor="middle" class="h">Permission Policy</text><text x="216" y="811" text-anchor="middle" class="t">deny → ask → allow · modes</text>
+  <rect x="392" y="748" width="300" height="98" rx="17" class="card"/><text x="542" y="782" text-anchor="middle" class="h">Lifecycle Hooks</text><text x="542" y="811" text-anchor="middle" class="t">block · modify · annotate · audit</text>
+  <rect x="718" y="748" width="300" height="98" rx="17" class="card"/><text x="868" y="782" text-anchor="middle" class="h">OS Sandbox</text><text x="868" y="811" text-anchor="middle" class="t">Seatbelt / bubblewrap · proxy</text>
+  <rect x="1044" y="748" width="330" height="98" rx="17" class="card"/><text x="1209" y="782" text-anchor="middle" class="h">Checkpoint &amp; Git</text><text x="1209" y="811" text-anchor="middle" class="t">file snapshots · rewind · worktree</text>
+  <text x="66" y="878" class="tiny">实线 = 官方文档明确的行为边界；该图不声称对应内部类或进程拓扑。</text>
+</svg>

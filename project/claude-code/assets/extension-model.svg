@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="870" viewBox="0 0 1440 870" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 扩展机制对比</title>
+  <desc id="desc">展示 CLAUDE.md、Rules、Skills、Subagents、Hooks、MCP 和 Plugins 在加载时机与职责上的差异。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101522"/><stop offset="1" stop-color="#21182a"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#73778a"/></marker>
+    <style>
+      .title{font:700 35px Inter,"Noto Sans SC",sans-serif;fill:#fff7ed}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.h{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#faf7ff}.t{font:500 13.5px Inter,"Noto Sans SC",sans-serif;fill:#ddd6e6}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}
+      .card{fill:#181c2a;stroke:#3b3f52;stroke-width:1.5}.coral{fill:#2b201d;stroke:#d97757}.purple{fill:#211d32;stroke:#a78bfa}.teal{fill:#17272a;stroke:#4fb8a8}.gold{fill:#2d2818;stroke:#d6a84f}.line{stroke:#73778a;stroke-width:2;fill:none;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1440" height="870" rx="28" fill="url(#bg)"/>
+  <text x="66" y="64" class="title">扩展机制的核心差异：注入知识、隔离工作，还是强制控制</text>
+  <text x="66" y="95" class="sub">把所有东西都塞进 system prompt 会浪费上下文；Claude Code 用不同加载时机和执行边界组合能力。</text>
+
+  <rect x="500" y="135" width="440" height="104" rx="22" class="coral"/>
+  <text x="720" y="173" text-anchor="middle" class="h">Core Agent Loop</text>
+  <text x="720" y="203" text-anchor="middle" class="t">Claude API ⇄ typed tools ⇄ results ⇄ next model step</text>
+  <path d="M720 239V285" class="line"/>
+
+  <g>
+    <rect x="66" y="300" width="294" height="150" rx="19" class="purple"/>
+    <text x="91" y="336" class="h">CLAUDE.md / Rules</text>
+    <text x="91" y="367" class="t">用途：长期事实与约定</text><text x="91" y="394" class="t">加载：根级启动；路径规则按需</text><text x="91" y="421" class="tiny">模型上下文，不是强制权限</text>
+
+    <rect x="404" y="300" width="294" height="150" rx="19" class="teal"/>
+    <text x="429" y="336" class="h">Skills</text>
+    <text x="429" y="367" class="t">用途：可复用流程与参考材料</text><text x="429" y="394" class="t">加载：描述索引 → 调用时正文</text><text x="429" y="421" class="tiny">可 fork 执行，可临时授权工具</text>
+
+    <rect x="742" y="300" width="294" height="150" rx="19" class="gold"/>
+    <text x="767" y="336" class="h">Subagents / Forks</text>
+    <text x="767" y="367" class="t">用途：上下文隔离与并行</text><text x="767" y="394" class="t">加载：独立 prompt / tools / history</text><text x="767" y="421" class="tiny">普通 Agent 新上下文；Fork 继承历史</text>
+
+    <rect x="1080" y="300" width="294" height="150" rx="19" class="coral"/>
+    <text x="1105" y="336" class="h">MCP / LSP</text>
+    <text x="1105" y="367" class="t">用途：接入外部系统和代码智能</text><text x="1105" y="394" class="t">加载：连接后，工具默认延迟发现</text><text x="1105" y="421" class="tiny">真实新能力，不只是提示词</text>
+  </g>
+
+  <path d="M213 450V498H551" class="line"/><path d="M551 450V498" class="line"/><path d="M889 450V498H551" class="line"/><path d="M1227 450V498H889" class="line"/>
+  <g>
+    <rect x="220" y="514" width="420" height="151" rx="20" class="gold"/>
+    <text x="246" y="550" class="h">Hooks：生命周期拦截器</text>
+    <text x="246" y="582" class="t">Session / Turn / Tool / Compact / Model Switch / Worktree</text>
+    <text x="246" y="612" class="t">同步 Hook 可 block、ask、modify、append context</text>
+    <text x="246" y="639" class="tiny">用于确定性政策；脚本、HTTP、MCP、Prompt、Agent 均可作为 handler</text>
+
+    <rect x="800" y="514" width="420" height="151" rx="20" class="purple"/>
+    <text x="826" y="550" class="h">Plugins：分发与组合容器</text>
+    <text x="826" y="582" class="t">Skills + Agents + Hooks + MCP + LSP + Themes</text>
+    <text x="826" y="612" class="t">manifest、作用域、缓存、Marketplace、版本约束</text>
+    <text x="826" y="639" class="tiny">它不创造新 loop，而是把现有扩展点打包成可安装产品</text>
+  </g>
+
+  <rect x="66" y="715" width="1308" height="104" rx="20" class="card"/>
+  <text x="92" y="751" class="h">选择口诀</text>
+  <text x="92" y="783" class="t">事实放 CLAUDE.md · 文件域规则放 paths rule · 重复流程做 Skill · 大读取/并行交给 Subagent · 强制策略放 Hook/Permission · 外部系统接 MCP · 团队分发用 Plugin</text>
+  <text x="92" y="808" class="tiny">官方仓库里的 feature-dev 组合 Command + 多个 Agents；ralph-wiggum 用 Stop Hook 把“准备停止”改写成下一轮继续条件。</text>
+  <text x="66" y="850" class="tiny">所有扩展都应经过 workspace trust、作用域与权限审阅；项目内容不是天然可信代码。</text>
+</svg>

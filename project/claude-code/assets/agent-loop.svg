@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="990" viewBox="0 0 1440 990" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code Agent loop 时序</title>
+  <desc id="desc">展示一次用户请求如何经过上下文组装、模型流、权限与工具执行、结果反馈、验证和停止。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101522"/><stop offset="1" stop-color="#21182a"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#73778a"/></marker>
+    <style>
+      .title{font:700 35px Inter,"Noto Sans SC",sans-serif;fill:#fff7ed}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.h{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#faf7ff}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#ddd6e6}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.n{font:700 13px Inter,sans-serif;fill:#16111b}
+      .lane{stroke:#45495b;stroke-width:1.4;stroke-dasharray:6 8}.arr{stroke:#73778a;stroke-width:2;fill:none;marker-end:url(#a)}.back{stroke:#4fb8a8;stroke-width:2;fill:none;marker-end:url(#a)}
+      .card{fill:#181c2a;stroke:#3b3f52}.coral{fill:#2b201d;stroke:#d97757}.purple{fill:#211d32;stroke:#a78bfa}.teal{fill:#17272a;stroke:#4fb8a8}.gold{fill:#2d2818;stroke:#d6a84f}
+    </style>
+  </defs>
+  <rect width="1440" height="990" rx="28" fill="url(#bg)"/>
+  <text x="64" y="61" class="title">一次 Turn：模型决策与确定性执行交替前进</text>
+  <text x="64" y="92" class="sub">这是官方行为语义的复原图，不对应未公开的内部函数名；并行 tool call 会形成一批结果后再进入下一次模型请求。</text>
+
+  <g>
+    <rect x="45" y="128" width="185" height="56" rx="13" class="card"/><text x="137" y="163" text-anchor="middle" class="h">User / Host</text>
+    <rect x="270" y="128" width="195" height="56" rx="13" class="coral"/><text x="367" y="163" text-anchor="middle" class="h">Session</text>
+    <rect x="505" y="128" width="205" height="56" rx="13" class="purple"/><text x="607" y="163" text-anchor="middle" class="h">Context Builder</text>
+    <rect x="750" y="128" width="195" height="56" rx="13" class="coral"/><text x="847" y="163" text-anchor="middle" class="h">Claude API</text>
+    <rect x="985" y="128" width="195" height="56" rx="13" class="gold"/><text x="1082" y="163" text-anchor="middle" class="h">Policy / Hooks</text>
+    <rect x="1220" y="128" width="175" height="56" rx="13" class="teal"/><text x="1307" y="163" text-anchor="middle" class="h">Tool / OS</text>
+    <path d="M137 184V930M367 184V930M607 184V930M847 184V930M1082 184V930M1307 184V930" class="lane"/>
+  </g>
+
+  <circle cx="247" cy="225" r="16" fill="#d97757"/><text x="247" y="230" text-anchor="middle" class="n">1</text>
+  <path d="M137 225H367" class="arr"/><text x="252" y="214" text-anchor="middle" class="t">prompt / queued steering / interrupt</text>
+  <rect x="286" y="247" width="162" height="58" rx="10" class="coral"/><text x="367" y="271" text-anchor="middle" class="t">建立或恢复 Turn</text><text x="367" y="292" text-anchor="middle" class="tiny">记录 session event</text>
+
+  <circle cx="486" cy="343" r="16" fill="#a78bfa"/><text x="486" y="348" text-anchor="middle" class="n">2</text>
+  <path d="M367 343H607" class="arr"/><text x="487" y="331" text-anchor="middle" class="t">收集当前会话状态</text>
+  <rect x="520" y="366" width="174" height="116" rx="12" class="purple"/>
+  <text x="607" y="392" text-anchor="middle" class="h">构造请求前缀</text>
+  <text x="538" y="420" class="tiny">system + tools</text><text x="538" y="442" class="tiny">CLAUDE.md + memory</text><text x="538" y="464" class="tiny">history + latest input</text>
+
+  <circle cx="728" cy="520" r="16" fill="#d97757"/><text x="728" y="525" text-anchor="middle" class="n">3</text>
+  <path d="M607 520H847" class="arr"/><text x="727" y="509" text-anchor="middle" class="t">流式模型请求（prefix cache）</text>
+  <rect x="765" y="544" width="164" height="86" rx="11" class="coral"/><text x="847" y="571" text-anchor="middle" class="h">Response stream</text><text x="847" y="596" text-anchor="middle" class="tiny">text · thinking</text><text x="847" y="616" text-anchor="middle" class="tiny">tool_use · usage</text>
+
+  <circle cx="964" cy="667" r="16" fill="#d6a84f"/><text x="964" y="672" text-anchor="middle" class="n">4</text>
+  <path d="M847 667H1082" class="arr"/><text x="964" y="656" text-anchor="middle" class="t">tool intent + typed input</text>
+  <rect x="998" y="690" width="168" height="105" rx="12" class="gold"/>
+  <text x="1082" y="717" text-anchor="middle" class="h">执行前门禁</text>
+  <text x="1016" y="744" class="tiny">permission rules / mode</text><text x="1016" y="765" class="tiny">PreToolUse hook</text><text x="1016" y="786" class="tiny">prompt / classifier</text>
+
+  <circle cx="1200" cy="830" r="16" fill="#4fb8a8"/><text x="1200" y="835" text-anchor="middle" class="n">5</text>
+  <path d="M1082 830H1307" class="arr"/><text x="1194" y="819" text-anchor="middle" class="t">allow / updated input</text>
+  <rect x="1233" y="849" width="148" height="65" rx="11" class="teal"/><text x="1307" y="875" text-anchor="middle" class="h">副作用</text><text x="1307" y="898" text-anchor="middle" class="tiny">sandbox if Bash</text>
+
+  <path d="M1307 930V951H607V887" class="back"/><text x="948" y="945" text-anchor="middle" class="t">tool result / error / persisted output path · PostToolUse · PostToolBatch</text>
+  <rect x="520" y="812" width="174" height="75" rx="12" class="purple"/><text x="607" y="839" text-anchor="middle" class="h">继续还是停止？</text><text x="607" y="864" text-anchor="middle" class="tiny">verify · compact · retry</text>
+  <path d="M607 812C607 764 700 752 772 704C820 672 827 636 827 630" class="back"/><text x="668" y="754" class="tiny">需要后续：下一 Step</text>
+  <path d="M520 850H367V914H137" class="arr"/><text x="327" y="899" text-anchor="middle" class="t">Stop hooks → final / failure / interrupted</text>
+
+  <rect x="62" y="951" width="1316" height="24" rx="8" fill="#201c2a"/>
+  <text x="720" y="968" text-anchor="middle" class="tiny">关键边界：模型负责选择下一动作；Harness 负责 schema、门禁、执行、输出预算、持久化与恢复。</text>
+</svg>
