@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 安全分层</title>
+  <desc id="desc">从模型意图到权限规则、Hooks、人工或分类器决策、OS 沙箱、执行以及 Checkpoint 恢复的分层安全链。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101522"/><stop offset="1" stop-color="#21182a"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#73778a"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="9" stdDeviation="13" flood-color="#000" flood-opacity=".3"/></filter>
+    <style>
+      .title{font:700 35px Inter,"Noto Sans SC",sans-serif;fill:#fff7ed}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.h{font:700 19px Inter,"Noto Sans SC",sans-serif;fill:#faf7ff}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#ddd6e6}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.num{font:700 18px Inter,sans-serif;fill:#17121c}
+      .card{fill:#181c2a;stroke:#3b3f52;stroke-width:1.5}.coral{fill:#2b201d;stroke:#d97757}.purple{fill:#211d32;stroke:#a78bfa}.teal{fill:#17272a;stroke:#4fb8a8}.gold{fill:#2d2818;stroke:#d6a84f}.red{fill:#2b1b24;stroke:#ef6f8f}.line{stroke:#73778a;stroke-width:2;fill:none;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="28" fill="url(#bg)"/>
+  <text x="66" y="64" class="title">安全不是一个确认框，而是“决策控制 + 强制隔离 + 可恢复性”</text>
+  <text x="66" y="95" class="sub">权限系统决定是否允许运行；Hooks 能在生命周期上追加政策；OS sandbox 限制 Bash 真正能触达的资源；Checkpoint 只负责有限回滚。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="150" width="260" height="130" rx="20" class="coral"/>
+    <circle cx="101" cy="181" r="18" fill="#d97757"/><text x="101" y="187" text-anchor="middle" class="num">1</text>
+    <text x="130" y="187" class="h">模型提出 Tool call</text><text x="94" y="222" class="t">命令、路径、URL、MCP 输入</text><text x="94" y="249" class="tiny">Prompt 只能影响“想做什么”</text>
+
+    <rect x="388" y="150" width="280" height="130" rx="20" class="purple"/>
+    <circle cx="419" cy="181" r="18" fill="#a78bfa"/><text x="419" y="187" text-anchor="middle" class="num">2</text>
+    <text x="448" y="187" class="h">PreToolUse Hooks</text><text x="412" y="222" class="t">block · ask · allow · update input</text><text x="412" y="249" class="tiny">在权限提示前执行；可确定性阻断</text>
+
+    <rect x="726" y="150" width="280" height="130" rx="20" class="gold"/>
+    <circle cx="757" cy="181" r="18" fill="#d6a84f"/><text x="757" y="187" text-anchor="middle" class="num">3</text>
+    <text x="786" y="187" class="h">规则与模式合并</text><text x="750" y="222" class="t">deny → ask → allow</text><text x="750" y="249" class="tiny">Hook 的 allow 不能越过 deny / ask</text>
+
+    <rect x="1064" y="150" width="306" height="130" rx="20" class="red"/>
+    <circle cx="1095" cy="181" r="18" fill="#ef6f8f"/><text x="1095" y="187" text-anchor="middle" class="num">4</text>
+    <text x="1124" y="187" class="h">用户或安全分类器</text><text x="1088" y="222" class="t">人工审批 / auto mode verdict</text><text x="1088" y="249" class="tiny">高风险路径仍可强制阻断</text>
+  </g>
+  <path d="M330 215H388" class="line"/><path d="M668 215H726" class="line"/><path d="M1006 215H1064" class="line"/>
+
+  <rect x="190" y="338" width="1060" height="215" rx="28" class="teal" filter="url(#shadow)"/>
+  <text x="720" y="379" text-anchor="middle" class="h">5. Bash 的 OS 强制边界</text>
+  <text x="720" y="410" text-anchor="middle" class="t">macOS Seatbelt · Linux/WSL2 bubblewrap · 网络代理 · 可选 seccomp Unix-socket 过滤</text>
+  <rect x="238" y="438" width="275" height="79" rx="14" class="card"/><text x="375" y="468" text-anchor="middle" class="h">Filesystem</text><text x="375" y="493" text-anchor="middle" class="tiny">allowWrite / denyRead / protected paths</text>
+  <rect x="582" y="438" width="275" height="79" rx="14" class="card"/><text x="720" y="468" text-anchor="middle" class="h">Network</text><text x="720" y="493" text-anchor="middle" class="tiny">allowedDomains / proxy / TLS limits</text>
+  <rect x="926" y="438" width="275" height="79" rx="14" class="card"/><text x="1063" y="468" text-anchor="middle" class="h">Process tree</text><text x="1063" y="493" text-anchor="middle" class="tiny">所有 Bash 子进程共享边界</text>
+  <path d="M1217 280V317H720V338" class="line"/>
+
+  <text x="66" y="610" class="tiny">AFTER EXECUTION</text>
+  <g>
+    <rect x="66" y="628" width="392" height="150" rx="20" class="card"/>
+    <text x="92" y="665" class="h">PostToolUse / PostToolBatch</text>
+    <text x="92" y="697" class="t">校验结果、追加上下文、让 Agent 继续修正</text>
+    <text x="92" y="729" class="tiny">Hook 是确定性策略点，但 Hook 自身也是代码执行面</text>
+    <text x="92" y="751" class="tiny">异步 Hook 不能回头阻断已发生的动作</text>
+
+    <rect x="524" y="628" width="392" height="150" rx="20" class="gold"/>
+    <text x="550" y="665" class="h">Checkpoint / Rewind</text>
+    <text x="550" y="697" class="t">每个 Prompt 前记录文件编辑工具的快照</text>
+    <text x="550" y="729" class="tiny">最多保留最近 100 个 checkpoint</text>
+    <text x="550" y="751" class="tiny">Bash、副 Agent、外部 API 的副作用通常不可回滚</text>
+
+    <rect x="982" y="628" width="392" height="150" rx="20" class="red"/>
+    <text x="1008" y="665" class="h">仍然存在的边界</text>
+    <text x="1008" y="697" class="t">域名前置、Unix socket、宽写路径、Apple Events</text>
+    <text x="1008" y="729" class="tiny">Sandbox 只覆盖 Bash；文件工具走权限层</text>
+    <text x="1008" y="751" class="tiny">Computer Use 操作真实桌面，不在 Bash sandbox 内</text>
+  </g>
+  <path d="M720 553V590H262V628" class="line"/><path d="M720 590V628" class="line"/><path d="M720 590H1178V628" class="line"/>
+
+  <rect x="66" y="820" width="1308" height="42" rx="14" fill="#2b1b24" stroke="#ef6f8f"/>
+  <text x="720" y="847" text-anchor="middle" class="t">最安全的无人值守组合：受管规则 + failIfUnavailable + 禁止 unsandboxed retry + 窄文件/网络白名单 + 外层容器或 VM。</text>
+</svg>

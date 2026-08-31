@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 上下文生命周期</title>
+  <desc id="desc">展示请求前缀分层、按需加载内容、会话增长、自动压缩和压缩后的重注入。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101522"/><stop offset="1" stop-color="#21182a"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#73778a"/></marker>
+    <style>
+      .title{font:700 35px Inter,"Noto Sans SC",sans-serif;fill:#fff7ed}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}.h{font:700 19px Inter,"Noto Sans SC",sans-serif;fill:#faf7ff}.t{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#ddd6e6}.tiny{font:500 12px Inter,"Noto Sans SC",sans-serif;fill:#aaa1b6}
+      .card{fill:#181c2a;stroke:#3b3f52;stroke-width:1.5}.coral{fill:#2b201d;stroke:#d97757}.purple{fill:#211d32;stroke:#a78bfa}.teal{fill:#17272a;stroke:#4fb8a8}.gold{fill:#2d2818;stroke:#d6a84f}.line{stroke:#73778a;stroke-width:2;fill:none;marker-end:url(#a)}
+    </style>
+  </defs>
+  <rect width="1440" height="900" rx="28" fill="url(#bg)"/>
+  <text x="66" y="64" class="title">上下文不是聊天记录，而是分层、按需加载、可压缩的运行时资源</text>
+  <text x="66" y="95" class="sub">Claude Code 依赖“稳定前缀 + 追加式历史”获得缓存收益，再用 lazy loading、输出落盘、Subagent 和 compaction 控制增长。</text>
+
+  <text x="66" y="140" class="tiny">REQUEST PREFIX — 越靠上越稳定，越影响后续缓存</text>
+  <g>
+    <rect x="66" y="160" width="390" height="84" rx="17" class="coral"/>
+    <text x="91" y="193" class="h">1. System prompt</text><text x="91" y="220" class="t">核心指令 · 内置工具定义 · output style</text>
+    <rect x="525" y="160" width="390" height="84" rx="17" class="purple"/>
+    <text x="550" y="193" class="h">2. Project context</text><text x="550" y="220" class="t">CLAUDE.md · auto memory · unscoped rules</text>
+    <rect x="984" y="160" width="390" height="84" rx="17" class="teal"/>
+    <text x="1009" y="193" class="h">3. Conversation</text><text x="1009" y="220" class="t">messages · file reads · tool results · latest input</text>
+  </g>
+  <path d="M456 202H525" class="line"/><path d="M915 202H984" class="line"/>
+  <text x="720" y="276" text-anchor="middle" class="tiny">精确 prefix match：前面任一点变化，后面的缓存都要重建；model 与 effort 也属于 cache key。</text>
+
+  <text x="66" y="324" class="tiny">ON-DEMAND INPUTS</text>
+  <g>
+    <rect x="66" y="342" width="248" height="132" rx="17" class="card"/>
+    <text x="190" y="375" text-anchor="middle" class="h">Nested CLAUDE.md</text><text x="88" y="406" class="t">读到对应子目录时加载</text><text x="88" y="432" class="tiny">path-scoped rules 同步触发</text>
+    <rect x="336" y="342" width="248" height="132" rx="17" class="card"/>
+    <text x="460" y="375" text-anchor="middle" class="h">Skills</text><text x="358" y="406" class="t">启动只放描述索引</text><text x="358" y="432" class="tiny">调用时注入完整 SKILL.md</text>
+    <rect x="606" y="342" width="248" height="132" rx="17" class="card"/>
+    <text x="730" y="375" text-anchor="middle" class="h">MCP tools</text><text x="628" y="406" class="t">默认只放名称与 server 指令</text><text x="628" y="432" class="tiny">ToolSearch 后载入 schema</text>
+    <rect x="876" y="342" width="248" height="132" rx="17" class="card"/>
+    <text x="1000" y="375" text-anchor="middle" class="h">Tool outputs</text><text x="898" y="406" class="t">大输出截断或持久化到文件</text><text x="898" y="432" class="tiny">模型按需 Read / Grep</text>
+    <rect x="1146" y="342" width="228" height="132" rx="17" class="card"/>
+    <text x="1260" y="375" text-anchor="middle" class="h">Subagents</text><text x="1168" y="406" class="t">独立上下文执行大读取</text><text x="1168" y="432" class="tiny">主会话只收摘要</text>
+  </g>
+
+  <path d="M720 504V546" class="line"/>
+  <rect x="170" y="546" width="1100" height="112" rx="22" class="gold"/>
+  <text x="720" y="582" text-anchor="middle" class="h">接近窗口上限：先清理旧 Tool 输出，再以独立总结请求执行 compaction</text>
+  <text x="720" y="613" text-anchor="middle" class="t">原对话替换为结构化 summary；system 层保持不变，conversation 层建立更短的新前缀。</text>
+  <text x="720" y="638" text-anchor="middle" class="tiny">缓存仍温热时，summary 请求可读取既有前缀；冷恢复时需要重新处理完整历史。</text>
+
+  <text x="66" y="711" class="tiny">AFTER COMPACTION — 明确重注入，不靠模型“记住”</text>
+  <g>
+    <rect x="66" y="730" width="250" height="105" rx="16" class="purple"/><text x="191" y="763" text-anchor="middle" class="h">根级上下文</text><text x="191" y="791" text-anchor="middle" class="t">CLAUDE.md · rules · memory</text><text x="191" y="813" text-anchor="middle" class="tiny">从磁盘重新读取</text>
+    <rect x="338" y="730" width="250" height="105" rx="16" class="teal"/><text x="463" y="763" text-anchor="middle" class="h">近期文件</text><text x="463" y="791" text-anchor="middle" class="t">最多 5 个，按最近修改</text><text x="463" y="813" text-anchor="middle" class="tiny">单文件超过 5k token 仅引用</text>
+    <rect x="610" y="730" width="250" height="105" rx="16" class="coral"/><text x="735" y="763" text-anchor="middle" class="h">已调用 Skills</text><text x="735" y="791" text-anchor="middle" class="t">每个 5k / 合计 25k token</text><text x="735" y="813" text-anchor="middle" class="tiny">最新优先，旧 Skill 可被丢弃</text>
+    <rect x="882" y="730" width="250" height="105" rx="16" class="gold"/><text x="1007" y="763" text-anchor="middle" class="h">Plan 与按需规则</text><text x="1007" y="791" text-anchor="middle" class="t">Plan 重注入；nested 延迟重载</text><text x="1007" y="813" text-anchor="middle" class="tiny">触发文件再次 Read 时生效</text>
+    <rect x="1154" y="730" width="220" height="105" rx="16" class="card"/><text x="1264" y="763" text-anchor="middle" class="h">Hooks</text><text x="1264" y="791" text-anchor="middle" class="t">SessionStart(compact)</text><text x="1264" y="813" text-anchor="middle" class="tiny">可追加新上下文</text>
+  </g>
+  <text x="66" y="876" class="tiny">工程启示：上下文治理必须同时设计“何时加载、如何截断、压缩后恢复什么、哪些变化会破坏缓存”。</text>
+</svg>
