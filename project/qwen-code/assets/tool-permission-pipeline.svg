@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="980" viewBox="0 0 1440 980" role="img" aria-labelledby="title desc">
+  <title id="title">Qwen Code 工具权限与隔离流水线</title>
+  <desc id="desc">工具请求依次经过发现、参数校验、权限规则、Auto Mode、Hook、调度器与可选沙箱</desc>
+  <defs>
+    <linearGradient id="bgP" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07121f"/><stop offset="1" stop-color="#11251f"/></linearGradient>
+    <linearGradient id="lineP" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5ee5ff"/><stop offset=".52" stop-color="#f2c76d"/><stop offset="1" stop-color="#5ce3a5"/></linearGradient>
+    <marker id="arrP" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3 0 6z" fill="#8fa0ba"/></marker>
+    <filter id="shP"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity=".25"/></filter>
+  </defs>
+  <rect width="1440" height="980" rx="24" fill="url(#bgP)"/>
+  <text x="70" y="66" fill="#f5f8ff" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="34" font-weight="800">工具治理：从“可见”到“可执行”</text>
+  <text x="70" y="100" fill="#96a7bf" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="16">工具暴露、应用授权、宿主策略、OS 隔离是四个不同控制面</text>
+  <rect x="70" y="122" width="1300" height="4" rx="2" fill="url(#lineP)"/>
+
+  <g font-family="'Noto Sans SC', system-ui, sans-serif" filter="url(#shP)">
+    <rect x="70" y="170" width="250" height="114" rx="17" fill="#10263b" stroke="#58dff7"/>
+    <text x="95" y="207" fill="#eefdff" font-size="20" font-weight="760">1 · Tool Registry</text>
+    <text x="95" y="235" fill="#9bb9c9" font-size="14">lazy factory · MCP discovery</text>
+    <text x="95" y="258" fill="#9bb9c9" font-size="14">deferred reveal · stable order</text>
+
+    <rect x="375" y="170" width="250" height="114" rx="17" fill="#192540" stroke="#8298db"/>
+    <text x="400" y="207" fill="#f0f4ff" font-size="20" font-weight="760">2 · Validate</text>
+    <text x="400" y="235" fill="#a8b3d0" font-size="14">call id · JSON Schema</text>
+    <text x="400" y="258" fill="#a8b3d0" font-size="14">canonical name · truncated write</text>
+
+    <rect x="680" y="170" width="250" height="114" rx="17" fill="#2d2833" stroke="#e6bf6d"/>
+    <text x="705" y="207" fill="#fff7e5" font-size="20" font-weight="760">3 · Permission Rules</text>
+    <text x="705" y="235" fill="#cfc2a6" font-size="14">deny &gt; ask &gt; allow &gt; default</text>
+    <text x="705" y="258" fill="#cfc2a6" font-size="14">tool · command · path · domain</text>
+
+    <rect x="985" y="170" width="385" height="114" rx="17" fill="#30252f" stroke="#f09a9f"/>
+    <text x="1010" y="207" fill="#fff0f1" font-size="20" font-weight="760">4 · Approval Mode</text>
+    <text x="1010" y="235" fill="#d2b1b4" font-size="14">plan · default · auto-edit · auto · yolo</text>
+    <text x="1010" y="258" fill="#d2b1b4" font-size="14">规则结果和当前模式共同决定后续路径</text>
+  </g>
+
+  <g fill="none" stroke="#8fa0ba" stroke-width="2" marker-end="url(#arrP)">
+    <path d="M320 227h45"/><path d="M625 227h45"/><path d="M930 227h45"/>
+  </g>
+
+  <g font-family="'Noto Sans SC', system-ui, sans-serif">
+    <rect x="180" y="342" width="1080" height="298" rx="22" fill="#231f2c" stroke="#e3a967" stroke-width="2" filter="url(#shP)"/>
+    <text x="218" y="382" fill="#ffd99a" font-size="15" font-weight="800">AUTO MODE · 只有未被上层规则最终裁决的调用才进入</text>
+    <g>
+      <rect x="218" y="410" width="220" height="82" rx="13" fill="#352d31" stroke="#b99561"/>
+      <text x="328" y="443" text-anchor="middle" fill="#fff5e5" font-size="17" font-weight="730">L5.1 编辑快速路径</text>
+      <text x="328" y="468" text-anchor="middle" fill="#cbb99d" font-size="13">工作区内且非敏感持久化路径</text>
+
+      <rect x="478" y="410" width="220" height="82" rx="13" fill="#352d31" stroke="#b99561"/>
+      <text x="588" y="443" text-anchor="middle" fill="#fff5e5" font-size="17" font-weight="730">L5.2 安全工具表</text>
+      <text x="588" y="468" text-anchor="middle" fill="#cbb99d" font-size="13">只读内建工具；不含 MCP</text>
+
+      <rect x="738" y="410" width="220" height="82" rx="13" fill="#3a292c" stroke="#da777b"/>
+      <text x="848" y="443" text-anchor="middle" fill="#fff0f1" font-size="17" font-weight="730">确定性危险拦截</text>
+      <text x="848" y="468" text-anchor="middle" fill="#d0a6a8" font-size="13">破坏命令 · 外部写入 · 自修改</text>
+
+      <rect x="998" y="410" width="220" height="82" rx="13" fill="#30294a" stroke="#9583e2"/>
+      <text x="1108" y="443" text-anchor="middle" fill="#f4f0ff" font-size="17" font-weight="730">两阶段 LLM 分类器</text>
+      <text x="1108" y="468" text-anchor="middle" fill="#b7add2" font-size="13">allow / block / unavailable</text>
+    </g>
+    <g fill="none" stroke="#aa9575" stroke-width="2" marker-end="url(#arrP)">
+      <path d="M438 451h30"/><path d="M698 451h30"/><path d="M958 451h30"/>
+    </g>
+    <rect x="218" y="529" width="1000" height="75" rx="13" fill="#2d2930" stroke="#74666f"/>
+    <text x="718" y="559" text-anchor="middle" fill="#e5dce2" font-size="16" font-weight="700">显式 ask、分类不可用、工作区外写入 → 回退人工确认</text>
+    <text x="718" y="583" text-anchor="middle" fill="#ad9fa8" font-size="13">确定性 hard block 不依赖分类器可用性</text>
+
+    <g filter="url(#shP)">
+      <rect x="70" y="704" width="280" height="128" rx="17" fill="#17263a" stroke="#7189b5"/>
+      <text x="95" y="741" fill="#f0f5ff" font-size="19" font-weight="760">5 · Hooks / Host Guard</text>
+      <text x="95" y="770" fill="#a1aec4" font-size="14">PreToolUse · invocation guard</text>
+      <text x="95" y="794" fill="#a1aec4" font-size="14">追加策略、阻断或改写</text>
+
+      <rect x="398" y="704" width="280" height="128" rx="17" fill="#17302f" stroke="#54c795"/>
+      <text x="423" y="741" fill="#edfff7" font-size="19" font-weight="760">6 · Scheduler Execute</text>
+      <text x="423" y="770" fill="#9bc7b7" font-size="14">safe parallel · unsafe ordered</text>
+      <text x="423" y="794" fill="#9bc7b7" font-size="14">timeout · abort · output budget</text>
+
+      <rect x="726" y="704" width="280" height="128" rx="17" fill="#17342d" stroke="#58dda0"/>
+      <text x="751" y="741" fill="#edfff7" font-size="19" font-weight="760">7 · Optional OS Sandbox</text>
+      <text x="751" y="770" fill="#9bc9b7" font-size="14">Docker · Podman · sandbox-exec</text>
+      <text x="751" y="794" fill="#9bc9b7" font-size="14">真正的进程/文件系统约束</text>
+
+      <rect x="1054" y="704" width="316" height="128" rx="17" fill="#293024" stroke="#adc765"/>
+      <text x="1079" y="741" fill="#f8ffe9" font-size="19" font-weight="760">8 · ToolResult</text>
+      <text x="1079" y="770" fill="#bbc99d" font-size="14">call id 配对 · media boundary</text>
+      <text x="1079" y="794" fill="#bbc99d" font-size="14">回到下一模型 turn</text>
+    </g>
+    <g fill="none" stroke="#8fa0ba" stroke-width="2" marker-end="url(#arrP)">
+      <path d="M350 768h38"/><path d="M678 768h38"/><path d="M1006 768h38"/>
+    </g>
+
+    <rect x="70" y="875" width="1300" height="55" rx="12" fill="#111d22" stroke="#3b6155"/>
+    <text x="720" y="909" text-anchor="middle" fill="#a8c8ba" font-size="15"><tspan font-weight="800" fill="#72e5ac">注意：</tspan>Git worktree 是变更/工作目录隔离，不是 OS 沙箱；Permission 是应用授权，也不是内核级隔离。</text>
+  </g>
+  <text x="1370" y="956" text-anchor="end" fill="#617286" font-family="Inter, system-ui, sans-serif" font-size="13">SOURCE: tool-registry.ts · coreToolScheduler.ts · permission-manager.ts · autoMode.ts</text>
+</svg>

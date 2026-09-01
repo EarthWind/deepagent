@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800" role="img" aria-labelledby="title desc">
+  <title id="title">Qwen Code 模型协议适配层</title>
+  <desc id="desc">上层统一请求通过 ContentGenerator 规范化后分别进入多种模型协议</desc>
+  <defs>
+    <linearGradient id="bgM" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08121f"/><stop offset="1" stop-color="#20132d"/></linearGradient>
+    <linearGradient id="irM" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5ee5ff"/><stop offset=".48" stop-color="#9685ff"/><stop offset="1" stop-color="#ff79c8"/></linearGradient>
+    <marker id="arrM" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3 0 6z" fill="#899bbc"/></marker>
+    <filter id="shM"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-opacity=".28"/></filter>
+  </defs>
+  <rect width="1440" height="800" rx="24" fill="url(#bgM)"/>
+  <text x="70" y="66" fill="#f7f8ff" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="34" font-weight="800">多模型适配：稳定 IR，变化留在 Converter</text>
+  <text x="70" y="100" fill="#9aa8c2" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="16">“兼容 OpenAI API”并不等于工具、思考、缓存和流式语义完全一致</text>
+  <rect x="70" y="122" width="1300" height="4" rx="2" fill="url(#irM)"/>
+
+  <g font-family="'Noto Sans SC', system-ui, sans-serif" filter="url(#shM)">
+    <rect x="210" y="164" width="1020" height="98" rx="18" fill="#13243b" stroke="#59daf4"/>
+    <text x="720" y="204" text-anchor="middle" fill="#f2fbff" font-size="24" font-weight="760">LlmClient / Turn / Tool Scheduler</text>
+    <text x="720" y="235" text-anchor="middle" fill="#96b7ca" font-size="15">只消费统一的 Content、Part、GenerateContentResponse 与 LlmEvent</text>
+
+    <rect x="150" y="315" width="1140" height="178" rx="22" fill="#1b1d43" stroke="#9589ff" stroke-width="2"/>
+    <text x="720" y="357" text-anchor="middle" fill="#f5f3ff" font-size="25" font-weight="780">ContentGenerator</text>
+    <text x="720" y="385" text-anchor="middle" fill="#b4afd1" font-size="15">generateContent · generateContentStream · embedContent</text>
+    <rect x="188" y="411" width="1064" height="52" rx="12" fill="#292856" stroke="#6963ad"/>
+    <text x="720" y="443" text-anchor="middle" fill="#dedaff" font-size="16">Canonical IR · lazy provider load · LoggingContentGenerator · ModelRegistry</text>
+
+    <g fill="#281c3a" stroke="#8f557f">
+      <rect x="70" y="590" width="294" height="118" rx="17"/><rect x="405" y="590" width="294" height="118" rx="17"/>
+      <rect x="740" y="590" width="294" height="118" rx="17"/><rect x="1075" y="590" width="294" height="118" rx="17"/>
+    </g>
+    <g text-anchor="middle">
+      <text x="217" y="628" fill="#fff0fa" font-size="20" font-weight="760">Qwen Generator</text>
+      <text x="217" y="657" fill="#c8a9be" font-size="14">OAuth client · Qwen models</text>
+      <text x="217" y="682" fill="#9d8499" font-size="13">Qwen protocol</text>
+
+      <text x="552" y="628" fill="#fff0fa" font-size="20" font-weight="760">OpenAI Generator</text>
+      <text x="552" y="657" fill="#c8a9be" font-size="14">pipeline · converter</text>
+      <text x="552" y="682" fill="#9d8499" font-size="13">compatible endpoint quirks</text>
+
+      <text x="887" y="628" fill="#fff0fa" font-size="20" font-weight="760">Anthropic Generator</text>
+      <text x="887" y="657" fill="#c8a9be" font-size="14">thinking · cache blocks</text>
+      <text x="887" y="682" fill="#9d8499" font-size="13">stream guards</text>
+
+      <text x="1222" y="628" fill="#fff0fa" font-size="20" font-weight="760">Gemini Generator</text>
+      <text x="1222" y="657" fill="#c8a9be" font-size="14">GoogleGenAI / Vertex</text>
+      <text x="1222" y="682" fill="#9d8499" font-size="13">native Content semantics</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#899bbc" stroke-width="2" marker-end="url(#arrM)">
+    <path d="M720 262v43"/>
+    <path d="M720 493v40H217v47"/><path d="M720 493v40H552v47"/><path d="M720 493v40H887v47"/><path d="M720 493v40H1222v47"/>
+  </g>
+  <g font-family="'Noto Sans SC', system-ui, sans-serif" font-size="13" fill="#8293ae">
+    <text x="720" y="552" text-anchor="middle">role · tool call/result · reasoning · streaming · usage · cache · media</text>
+    <text x="1368" y="758" text-anchor="end">SOURCE: contentGenerator.ts · modelRegistry.ts</text>
+  </g>
+</svg>

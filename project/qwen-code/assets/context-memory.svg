@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Qwen Code 上下文生命周期</title>
+  <desc id="desc">展示单轮工具结果、会话压缩、持久日志和跨会话记忆的不同时间尺度</desc>
+  <defs>
+    <linearGradient id="bgC" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07121e"/><stop offset="1" stop-color="#17152d"/></linearGradient>
+    <linearGradient id="timeC" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5fe6ff"/><stop offset=".52" stop-color="#9385ff"/><stop offset="1" stop-color="#ff79c7"/></linearGradient>
+    <marker id="arrC" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3 0 6z" fill="#8fa0c0"/></marker>
+    <filter id="shC"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity=".26"/></filter>
+  </defs>
+  <rect width="1440" height="900" rx="24" fill="url(#bgC)"/>
+  <text x="70" y="66" fill="#f7f9ff" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="34" font-weight="800">上下文生命周期：不要让摘要承担所有记忆</text>
+  <text x="70" y="100" fill="#96a5c0" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="16">原始事实、模型工作集和跨会话知识使用不同存储与压缩策略</text>
+  <rect x="70" y="122" width="1300" height="4" rx="2" fill="url(#timeC)"/>
+
+  <g font-family="'Noto Sans SC', system-ui, sans-serif">
+    <text x="88" y="173" fill="#78e9fb" font-size="14" font-weight="750">短期 · CURRENT TURN</text>
+    <text x="516" y="173" fill="#b2a8ff" font-size="14" font-weight="750">中期 · CURRENT SESSION</text>
+    <text x="1050" y="173" fill="#ff9fd7" font-size="14" font-weight="750">长期 · CROSS SESSION</text>
+    <path d="M90 198H1340" stroke="url(#timeC)" stroke-width="4"/>
+    <circle cx="90" cy="198" r="9" fill="#62e4ff"/><circle cx="720" cy="198" r="9" fill="#9184ff"/><circle cx="1340" cy="198" r="9" fill="#ff7ac8"/>
+
+    <g filter="url(#shC)">
+      <rect x="70" y="245" width="342" height="218" rx="18" fill="#11263c" stroke="#5bddf5"/>
+      <text x="98" y="283" fill="#effcff" font-size="21" font-weight="780">Turn Working Set</text>
+      <text x="98" y="313" fill="#9cbacc" font-size="14">user prompt · thought · content</text>
+      <text x="98" y="339" fill="#9cbacc" font-size="14">function call ↔ function response</text>
+      <rect x="98" y="368" width="286" height="64" rx="11" fill="#17344b" stroke="#3a7288"/>
+      <text x="241" y="394" text-anchor="middle" fill="#dff9ff" font-size="15" font-weight="700">Microcompaction</text>
+      <text x="241" y="417" text-anchor="middle" fill="#96bfcb" font-size="12">清理旧的大工具结果/媒体，保留协议骨架</text>
+
+      <rect x="549" y="245" width="342" height="218" rx="18" fill="#1d2046" stroke="#9488ff"/>
+      <text x="577" y="283" fill="#f4f2ff" font-size="21" font-weight="780">Logical Model History</text>
+      <text x="577" y="313" fill="#aaa9cd" font-size="14">token threshold · effective window</text>
+      <text x="577" y="339" fill="#aaa9cd" font-size="14">attachments · startup reinjection</text>
+      <rect x="577" y="368" width="286" height="64" rx="11" fill="#29295a" stroke="#625eae"/>
+      <text x="720" y="394" text-anchor="middle" fill="#eeebff" font-size="15" font-weight="700">Full Compaction</text>
+      <text x="720" y="417" text-anchor="middle" fill="#b4acd0" font-size="12">&lt;state_snapshot&gt; 取代旧模型工作集</text>
+
+      <rect x="1028" y="245" width="342" height="218" rx="18" fill="#2b1b39" stroke="#ed78c1"/>
+      <text x="1056" y="283" fill="#fff1fa" font-size="21" font-weight="780">Managed Auto-Memory</text>
+      <text x="1056" y="313" fill="#c7a5bd" font-size="14">user · feedback · project · reference</text>
+      <text x="1056" y="339" fill="#c7a5bd" font-size="14">topic files · index · cursor · lock</text>
+      <rect x="1056" y="368" width="286" height="64" rx="11" fill="#3a2448" stroke="#8e4c7c"/>
+      <text x="1199" y="394" text-anchor="middle" fill="#ffedf8" font-size="15" font-weight="700">Recall · Extract · Dream</text>
+      <text x="1199" y="417" text-anchor="middle" fill="#c6a6bc" font-size="12">按需召回 · 后台抽取 · 周期整理</text>
+    </g>
+
+    <g fill="none" stroke="#8fa0c0" stroke-width="2" marker-end="url(#arrC)">
+      <path d="M412 354h127"/><path d="M891 354h127"/>
+    </g>
+
+    <rect x="70" y="527" width="1300" height="182" rx="20" fill="#13242d" stroke="#50c995" filter="url(#shC)"/>
+    <text x="102" y="565" fill="#77e7b2" font-size="15" font-weight="800">事实底座 · APPEND-ONLY SESSION TREE</text>
+    <g>
+      <rect x="102" y="590" width="230" height="82" rx="12" fill="#19343a" stroke="#3e7468"/>
+      <text x="217" y="621" text-anchor="middle" fill="#edfff8" font-size="17" font-weight="730">JSONL Records</text>
+      <text x="217" y="647" text-anchor="middle" fill="#9fc7ba" font-size="13">uuid / parentUuid</text>
+      <rect x="373" y="590" width="230" height="82" rx="12" fill="#19343a" stroke="#3e7468"/>
+      <text x="488" y="621" text-anchor="middle" fill="#edfff8" font-size="17" font-weight="730">Rewind / Fork</text>
+      <text x="488" y="647" text-anchor="middle" fill="#9fc7ba" font-size="13">切换活跃父链，不覆写过去</text>
+      <rect x="644" y="590" width="230" height="82" rx="12" fill="#19343a" stroke="#3e7468"/>
+      <text x="759" y="621" text-anchor="middle" fill="#edfff8" font-size="17" font-weight="730">File Snapshots</text>
+      <text x="759" y="647" text-anchor="middle" fill="#9fc7ba" font-size="13">每个新用户 turn 的文件历史</text>
+      <rect x="915" y="590" width="230" height="82" rx="12" fill="#19343a" stroke="#3e7468"/>
+      <text x="1030" y="621" text-anchor="middle" fill="#edfff8" font-size="17" font-weight="730">Writer Lease</text>
+      <text x="1030" y="647" text-anchor="middle" fill="#9fc7ba" font-size="13">daemon / shared writer safety</text>
+      <rect x="1186" y="590" width="152" height="82" rx="12" fill="#19343a" stroke="#3e7468"/>
+      <text x="1262" y="621" text-anchor="middle" fill="#edfff8" font-size="17" font-weight="730">Resume</text>
+      <text x="1262" y="647" text-anchor="middle" fill="#9fc7ba" font-size="13">crash recovery</text>
+    </g>
+
+    <rect x="173" y="763" width="1094" height="68" rx="14" fill="#171b29" stroke="#4a566f"/>
+    <text x="720" y="791" text-anchor="middle" fill="#dfe6f4" font-size="16" font-weight="700">物理历史保存原始事实；逻辑历史允许压缩；长期记忆只保存可复用知识</text>
+    <text x="720" y="816" text-anchor="middle" fill="#919eb5" font-size="13">三者互补，而不是用一个“超长 prompt”解决全部问题</text>
+  </g>
+  <text x="1370" y="867" text-anchor="end" fill="#66768e" font-family="Inter, system-ui, sans-serif" font-size="13">SOURCE: chatRecordingService.ts · chatCompressionService.ts · auto-memory design</text>
+</svg>

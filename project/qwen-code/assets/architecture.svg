@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Qwen Code 总体架构</title>
+  <desc id="desc">从产品宿主到核心运行时、模型协议、工具治理和持久状态的分层架构</desc>
+  <defs>
+    <linearGradient id="bgA" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#12152c"/></linearGradient>
+    <linearGradient id="flowA" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#62e5ff"/><stop offset=".5" stop-color="#9084ff"/><stop offset="1" stop-color="#ff79c6"/></linearGradient>
+    <filter id="shadowA"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".28"/></filter>
+    <marker id="arrowA" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L10 3 0 6z" fill="#8195bd"/></marker>
+  </defs>
+  <rect width="1440" height="900" rx="24" fill="url(#bgA)"/>
+  <text x="70" y="70" fill="#f5f8ff" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="34" font-weight="800">Qwen Code 总体架构</text>
+  <text x="70" y="104" fill="#91a1bd" font-family="'Noto Sans SC', system-ui, sans-serif" font-size="16">多个产品面共享一个 Agent Core；模型提出动作，宿主拥有副作用</text>
+  <rect x="70" y="125" width="1300" height="4" rx="2" fill="url(#flowA)"/>
+
+  <g font-family="'Noto Sans SC', system-ui, sans-serif" filter="url(#shadowA)">
+    <rect x="70" y="162" width="1300" height="122" rx="18" fill="#10203a" stroke="#4fdaf3" stroke-opacity=".55"/>
+    <text x="98" y="194" fill="#70e7fb" font-size="15" font-weight="700">产品与宿主层 · SURFACES</text>
+    <g fill="#182b48" stroke="#3b6080">
+      <rect x="98" y="214" width="190" height="48" rx="11"/><rect x="310" y="214" width="190" height="48" rx="11"/>
+      <rect x="522" y="214" width="190" height="48" rx="11"/><rect x="734" y="214" width="190" height="48" rx="11"/>
+      <rect x="946" y="214" width="190" height="48" rx="11"/><rect x="1158" y="214" width="184" height="48" rx="11"/>
+    </g>
+    <g fill="#eaf7ff" font-size="17" font-weight="650" text-anchor="middle">
+      <text x="193" y="244">Ink / OpenTUI</text><text x="405" y="244">Headless CLI</text>
+      <text x="617" y="244">SDK</text><text x="829" y="244">qwen serve</text>
+      <text x="1041" y="244">IDE / Web / Desktop</text><text x="1250" y="244">Channels</text>
+    </g>
+
+    <rect x="70" y="325" width="1300" height="207" rx="18" fill="#171a3a" stroke="#8f83ff" stroke-opacity=".62"/>
+    <text x="98" y="359" fill="#b2a9ff" font-size="15" font-weight="700">会话与 AGENT 运行时 · CORE</text>
+    <g fill="#23234f" stroke="#5e59a5">
+      <rect x="98" y="383" width="245" height="118" rx="14"/><rect x="365" y="383" width="245" height="118" rx="14"/>
+      <rect x="632" y="383" width="245" height="118" rx="14"/><rect x="899" y="383" width="205" height="118" rx="14"/>
+      <rect x="1126" y="383" width="216" height="118" rx="14"/>
+    </g>
+    <g fill="#f3f1ff">
+      <text x="120" y="416" font-size="19" font-weight="750">LlmClient</text><text x="120" y="444" fill="#aaa8cc" font-size="14">Session orchestration</text><text x="120" y="470" fill="#aaa8cc" font-size="14">context · hooks · limits</text>
+      <text x="387" y="416" font-size="19" font-weight="750">Turn + LlmChat</text><text x="387" y="444" fill="#aaa8cc" font-size="14">single model stream</text><text x="387" y="470" fill="#aaa8cc" font-size="14">retry · fallback · repair</text>
+      <text x="654" y="416" font-size="19" font-weight="750">CoreToolScheduler</text><text x="654" y="444" fill="#aaa8cc" font-size="14">approval · execute</text><text x="654" y="470" fill="#aaa8cc" font-size="14">parallel · timeout · hooks</text>
+      <text x="921" y="416" font-size="19" font-weight="750">AgentCore</text><text x="921" y="444" fill="#aaa8cc" font-size="14">SubAgent loop</text><text x="921" y="470" fill="#aaa8cc" font-size="14">events · stats</text>
+      <text x="1148" y="416" font-size="19" font-weight="750">ACP Bridge</text><text x="1148" y="444" fill="#aaa8cc" font-size="14">sessions · SSE</text><text x="1148" y="470" fill="#aaa8cc" font-size="14">permission mediation</text>
+    </g>
+
+    <rect x="70" y="573" width="625" height="250" rx="18" fill="#211631" stroke="#ff79c6" stroke-opacity=".55"/>
+    <text x="98" y="608" fill="#ff9cd6" font-size="15" font-weight="700">模型协议平面 · MODEL</text>
+    <rect x="98" y="630" width="569" height="60" rx="13" fill="#332041" stroke="#8c4f84"/>
+    <text x="382" y="657" fill="#fff0fa" text-anchor="middle" font-size="19" font-weight="750">ContentGenerator + Canonical Content / Part</text>
+    <text x="382" y="678" fill="#c9a8c0" text-anchor="middle" font-size="13">converter · stream guard · logging · prompt cache</text>
+    <g fill="#30213f" stroke="#77496f">
+      <rect x="98" y="714" width="126" height="74" rx="12"/><rect x="239" y="714" width="126" height="74" rx="12"/>
+      <rect x="380" y="714" width="126" height="74" rx="12"/><rect x="521" y="714" width="146" height="74" rx="12"/>
+    </g>
+    <g fill="#f7e9f3" text-anchor="middle" font-size="16" font-weight="700">
+      <text x="161" y="758">Qwen OAuth</text><text x="302" y="758">OpenAI</text><text x="443" y="758">Anthropic</text><text x="594" y="758">Gemini / Vertex</text>
+    </g>
+
+    <rect x="717" y="573" width="653" height="250" rx="18" fill="#102a2d" stroke="#51dfa2" stroke-opacity=".52"/>
+    <text x="745" y="608" fill="#73ecb4" font-size="15" font-weight="700">能力与状态平面 · CAPABILITIES &amp; STATE</text>
+    <g fill="#17383a" stroke="#376f69">
+      <rect x="745" y="630" width="182" height="72" rx="12"/><rect x="949" y="630" width="182" height="72" rx="12"/><rect x="1153" y="630" width="189" height="72" rx="12"/>
+      <rect x="745" y="720" width="182" height="72" rx="12"/><rect x="949" y="720" width="182" height="72" rx="12"/><rect x="1153" y="720" width="189" height="72" rx="12"/>
+    </g>
+    <g fill="#e9fff7" text-anchor="middle">
+      <text x="836" y="661" font-size="17" font-weight="730">Tool Registry</text><text x="836" y="682" fill="#9ec8bd" font-size="13">lazy · deferred</text>
+      <text x="1040" y="661" font-size="17" font-weight="730">Permissions</text><text x="1040" y="682" fill="#9ec8bd" font-size="13">rules · auto mode</text>
+      <text x="1247" y="661" font-size="17" font-weight="730">MCP / Extensions</text><text x="1247" y="682" fill="#9ec8bd" font-size="13">external capabilities</text>
+      <text x="836" y="751" font-size="17" font-weight="730">Session Store</text><text x="836" y="772" fill="#9ec8bd" font-size="13">JSONL · snapshots</text>
+      <text x="1040" y="751" font-size="17" font-weight="730">Context</text><text x="1040" y="772" fill="#9ec8bd" font-size="13">compact · memory</text>
+      <text x="1247" y="751" font-size="17" font-weight="730">Teams / Workflow</text><text x="1247" y="772" fill="#9ec8bd" font-size="13">dispatch · journal</text>
+    </g>
+  </g>
+
+  <g fill="none" stroke="#8195bd" stroke-width="2" marker-end="url(#arrowA)" opacity=".8">
+    <path d="M720 284v32"/><path d="M510 532v30"/><path d="M960 532v30"/>
+  </g>
+  <text x="1370" y="866" text-anchor="end" fill="#677792" font-family="Inter, system-ui, sans-serif" font-size="13">SOURCE SNAPSHOT · d6c03908164c</text>
+</svg>
