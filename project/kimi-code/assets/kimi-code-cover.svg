@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Kimi Code 源码实现解析</title>
+  <desc id="desc">展示模型、Agent Loop、工具与持久化之间关系的深色技术封面</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071326"/>
+      <stop offset="0.55" stop-color="#0b1d36"/>
+      <stop offset="1" stop-color="#15113a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#42d7ff"/>
+      <stop offset="1" stop-color="#9b7bff"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#6ea8d6" stroke-opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" rx="28" fill="url(#bg)"/>
+  <rect width="1200" height="630" rx="28" fill="url(#grid)"/>
+  <circle cx="1050" cy="95" r="170" fill="#704dff" opacity="0.12"/>
+  <circle cx="900" cy="570" r="230" fill="#20c9ff" opacity="0.07"/>
+
+  <g transform="translate(72 70)">
+    <rect x="0" y="0" width="150" height="34" rx="17" fill="#102d49" stroke="#42d7ff" stroke-opacity="0.45"/>
+    <text x="75" y="23" text-anchor="middle" fill="#9beaff" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">SOURCE STUDY</text>
+    <text x="0" y="112" fill="#f2f7ff" font-family="Inter,Arial,sans-serif" font-size="70" font-weight="800">Kimi Code</text>
+    <text x="0" y="172" fill="url(#accent)" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="42" font-weight="700">生产级 Coding Agent 源码解析</text>
+    <text x="2" y="222" fill="#9fb3ca" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="23">从一次 Prompt，到可授权、可压缩、可恢复的执行系统</text>
+  </g>
+
+  <g transform="translate(104 374)" font-family="Inter,Arial,sans-serif">
+    <rect width="220" height="104" rx="18" fill="#0d2943" stroke="#2d6d98"/>
+    <text x="110" y="37" text-anchor="middle" fill="#65ddff" font-size="15" font-weight="700">MODEL ADAPTER</text>
+    <text x="110" y="69" text-anchor="middle" fill="#d7e8f8" font-size="17">OpenAI · Anthropic</text>
+    <text x="110" y="91" text-anchor="middle" fill="#8ca8bf" font-size="14">Google · Kimi Traits</text>
+  </g>
+  <g transform="translate(410 345)">
+    <circle cx="112" cy="82" r="82" fill="#132750" stroke="#7f7cff" stroke-width="2"/>
+    <circle cx="112" cy="82" r="62" fill="none" stroke="#42d7ff" stroke-opacity="0.25" stroke-width="8"/>
+    <path d="M85 61h54M85 82h42M85 103h61" stroke="#dff7ff" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="162" cy="35" r="8" fill="#42d7ff" filter="url(#glow)"/>
+    <text x="112" y="190" text-anchor="middle" fill="#b9c9df" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700">AGENT LOOP V2</text>
+  </g>
+  <g transform="translate(690 374)" font-family="Inter,Arial,sans-serif">
+    <rect width="178" height="104" rx="18" fill="#162344" stroke="#6658aa"/>
+    <text x="89" y="37" text-anchor="middle" fill="#bfaeff" font-size="15" font-weight="700">TOOL PLANE</text>
+    <text x="89" y="69" text-anchor="middle" fill="#d7e8f8" font-size="17">调度 · 权限</text>
+    <text x="89" y="91" text-anchor="middle" fill="#8ca8bf" font-size="14">MCP · Skill</text>
+  </g>
+  <g transform="translate(936 374)" font-family="Inter,Arial,sans-serif">
+    <rect width="178" height="104" rx="18" fill="#102d3d" stroke="#258b96"/>
+    <text x="89" y="37" text-anchor="middle" fill="#66f0df" font-size="15" font-weight="700">STATE PLANE</text>
+    <text x="89" y="69" text-anchor="middle" fill="#d7e8f8" font-size="17">Event · Wire</text>
+    <text x="89" y="91" text-anchor="middle" fill="#8ca8bf" font-size="14">Replay · Undo</text>
+  </g>
+  <g fill="none" stroke="url(#accent)" stroke-width="2" stroke-dasharray="7 8" opacity="0.75">
+    <path d="M325 426H410"/><path d="M634 426H690"/><path d="M868 426H936"/>
+  </g>
+
+  <text x="72" y="578" fill="#6f8aa3" font-family="Inter,Arial,sans-serif" font-size="15">Source snapshot · v0.40.1 · agent-core-v2</text>
+  <text x="1128" y="578" text-anchor="end" fill="#6f8aa3" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="15">大模型 Agent 工程视角</text>
+</svg>

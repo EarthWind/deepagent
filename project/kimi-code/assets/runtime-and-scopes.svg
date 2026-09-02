@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Kimi Code 的 DI 生命周期与工作区运行时</title>
+  <desc id="desc">区分三层 DI Scope 和由 Program 管理的工作区 Runtime Generation</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fbff"/><stop offset="1" stop-color="#eff4fb"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4e6d89"/></marker>
+    <style>.h{font:700 27px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#102b46}.t{font:700 18px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#173a5b}.s{font:14px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#526d85}.m{font:13px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#74879a}.arrow{stroke:#4e6d89;stroke-width:2;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1400" height="760" rx="24" fill="url(#bg)"/>
+  <text x="58" y="58" class="h">三个 DI Scope，不等于三个业务对象：Workspace 已从 Scope 拆到 Runtime Plane</text>
+  <text x="58" y="86" class="m">源码中的 SCOPE_TOPOLOGY 只有 App、Session、Agent；工作区由 App 级管理器物化成 WorkspaceInstance。</text>
+
+  <g>
+    <rect x="60" y="126" width="540" height="538" rx="20" fill="#fff" stroke="#c6d6e5"/>
+    <text x="88" y="164" class="t">DI 生命周期树</text>
+    <rect x="108" y="194" width="444" height="118" rx="18" fill="#e8f5ff" stroke="#9bcdef"/>
+    <text x="136" y="227" class="t">App Scope</text>
+    <text x="136" y="254" class="s">配置、Feature 装配、Provider / Model Catalog</text>
+    <text x="136" y="278" class="s">WorkspaceInstance Manager、Plugin、全局索引</text>
+    <path d="M330 312V350" class="arrow"/>
+    <rect x="108" y="354" width="444" height="118" rx="18" fill="#f1efff" stroke="#b9b1eb"/>
+    <text x="136" y="387" class="t">Session Scope</text>
+    <text x="136" y="414" class="s">会话元数据、Skill Catalog、Instructions</text>
+    <text x="136" y="438" class="s">MCP Handle、主 Agent 与 Subagent 生命周期</text>
+    <path d="M330 472V510" class="arrow"/>
+    <rect x="108" y="514" width="444" height="118" rx="18" fill="#eaf9f6" stroke="#9ad9ca"/>
+    <text x="136" y="547" class="t">Agent Scope</text>
+    <text x="136" y="574" class="s">Loop、Context、Profile、Tool Registry / Executor</text>
+    <text x="136" y="598" class="s">Permission、Compaction、Wire、Agent-local State</text>
+  </g>
+
+  <path d="M600 250H658" class="arrow"/>
+  <g>
+    <rect x="660" y="126" width="680" height="538" rx="20" fill="#102f4b" stroke="#215a83"/>
+    <text x="690" y="164" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="18" font-weight="700" fill="#dcf4ff">Workspace Runtime Plane</text>
+    <rect x="692" y="194" width="616" height="82" rx="14" fill="#153e5e" stroke="#3479a5"/>
+    <text x="716" y="226" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#7ae0ff">WorkspaceInstance Manager</text>
+    <text x="716" y="252" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#b9d4e7">按 workspace id / root 去重、物化、attach runtime provider、管理关闭</text>
+    <path d="M1000 276V314" stroke="#73b9d9" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="692" y="318" width="616" height="104" rx="14" fill="#19365f" stroke="#616cb4"/>
+    <text x="716" y="350" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#bbbaff">Program</text>
+    <text x="716" y="377" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#cbcdea">持有当前 Runtime Generation；通过 lease / ref-count 保证旧代安全退场</text>
+    <text x="716" y="400" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#cbcdea">组装工作区服务，并暴露 SessionLifecycleService</text>
+    <path d="M1000 422V458" stroke="#8b8bc2" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="692" y="462" width="616" height="164" rx="14" fill="#153e43" stroke="#2d8e8c"/>
+    <text x="716" y="494" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" font-weight="700" fill="#7cecdf">Runtime Generation</text>
+    <g font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c1e2df">
+      <text x="716" y="526">能力：FS · Process · Watch · Terminal · Clock</text>
+      <text x="716" y="553">工作区服务：Git · Trust · AGENTS.md · Skills · MCP</text>
+      <text x="716" y="580">Provider：本地 Node backend；也可附加远程 Runtime</text>
+      <text x="716" y="607">切换代时：新会话租新代，旧租约释放后再 dispose</text>
+    </g>
+  </g>
+  <rect x="60" y="693" width="1280" height="42" rx="12" fill="#fff4dd" stroke="#e9c26d"/>
+  <text x="700" y="720" text-anchor="middle" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#77531a">工程含义：DI 管对象寿命；Program 管工作区能力的热切换与租约。把二者分开，远程执行不必伪装成新的 DI 层。</text>
+</svg>

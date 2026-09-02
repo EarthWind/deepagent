@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Kimi Code 工具执行与权限流水线</title>
+  <desc id="desc">工具从动态发现、参数校验、权限决策、冲突感知调度到结果持久化的流程</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fbff"/><stop offset="1" stop-color="#eef4fa"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4e6d89"/></marker>
+    <style>.h{font:700 27px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#102b46}.t{font:700 17px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#173a5b}.s{font:14px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#526d85}.m{font:13px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#74879a}.flow{stroke:#4e6d89;stroke-width:2;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1400" height="900" rx="24" fill="url(#bg)"/>
+  <text x="58" y="58" class="h">工具不是函数表：它是一条“发现—治理—调度—回放”管线</text>
+  <text x="58" y="86" class="m">权限策略是有序 first-match；并发由资源访问冲突决定，而不是简单 Promise.all。</text>
+
+  <g>
+    <rect x="60" y="126" width="250" height="138" rx="16" fill="#e8f5ff" stroke="#99cdec"/>
+    <text x="86" y="159" class="t">1. Tool Registry</text>
+    <text x="86" y="189" class="s">Builtin / Feature / MCP</text><text x="86" y="215" class="s">Agent-scope 实例化</text><text x="86" y="241" class="s">按 Profile 做 allowlist</text>
+    <path d="M310 195H350" class="flow"/>
+    <rect x="352" y="126" width="250" height="138" rx="16" fill="#f0efff" stroke="#bab3e9"/>
+    <text x="378" y="159" class="t">2. Dynamic Select</text>
+    <text x="378" y="189" class="s">延迟暴露 MCP Schema</text><text x="378" y="215" class="s">模型先看到工具名索引</text><text x="378" y="241" class="s">select_tools 再加载定义</text>
+    <path d="M602 195H642" class="flow"/>
+    <rect x="644" y="126" width="250" height="138" rx="16" fill="#fff" stroke="#c6d6e5"/>
+    <text x="670" y="159" class="t">3. Validate</text>
+    <text x="670" y="189" class="s">解析 JSON arguments</text><text x="670" y="215" class="s">JSON Schema 校验</text><text x="670" y="241" class="s">计算 action / accesses</text>
+    <path d="M894 195H934" class="flow"/>
+    <rect x="936" y="126" width="404" height="138" rx="16" fill="#fff6e4" stroke="#e8c675"/>
+    <text x="962" y="159" class="t">4. Permission Gate</text>
+    <text x="962" y="189" class="s">策略链输出 allow / ask / deny</text><text x="962" y="215" class="s">ask 经 Session RPC 交给 UI；可记“本会话允许”</text><text x="962" y="241" class="s">manual / auto / yolo 只是策略输入，不是 OS 沙箱</text>
+  </g>
+
+  <path d="M1138 264V314" class="flow"/>
+  <g>
+    <rect x="60" y="318" width="1280" height="264" rx="20" fill="#102f4b" stroke="#225b84"/>
+    <text x="88" y="356" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="19" font-weight="700" fill="#dff4ff">5. ToolScheduler：资源冲突感知并发</text>
+    <rect x="88" y="382" width="360" height="150" rx="14" fill="#153e5e" stroke="#347da7"/>
+    <text x="112" y="414" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="700" fill="#82e1ff">访问声明</text>
+    <text x="112" y="444" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c2d9e8">all 或 file(path, mode, recursive)</text>
+    <text x="112" y="470" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c2d9e8">mode = read / write / readwrite / search</text>
+    <text x="112" y="496" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c2d9e8">路径重叠 + 任一写入 ⇒ 冲突</text>
+    <path d="M448 456H514" stroke="#6eb9da" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="516" y="382" width="364" height="150" rx="14" fill="#18375e" stroke="#626eb4"/>
+    <text x="540" y="414" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="700" fill="#c1bfff">调度规则</text>
+    <text x="540" y="444" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#d0d0eb">read ↔ read：可以并发</text>
+    <text x="540" y="470" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#d0d0eb">相交 write：串行等待</text>
+    <text x="540" y="496" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#d0d0eb">完成顺序流出，不强制原调用顺序</text>
+    <path d="M880 456H946" stroke="#8d8fc2" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="948" y="382" width="364" height="150" rx="14" fill="#153e43" stroke="#2d8f8e"/>
+    <text x="972" y="414" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="700" fill="#7cecdf">执行与 Hook</text>
+    <text x="972" y="444" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c0e1de">before veto / willExecute / progress</text>
+    <text x="972" y="470" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c0e1de">调用 Runtime 中的 FS / Process / MCP</text>
+    <text x="972" y="496" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#c0e1de">after hook / normalize result</text>
+  </g>
+
+  <path d="M700 582V628" class="flow"/>
+  <g>
+    <rect x="60" y="632" width="400" height="152" rx="16" fill="#fff" stroke="#c5d5e4"/>
+    <text x="86" y="665" class="t">6. Output Budget</text>
+    <text x="86" y="695" class="s">进度持续发给 UI</text><text x="86" y="721" class="s">过长结果截断并 spill 到存储</text><text x="86" y="747" class="s">模型默认只接收受控大小结果</text>
+    <path d="M460 708H500" class="flow"/>
+    <rect x="502" y="632" width="400" height="152" rx="16" fill="#edf9f6" stroke="#9cd8cd"/>
+    <text x="528" y="665" class="t">7. Context + Event</text>
+    <text x="528" y="695" class="s">tool.result 进入 Context Memory</text><text x="528" y="721" class="s">Event Dispatcher 同步折叠状态</text><text x="528" y="747" class="s">Wire 追加 durable event</text>
+    <path d="M902 708H942" class="flow"/>
+    <rect x="944" y="632" width="396" height="152" rx="16" fill="#f1efff" stroke="#bab3e9"/>
+    <text x="970" y="665" class="t">8. Continue Loop</text>
+    <text x="970" y="695" class="s">ContinuationStepRequest 入队</text><text x="970" y="721" class="s">下一次请求携带严格配对结果</text><text x="970" y="747" class="s">无工具调用时结束 Turn</text>
+  </g>
+  <rect x="60" y="818" width="1280" height="48" rx="12" fill="#ffeceb" stroke="#e7aaa5"/>
+  <text x="700" y="848" text-anchor="middle" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#7c3631">安全边界：Permission Gate 是应用层授权；一旦允许，Bash、本地 MCP 和插件仍继承当前 OS 用户的实际权限。</text>
+</svg>

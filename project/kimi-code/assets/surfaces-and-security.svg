@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+  <title id="title">Kimi Code 产品表面与 Kap Server 安全边界</title>
+  <desc id="desc">展示 TUI、Web、ACP、SDK 共享核心，以及 Kap Server 的网络安全控制</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7fbff"/><stop offset="1" stop-color="#eef3fa"/></linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4d6c88"/></marker>
+    <style>.h{font:700 27px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#102b46}.t{font:700 17px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#173a5b}.s{font:14px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#526d85}.m{font:13px Inter,'PingFang SC','Microsoft YaHei',sans-serif;fill:#74879a}.flow{stroke:#4d6c88;stroke-width:2;fill:none;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1400" height="860" rx="24" fill="url(#bg)"/>
+  <text x="58" y="58" class="h">一个 Core，多种产品表面；Kap Server 是明确的网络信任边界</text>
+  <text x="58" y="86" class="m">TUI 通过 Node SDK 兼容层复用 v2；Web / 远程客户端经 REST + WebSocket 接入；ACP 走 stdio。</text>
+
+  <g>
+    <rect x="60" y="126" width="280" height="146" rx="17" fill="#e8f5ff" stroke="#9acdef"/>
+    <text x="88" y="160" class="t">Kimi TUI</text><text x="88" y="190" class="s">pi-tui diff renderer</text><text x="88" y="216" class="s">TUIState + controllers</text><text x="88" y="242" class="s">不直接 import agent-core</text>
+    <rect x="373" y="126" width="280" height="146" rx="17" fill="#f1efff" stroke="#bab3e9"/>
+    <text x="401" y="160" class="t">Headless / Node SDK</text><text x="401" y="190" class="s">kimi -p</text><text x="401" y="216" class="s">KimiHarnessV2 adapter</text><text x="401" y="242" class="s">事件与会话语义归一</text>
+    <rect x="686" y="126" width="280" height="146" rx="17" fill="#edf9f6" stroke="#9bd8cc"/>
+    <text x="714" y="160" class="t">ACP / IDE</text><text x="714" y="190" class="s">stdio Agent Client Protocol</text><text x="714" y="216" class="s">事件、Plan、Approval、Replay</text><text x="714" y="242" class="s">Zed / JetBrains 等宿主</text>
+    <rect x="999" y="126" width="341" height="146" rx="17" fill="#fff6e4" stroke="#e8c675"/>
+    <text x="1027" y="160" class="t">Web / Remote Client</text><text x="1027" y="190" class="s">源码不在本仓库：仅提交 dist-web</text><text x="1027" y="216" class="s">来自独立 code-app 仓库的构建产物</text><text x="1027" y="242" class="s">后端仍可由本仓库审计</text>
+  </g>
+
+  <g class="flow"><path d="M200 272V324"/><path d="M513 272V324"/><path d="M826 272V324"/><path d="M1170 272V324"/></g>
+  <rect x="120" y="328" width="1160" height="104" rx="19" fill="#102f4b" stroke="#235b82"/>
+  <text x="700" y="367" text-anchor="middle" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="20" font-weight="700" fill="#dff4ff">agent-core-v2 + session semantics</text>
+  <text x="700" y="398" text-anchor="middle" font-family="Inter,'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#bcd5e6">统一的 Agent Loop · Event · Permission RPC · Task / Question / Approval · Transcript</text>
+
+  <path d="M700 432V484" class="flow"/>
+  <g>
+    <rect x="60" y="488" width="1280" height="286" rx="20" fill="#fff" stroke="#c5d5e4"/>
+    <text x="88" y="526" class="t">Kap Server：Fastify REST `/api/v1` + WebSocket `/api/v1/ws`</text>
+    <rect x="88" y="552" width="285" height="170" rx="14" fill="#e8f5ff" stroke="#a0cce8"/>
+    <text x="112" y="584" class="t">默认最小暴露</text>
+    <text x="112" y="614" class="s">绑定 127.0.0.1:58627</text><text x="112" y="640" class="s">底层非 loopback 检查 insecureNoTls</text><text x="112" y="666" class="s">CLI 当前将该选项默认为 true</text><text x="112" y="692" class="s">远程禁用 terminal，限制 debug/shutdown</text>
+    <rect x="397" y="552" width="285" height="170" rx="14" fill="#fff6e4" stroke="#e8c675"/>
+    <text x="421" y="584" class="t">认证与来源</text>
+    <text x="421" y="614" class="s">Bearer token</text><text x="421" y="640" class="s">Host / DNS rebinding 检查</text><text x="421" y="666" class="s">CORS origin 校验</text><text x="421" y="692" class="s">认证失败 rate limit</text>
+    <rect x="706" y="552" width="285" height="170" rx="14" fill="#edf9f6" stroke="#9bd8cc"/>
+    <text x="730" y="584" class="t">流式可靠性</text>
+    <text x="730" y="614" class="s">hello / subscriptions / cursor</text><text x="730" y="640" class="s">resync / heartbeat</text><text x="730" y="666" class="s">batching / backpressure</text><text x="730" y="692" class="s">OpenAPI + AsyncAPI contracts</text>
+    <rect x="1015" y="552" width="297" height="170" rx="14" fill="#f1efff" stroke="#bab3e9"/>
+    <text x="1039" y="584" class="t">浏览器凭证处理</text>
+    <text x="1039" y="614" class="s">Web URL 使用 #token= fragment</text><text x="1039" y="640" class="s">fragment 不随 HTTP 请求发送</text><text x="1039" y="666" class="s">避免 token 进入服务端访问日志</text><text x="1039" y="692" class="s">客户端再转为 Authorization header</text>
+  </g>
+  <text x="60" y="812" class="m">后端 API 覆盖：workspace / session / prompt / approvals / questions / files / tasks / skills / plugins / models / search / transcript。</text>
+  <text x="60" y="838" class="m">边界提醒：Web 前端源码缺席意味着本文不能审计其依赖、状态管理与浏览器端数据处理，只能验证预构建资产和服务端契约。</text>
+</svg>
