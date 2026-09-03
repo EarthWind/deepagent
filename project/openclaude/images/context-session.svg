@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaude 上下文工程与会话持久化</title>
+  <desc id="desc">展示系统提示词分段、项目上下文、压缩层和 JSONL 会话链之间的关系。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#15192e"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-opacity=".3"/></filter>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker>
+    <style>.h{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.t{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#e2e8f0}.d{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#b8c4d8}.p{font:700 13px Inter,"Noto Sans SC",sans-serif;fill:#07111f}.box{stroke:#334155;stroke-width:1.5;filter:url(#s)}.f{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1400" height="900" rx="28" fill="url(#bg)"/>
+  <text x="70" y="66" class="h">上下文是分层预算，会话是可分支日志</text>
+  <text x="70" y="98" class="sub">Prompt cache 稳定性、信息新鲜度与可恢复性被分别治理</text>
+
+  <rect x="70" y="140" width="600" height="590" rx="20" fill="#0e2236" class="box"/>
+  <text x="105" y="183" class="t">模型请求上下文栈</text>
+  <rect x="105" y="215" width="530" height="82" rx="14" fill="#12333a" stroke="#2dd4bf"/>
+  <text x="135" y="247" class="t">稳定 System Sections</text><text x="135" y="273" class="d">identity · rules · tools · style · efficiency</text>
+  <rect x="105" y="313" width="530" height="82" rx="14" fill="#162d42" stroke="#38bdf8"/>
+  <text x="135" y="345" class="t">动态 System Context</text><text x="135" y="371" class="d">session · environment · model · MCP · scratchpad</text>
+  <rect x="105" y="411" width="530" height="82" rx="14" fill="#1d2947" stroke="#818cf8"/>
+  <text x="135" y="443" class="t">Project / User Context</text><text x="135" y="469" class="d">项目指令 · memory · 当前日期 · Git 快照 · Repo Map*</text>
+  <rect x="105" y="509" width="530" height="82" rx="14" fill="#2a243c" stroke="#c084fc"/>
+  <text x="135" y="541" class="t">Conversation Messages</text><text x="135" y="567" class="d">user · assistant · tool_result · attachments</text>
+  <rect x="105" y="607" width="530" height="82" rx="14" fill="#322234" stroke="#f472b6"/>
+  <text x="135" y="639" class="t">请求前治理</text><text x="135" y="665" class="d">snip → microcompact → collapse → auto compact → hard cap</text>
+  <text x="105" y="714" class="d">* Repo Map 自动注入默认关闭，可按需调用 /repomap。</text>
+
+  <path d="M670 430H745" class="f"/>
+  <rect x="750" y="140" width="580" height="590" rx="20" fill="#171e35" class="box"/>
+  <text x="785" y="183" class="t">追加式 JSONL 会话</text>
+
+  <circle cx="835" cy="255" r="28" fill="#5eead4"/><text x="835" y="260" text-anchor="middle" class="p">U1</text>
+  <path d="M863 255H940" class="f"/>
+  <circle cx="975" cy="255" r="28" fill="#7dd3fc"/><text x="975" y="260" text-anchor="middle" class="p">A1</text>
+  <path d="M1003 255H1080" class="f"/>
+  <circle cx="1115" cy="255" r="28" fill="#a5b4fc"/><text x="1115" y="260" text-anchor="middle" class="p">TR</text>
+  <path d="M1143 255H1220" class="f"/>
+  <circle cx="1255" cy="255" r="28" fill="#c4b5fd"/><text x="1255" y="260" text-anchor="middle" class="p">A2</text>
+  <text x="785" y="311" class="d">每个 transcript message 有 uuid / parentUuid；从 leaf 反向重建。</text>
+
+  <path d="M975 283V365H1050" class="f"/>
+  <circle cx="1085" cy="365" r="28" fill="#f0abfc"/><text x="1085" y="370" text-anchor="middle" class="p">U2′</text>
+  <path d="M1113 365H1200" class="f"/>
+  <circle cx="1235" cy="365" r="28" fill="#f9a8d4"/><text x="1235" y="370" text-anchor="middle" class="p">A2′</text>
+  <text x="785" y="415" class="d">fork session 只分支对话图，不复制工作区；并行 tool result 是 DAG。</text>
+
+  <rect x="785" y="455" width="510" height="82" rx="14" fill="#102d36" stroke="#2dd4bf"/>
+  <text x="815" y="487" class="t">恢复</text><text x="815" y="513" class="d">找最新 leaf → parentUuid 链 → 修复并行结果孤儿</text>
+  <rect x="785" y="553" width="510" height="82" rx="14" fill="#24233d" stroke="#818cf8"/>
+  <text x="815" y="585" class="t">子 Agent Sidechain</text><text x="815" y="611" class="d">session/subagents/agent-&lt;id&gt;.jsonl + identity metadata</text>
+  <rect x="785" y="651" width="510" height="50" rx="14" fill="#342530" stroke="#fb7185"/>
+  <text x="815" y="682" class="d">原始 transcript 读取设 50 MB 防 OOM；日志自身仍可能更大。</text>
+
+  <rect x="70" y="778" width="1260" height="64" rx="15" fill="#111f34" stroke="#334155"/>
+  <text x="100" y="806" class="d">工程含义：</text><text x="190" y="806" class="d">上下文压缩不会代替持久化；持久化保留事实历史，模型请求只携带预算内的有效投影。</text>
+  <text x="100" y="830" class="d">缓存含义：</text><text x="190" y="830" class="d">稳定区段尽量前置；可观测消息允许 clone，回送 API 的原消息避免就地修改。</text>
+</svg>
