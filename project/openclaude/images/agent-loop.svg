@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="930" viewBox="0 0 1400 930" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaude query 状态机</title>
+  <desc id="desc">展示 OpenClaude 从上下文预处理、模型流式调用、工具执行到恢复和终止的循环。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#17162d"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="7" stdDeviation="8" flood-opacity=".3"/></filter>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker>
+    <marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#34d399"/></marker>
+    <style>.h{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.t{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#e2e8f0}.d{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#b8c4d8}.n{font:700 14px Inter,sans-serif;fill:#07111f}.b{stroke:#334155;stroke-width:1.5;filter:url(#s)}.f{fill:none;stroke:#64748b;stroke-width:2;marker-end:url(#a)}.ok{fill:none;stroke:#34d399;stroke-width:2.5;marker-end:url(#ag)}.dash{fill:none;stroke:#f59e0b;stroke-width:2;stroke-dasharray:8 7;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1400" height="930" rx="28" fill="url(#bg)"/>
+  <text x="70" y="66" class="h">query()：可恢复的流式 Agent 状态机</text>
+  <text x="70" y="98" class="sub">状态显式保存在循环中；async generator 同时服务 TUI、headless 和子 Agent</text>
+
+  <circle cx="110" cy="165" r="28" fill="#5eead4"/><text x="110" y="170" text-anchor="middle" class="n">1</text>
+  <rect x="165" y="125" width="490" height="90" rx="16" fill="#10283a" class="b"/>
+  <text x="195" y="160" class="t">准备消息与上下文</text><text x="195" y="188" class="d">skills / memory prefetch · history snip · tool result budget</text>
+  <path d="M655 170H745" class="f"/>
+  <circle cx="790" cy="165" r="28" fill="#7dd3fc"/><text x="790" y="170" text-anchor="middle" class="n">2</text>
+  <rect x="845" y="125" width="485" height="90" rx="16" fill="#10233d" class="b"/>
+  <text x="875" y="160" class="t">压缩与 Prompt 组装</text><text x="875" y="188" class="d">microcompact · context collapse · auto compact · hard cap</text>
+
+  <path d="M1085 215V265" class="f"/>
+  <circle cx="790" cy="310" r="28" fill="#a5b4fc"/><text x="790" y="315" text-anchor="middle" class="n">3</text>
+  <rect x="845" y="265" width="485" height="95" rx="16" fill="#191f43" class="b"/>
+  <text x="875" y="303" class="t">模型与 Provider 路由</text><text x="875" y="330" class="d">固定本轮路由 · reserve turn · callModel(stream)</text>
+  <path d="M845 312H655" class="f"/>
+  <circle cx="610" cy="310" r="28" fill="#c4b5fd"/><text x="610" y="315" text-anchor="middle" class="n">4</text>
+  <rect x="70" y="265" width="485" height="95" rx="16" fill="#211d42" class="b"/>
+  <text x="100" y="303" class="t">消费流式事件</text><text x="100" y="330" class="d">text / thinking / tool_use；可立即启动流式工具</text>
+
+  <path d="M312 360V415" class="f"/>
+  <polygon points="312,415 482,490 312,565 142,490" fill="#2a2138" stroke="#f0abfc" stroke-width="2" filter="url(#s)"/>
+  <text x="312" y="480" text-anchor="middle" class="t">响应包含</text><text x="312" y="505" text-anchor="middle" class="t">tool_use？</text>
+  <text x="110" y="467" class="d">否</text><text x="496" y="467" class="d">是</text>
+  <path d="M142 490H85V695H165" class="ok"/>
+  <path d="M482 490H560" class="f"/>
+
+  <circle cx="605" cy="490" r="28" fill="#f0abfc"/><text x="605" y="495" text-anchor="middle" class="n">5</text>
+  <rect x="660" y="445" width="670" height="100" rx="16" fill="#2a1d38" class="b"/>
+  <text x="690" y="483" class="t">执行工具批次</text><text x="690" y="510" class="d">schema → hooks → permission → call → result；安全并发、危险操作串行</text>
+  <path d="M995 545V600" class="f"/>
+  <circle cx="790" cy="645" r="28" fill="#f9a8d4"/><text x="790" y="650" text-anchor="middle" class="n">6</text>
+  <rect x="845" y="600" width="485" height="95" rx="16" fill="#281d36" class="b"/>
+  <text x="875" y="638" class="t">回填并推进状态</text><text x="875" y="665" class="d">assistant + tool_result + 附件；刷新 MCP 工具集</text>
+  <path d="M845 647H655" class="f"/>
+  <circle cx="610" cy="645" r="28" fill="#fdba74"/><text x="610" y="650" text-anchor="middle" class="n">7</text>
+  <rect x="165" y="600" width="390" height="95" rx="16" fill="#2d2532" class="b"/>
+  <text x="195" y="638" class="t">失败循环守卫</text><text x="195" y="665" class="d">重复失败提示 / 终止，maxSteps 切最终摘要</text>
+
+  <path d="M312 600V565" class="dash"/>
+  <path d="M1085 600C1085 400 1315 420 1315 290C1315 235 1245 230 1195 230" class="dash"/>
+  <text x="1170" y="410" class="d" fill="#fbbf24">tool_result 回到下一轮</text>
+
+  <rect x="165" y="690" width="390" height="82" rx="16" fill="#123629" stroke="#34d399" stroke-width="2" filter="url(#s)"/>
+  <text x="195" y="724" class="t">Stop hooks → Terminal</text><text x="195" y="750" class="d">completed / max_turns / blocking_limit / aborted</text>
+
+  <rect x="70" y="820" width="1260" height="58" rx="14" fill="#111f36" stroke="#334155"/>
+  <text x="100" y="846" class="d">恢复旁路：</text><text x="195" y="846" class="d">上下文溢出 → 压缩重试　|　输出上限 → continuation nudge　|　流式失败 → tombstone + fallback　|　429 → provider fallback</text>
+  <text x="100" y="868" class="d">核心不变量：</text><text x="195" y="868" class="d">不修改将回送模型的原始缓存前缀；失败流产生的孤儿消息先 tombstone；同一 turn 的 provider dispatch 只被一个执行者占用</text>
+</svg>

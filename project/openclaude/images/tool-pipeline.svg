@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="850" viewBox="0 0 1400 850" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaude 工具执行与权限管线</title>
+  <desc id="desc">工具调用依次经过查找、校验、Hooks、权限判定、执行和结果归一化，并由调度器控制并发。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#06131e"/><stop offset="1" stop-color="#14182b"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-opacity=".28"/></filter>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker>
+    <style>.h{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.t{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#e2e8f0}.d{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#b8c4d8}.num{font:700 14px Inter,sans-serif;fill:#06131e}.box{stroke:#334155;stroke-width:1.5;filter:url(#s)}.f{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#a)}.fd{stroke:#f59e0b;stroke-width:2;stroke-dasharray:7 6;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1400" height="850" rx="28" fill="url(#bg)"/>
+  <text x="70" y="66" class="h">工具不是函数表，而是一条受控执行管线</text>
+  <text x="70" y="98" class="sub">ToolDef 统一描述 schema、权限、并发、破坏性、呈现与结果映射</text>
+
+  <g>
+    <circle cx="100" cy="188" r="24" fill="#5eead4"/><text x="100" y="193" text-anchor="middle" class="num">1</text>
+    <rect x="140" y="140" width="185" height="96" rx="15" fill="#0e2937" class="box"/><text x="165" y="179" class="t">查找工具</text><text x="165" y="207" class="d">内建 + MCP</text>
+    <path d="M325 188H370" class="f"/>
+    <circle cx="400" cy="188" r="24" fill="#7dd3fc"/><text x="400" y="193" text-anchor="middle" class="num">2</text>
+    <rect x="440" y="140" width="210" height="96" rx="15" fill="#10243c" class="box"/><text x="465" y="179" class="t">结构校验</text><text x="465" y="207" class="d">Zod / JSON Schema</text>
+    <path d="M650 188H695" class="f"/>
+    <circle cx="725" cy="188" r="24" fill="#a5b4fc"/><text x="725" y="193" text-anchor="middle" class="num">3</text>
+    <rect x="765" y="140" width="210" height="96" rx="15" fill="#191f42" class="box"/><text x="790" y="179" class="t">语义校验</text><text x="790" y="207" class="d">validateInput()</text>
+    <path d="M975 188H1020" class="f"/>
+    <circle cx="1050" cy="188" r="24" fill="#c4b5fd"/><text x="1050" y="193" text-anchor="middle" class="num">4</text>
+    <rect x="1090" y="140" width="240" height="96" rx="15" fill="#221e41" class="box"/><text x="1115" y="179" class="t">PreToolUse Hooks</text><text x="1115" y="207" class="d">改输入 / 加上下文 / 决策</text>
+  </g>
+
+  <path d="M1210 236V300" class="f"/>
+  <polygon points="1065,350 1210,292 1355,350 1210,408" fill="#2c213b" stroke="#f0abfc" stroke-width="2" filter="url(#s)"/>
+  <text x="1210" y="342" text-anchor="middle" class="t">权限决策</text><text x="1210" y="370" text-anchor="middle" class="d">allow / ask / deny</text>
+  <path d="M1065 350H950" class="f"/>
+  <rect x="685" y="302" width="265" height="96" rx="15" fill="#31222d" class="box"/><text x="715" y="340" class="t">规则与 Mode</text><text x="715" y="368" class="d">deny / ask / safety / plan</text>
+  <path d="M685 350H620" class="f"/>
+  <rect x="365" y="302" width="255" height="96" rx="15" fill="#1a2a38" class="box"/><text x="395" y="340" class="t">用户或策略批准</text><text x="395" y="368" class="d">可能返回 updatedInput</text>
+  <path d="M365 350H300V495H365" class="f"/>
+  <rect x="365" y="447" width="255" height="96" rx="15" fill="#11342f" stroke="#34d399" stroke-width="2" filter="url(#s)"/><text x="395" y="485" class="t">tool.call()</text><text x="395" y="513" class="d">进度事件 + AbortSignal</text>
+  <path d="M620 495H685" class="f"/>
+  <rect x="685" y="447" width="265" height="96" rx="15" fill="#132d3c" class="box"/><text x="715" y="485" class="t">映射 tool_result</text><text x="715" y="513" class="d">尺寸控制 / 富媒体 / metadata</text>
+  <path d="M950 495H1015" class="f"/>
+  <rect x="1015" y="447" width="315" height="96" rx="15" fill="#24233f" class="box"/><text x="1045" y="485" class="t">PostToolUse Hooks</text><text x="1045" y="513" class="d">可重写 MCP 输出 / 附加消息</text>
+
+  <path d="M492 543V620H250" class="fd"/><text x="505" y="591" class="d">异常</text>
+  <rect x="70" y="620" width="330" height="82" rx="15" fill="#3a2027" stroke="#fb7185" stroke-width="1.5"/><text x="100" y="653" class="t">PostToolUseFailure</text><text x="100" y="679" class="d">结构化错误仍回送模型</text>
+  <path d="M1172 543V620H1090" class="f"/>
+  <rect x="920" y="620" width="410" height="82" rx="15" fill="#15293c" stroke="#60a5fa" stroke-width="1.5"/><text x="950" y="653" class="t">下一轮 query()</text><text x="950" y="679" class="d">assistant + tool_result 保持调用 ID 对齐</text>
+
+  <rect x="70" y="748" width="1260" height="54" rx="14" fill="#111f32" stroke="#334155"/>
+  <text x="100" y="780" class="d">并发纪律：连续的 isConcurrencySafe 工具组成并发批次；非安全工具独占执行；流式启动不改变最终结果的输入顺序。</text>
+</svg>

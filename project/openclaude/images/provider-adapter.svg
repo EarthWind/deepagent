@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">OpenClaude 多模型适配架构</title>
+  <desc id="desc">Descriptor 元数据控制路由，客户端工厂选择原生 SDK 或 OpenAI Shim，模型侧事件再统一为 Anthropic Messages 语义。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#18172d"/></linearGradient>
+    <linearGradient id="core" x2="1"><stop stop-color="#5eead4"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-opacity=".3"/></filter>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker>
+    <style>.h{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.t{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#e2e8f0}.d{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#b8c4d8}.p{font:700 14px Inter,"Noto Sans SC",sans-serif;fill:#07111f}.box{stroke:#334155;stroke-width:1.5;filter:url(#s)}.f{stroke:#64748b;stroke-width:2;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1400" height="900" rx="28" fill="url(#bg)"/>
+  <text x="70" y="66" class="h">多模型的关键：稳定内核协议，变化留在边界</text>
+  <text x="70" y="98" class="sub">“兼容 OpenAI”只是一个 transport family；不是所有 provider 都被强塞进同一 HTTP 模板</text>
+
+  <rect x="70" y="140" width="1260" height="116" rx="18" fill="#0d2636" class="box"/>
+  <text x="105" y="180" class="t">Descriptor / Registry / Runtime Metadata</text>
+  <text x="105" y="211" class="d">route · auth · catalog · context window · reasoning · vision · api format · discovery · headers</text>
+  <rect x="1025" y="174" width="270" height="42" rx="21" fill="url(#core)"/><text x="1160" y="200" text-anchor="middle" class="p">transportConfig.kind</text>
+  <path d="M700 256V305" class="f"/>
+
+  <rect x="420" y="310" width="560" height="110" rx="18" fill="#18213b" stroke="#818cf8" stroke-width="2" filter="url(#s)"/>
+  <text x="700" y="352" text-anchor="middle" class="t">getAnthropicClient()</text>
+  <text x="700" y="382" text-anchor="middle" class="d">选择传输、凭证、base URL、超时与 Provider override</text>
+  <text x="700" y="405" text-anchor="middle" class="d">跨 Provider Agent 路由会剥离父级 auth headers</text>
+
+  <path d="M520 420V475" class="f"/><path d="M700 420V475" class="f"/><path d="M880 420V475" class="f"/>
+  <rect x="70" y="480" width="410" height="165" rx="18" fill="#102b35" class="box"/>
+  <text x="105" y="519" class="t">Anthropic-family 原生路径</text>
+  <text x="105" y="550" class="d">Anthropic Messages</text><text x="105" y="578" class="d">Bedrock SDK · Vertex SDK · Foundry SDK</text><text x="105" y="606" class="d">可保留 thinking / cache_control 语义</text>
+  <rect x="105" y="615" width="170" height="22" rx="11" fill="#5eead4"/><text x="190" y="631" text-anchor="middle" class="p">Native clients</text>
+
+  <rect x="495" y="480" width="410" height="165" rx="18" fill="#1b243f" class="box"/>
+  <text x="530" y="519" class="t">OpenAI Shim 路径</text>
+  <text x="530" y="550" class="d">输入：Anthropic messages / tools / system</text><text x="530" y="578" class="d">输出：OpenAI / Codex / Gemini / Ollama 请求</text><text x="530" y="606" class="d">SSE 再翻译回 Anthropic stream events</text>
+  <rect x="530" y="615" width="165" height="22" rx="11" fill="#a5b4fc"/><text x="612" y="631" text-anchor="middle" class="p">Protocol shim</text>
+
+  <rect x="920" y="480" width="410" height="165" rx="18" fill="#2a2037" class="box"/>
+  <text x="955" y="519" class="t">显式协议例外</text>
+  <text x="955" y="550" class="d">GitHub dual mode · Azure headers</text><text x="955" y="578" class="d">Gemini thought signature · Kimi/DeepSeek reasoning</text><text x="955" y="606" class="d">Ollama native chat · provider-specific retry</text>
+  <rect x="955" y="615" width="185" height="22" rx="11" fill="#f0abfc"/><text x="1047" y="631" text-anchor="middle" class="p">Real differences</text>
+
+  <path d="M275 645V708H620" class="f"/><path d="M700 645V708" class="f"/><path d="M1125 645V708H780" class="f"/>
+  <rect x="320" y="712" width="760" height="112" rx="20" fill="#102c35" stroke="#2dd4bf" stroke-width="2" filter="url(#s)"/>
+  <text x="700" y="754" text-anchor="middle" class="t">Agent Core 的规范化事件空间</text>
+  <text x="700" y="784" text-anchor="middle" class="d">assistant content blocks · thinking · tool_use · tool_result · usage · errors</text>
+  <text x="700" y="808" text-anchor="middle" class="d">query() 因而无需为每个 Provider 重写状态机</text>
+  <rect x="1095" y="733" width="205" height="70" rx="14" fill="#1e293b" stroke="#475569"/>
+  <text x="1197" y="760" text-anchor="middle" class="d">设计代价</text><text x="1197" y="785" text-anchor="middle" class="d">核心语义偏 Anthropic</text>
+</svg>
