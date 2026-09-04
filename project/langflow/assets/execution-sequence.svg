@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+  <title id="title">Langflow 执行与流式回传时序</title>
+  <desc id="desc">展示从用户运行工作流，到前端、API、Graph、Vertex、Component、Agent 和持久化服务之间的调用与事件回传。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09111f"/><stop offset="1" stop-color="#101a2d"/></linearGradient>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#67e8f9"/></marker>
+    <marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#f9a8d4"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e7f1ff}.h{font-size:28px;font-weight:700}.sub{font-size:14px;fill:#9fb1cc}.head{font-size:15px;font-weight:700}.txt{font-size:13px}.life{stroke:#49617f;stroke-width:1.4;stroke-dasharray:5 6}.call{stroke:#67e8f9;stroke-width:2;fill:none;marker-end:url(#a)}.ret{stroke:#f9a8d4;stroke-width:2;fill:none;stroke-dasharray:5 4;marker-end:url(#b)}.note{fill:#1b2a43;stroke:#64748b}.ntext{font-size:12px;fill:#c8d8ef}</style>
+  </defs>
+  <rect width="1280" height="800" fill="url(#bg)"/>
+  <text class="t h" x="50" y="53">一次 Workflow 运行，发生了什么？</text>
+  <text class="t sub" x="50" y="78">V2 stream / AG-UI 主路径；粉色虚线为事件回传</text>
+
+  <g class="t head" text-anchor="middle">
+    <rect x="45" y="105" width="140" height="48" rx="10" fill="#1f3c5b" stroke="#60a5fa"/><text x="115" y="134">用户 / Canvas</text>
+    <rect x="215" y="105" width="140" height="48" rx="10" fill="#1f3c5b" stroke="#60a5fa"/><text x="285" y="134">Zustand / Bridge</text>
+    <rect x="385" y="105" width="140" height="48" rx="10" fill="#194348" stroke="#5eead4"/><text x="455" y="134">Workflow API</text>
+    <rect x="555" y="105" width="140" height="48" rx="10" fill="#3f3060" stroke="#c084fc"/><text x="625" y="134">Graph Scheduler</text>
+    <rect x="725" y="105" width="140" height="48" rx="10" fill="#3f3060" stroke="#c084fc"/><text x="795" y="134">Vertex / Component</text>
+    <rect x="895" y="105" width="140" height="48" rx="10" fill="#59342f" stroke="#fb923c"/><text x="965" y="134">Agent / Tools</text>
+    <rect x="1065" y="105" width="170" height="48" rx="10" fill="#29384c" stroke="#94a3b8"/><text x="1150" y="134">DB / Queue / Trace</text>
+  </g>
+  <g class="life"><line x1="115" y1="153" x2="115" y2="755"/><line x1="285" y1="153" x2="285" y2="755"/><line x1="455" y1="153" x2="455" y2="755"/><line x1="625" y1="153" x2="625" y2="755"/><line x1="795" y1="153" x2="795" y2="755"/><line x1="965" y1="153" x2="965" y2="755"/><line x1="1150" y1="153" x2="1150" y2="755"/></g>
+
+  <g class="t txt">
+    <path class="call" d="M115 190H280"/><text x="135" y="182">1. 点击 Run</text>
+    <path class="call" d="M285 225H450"/><text x="300" y="217">2. POST /run?stream=true</text>
+    <path class="call" d="M455 260H620"/><text x="468" y="252">3. 校验 input / tweaks / globals</text>
+    <path class="call" d="M625 295H790"/><text x="642" y="287">4. from_payload → Vertex / Edge</text>
+    <path class="call" d="M625 330H1145"/><text x="642" y="322">5. 建立 execution / trace / event sink</text>
+    <rect class="note" x="565" y="350" width="310" height="54" rx="9"/><text class="ntext" x="580" y="372">调度器计算 runnable vertices：</text><text class="ntext" x="580" y="391">依赖满足的节点可同层并发，循环/条件另行推进</text>
+    <path class="call" d="M625 430H790"/><text x="642" y="422">6. build_vertex</text>
+    <path class="call" d="M795 465H960"/><text x="812" y="457">7. Agent 节点：astream_events</text>
+    <path class="call" d="M965 500H1145"/><text x="982" y="492">8. memory / checkpoint / tool I/O</text>
+    <path class="ret" d="M965 535H800"/><text x="812" y="527">token / tool / message</text>
+    <path class="ret" d="M795 570H460"/><text x="530" y="562">9. EventManager → 协议适配器</text>
+    <path class="ret" d="M455 605H290"/><text x="315" y="597">10. SSE：AG-UI events</text>
+    <path class="ret" d="M285 640H120"/><text x="135" y="632">11. JSON Patch 节点状态</text>
+    <rect x="80" y="659" width="240" height="60" rx="9" fill="#203653" stroke="#60a5fa"/><text x="100" y="684">画布更新颜色、边动画、输出；</text><text x="100" y="704">Playground 追加消息与流式 token</text>
+    <rect x="900" y="659" width="305" height="60" rx="9" fill="#432d35" stroke="#f9a8d4"/><text x="920" y="684">若工具需人工批准：暂停内层 Agent，</text><text x="920" y="704">外层 Graph 保存 checkpoint，之后 resume</text>
+    <path class="ret" d="M900 690H325"/>
+  </g>
+</svg>
