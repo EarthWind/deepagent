@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" role="img" aria-labelledby="title desc">
+  <title id="title">Langflow 双层图运行时</title>
+  <desc id="desc">外层 LFX 工作流图包含一个 Agent 节点，Agent 节点内部运行 LangGraph 的模型工具循环，并可暂停等待人工审批。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#081120"/><stop offset="1" stop-color="#16152c"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#000" flood-opacity=".28"/></filter>
+    <marker id="ap" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#c4b5fd"/></marker>
+    <marker id="ao" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#fb923c"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e8f0ff}.h{font-size:28px;font-weight:700}.sub{font-size:14px;fill:#a5b4cf}.label{font-size:16px;font-weight:700}.small{font-size:13px;fill:#c5d2e7}.node{filter:url(#s)}.outer{stroke:#c4b5fd;stroke-width:2.4;fill:none;marker-end:url(#ap)}.inner{stroke:#fb923c;stroke-width:2.4;fill:none;marker-end:url(#ao)}</style>
+  </defs>
+  <rect width="1280" height="700" fill="url(#bg)"/>
+  <text class="t h" x="54" y="58">“一个图里还有一个图”：Agent 执行的关键心智模型</text>
+  <text class="t sub" x="54" y="84">外层图负责确定性数据流与节点生命周期；内层图负责非确定性的模型—工具循环</text>
+  <rect x="52" y="120" width="1176" height="520" rx="22" fill="#171b35" stroke="#8b5cf6" stroke-width="2"/>
+  <text class="t label" x="78" y="154">外层：LFX Graph（画布工作流）</text>
+
+  <g class="node">
+    <rect x="92" y="300" width="160" height="84" rx="16" fill="#342852" stroke="#c4b5fd"/><text class="t label" x="128" y="333">Chat Input</text><text class="t small" x="125" y="359">Message</text>
+    <rect x="307" y="300" width="160" height="84" rx="16" fill="#342852" stroke="#c4b5fd"/><text class="t label" x="349" y="333">Retriever</text><text class="t small" x="342" y="359">Data / Tool</text>
+    <rect x="1015" y="300" width="160" height="84" rx="16" fill="#342852" stroke="#c4b5fd"/><text class="t label" x="1055" y="333">Output</text><text class="t small" x="1050" y="359">Message</text>
+  </g>
+  <path class="outer" d="M252 342H302"/><path class="outer" d="M467 342H515"/><path class="outer" d="M970 342H1010"/>
+
+  <rect x="520" y="185" width="445" height="375" rx="22" fill="#392526" stroke="#fb923c" stroke-width="2.2" filter="url(#s)"/>
+  <text class="t label" x="546" y="220">Agent Component</text>
+  <text class="t small" x="546" y="244">内层：LangGraph CompiledStateGraph</text>
+  <g class="node">
+    <rect x="555" y="290" width="135" height="72" rx="14" fill="#60382e" stroke="#fdba74"/><text class="t label" x="603" y="321">LLM</text><text class="t small" x="581" y="345">decide / answer</text>
+    <rect x="795" y="290" width="135" height="72" rx="14" fill="#60382e" stroke="#fdba74"/><text class="t label" x="835" y="321">Tools</text><text class="t small" x="821" y="345">call / result</text>
+    <rect x="675" y="442" width="135" height="72" rx="14" fill="#60382e" stroke="#f9a8d4"/><text class="t label" x="708" y="473">Human</text><text class="t small" x="697" y="497">approve / edit</text>
+  </g>
+  <path class="inner" d="M690 311C730 275 755 275 790 311"/><text class="t small" x="715" y="276">tool_call</text>
+  <path class="inner" d="M795 345C755 388 730 388 690 345"/><text class="t small" x="717" y="397">ToolMessage</text>
+  <path class="inner" d="M837 362C830 411 800 438 780 448"/><text class="t small" x="838" y="410">interrupt</text>
+  <path class="inner" d="M703 443C664 416 635 390 632 367"/><text class="t small" x="610" y="423">resume</text>
+  <rect x="546" y="535" width="393" height="1" fill="#80574d"/>
+
+  <rect x="85" y="515" width="385" height="82" rx="13" fill="#222a44" stroke="#596a90"/>
+  <text class="t small" x="107" y="543">外层状态：VertexBuildResult、边值、事务、</text><text class="t small" x="107" y="566">条件分支、循环、流程 checkpoint</text>
+  <rect x="985" y="515" width="205" height="82" rx="13" fill="#222a44" stroke="#596a90"/>
+  <text class="t small" x="1007" y="543">内层事件被翻译为</text><text class="t small" x="1007" y="566">token / tool / message / pause</text>
+  <path class="outer" d="M965 525H980"/>
+</svg>

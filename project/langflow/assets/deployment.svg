@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Langflow 开发环境与生产环境拓扑对比</title>
+  <desc id="desc">左侧为单进程开发默认配置，右侧为使用负载均衡、多个 Langflow 实例、PostgreSQL、Redis、对象存储和可观测后端的生产参考拓扑。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#122039"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#000" flood-opacity=".22"/></filter>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#7dd3fc"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e9f2ff}.h{font-size:28px;font-weight:700}.sub{font-size:14px;fill:#a4b4cd}.label{font-size:16px;font-weight:700}.small{font-size:13px;fill:#cad8ed}.box{filter:url(#s)}.line{stroke:#7dd3fc;stroke-width:2;fill:none;marker-end:url(#a)}.warn{fill:#fcd34d;font-size:13px}</style>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <text class="t h" x="52" y="56">部署形态：开发默认值不是生产架构</text>
+  <text class="t sub" x="52" y="82">生产环境的核心是共享状态、外部存储、队列与基础设施隔离</text>
+
+  <rect x="52" y="118" width="440" height="530" rx="22" fill="#18243a" stroke="#64748b"/>
+  <text class="t label" x="80" y="155">本地开发 / 单实例</text>
+  <rect class="box" x="105" y="195" width="330" height="115" rx="16" fill="#253b5d" stroke="#60a5fa"/>
+  <text class="t label" x="187" y="230">Langflow 单进程</text>
+  <text class="t small" x="138" y="258">FastAPI + 内存服务 + 本地组件运行</text>
+  <text class="t small" x="170" y="282">画布 / API / Worker 同进程</text>
+  <path class="line" d="M270 310V365"/>
+  <rect class="box" x="105" y="370" width="145" height="82" rx="14" fill="#2d3546" stroke="#94a3b8"/>
+  <text class="t label" x="144" y="405">SQLite</text><text class="t small" x="135" y="430">本地数据库</text>
+  <rect class="box" x="290" y="370" width="145" height="82" rx="14" fill="#2d3546" stroke="#94a3b8"/>
+  <text class="t label" x="329" y="405">Local</text><text class="t small" x="313" y="430">文件 / 缓存</text>
+  <rect x="90" y="500" width="360" height="100" rx="13" fill="#3b3020" stroke="#fbbf24"/>
+  <text class="t warn" x="112" y="531">适合开发与单机试验；不具备多实例共享状态，</text>
+  <text class="t warn" x="112" y="555">进程重启会丢失内存队列/缓存，SQLite 也不适合</text>
+  <text class="t warn" x="112" y="579">生产并发与水平扩展。</text>
+
+  <rect x="530" y="118" width="698" height="530" rx="22" fill="#132c32" stroke="#2dd4bf"/>
+  <text class="t label" x="558" y="155">生产参考拓扑</text>
+  <rect class="box" x="760" y="180" width="240" height="64" rx="14" fill="#17454b" stroke="#5eead4"/>
+  <text class="t label" x="809" y="208">Gateway / LB</text><text class="t small" x="797" y="230">TLS · auth · rate limit</text>
+  <rect class="box" x="595" y="300" width="225" height="82" rx="14" fill="#18454a" stroke="#5eead4"/>
+  <text class="t label" x="644" y="333">Langflow A</text><text class="t small" x="632" y="358">API + Worker</text>
+  <rect class="box" x="940" y="300" width="225" height="82" rx="14" fill="#18454a" stroke="#5eead4"/>
+  <text class="t label" x="989" y="333">Langflow B</text><text class="t small" x="977" y="358">API + Worker</text>
+  <path class="line" d="M840 244L732 295"/><path class="line" d="M920 244L1028 295"/>
+  <rect class="box" x="565" y="470" width="150" height="82" rx="14" fill="#28394e" stroke="#93c5fd"/>
+  <text class="t label" x="591" y="504">PostgreSQL</text><text class="t small" x="584" y="529">flows / jobs / state</text>
+  <rect class="box" x="742" y="470" width="150" height="82" rx="14" fill="#28394e" stroke="#93c5fd"/>
+  <text class="t label" x="783" y="504">Redis</text><text class="t small" x="765" y="529">queue / cache</text>
+  <rect class="box" x="919" y="470" width="150" height="82" rx="14" fill="#28394e" stroke="#93c5fd"/>
+  <text class="t label" x="952" y="504">Storage</text><text class="t small" x="941" y="529">S3 / Blob</text>
+  <rect class="box" x="1096" y="470" width="100" height="82" rx="14" fill="#28394e" stroke="#93c5fd"/>
+  <text class="t label" x="1112" y="504">OTel</text><text class="t small" x="1110" y="529">trace</text>
+  <path class="line" d="M708 382L640 465"/><path class="line" d="M740 382L810 465"/><path class="line" d="M1020 382L990 465"/><path class="line" d="M1070 382L1142 465"/>
+  <text class="t small" x="585" y="598">另需：固定 secret key、外部向量库、网络/租户隔离、备份与指标告警</text>
+</svg>

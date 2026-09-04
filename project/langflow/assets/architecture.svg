@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="790" viewBox="0 0 1280 790" role="img" aria-labelledby="title desc">
+  <title id="title">Langflow 1.12 源码架构</title>
+  <desc id="desc">从可视化编辑器、API 与服务层，到 LFX 图运行时、Agent 内循环和基础设施的分层架构图。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#111d35"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".22"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7dd3fc"/></marker>
+    <style>
+      .t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5efff}.h{font-weight:700;font-size:28px}.sub{font-size:14px;fill:#9fb1cc}.label{font-weight:700;font-size:17px}.small{font-size:13px;fill:#bed0ea}.box{rx:16;stroke-width:1.5;filter:url(#shadow)}.line{stroke:#7dd3fc;stroke-width:2;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1280" height="790" fill="url(#bg)"/>
+  <text class="t h" x="60" y="58">Langflow：从画布到 Agent 运行时</text>
+  <text class="t sub" x="60" y="83">源码快照：main@e3abffc · v1.12.0 · 箭头表示主要控制流与事件回传</text>
+
+  <rect class="box" x="60" y="120" width="1160" height="105" fill="#16233e" stroke="#405477"/>
+  <text class="t label" x="88" y="151">交互与协议层</text>
+  <rect x="260" y="141" width="240" height="58" rx="11" fill="#243b63" stroke="#60a5fa"/>
+  <text class="t label" x="285" y="168">React 19 可视化画布</text><text class="t small" x="285" y="188">XYFlow · Zustand · Query</text>
+  <rect x="535" y="141" width="210" height="58" rx="11" fill="#243b63" stroke="#60a5fa"/>
+  <text class="t label" x="560" y="168">Playground / API</text><text class="t small" x="560" y="188">REST · SSE · NDJSON</text>
+  <rect x="780" y="141" width="350" height="58" rx="11" fill="#243b63" stroke="#60a5fa"/>
+  <text class="t label" x="805" y="168">外部互操作</text><text class="t small" x="805" y="188">AG-UI · MCP Client/Server · A2A</text>
+
+  <rect class="box" x="60" y="265" width="1160" height="112" fill="#122b32" stroke="#2dd4bf"/>
+  <text class="t label" x="88" y="298">FastAPI 应用与服务容器</text>
+  <rect x="260" y="286" width="240" height="64" rx="11" fill="#18454a" stroke="#5eead4"/>
+  <text class="t label" x="285" y="314">V1 构建 API</text><text class="t small" x="285" y="337">逐节点事件 · Canvas 调试</text>
+  <rect x="535" y="286" width="240" height="64" rx="11" fill="#18454a" stroke="#5eead4"/>
+  <text class="t label" x="560" y="314">V2 Workflow API</text><text class="t small" x="560" y="337">sync · stream · background</text>
+  <rect x="810" y="286" width="320" height="64" rx="11" fill="#18454a" stroke="#5eead4"/>
+  <text class="t label" x="835" y="314">ServiceManager</text><text class="t small" x="835" y="337">DB · cache · queue · storage · policy · trace</text>
+
+  <rect class="box" x="60" y="417" width="725" height="255" fill="#2e2148" stroke="#c084fc"/>
+  <text class="t label" x="88" y="451">LFX：可执行图运行时</text>
+  <rect x="93" y="478" width="196" height="70" rx="11" fill="#49336e" stroke="#d8b4fe"/>
+  <text class="t label" x="116" y="507">Graph / IR</text><text class="t small" x="116" y="531">Vertex · Edge · Handle</text>
+  <rect x="326" y="478" width="196" height="70" rx="11" fill="#49336e" stroke="#d8b4fe"/>
+  <text class="t label" x="349" y="507">Scheduler</text><text class="t small" x="349" y="531">依赖 · 并行 · 循环 · 条件</text>
+  <rect x="559" y="478" width="196" height="70" rx="11" fill="#49336e" stroke="#d8b4fe"/>
+  <text class="t label" x="582" y="507">Component</text><text class="t small" x="582" y="531">输入/输出 · 工具化 · 缓存</text>
+  <path class="line" d="M289 513 H321"/><path class="line" d="M522 513 H554"/>
+  <rect x="93" y="577" width="662" height="64" rx="11" fill="#3d2c5c" stroke="#a78bfa"/>
+  <text class="t label" x="116" y="606">事件与状态：VertexBuildResult · EventManager · Checkpoint</text>
+  <text class="t small" x="116" y="629">同一份画布 JSON 被解析为后端运行图；执行事件再映射回节点状态</text>
+
+  <rect class="box" x="825" y="417" width="395" height="255" fill="#3b2524" stroke="#fb923c"/>
+  <text class="t label" x="853" y="451">Agent 节点的内层 LangGraph</text>
+  <rect x="855" y="478" width="335" height="70" rx="11" fill="#5a3430" stroke="#fdba74"/>
+  <text class="t label" x="880" y="507">create_agent / CompiledStateGraph</text>
+  <text class="t small" x="880" y="531">LLM ⇄ Tool · Middleware · Memory</text>
+  <rect x="855" y="577" width="155" height="64" rx="11" fill="#5a3430" stroke="#fdba74"/>
+  <text class="t label" x="880" y="606">HITL</text><text class="t small" x="880" y="629">approve/edit/reject</text>
+  <rect x="1035" y="577" width="155" height="64" rx="11" fill="#5a3430" stroke="#fdba74"/>
+  <text class="t label" x="1060" y="606">事件适配</text><text class="t small" x="1060" y="629">token/tool/message</text>
+  <path class="line" d="M1010 609 H1030"/>
+
+  <path class="line" d="M640 225 V260"/><path class="line" d="M640 377 V412"/><path class="line" d="M785 544 H820"/>
+  <path d="M1130 225 C1190 250 1190 370 1130 412" stroke="#7dd3fc" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="713" width="1160" height="45" rx="12" fill="#142238" stroke="#36516f"/>
+  <text class="t small" x="88" y="741">基础设施：PostgreSQL / SQLite · Redis Queue &amp; Cache · 对象存储 · OpenTelemetry · Provider APIs</text>
+  <path class="line" d="M422 672 V708"/><path class="line" d="M1022 672 V708"/>
+</svg>
