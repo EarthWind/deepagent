@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="780" viewBox="0 0 1440 780" role="img" aria-labelledby="title desc">
+  <title id="title">LangChain 结构化输出策略</title>
+  <desc id="desc">展示 AutoStrategy 在 ProviderStrategy 与 ToolStrategy 之间选择以及错误重试过程</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09131f"/><stop offset="1" stop-color="#14243a"/></linearGradient><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5 0 9z" fill="#69dda6"/></marker><style>.s{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.m{font-family:"JetBrains Mono",monospace}.t{fill:#f5f8fc}.sub{fill:#9eb2c9}.box{fill:#12283f;stroke:#3b546f;stroke-width:2}.arr{stroke:#69dda6;stroke-width:2.3;fill:none;marker-end:url(#a)}</style></defs>
+  <rect width="1440" height="780" rx="28" fill="url(#bg)"/>
+  <text class="s t" x="70" y="68" font-size="33" font-weight="800">结构化输出：不是解析字符串，而是改变模型协议</text>
+  <text class="s sub" x="70" y="104" font-size="17">同一份 Pydantic / dataclass / TypedDict / JSON Schema，映射为 provider-native 或人工工具调用</text>
+
+  <g transform="translate(70 165)">
+    <g transform="translate(0 128)"><rect class="box" width="252" height="114" rx="18"/><text class="m t" x="126" y="43" text-anchor="middle" font-size="18">response_format</text><text class="s sub" x="126" y="75" text-anchor="middle" font-size="14">Schema / AutoStrategy</text></g>
+    <path class="arr" d="M252 185H360"/>
+    <g transform="translate(360 111)"><path d="M150 0L300 74 150 148 0 74z" fill="#252d46" stroke="#c4a8ff" stroke-width="2"/><text class="s t" x="150" y="64" text-anchor="middle" font-size="17" font-weight="700">模型 profile 支持</text><text class="m" x="150" y="91" text-anchor="middle" fill="#cdb9ff" font-size="14">structured_output?</text></g>
+
+    <path class="arr" d="M510 111V40H742"/><text class="s" x="543" y="30" fill="#69dda6" font-size="13">是</text>
+    <g transform="translate(742 0)"><rect width="506" height="160" rx="21" fill="#16342f" stroke="#69dda6" stroke-width="2"/><text class="s" x="253" y="42" text-anchor="middle" fill="#69dda6" font-size="21" font-weight="800">ProviderStrategy</text><text class="m t" x="34" y="82" font-size="14">response_format = {"type": "json_schema", …}</text><text class="s sub" x="34" y="115" font-size="14">供应商原生约束 → 提取文本 → json.loads → TypeAdapter</text><text class="s sub" x="34" y="140" font-size="13">优点：协议明确；限制：依赖模型/供应商能力声明</text></g>
+
+    <path class="arr" d="M510 259V340H742"/><text class="s" x="544" y="331" fill="#69dda6" font-size="13">否 / 显式指定</text>
+    <g transform="translate(742 290)"><rect width="506" height="192" rx="21" fill="#172d45" stroke="#79b7ff" stroke-width="2"/><text class="s" x="253" y="42" text-anchor="middle" fill="#79b7ff" font-size="21" font-weight="800">ToolStrategy</text><text class="s sub" x="34" y="79" font-size="14">Schema → 人工 StructuredTool → 强制模型调用</text><text class="s sub" x="34" y="110" font-size="14">识别输出 tool_call → 校验 args → structured_response</text><path d="M36 139H354" stroke="#536c87" stroke-width="2"/><text class="s" x="34" y="169" fill="#f0b97c" font-size="13">多输出或校验失败：写 ToolMessage 错误，再让模型重试</text></g>
+    <path class="arr" d="M1248 80H1324V249"/><path class="arr" d="M1248 386H1324V249"/>
+    <g transform="translate(1260 202)"><rect width="100" height="94" rx="47" fill="#17334d" stroke="#79b7ff" stroke-width="2"/><text class="s t" x="50" y="41" text-anchor="middle" font-size="14" font-weight="700">validated</text><text class="m" x="50" y="65" text-anchor="middle" fill="#9cc8ff" font-size="11">object</text></g>
+  </g>
+  <g transform="translate(70 684)"><rect width="1300" height="52" rx="14" fill="#112236" stroke="#334b63"/><text class="s" x="24" y="33" fill="#96aac1" font-size="14">注意：源码对 Pydantic/dataclass/TypedDict 使用 TypeAdapter；原始 JSON Schema 字典只返回 data，不在本地再次执行 schema 校验。</text></g>
+</svg>

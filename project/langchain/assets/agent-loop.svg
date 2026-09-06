@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">create_agent 构图与 Agent 运行循环</title>
+  <desc id="desc">上半部分展示 create_agent 编译状态图，下半部分展示模型节点、工具并行执行和退出条件</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#081320"/><stop offset="1" stop-color="#132239"/></linearGradient><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5 0 9z" fill="#68dda5"/></marker><marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5 0 9z" fill="#79b7ff"/></marker><style>.s{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.m{font-family:"JetBrains Mono",monospace}.t{fill:#f4f8fd}.sub{fill:#99aec6}.box{fill:#122840;stroke:#39536d;stroke-width:2}.ga{stroke:#68dda5;stroke-width:2.5;fill:none;marker-end:url(#a)}.gb{stroke:#79b7ff;stroke-width:2.5;fill:none;marker-end:url(#b)}</style></defs>
+  <rect width="1440" height="960" rx="28" fill="url(#bg)"/>
+  <text class="s t" x="70" y="66" font-size="33" font-weight="800">一份 Agent 配置，经历两次“变形”</text>
+  <text class="s sub" x="70" y="101" font-size="17">构建期：Python 参数 → 状态图；运行期：消息状态 → 模型/工具循环</text>
+
+  <g transform="translate(70 144)">
+    <text class="s" x="0" y="0" fill="#68dda5" font-size="16" font-weight="700">BUILD TIME</text>
+    <g transform="translate(0 28)"><rect class="box" width="212" height="104" rx="17"/><text class="m t" x="106" y="43" text-anchor="middle" font-size="18">create_agent</text><text class="s sub" x="106" y="74" text-anchor="middle" font-size="14">model / tools / middleware</text></g>
+    <path class="ga" d="M212 80H282"/>
+    <g transform="translate(282 28)"><rect class="box" width="212" height="104" rx="17"/><text class="s t" x="106" y="40" text-anchor="middle" font-size="18" font-weight="700">规范化输入</text><text class="s sub" x="106" y="70" text-anchor="middle" font-size="14">模型、schema、工具</text></g>
+    <path class="ga" d="M494 80H564"/>
+    <g transform="translate(564 28)"><rect class="box" width="212" height="104" rx="17"/><text class="s t" x="106" y="40" text-anchor="middle" font-size="18" font-weight="700">绑定模型</text><text class="s sub" x="106" y="70" text-anchor="middle" font-size="14">bind_tools / response</text></g>
+    <path class="ga" d="M776 80H846"/>
+    <g transform="translate(846 28)"><rect class="box" width="212" height="104" rx="17"/><text class="s t" x="106" y="40" text-anchor="middle" font-size="18" font-weight="700">装配节点与边</text><text class="s sub" x="106" y="70" text-anchor="middle" font-size="14">hooks / model / tools</text></g>
+    <path class="ga" d="M1058 80H1128"/>
+    <g transform="translate(1128 28)"><rect width="212" height="104" rx="17" fill="#15362f" stroke="#68dda5" stroke-width="2"/><text class="m t" x="106" y="40" text-anchor="middle" font-size="17">compile()</text><text class="s" x="106" y="70" text-anchor="middle" fill="#68dda5" font-size="14">CompiledStateGraph</text></g>
+  </g>
+
+  <line x1="70" y1="330" x2="1370" y2="330" stroke="#30465e" stroke-width="2"/>
+  <g transform="translate(70 375)">
+    <text class="s" x="0" y="0" fill="#79b7ff" font-size="16" font-weight="700">RUN TIME</text>
+    <g transform="translate(0 50)"><rect width="175" height="92" rx="46" fill="#17334d" stroke="#79b7ff" stroke-width="2"/><text class="s t" x="87" y="39" text-anchor="middle" font-size="18" font-weight="700">START</text><text class="s sub" x="87" y="64" text-anchor="middle" font-size="13">写入 messages</text></g>
+    <path class="gb" d="M175 96H277"/>
+
+    <g transform="translate(277 32)"><rect width="260" height="128" rx="20" fill="#182e47" stroke="#79b7ff" stroke-width="2"/><text class="s t" x="130" y="42" text-anchor="middle" font-size="22" font-weight="800">model node</text><text class="m" x="130" y="73" text-anchor="middle" fill="#9cc8ff" font-size="13">ModelRequest → AIMessage</text><text class="s sub" x="130" y="101" text-anchor="middle" font-size="13">system + messages + tools</text></g>
+
+    <path class="gb" d="M537 96H655"/>
+    <g transform="translate(655 33)"><path d="M126 0L252 63 126 126 0 63z" fill="#24314a" stroke="#c2a6ff" stroke-width="2"/><text class="s t" x="126" y="54" text-anchor="middle" font-size="17" font-weight="700">有待执行客户端</text><text class="m" x="126" y="80" text-anchor="middle" fill="#cbb6ff" font-size="14">tool_calls?</text></g>
+
+    <path class="gb" d="M907 96H1035"/>
+    <text class="s" x="956" y="73" fill="#9cc8ff" font-size="13">否 / 已完成</text>
+    <g transform="translate(1035 50)"><rect width="175" height="92" rx="46" fill="#17334d" stroke="#79b7ff" stroke-width="2"/><text class="s t" x="87" y="39" text-anchor="middle" font-size="18" font-weight="700">END</text><text class="s sub" x="87" y="64" text-anchor="middle" font-size="13">返回最终状态</text></g>
+
+    <path class="ga" d="M781 159V254"/><text class="s" x="797" y="210" fill="#68dda5" font-size="13">是：Send fan-out</text>
+    <g transform="translate(555 254)"><rect width="452" height="133" rx="20" fill="#14332f" stroke="#68dda5" stroke-width="2"/><text class="s t" x="226" y="39" text-anchor="middle" font-size="21" font-weight="800">tools node</text><text class="s sub" x="226" y="69" text-anchor="middle" font-size="14">校验参数 · 注入 ToolRuntime · 并行执行</text><rect x="42" y="89" width="104" height="25" rx="12" fill="#214940"/><rect x="174" y="89" width="104" height="25" rx="12" fill="#214940"/><rect x="306" y="89" width="104" height="25" rx="12" fill="#214940"/><text class="m" x="94" y="106" text-anchor="middle" fill="#a9edcf" font-size="11">tool A</text><text class="m" x="226" y="106" text-anchor="middle" fill="#a9edcf" font-size="11">tool B</text><text class="m" x="358" y="106" text-anchor="middle" fill="#a9edcf" font-size="11">tool C</text></g>
+    <path class="ga" d="M555 320H405V160"/><text class="s" x="421" y="305" fill="#68dda5" font-size="13">ToolMessage → 继续循环</text>
+    <path class="gb" d="M1007 320H1215V142"/><text class="s" x="1032" y="305" fill="#9cc8ff" font-size="13">return_direct / structured → END</text>
+
+    <g transform="translate(0 475)"><rect width="1300" height="105" rx="18" fill="#101f31" stroke="#314a62" stroke-width="2"/><text class="s" x="28" y="36" fill="#f4f8fd" font-size="17" font-weight="700">model → tools 路由优先级</text><text class="m" x="28" y="69" fill="#96aac1" font-size="14">jump_to → no AI / no tool_calls → pending client calls → structured_response → synthetic result loops</text><text class="s" x="28" y="92" fill="#758da7" font-size="13">工具执行后的独立路由再检查 return_direct；默认递归上限被提升，但业务仍应设置调用预算。</text></g>
+  </g>
+</svg>

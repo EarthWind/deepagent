@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="850" viewBox="0 0 1440 850" role="img" aria-labelledby="title desc">
+  <title id="title">LangChain Agent 中间件生命周期</title>
+  <desc id="desc">展示 before/after hooks 以及 wrap model/tool call 的洋葱式嵌套顺序</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#09121f"/><stop offset="1" stop-color="#14243a"/></linearGradient><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5 0 9z" fill="#6adca6"/></marker><style>.s{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.m{font-family:"JetBrains Mono",monospace}.t{fill:#f5f8fc}.sub{fill:#9eb2c9}.box{fill:#12273e;stroke:#3c546e;stroke-width:2}.arr{stroke:#6adca6;stroke-width:2.3;fill:none;marker-end:url(#a)}</style></defs>
+  <rect width="1440" height="850" rx="28" fill="url(#bg)"/>
+  <text class="s t" x="70" y="68" font-size="33" font-weight="800">Middleware：不是回调列表，而是 Agent 的控制平面</text>
+  <text class="s sub" x="70" y="104" font-size="17">生命周期 hook 改状态；wrap hook 包裹真正 I/O，可重试、短路、切换模型或改写结果</text>
+
+  <g transform="translate(68 158)">
+    <rect x="0" y="0" width="1304" height="224" rx="22" fill="#0f2033" stroke="#30475e" stroke-width="2"/>
+    <text class="s" x="28" y="39" fill="#79b7ff" font-size="15" font-weight="700">GRAPH LIFECYCLE</text>
+    <g transform="translate(32 72)"><rect class="box" width="192" height="92" rx="16"/><text class="m t" x="96" y="38" text-anchor="middle" font-size="15">before_agent</text><text class="s sub" x="96" y="66" text-anchor="middle" font-size="13">每次 invoke 一次</text></g>
+    <path class="arr" d="M224 118H280"/>
+    <g transform="translate(280 72)"><rect class="box" width="192" height="92" rx="16"/><text class="m t" x="96" y="38" text-anchor="middle" font-size="15">before_model</text><text class="s sub" x="96" y="66" text-anchor="middle" font-size="13">每轮模型前</text></g>
+    <path class="arr" d="M472 118H528"/>
+    <g transform="translate(528 72)"><rect width="192" height="92" rx="16" fill="#16342f" stroke="#6adca6" stroke-width="2"/><text class="s t" x="96" y="38" text-anchor="middle" font-size="17" font-weight="700">model ↔ tools</text><text class="s" x="96" y="66" text-anchor="middle" fill="#9ee8c7" font-size="13">循环 0..N 次</text></g>
+    <path class="arr" d="M720 118H776"/>
+    <g transform="translate(776 72)"><rect class="box" width="192" height="92" rx="16"/><text class="m t" x="96" y="38" text-anchor="middle" font-size="15">after_model</text><text class="s sub" x="96" y="66" text-anchor="middle" font-size="13">可 interrupt / jump</text></g>
+    <path class="arr" d="M968 118H1024"/>
+    <g transform="translate(1024 72)"><rect class="box" width="192" height="92" rx="16"/><text class="m t" x="96" y="38" text-anchor="middle" font-size="15">after_agent</text><text class="s sub" x="96" y="66" text-anchor="middle" font-size="13">每次 invoke 一次</text></g>
+  </g>
+
+  <g transform="translate(68 430)">
+    <text class="s" x="0" y="0" fill="#c4a8ff" font-size="15" font-weight="700">ONION WRAPPING · 配置 [A, B, C] 时 A 最外层</text>
+    <rect x="0" y="32" width="870" height="316" rx="24" fill="#1b2438" stroke="#6f5a9c" stroke-width="2"/>
+    <text class="m" x="28" y="72" fill="#d1bdff" font-size="16">A.wrap_model_call(request, handler)</text>
+    <rect x="70" y="94" width="730" height="214" rx="22" fill="#172c40" stroke="#537ca5" stroke-width="2"/>
+    <text class="m" x="98" y="133" fill="#a9cefa" font-size="16">B.wrap_model_call(request, handler)</text>
+    <rect x="140" y="154" width="590" height="112" rx="20" fill="#15342e" stroke="#6adca6" stroke-width="2"/>
+    <text class="m t" x="435" y="199" text-anchor="middle" font-size="17">C → bound_model.invoke()</text>
+    <text class="s" x="435" y="231" text-anchor="middle" fill="#9ee8c7" font-size="14">响应按 C → B → A 向外返回</text>
+
+    <g transform="translate(914 32)"><rect width="390" height="316" rx="24" fill="#102238" stroke="#36516b" stroke-width="2"/><text class="s t" x="28" y="45" font-size="19" font-weight="700">wrap 能做什么？</text><text class="s sub" x="30" y="88" font-size="15">① 修改 request：模型、prompt、tools</text><text class="s sub" x="30" y="128" font-size="15">② 调 handler 多次：retry / fallback</text><text class="s sub" x="30" y="168" font-size="15">③ 不调 handler：缓存、拒绝、熔断</text><text class="s sub" x="30" y="208" font-size="15">④ 修改 response：脱敏、指标、状态更新</text><text class="s sub" x="30" y="248" font-size="15">⑤ tool wrap：审批、权限、审计、重试</text><rect x="28" y="272" width="334" height="25" rx="12" fill="#1c354c"/><text class="s" x="195" y="290" text-anchor="middle" fill="#83baf3" font-size="12">顺序就是语义，务必写组合测试</text></g>
+  </g>
+  <text class="s" x="68" y="813" fill="#758ba5" font-size="14">built-ins：retry · fallback · call limit · summarization · PII · HITL · tool selection · shell · filesystem …</text>
+</svg>
