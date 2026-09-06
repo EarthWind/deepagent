@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="970" viewBox="0 0 1440 970" role="img" aria-labelledby="title desc">
+  <title id="title">LangChain monorepo 与运行时分层</title>
+  <desc id="desc">从应用层、LangChain Agent 层、LangGraph 运行时、LangChain Core 契约到生态集成的分层架构</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#091321"/><stop offset="1" stop-color="#101e32"/></linearGradient><style>.s{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.m{font-family:"JetBrains Mono",monospace}.box{stroke-width:2}.sub{fill:#9db1c9}.arrow{stroke:#58718c;stroke-width:2;fill:none}</style></defs>
+  <rect width="1440" height="970" rx="28" fill="url(#bg)"/>
+  <text class="s" x="72" y="72" fill="#f5f8fc" font-size="34" font-weight="800">LangChain v1：薄 Agent API，厚协议层，图运行时托底</text>
+  <text class="s sub" x="72" y="108" font-size="17">依赖方向向下；可观测、流式和配置贯穿所有层</text>
+
+  <g transform="translate(74 150)">
+    <rect x="0" y="0" width="965" height="105" rx="18" fill="#122a41" stroke="#73b7ff" class="box"/>
+    <text class="s" x="34" y="42" fill="#73b7ff" font-size="16" font-weight="700">APPLICATION</text>
+    <text class="s" x="34" y="77" fill="#f6f9fd" font-size="25" font-weight="700">业务应用：Chat、RAG、Copilot、自动化工作流</text>
+    <g transform="translate(990 0)"><rect width="300" height="105" rx="18" fill="#11253a" stroke="#36516d" class="box"/><text class="s" x="28" y="42" fill="#c8d7e8" font-size="18" font-weight="700">LangSmith / callbacks</text><text class="s sub" x="28" y="73" font-size="15">trace · eval · metadata</text></g>
+
+    <path class="arrow" d="M485 105v38"/><path d="M485 143l-8-13h16z" fill="#62e6a7"/>
+    <rect x="0" y="145" width="965" height="128" rx="18" fill="#12302f" stroke="#62e6a7" class="box"/>
+    <text class="s" x="34" y="187" fill="#62e6a7" font-size="16" font-weight="700">LANGCHAIN 1.4 · HIGH-LEVEL</text>
+    <text class="m" x="34" y="224" fill="#f6f9fd" font-size="24">create_agent()</text>
+    <text class="s sub" x="253" y="224" font-size="17">middleware · structured output · model factory · MCP adapter</text>
+    <text class="s sub" x="34" y="252" font-size="15">构图、绑定工具、路由退出条件；返回 CompiledStateGraph</text>
+    <g transform="translate(990 145)"><rect width="300" height="128" rx="18" fill="#11253a" stroke="#36516d" class="box"/><text class="s" x="28" y="44" fill="#f6f9fd" font-size="18" font-weight="700">langchain-classic</text><text class="s sub" x="28" y="76" font-size="15">旧 chains / retrievers</text><text class="s sub" x="28" y="100" font-size="15">兼容层，不是 v1 主路径</text></g>
+
+    <path class="arrow" d="M485 273v38"/><path d="M485 311l-8-13h16z" fill="#62e6a7"/>
+    <rect x="0" y="313" width="965" height="128" rx="18" fill="#2a213e" stroke="#b791ff" class="box"/>
+    <text class="s" x="34" y="355" fill="#c5a8ff" font-size="16" font-weight="700">LANGGRAPH · RUNTIME</text>
+    <text class="s" x="34" y="392" fill="#f6f9fd" font-size="24" font-weight="700">StateGraph · ToolNode · Runtime · checkpoint · store</text>
+    <text class="s sub" x="34" y="420" font-size="15">循环、并行 Send、interrupt/resume、持久化、durable execution</text>
+    <g transform="translate(990 313)"><rect width="300" height="128" rx="18" fill="#11253a" stroke="#36516d" class="box"/><text class="s" x="28" y="44" fill="#f6f9fd" font-size="18" font-weight="700">运行控制面</text><text class="s sub" x="28" y="76" font-size="15">thread_id · recursion_limit</text><text class="s sub" x="28" y="100" font-size="15">stream mode · interrupts</text></g>
+
+    <path class="arrow" d="M485 441v38"/><path d="M485 479l-8-13h16z" fill="#62e6a7"/>
+    <rect x="0" y="481" width="965" height="139" rx="18" fill="#222b42" stroke="#6fa2ee" class="box"/>
+    <text class="s" x="34" y="523" fill="#87b7ff" font-size="16" font-weight="700">LANGCHAIN-CORE 1.6 · PROTOCOLS</text>
+    <text class="s" x="34" y="560" fill="#f6f9fd" font-size="22" font-weight="700">Runnable · BaseChatModel · BaseTool · Messages</text>
+    <text class="s sub" x="34" y="594" font-size="15">统一 invoke / batch / stream；schema、序列化、回调与 tracing 配置</text>
+    <g transform="translate(990 481)"><rect width="300" height="139" rx="18" fill="#11253a" stroke="#36516d" class="box"/><text class="s" x="28" y="44" fill="#f6f9fd" font-size="18" font-weight="700">langchain-tests</text><text class="s sub" x="28" y="76" font-size="15">跨 provider 契约测试</text><text class="s sub" x="28" y="101" font-size="15">chat model · tool · store</text></g>
+
+    <path class="arrow" d="M485 620v38"/><path d="M485 658l-8-13h16z" fill="#62e6a7"/>
+    <rect x="0" y="660" width="1290" height="104" rx="18" fill="#18283a" stroke="#4b6580" class="box"/>
+    <text class="s" x="34" y="702" fill="#e8eef6" font-size="20" font-weight="700">Provider / Integration packages</text>
+    <text class="m" x="34" y="739" fill="#96aac1" font-size="15">langchain-openai · anthropic · google · ollama · vector stores · loaders · MCP servers …</text>
+  </g>
+  <text class="s" x="72" y="944" fill="#758ba5" font-size="14">关键边界：LangChain 负责 Agent 工程抽象；LangGraph 负责有状态执行；provider 包负责外部系统适配。</text>
+</svg>

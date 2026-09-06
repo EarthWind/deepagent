@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">LangChain v1 源码拆解封面</title>
+  <desc id="desc">展示模型、Agent 图、工具、中间件和状态存储之间关系的深色技术插图</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08111f"/><stop offset="0.55" stop-color="#10223b"/><stop offset="1" stop-color="#0c1628"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#62e6a7"/><stop offset="1" stop-color="#73b7ff"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      .sans{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif}.mono{font-family:"JetBrains Mono",monospace}
+      .muted{fill:#9fb3ca}.line{stroke:#4e6681;stroke-width:2;fill:none}.card{fill:#10243c;stroke:#36506c;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1440" height="760" rx="32" fill="url(#bg)"/>
+  <circle cx="1260" cy="90" r="240" fill="#47d69b" opacity=".08"/><circle cx="1080" cy="690" r="290" fill="#4a8cff" opacity=".07"/>
+  <g class="sans">
+    <text x="88" y="105" fill="#62e6a7" font-size="22" font-weight="700" letter-spacing="3">SOURCE CODE RESEARCH · 2026</text>
+    <text x="88" y="205" fill="#f4f8ff" font-size="76" font-weight="800">拆解 LangChain v1</text>
+    <text x="88" y="264" fill="#c8d7e8" font-size="29">从 Runnable 契约，到 LangGraph Agent 运行时</text>
+    <text x="88" y="324" class="muted" font-size="19">面向大模型 Agent 工程师的源码级架构、执行链路与生产实践</text>
+  </g>
+  <g transform="translate(84 405)">
+    <rect class="card" x="0" y="48" width="220" height="108" rx="18"/>
+    <text class="sans" x="110" y="92" text-anchor="middle" fill="#f4f8ff" font-size="22" font-weight="700">Chat Model</text>
+    <text class="mono" x="110" y="126" text-anchor="middle" fill="#73b7ff" font-size="14">bind_tools()</text>
+    <path class="line" d="M220 102H354"/><path d="M354 102l-13-8v16z" fill="#62e6a7"/>
+    <rect x="354" y="0" width="338" height="204" rx="25" fill="#132d47" stroke="url(#accent)" stroke-width="3" filter="url(#glow)"/>
+    <text class="sans" x="523" y="70" text-anchor="middle" fill="#f4f8ff" font-size="28" font-weight="800">CompiledStateGraph</text>
+    <text class="mono" x="523" y="110" text-anchor="middle" fill="#62e6a7" font-size="16">model → tools → model</text>
+    <rect x="401" y="137" width="102" height="34" rx="17" fill="#203d59"/><text class="sans" x="452" y="160" text-anchor="middle" fill="#c8d7e8" font-size="13">middleware</text>
+    <rect x="517" y="137" width="128" height="34" rx="17" fill="#203d59"/><text class="sans" x="581" y="160" text-anchor="middle" fill="#c8d7e8" font-size="13">checkpoint</text>
+    <path class="line" d="M692 102H826"/><path d="M826 102l-13-8v16z" fill="#62e6a7"/>
+    <rect class="card" x="826" y="48" width="220" height="108" rx="18"/>
+    <text class="sans" x="936" y="92" text-anchor="middle" fill="#f4f8ff" font-size="22" font-weight="700">Tools</text>
+    <text class="mono" x="936" y="126" text-anchor="middle" fill="#73b7ff" font-size="14">ToolMessage</text>
+    <path class="line" d="M1046 102H1174"/><path d="M1174 102l-13-8v16z" fill="#62e6a7"/>
+    <rect class="card" x="1174" y="48" width="180" height="108" rx="18"/>
+    <text class="sans" x="1264" y="92" text-anchor="middle" fill="#f4f8ff" font-size="22" font-weight="700">State</text>
+    <text class="mono" x="1264" y="126" text-anchor="middle" fill="#73b7ff" font-size="14">messages[]</text>
+  </g>
+  <text class="mono" x="88" y="701" fill="#758ba5" font-size="15">master@eef3eae · langchain 1.4.0 · langchain-core 1.6.2</text>
+</svg>
