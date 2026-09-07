@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="950" viewBox="0 0 1600 950" role="img" aria-labelledby="title desc">
+  <title id="title">Tool execution and security pipeline</title>
+  <desc id="desc">A model tool call passes durable logging, extensible policy, monotonic guards, execution wrappers, tool body, post processing, immutable observation, and ordered result commit.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1020"/><stop offset="1" stop-color="#151b33"/></linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5d85f0"/><stop offset=".5" stop-color="#47b0ac"/><stop offset="1" stop-color="#e2a75e"/></linearGradient>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3z" fill="#6f96f7"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC",system-ui,sans-serif;fill:#f4f7ff}.m{fill:#9dabc9}.h{font-size:20px;font-weight:760}.s{font-size:15px}.xs{font-size:13px}.box{stroke-width:2}.w{stroke:#6f96f7;stroke-width:3;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1600" height="950" rx="30" fill="url(#bg)"/>
+  <text class="t" x="65" y="70" font-size="36" font-weight="800">工具调用：可扩展，但关键约束保持单调</text>
+  <text class="t m" x="65" y="106" font-size="18">同一流水线服务 Native Function Calling、PTC 子调用、权限、沙箱、重试、指标与 UI</text>
+  <rect x="65" y="140" width="1470" height="8" rx="4" fill="url(#bar)"/>
+
+  <g class="t">
+    <rect x="70" y="205" width="190" height="92" rx="18" fill="#202c4d" stroke="#5978bd" class="box"/>
+    <text class="h" x="98" y="240">1. tool/call</text><text class="m s" x="98" y="267">先写 Session</text><text class="m xs" x="98" y="286">args 快照 + freeze</text>
+    <path class="w" d="M260 250 H300"/>
+    <rect x="305" y="205" width="200" height="92" rx="18" fill="#3a322a" stroke="#d19a55" class="box"/>
+    <text class="h" x="333" y="240">2. pre-execute</text><text class="m s" x="333" y="267">allow / deny / ask</text><text class="m xs" x="333" y="286">waterfall 可重排策略</text>
+    <path class="w" d="M505 250 H545"/>
+    <rect x="550" y="205" width="200" height="92" rx="18" fill="#432e35" stroke="#ca6d7b" class="box"/>
+    <text class="h" x="578" y="240">3. guards</text><text class="m s" x="578" y="267">deny 或 abstain</text><text class="m xs" x="578" y="286">后续不能撤销拒绝</text>
+    <path class="w" d="M750 250 H790"/>
+    <rect x="795" y="205" width="200" height="92" rx="18" fill="#253653" stroke="#557cae" class="box"/>
+    <text class="h" x="823" y="240">4. execute hook</text><text class="m s" x="823" y="267">timeout / retry / metric</text><text class="m xs" x="823" y="286">around-dispatch</text>
+    <path class="w" d="M995 250 H1035"/>
+    <rect x="1040" y="205" width="200" height="92" rx="18" fill="#19424b" stroke="#47ae9f" class="box"/>
+    <text class="h" x="1068" y="240">5. tool body</text><text class="m s" x="1068" y="267">Provider capability</text><text class="m xs" x="1068" y="286">shell / fs / web / MCP</text>
+    <path class="w" d="M1240 250 H1280"/>
+    <rect x="1285" y="205" width="245" height="92" rx="18" fill="#1c3f47" stroke="#4cb5a4" class="box"/>
+    <text class="h" x="1313" y="240">6. post + result</text><text class="m s" x="1313" y="267">变换 → 冻结 → 观察</text><text class="m xs" x="1313" y="286">最终只提交一次</text>
+  </g>
+
+  <g>
+    <rect x="70" y="365" width="710" height="210" rx="24" fill="#121e38" stroke="#405d96" class="box"/>
+    <text class="t h" x="105" y="410">两种“并发”必须分开看</text>
+    <rect x="105" y="440" width="300" height="95" rx="16" fill="#203255" stroke="#5478b7"/>
+    <text class="t s" x="130" y="473" font-weight="700">执行并发</text><text class="t m xs" x="130" y="498">isConcurrencySafe(args) = true</text><text class="t m xs" x="130" y="520">可在有界 rolling pool 中重叠</text>
+    <rect x="440" y="440" width="300" height="95" rx="16" fill="#1c4149" stroke="#4dab9e"/>
+    <text class="t s" x="465" y="473" font-weight="700">提交确定性</text><text class="t m xs" x="465" y="498">pre-policy 与 tool/result</text><text class="t m xs" x="465" y="520">仍按模型原始 call 顺序落日志</text>
+  </g>
+
+  <g>
+    <rect x="820" y="365" width="710" height="210" rx="24" fill="#121e38" stroke="#405d96" class="box"/>
+    <text class="t h" x="855" y="410">Native 与 PTC 共用权威流水线</text>
+    <rect x="855" y="440" width="290" height="95" rx="16" fill="#213353" stroke="#5478b7"/>
+    <text class="t s" x="880" y="473" font-weight="700">Native</text><text class="t m xs" x="880" y="498">模型直接发 tool call</text><text class="t m xs" x="880" y="520">每个 schema 直接出现在请求中</text>
+    <rect x="1180" y="440" width="315" height="95" rx="16" fill="#263b47" stroke="#4dab9e"/>
+    <text class="t s" x="1205" y="473" font-weight="700">PTC / run_code</text><text class="t m xs" x="1205" y="498">生成 SDK → Worker → nested dispatch</text><text class="t m xs" x="1205" y="520">子调用重新进入 1–6 全流程</text>
+  </g>
+
+  <g>
+    <rect x="70" y="625" width="1460" height="235" rx="24" fill="#151c32" stroke="#3e4e79" class="box"/>
+    <text class="t h" x="105" y="670">安全边界：三层职责，不要混为一谈</text>
+    <rect x="105" y="705" width="420" height="110" rx="17" fill="#3d3228" stroke="#d19a55"/>
+    <text class="t s" x="132" y="739" font-weight="700">策略层</text><text class="t m xs" x="132" y="765">权限 preset / ask approval / monotonic guard</text><text class="t m xs" x="132" y="787">决定“这次调用能否执行”</text>
+    <rect x="590" y="705" width="420" height="110" rx="17" fill="#1d3f47" stroke="#4dab9e"/>
+    <text class="t s" x="617" y="739" font-weight="700">文件副作用层</text><text class="t m xs" x="617" y="765">fs path fence + bwrap / Landlock / Seatbelt / ACL</text><text class="t m xs" x="617" y="787">决定“可以写到哪里”</text>
+    <rect x="1075" y="705" width="420" height="110" rx="17" fill="#412e35" stroke="#ca6d7b"/>
+    <text class="t s" x="1102" y="739" font-weight="700">部署隔离层</text><text class="t m xs" x="1102" y="765">VM / container / microVM / remote executor</text><text class="t m xs" x="1102" y="787">真正承载网络、内核与多租户边界</text>
+  </g>
+  <text class="t m s" x="70" y="905">关键判断：内置 sandbox 主要是文件效果策略；PTC Worker 主要是资源有界执行。高风险部署仍需要外部隔离。</text>
+</svg>
