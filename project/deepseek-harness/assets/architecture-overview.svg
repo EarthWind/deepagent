@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek Harness architecture overview</title>
+  <desc id="desc">Profiles and patch layers compose a Cordis plugin tree that connects agent loop, model, tools, sessions, policy, and user surfaces.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1020"/><stop offset="1" stop-color="#151b33"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#19254a"/><stop offset="1" stop-color="#10182f"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#5b8cff"/><stop offset="1" stop-color="#6be6c1"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity=".35"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#7e9cff"/></marker>
+    <style>
+      .t{font-family:Inter,"Noto Sans SC",system-ui,sans-serif;fill:#f4f7ff}.muted{fill:#9eacca}.label{font-size:22px;font-weight:700}.small{font-size:17px}.tiny{font-size:15px}.box{stroke:#36456f;stroke-width:2}.wire{fill:none;stroke:#7e9cff;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="980" rx="30" fill="url(#bg)"/>
+  <text class="t" x="70" y="76" font-size="38" font-weight="800">DeepSeek Harness：配置组合出的 Agent Runtime</text>
+  <text class="t muted" x="70" y="112" font-size="19">不是单体 ReAct 循环：启动器只负责装配，能力通过 Cordis 服务、事件与可逆 effect 协作</text>
+
+  <g filter="url(#shadow)">
+    <rect x="65" y="170" width="350" height="610" rx="24" fill="#111a33" class="box"/>
+    <text class="t label" x="95" y="215">① Profile / Bundle 层</text>
+    <text class="t muted small" x="95" y="246">后层按 row id 覆盖前层</text>
+    <g>
+      <rect x="100" y="295" width="280" height="76" rx="14" fill="#26345f" stroke="#617ec9"/>
+      <text class="t small" x="125" y="325" font-weight="700">Bundle patches</text><text class="t muted tiny" x="125" y="350">base → web / sdk / headless</text>
+      <rect x="100" y="392" width="280" height="76" rx="14" fill="#25365a" stroke="#5385bd"/>
+      <text class="t small" x="125" y="422" font-weight="700">Profile patch</text><text class="t muted tiny" x="125" y="447">profiles/&lt;name&gt;/cordis.patch.yml</text>
+      <rect x="100" y="489" width="280" height="76" rx="14" fill="#214154" stroke="#44a9a2"/>
+      <text class="t small" x="125" y="519" font-weight="700">Home patch</text><text class="t muted tiny" x="125" y="544">$DSH_HOME/cordis.patch.yml</text>
+      <rect x="100" y="586" width="280" height="76" rx="14" fill="#194b4d" stroke="#56cbb4"/>
+      <text class="t small" x="125" y="616" font-weight="700">CLI overlays</text><text class="t muted tiny" x="125" y="641">--patch a.yml --patch b.yml</text>
+      <rect x="100" y="683" width="280" height="62" rx="14" fill="url(#accent)" opacity=".88"/>
+      <text class="t small" x="125" y="721" font-weight="800">Effective plugin tree</text>
+    </g>
+  </g>
+
+  <path class="wire" d="M415 475 C455 475 455 475 500 475"/>
+
+  <g filter="url(#shadow)">
+    <rect x="505" y="150" width="675" height="680" rx="28" fill="url(#core)" stroke="#526cae" stroke-width="2.5"/>
+    <text class="t" x="545" y="200" font-size="26" font-weight="800">② Cordis Context</text>
+    <text class="t muted small" x="545" y="230">服务注册表 · 类型化事件 · Fiber 生命周期 · 自动撤销 effect</text>
+    <rect x="545" y="270" width="280" height="110" rx="18" fill="#22315b" class="box"/>
+    <text class="t label" x="575" y="310">Agent Loop</text><text class="t muted tiny" x="575" y="339">Turn / Step / Inbox</text><text class="t muted tiny" x="575" y="361">串起其他能力，不拥有它们</text>
+    <rect x="860" y="270" width="280" height="110" rx="18" fill="#243557" class="box"/>
+    <text class="t label" x="890" y="310">LLM Runtime</text><text class="t muted tiny" x="890" y="339">Adapter registry / stream</text><text class="t muted tiny" x="890" y="361">DeepSeek / pi-ai / custom</text>
+    <rect x="545" y="410" width="280" height="110" rx="18" fill="#1d3b51" class="box"/>
+    <text class="t label" x="575" y="450">Tool Runtime</text><text class="t muted tiny" x="575" y="479">Native / PTC / scopes</text><text class="t muted tiny" x="575" y="501">policy → execute → result</text>
+    <rect x="860" y="410" width="280" height="110" rx="18" fill="#1d3e50" class="box"/>
+    <text class="t label" x="890" y="450">Session</text><text class="t muted tiny" x="890" y="479">Append-only event log</text><text class="t muted tiny" x="890" y="501">Surface → model history</text>
+    <rect x="545" y="550" width="280" height="110" rx="18" fill="#17464b" class="box"/>
+    <text class="t label" x="575" y="590">Policy &amp; Sandbox</text><text class="t muted tiny" x="575" y="619">approval / permissions</text><text class="t muted tiny" x="575" y="641">fs + shell file-effect fence</text>
+    <rect x="860" y="550" width="280" height="110" rx="18" fill="#184844" class="box"/>
+    <text class="t label" x="890" y="590">Persistence</text><text class="t muted tiny" x="890" y="619">JSONL + Zstd generations</text><text class="t muted tiny" x="890" y="641">checkpoint / recovery</text>
+    <rect x="545" y="700" width="595" height="84" rx="18" fill="#243050" stroke="#5a72ae"/>
+    <text class="t small" x="575" y="734" font-weight="700">Capability seams</text>
+    <text class="t muted tiny" x="575" y="760">Service Definition → Provider → Consumer；替换 provider 即迁移整组能力</text>
+    <path d="M825 325 H860 M685 380 V410 M1000 380 V410 M825 465 H860 M685 520 V550 M1000 520 V550" stroke="#4b6ba8" stroke-width="2" stroke-dasharray="7 7"/>
+  </g>
+
+  <path class="wire" d="M1180 475 C1215 475 1215 475 1255 475"/>
+
+  <g filter="url(#shadow)">
+    <rect x="1260" y="170" width="275" height="610" rx="24" fill="#111a33" class="box"/>
+    <text class="t label" x="1290" y="215">③ 同一内核，多种表面</text>
+    <rect x="1295" y="270" width="205" height="75" rx="15" fill="#273761" stroke="#587bc8"/><text class="t small" x="1327" y="316" font-weight="700">Web UI</text>
+    <rect x="1295" y="370" width="205" height="75" rx="15" fill="#24405b" stroke="#438db3"/><text class="t small" x="1327" y="416" font-weight="700">Headless CLI</text>
+    <rect x="1295" y="470" width="205" height="75" rx="15" fill="#1d4a54" stroke="#45aa9e"/><text class="t small" x="1327" y="516" font-weight="700">TS / Python SDK</text>
+    <rect x="1295" y="570" width="205" height="75" rx="15" fill="#175049" stroke="#4fc6a7"/><text class="t small" x="1327" y="616" font-weight="700">ACP / Desktop</text>
+    <rect x="1295" y="670" width="205" height="75" rx="15" fill="#23445b" stroke="#4a95b8"/><text class="t small" x="1327" y="716" font-weight="700">Custom profile</text>
+  </g>
+
+  <g>
+    <rect x="65" y="875" width="1470" height="55" rx="16" fill="#101a32" stroke="#2f416a"/>
+    <circle cx="100" cy="902" r="7" fill="#6be6c1"/><text class="t tiny" x="120" y="908">装配决定能力</text>
+    <circle cx="350" cy="902" r="7" fill="#6be6c1"/><text class="t tiny" x="370" y="908">依赖决定激活顺序</text>
+    <circle cx="665" cy="902" r="7" fill="#6be6c1"/><text class="t tiny" x="685" y="908">事件决定协作</text>
+    <circle cx="910" cy="902" r="7" fill="#6be6c1"/><text class="t tiny" x="930" y="908">Session 决定可回放事实</text>
+    <circle cx="1260" cy="902" r="7" fill="#6be6c1"/><text class="t tiny" x="1280" y="908">Effect 决定可卸载性</text>
+  </g>
+</svg>

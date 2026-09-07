@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek Harness turn and step lifecycle</title>
+  <desc id="desc">Sequence from durable inbox through prompt assembly, model streaming, tool execution, and durable turn completion.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1020"/><stop offset="1" stop-color="#141a31"/></linearGradient>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3z" fill="#7398ff"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC",system-ui,sans-serif;fill:#f4f7ff}.m{fill:#9dabc9}.h{font-size:20px;font-weight:750}.s{font-size:15px}.line{stroke:#3b4c76;stroke-width:2;stroke-dasharray:7 7}.msg{stroke:#7398ff;stroke-width:2.5;marker-end:url(#arr)}.dur{fill:#183e46;stroke:#4fc8ad}.live{fill:#242e52;stroke:#6689da}.policy{fill:#463329;stroke:#d49b56}</style>
+  </defs>
+  <rect width="1600" height="1080" rx="30" fill="url(#bg)"/>
+  <text class="t" x="65" y="68" font-size="36" font-weight="800">一轮 Agent 是怎样跑起来的</text>
+  <text class="t m" x="65" y="103" font-size="18">持久事实用绿色表示；进程内实时协调用蓝色表示；策略门禁用橙色表示</text>
+
+  <g>
+    <rect x="70" y="145" width="210" height="56" rx="14" fill="#202b4b" stroke="#536ba8"/><text class="t h" x="120" y="180">Client / Inbox</text>
+    <rect x="385" y="145" width="210" height="56" rx="14" fill="#202b4b" stroke="#536ba8"/><text class="t h" x="435" y="180">Agent Loop</text>
+    <rect x="700" y="145" width="210" height="56" rx="14" fill="#173d45" stroke="#4fc8ad"/><text class="t h" x="768" y="180">Session</text>
+    <rect x="1015" y="145" width="210" height="56" rx="14" fill="#202b4b" stroke="#536ba8"/><text class="t h" x="1084" y="180">LLM</text>
+    <rect x="1330" y="145" width="210" height="56" rx="14" fill="#3b3029" stroke="#c88a4f"/><text class="t h" x="1374" y="180">Tool Runtime</text>
+    <line class="line" x1="175" y1="201" x2="175" y2="1000"/><line class="line" x1="490" y1="201" x2="490" y2="1000"/><line class="line" x1="805" y1="201" x2="805" y2="1000"/><line class="line" x1="1120" y1="201" x2="1120" y2="1000"/><line class="line" x1="1435" y1="201" x2="1435" y2="1000"/>
+  </g>
+
+  <g class="t s">
+    <line class="msg" x1="175" y1="245" x2="480" y2="245"/><text x="235" y="235">followup / steer / inject</text>
+    <line class="msg" x1="490" y1="290" x2="795" y2="290"/><text x="558" y="280">append turn/start</text>
+    <rect class="dur" x="660" y="310" width="290" height="48" rx="12"/><text x="682" y="340">seq 连续、快照并冻结事件</text>
+
+    <line class="msg" x1="490" y1="395" x2="185" y2="395"/><text x="230" y="385">claim durable inbox occurrence</text>
+    <rect class="live" x="350" y="418" width="280" height="52" rx="12"/><text x="375" y="449">system prompt + runtime context</text>
+    <rect class="live" x="350" y="488" width="280" height="52" rx="12"/><text x="384" y="519">agent/pre-step waterfall</text>
+
+    <line class="msg" x1="490" y1="575" x2="795" y2="575"/><text x="570" y="565">step/start + user/message</text>
+    <line class="msg" x1="490" y1="622" x2="795" y2="622"/><text x="550" y="612">deriveMessages(surface)</text>
+    <rect class="live" x="350" y="647" width="280" height="52" rx="12"/><text x="382" y="678">agent/request：冻结 exact request</text>
+
+    <line class="msg" x1="500" y1="730" x2="1110" y2="730"/><text x="720" y="719">llm/stream(prepared call)</text>
+    <line class="msg" x1="1120" y1="775" x2="500" y2="775"/><text x="755" y="765">实时 text / reasoning / tool-call chunks</text>
+    <rect class="live" x="955" y="798" width="330" height="49" rx="12"/><text x="980" y="828">agent/assistant-stream（瞬态）</text>
+    <line class="msg" x1="490" y1="870" x2="795" y2="870"/><text x="540" y="860">assistant/message | attempt</text>
+    <rect class="dur" x="660" y="890" width="290" height="48" rx="12"/><text x="682" y="920">先持久 settlement，再发 stream/end</text>
+
+    <line class="msg" x1="500" y1="965" x2="1425" y2="965"/><text x="760" y="955">tool/call → policy → execute → tool/result</text>
+    <rect class="policy" x="1295" y="985" width="280" height="48" rx="12"/><text x="1317" y="1015">有工具则下一 step；否则结束 turn</text>
+  </g>
+
+  <g transform="translate(70 1020)">
+    <rect x="0" y="0" width="1050" height="38" rx="10" fill="#17233f" stroke="#3c527f"/>
+    <text class="t s" x="18" y="25">最终：agent/turn-stopping → turn/end(reason)；若 inbox 仍有 waking 消息，循环自动开启下一 turn</text>
+  </g>
+</svg>

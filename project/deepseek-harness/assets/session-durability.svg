@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Session event sourcing, persistence, compaction and recovery</title>
+  <desc id="desc">The append-only event log feeds model surface projection, persisted JSONL generations, compaction replacements, and crash recovery.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1020"/><stop offset="1" stop-color="#141a31"/></linearGradient>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3z" fill="#73a0ff"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC",system-ui,sans-serif;fill:#f3f7ff}.m{fill:#9eaccb}.h{font-size:22px;font-weight:760}.s{font-size:16px}.xs{font-size:14px}.box{stroke-width:2}.w{stroke:#73a0ff;stroke-width:3;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1600" height="1000" rx="30" fill="url(#bg)"/>
+  <text class="t" x="65" y="70" font-size="36" font-weight="800">Session：同一份事实，四种用途</text>
+  <text class="t m" x="65" y="106" font-size="18">事件日志是权威源；模型上下文、UI、持久化与恢复都从它派生</text>
+
+  <g>
+    <rect x="65" y="155" width="1470" height="170" rx="24" fill="#111a32" stroke="#354a78" class="box"/>
+    <text class="t h" x="95" y="195">Append-only SessionEvent log</text>
+    <g class="t xs">
+      <rect x="95" y="225" width="150" height="62" rx="12" fill="#1d3353" stroke="#537bb5"/><text x="116" y="252">0 turn/start</text><text class="m" x="116" y="274">durable boundary</text>
+      <rect x="260" y="225" width="170" height="62" rx="12" fill="#1d3f4d" stroke="#4eae9d"/><text x="281" y="252">1 user/message</text><text class="m" x="281" y="274">surface: append</text>
+      <rect x="445" y="225" width="185" height="62" rx="12" fill="#253252" stroke="#607dbb"/><text x="466" y="252">2 request/header</text><text class="m" x="466" y="274">replay metadata</text>
+      <rect x="645" y="225" width="185" height="62" rx="12" fill="#1d3f4d" stroke="#4eae9d"/><text x="666" y="252">3 assistant/msg</text><text class="m" x="666" y="274">compact stream</text>
+      <rect x="845" y="225" width="165" height="62" rx="12" fill="#3c332a" stroke="#c79658"/><text x="866" y="252">4 tool/call</text><text class="m" x="866" y="274">before side effect</text>
+      <rect x="1025" y="225" width="175" height="62" rx="12" fill="#3c332a" stroke="#c79658"/><text x="1046" y="252">5 tool/result</text><text class="m" x="1046" y="274">model outcome</text>
+      <rect x="1215" y="225" width="145" height="62" rx="12" fill="#1f3d47" stroke="#4eae9d"/><text x="1236" y="252">6 step/end</text><text class="m" x="1236" y="274">checkpoint</text>
+      <rect x="1375" y="225" width="130" height="62" rx="12" fill="#1d3353" stroke="#537bb5"/><text x="1391" y="252">7 turn/end</text><text class="m" x="1391" y="274">reason</text>
+    </g>
+  </g>
+
+  <path class="w" d="M420 325 C420 360 315 360 315 400"/><path class="w" d="M800 325 V400"/><path class="w" d="M1180 325 C1180 360 1280 360 1280 400"/>
+
+  <g>
+    <rect x="65" y="405" width="470" height="390" rx="24" fill="#14233d" stroke="#46679b" class="box"/>
+    <text class="t h" x="95" y="450">A. Model Surface</text>
+    <text class="t m s" x="95" y="480">deriveMessages() 只读取可见节点</text>
+    <rect x="100" y="520" width="400" height="70" rx="14" fill="#1a3c48" stroke="#49ab99"/><text class="t s" x="125" y="550">append：加入新消息节点</text><text class="t m xs" x="125" y="574">user / assistant / tool result</text>
+    <rect x="100" y="610" width="400" height="95" rx="14" fill="#2e324a" stroke="#7f78ba"/><text class="t s" x="125" y="640">replace：用摘要/裁剪结果遮蔽旧范围</text><text class="t m xs" x="125" y="665">原事件仍在日志；surface generation 前进</text><text class="t m xs" x="125" y="687">审计事实与模型上下文解耦</text>
+    <rect x="100" y="725" width="400" height="42" rx="11" fill="#203152"/><text class="t xs" x="125" y="751">不带 surfaceOp 的事件：保留但不进入模型历史</text>
+  </g>
+
+  <g>
+    <rect x="565" y="405" width="470" height="390" rx="24" fill="#14233d" stroke="#46679b" class="box"/>
+    <text class="t h" x="595" y="450">B. Disk Persistence</text>
+    <text class="t m s" x="595" y="480">当前 v2；历史 generation 不原地改写</text>
+    <rect x="600" y="520" width="400" height="178" rx="14" fill="#1a2d48" stroke="#527bb7"/>
+    <text class="t xs" x="625" y="551">sessions/--cwd--/&lt;escaped-id&gt;/</text>
+    <text class="t xs" x="650" y="585">session.v2.jsonl.zstd</text>
+    <rect x="650" y="605" width="300" height="30" rx="7" fill="#264361"/><text class="t xs" x="670" y="626">checksummed header frame</text>
+    <rect x="650" y="644" width="300" height="30" rx="7" fill="#1d4a50"/><text class="t xs" x="670" y="665">append batch frame × N</text>
+    <text class="t m xs" x="625" y="688">每批 fsync；失败回滚到旧字节长度</text>
+    <rect x="600" y="720" width="400" height="47" rx="11" fill="#203152"/><text class="t xs" x="625" y="749">单写者：进程内 claim + flock / Win semaphore</text>
+  </g>
+
+  <g>
+    <rect x="1065" y="405" width="470" height="390" rx="24" fill="#14233d" stroke="#46679b" class="box"/>
+    <text class="t h" x="1095" y="450">C. Checkpoint &amp; Recovery</text>
+    <text class="t m s" x="1095" y="480">外部副作用前先确认日志已持久</text>
+    <rect x="1100" y="520" width="400" height="54" rx="13" fill="#224557" stroke="#4eae9d"/><text class="t s" x="1125" y="554">① 调用模型之前 flush</text>
+    <rect x="1100" y="590" width="400" height="54" rx="13" fill="#3e352a" stroke="#c79658"/><text class="t s" x="1125" y="624">② 顶层工具正文之前 flush</text>
+    <rect x="1100" y="660" width="400" height="54" rx="13" fill="#224557" stroke="#4eae9d"/><text class="t s" x="1125" y="694">③ 下一 step 派生之前 flush</text>
+    <rect x="1100" y="730" width="400" height="47" rx="11" fill="#472e35" stroke="#c96977"/><text class="t xs" x="1125" y="759">崩溃后未配对调用 → TOOL_OUTCOME_UNKNOWN</text>
+  </g>
+
+  <g>
+    <rect x="65" y="845" width="1470" height="95" rx="20" fill="#171e37" stroke="#4b5687"/>
+    <text class="t h" x="95" y="882">Compaction 是日志上的事务，不是删除历史</text>
+    <text class="t m s" x="95" y="915">compaction/start → 摘要 / tool-result prune → surface replace → compaction/end；失败时不提交半套上下文</text>
+  </g>
+</svg>
