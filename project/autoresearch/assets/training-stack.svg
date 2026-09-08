@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="880" viewBox="0 0 1440 880" role="img" aria-labelledby="title desc">
+  <title id="title">Autoresearch training stack</title>
+  <desc id="desc">Data flows from ClimbMix parquet shards through a BPE tokenizer and packed batches into an eight-layer GPT. Hidden matrices use Muon while embeddings and scalars use AdamW, followed by BPB evaluation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#10243a"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#79c0ff"/></marker>
+    <filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".25"/></filter>
+    <style>.title{font:700 38px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.sub{font:400 18px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3}.h{font:700 21px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.t{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#b8c2cc}.mono{font:600 16px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#79c0ff}.line{fill:none;stroke:#79c0ff;stroke-width:3;marker-end:url(#a)}.dash{fill:none;stroke:#596575;stroke-width:2;stroke-dasharray:7 7}</style>
+  </defs>
+  <rect width="1440" height="880" fill="url(#bg)"/>
+  <text x="70" y="70" class="title">训练赛道：数据、模型与优化器都挤进两个 Python 文件</text>
+  <text x="70" y="105" class="sub">默认配置：8 层、d=512、4 个注意力头、50.3M 参数、2,048 上下文、524,288 tokens / optimizer step</text>
+
+  <g filter="url(#s)">
+    <rect x="70" y="175" width="270" height="150" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <text x="100" y="217" class="h">ClimbMix Parquet</text><text x="100" y="252" class="t">默认 10 个训练 shard</text><text x="100" y="278" class="t">固定 shard_06542 验证</text><text x="100" y="303" class="mono">~/.cache/autoresearch</text>
+
+    <rect x="430" y="175" width="270" height="150" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <text x="460" y="217" class="h">8,192 BPE</text><text x="460" y="252" class="t">rustbpe 训练，tiktoken 执行</text><text x="460" y="278" class="t">BOS + token byte lookup</text><text x="460" y="303" class="mono">tokenizer.pkl</text>
+
+    <rect x="790" y="175" width="270" height="150" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <text x="820" y="217" class="h">Best-fit Packing</text><text x="820" y="252" class="t">buffer=1,000，BOS 对齐</text><text x="820" y="278" class="t">T+1 移位，无 padding</text><text x="820" y="303" class="mono">B=128, T=2048</text>
+
+    <rect x="1150" y="175" width="220" height="150" rx="22" fill="#0d1b2a" stroke="#a371f7"/>
+    <text x="1180" y="217" class="h">BF16 + FA3</text><text x="1180" y="252" class="t">单卡 CUDA</text><text x="1180" y="278" class="t">torch.compile</text><text x="1180" y="303" class="mono">grad_accum = 2</text>
+  </g>
+  <path d="M340 250H430" class="line"/><path d="M700 250H790" class="line"/><path d="M1060 250H1150" class="line"/>
+
+  <g filter="url(#s)">
+    <rect x="165" y="410" width="780" height="354" rx="28" fill="#0d1b2a" stroke="#79c0ff" stroke-width="2"/>
+    <text x="205" y="456" class="h">GPT 前向：8 × Block</text>
+    <rect x="205" y="486" width="700" height="55" rx="14" fill="#142b42"/><text x="230" y="520" class="mono">token embedding → RMSNorm → x₀</text>
+    <rect x="205" y="558" width="700" height="78" rx="14" fill="#142b42"/><text x="230" y="589" class="t">x ← λᵣ x + λ₀ x₀　→　RMSNorm　→　QK RoPE + QK Norm</text><text x="230" y="617" class="t">FlashAttention-3（SSSL 滑窗）+ gated value embedding</text>
+    <rect x="205" y="653" width="700" height="55" rx="14" fill="#142b42"/><text x="230" y="687" class="mono">residual → RMSNorm → squared ReLU MLP → residual</text>
+    <text x="205" y="742" class="t">末端 RMSNorm → untied lm_head → tanh softcap(15) → cross entropy</text>
+
+    <rect x="1030" y="410" width="340" height="160" rx="22" fill="#10291e" stroke="#7ee787" stroke-width="2"/>
+    <text x="1060" y="453" class="h" fill="#7ee787">Muon 路径</text><text x="1060" y="487" class="t">Block 内矩阵按 shape 堆叠</text><text x="1060" y="514" class="t">Nesterov → Polar Express</text><text x="1060" y="541" class="t">NorMuon 归一化 → cautious WD</text>
+
+    <rect x="1030" y="604" width="340" height="160" rx="22" fill="#2a2112" stroke="#f2cc60" stroke-width="2"/>
+    <text x="1060" y="647" class="h" fill="#f2cc60">AdamW 路径</text><text x="1060" y="681" class="t">wte / value embeds / lm_head</text><text x="1060" y="708" class="t">resid λ / x₀ λ</text><text x="1060" y="735" class="t">不同 LR、beta 与 decay 策略</text>
+  </g>
+  <path d="M1260 325C1260 365 865 365 840 410" class="line"/>
+  <path d="M945 528H1030" class="line"/><path d="M945 681H1030" class="line"/>
+  <path d="M555 764V822H1200V764" class="dash"/>
+  <text x="611" y="849" class="sub">固定验证：20,971,520 target tokens → total nats / total UTF-8 bytes / ln(2) → val_bpb</text>
+</svg>
