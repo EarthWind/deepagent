@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="690" viewBox="0 0 1440 690" role="img" aria-labelledby="title desc">
+  <title id="title">Autoresearch trust boundary</title>
+  <desc id="desc">The repository intends train.py to be mutable and prepare.py to be immutable, but both live in the same workspace and process, so the boundary is policy rather than enforced isolation.</desc>
+  <defs>
+    <linearGradient id="bg"><stop stop-color="#07111f"/><stop offset="1" stop-color="#10243a"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#ff7b72"/></marker>
+    <style>.title{font:700 38px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.sub{font:400 18px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3}.h{font:700 23px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.t{font:400 16px Inter,"Noto Sans SC",sans-serif;fill:#c9d1d9}.tiny{font:700 14px Inter,"Noto Sans SC",sans-serif;letter-spacing:.8px}.risk{fill:none;stroke:#ff7b72;stroke-width:3;stroke-dasharray:8 7;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1440" height="690" fill="url(#bg)"/>
+  <text x="70" y="72" class="title">“冻结评测”是协议，不是安全边界</text>
+  <text x="70" y="108" class="sub">默认设计适合可信 Agent 的实验；若把它当成对抗性 benchmark，需要额外隔离</text>
+
+  <rect x="72" y="168" width="600" height="400" rx="28" fill="#10291e" stroke="#7ee787" stroke-width="2"/>
+  <text x="106" y="214" class="tiny" fill="#7ee787">INTENDED MUTABLE ZONE</text>
+  <text x="106" y="260" class="h">train.py</text>
+  <rect x="106" y="292" width="530" height="220" rx="18" fill="#0d1b2a"/>
+  <text x="136" y="334" class="t">✓ 模型架构与超参数</text><text x="136" y="370" class="t">✓ 优化器与训练循环</text><text x="136" y="406" class="t">✓ batch / depth / attention</text><text x="136" y="442" class="t">✓ 输出由同一进程打印</text><text x="136" y="484" class="sub">目标：最低 val_bpb，显存为软约束</text>
+
+  <rect x="768" y="168" width="600" height="400" rx="28" fill="#2b171b" stroke="#ff7b72" stroke-width="2"/>
+  <text x="802" y="214" class="tiny" fill="#ff7b72">INTENDED IMMUTABLE ZONE</text>
+  <text x="802" y="260" class="h">prepare.py + cache + evaluator</text>
+  <rect x="802" y="292" width="530" height="220" rx="18" fill="#0d1b2a"/>
+  <text x="832" y="334" class="t">数据 shard 与 split</text><text x="832" y="370" class="t">Tokenizer 与 token byte table</text><text x="832" y="406" class="t">TIME_BUDGET / EVAL_TOKENS</text><text x="832" y="442" class="t">evaluate_bpb()</text><text x="832" y="484" class="sub">当前仅靠 program.md 写着 “do not modify”</text>
+
+  <path d="M625 332C730 285 723 285 810 332" class="risk"/>
+  <path d="M625 398C730 398 723 398 810 398" class="risk"/>
+  <path d="M625 464C730 520 723 520 810 464" class="risk"/>
+  <text x="680" y="276" class="tiny" fill="#ff7b72">同一工作区</text><text x="686" y="388" class="tiny" fill="#ff7b72">同一进程</text><text x="671" y="539" class="tiny" fill="#ff7b72">同一 OS 权限</text>
+
+  <rect x="200" y="602" width="1040" height="52" rx="14" fill="#f2cc60" opacity=".13" stroke="#f2cc60"/>
+  <text x="235" y="635" class="t" fill="#f7dd8b">生产化方向：只读挂载 evaluator；隔离验证数据；Supervisor 独立解析指标；签名 artifact；用容器/VM 限制网络与文件权限。</text>
+</svg>

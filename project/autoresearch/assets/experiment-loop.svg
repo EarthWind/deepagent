@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">Autoresearch experiment loop</title>
+  <desc id="desc">A state machine showing setup, baseline, hypothesis, code edit, commit, five minute run, metric extraction, result logging, and keep or discard.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#10243a"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#79c0ff"/></marker>
+    <marker id="g" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7ee787"/></marker>
+    <marker id="r" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#ff7b72"/></marker>
+    <filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".25"/></filter>
+    <style>.title{font:700 38px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.sub{font:400 18px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3}.h{font:700 20px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.t{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#b8c2cc}.n{font:800 22px Inter,sans-serif;fill:#07111f}.line{fill:none;stroke:#79c0ff;stroke-width:3;marker-end:url(#a)}.keep{fill:none;stroke:#7ee787;stroke-width:4;marker-end:url(#g)}.drop{fill:none;stroke:#ff7b72;stroke-width:4;marker-end:url(#r)}</style>
+  </defs>
+  <rect width="1440" height="760" fill="url(#bg)"/>
+  <text x="70" y="70" class="title">一轮实验，其实是一台 Prompt 驱动的状态机</text>
+  <text x="70" y="105" class="sub">基线只执行一次；之后每一轮都先提交候选，再让数字决定 Git 指针是否前进</text>
+
+  <g filter="url(#s)">
+    <rect x="72" y="182" width="212" height="118" rx="20" fill="#0d1b2a" stroke="#303b4b"/>
+    <circle cx="106" cy="216" r="18" fill="#79c0ff"/><text x="99" y="224" class="n">0</text>
+    <text x="136" y="221" class="h">一次性 Setup</text><text x="96" y="258" class="t">建分支、检查缓存</text><text x="96" y="281" class="t">初始化 results.tsv</text>
+
+    <rect x="350" y="182" width="212" height="118" rx="20" fill="#0d1b2a" stroke="#303b4b"/>
+    <circle cx="384" cy="216" r="18" fill="#79c0ff"/><text x="378" y="224" class="n">1</text>
+    <text x="414" y="221" class="h">建立 Baseline</text><text x="374" y="258" class="t">原样运行 train.py</text><text x="374" y="281" class="t">获得当前 best BPB</text>
+
+    <rect x="628" y="182" width="212" height="118" rx="20" fill="#0d1b2a" stroke="#303b4b"/>
+    <circle cx="662" cy="216" r="18" fill="#79c0ff"/><text x="656" y="224" class="n">2</text>
+    <text x="692" y="221" class="h">形成假设</text><text x="652" y="258" class="t">读历史，选择一个</text><text x="652" y="281" class="t">架构 / 优化实验</text>
+
+    <rect x="906" y="182" width="212" height="118" rx="20" fill="#0d1b2a" stroke="#f2cc60"/>
+    <circle cx="940" cy="216" r="18" fill="#f2cc60"/><text x="934" y="224" class="n">3</text>
+    <text x="970" y="221" class="h">修改并 Commit</text><text x="930" y="258" class="t">只改 train.py</text><text x="930" y="281" class="t">候选先成为 Git 对象</text>
+
+    <rect x="1184" y="182" width="212" height="118" rx="20" fill="#0d1b2a" stroke="#a371f7"/>
+    <circle cx="1218" cy="216" r="18" fill="#a371f7"/><text x="1212" y="224" class="n">4</text>
+    <text x="1248" y="221" class="h">训练 5 分钟</text><text x="1208" y="258" class="t">日志重定向</text><text x="1208" y="281" class="t">超时 / OOM / NaN</text>
+  </g>
+
+  <path d="M284 241H350" class="line"/><path d="M562 241H628" class="line"/><path d="M840 241H906" class="line"/><path d="M1118 241H1184" class="line"/>
+
+  <g filter="url(#s)">
+    <rect x="1020" y="430" width="250" height="126" rx="20" fill="#0d1b2a" stroke="#79c0ff"/>
+    <circle cx="1055" cy="466" r="18" fill="#79c0ff"/><text x="1049" y="474" class="n">5</text>
+    <text x="1085" y="471" class="h">提取 + 记账</text><text x="1045" y="508" class="t">grep val_bpb / VRAM</text><text x="1045" y="532" class="t">追加一行 TSV</text>
+
+    <path d="M716 414L846 493L716 572L586 493Z" fill="#10243a" stroke="#f0f6fc" stroke-width="2"/>
+    <text x="650" y="484" class="h">BPB 是否更低？</text><text x="647" y="513" class="t">同时考虑显存与简洁性</text>
+
+    <rect x="210" y="405" width="250" height="126" rx="20" fill="#10291e" stroke="#7ee787" stroke-width="2"/>
+    <text x="240" y="451" class="h" fill="#7ee787">KEEP：分支前进</text><text x="240" y="487" class="t">新 commit 成为下一轮起点</text><text x="240" y="512" class="t">running best 单调下降</text>
+
+    <rect x="210" y="576" width="250" height="112" rx="20" fill="#2b171b" stroke="#ff7b72" stroke-width="2"/>
+    <text x="240" y="620" class="h" fill="#ff7b72">DISCARD / CRASH</text><text x="240" y="655" class="t">记录结果，Git 回退到旧 best</text>
+  </g>
+
+  <path d="M1290 300V380Q1290 493 1270 493" class="line"/>
+  <path d="M1020 493H846" class="line"/>
+  <path d="M586 471H460" class="keep"/>
+  <path d="M586 520C520 548 510 632 460 632" class="drop"/>
+  <path d="M335 405C335 338 676 360 720 300" class="keep"/>
+  <path d="M335 576C335 350 680 362 720 300" class="drop"/>
+  <text x="493" y="445" class="t" fill="#7ee787">更优</text><text x="492" y="573" class="t" fill="#ff7b72">不更优 / 失败</text>
+  <text x="70" y="727" class="sub">注意：循环的执行者不是仓库代码，而是读取 program.md 的外部 Agent；“LOOP FOREVER”是一条指令，不是守护进程。</text>
+</svg>

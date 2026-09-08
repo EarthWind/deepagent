@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810" role="img" aria-labelledby="title desc">
+  <title id="title">Autoresearch architecture overview</title>
+  <desc id="desc">The human writes program.md, an external coding agent edits train.py, the fixed prepare.py supplies data and evaluation, a GPU returns validation BPB, and Git keeps or rolls back the experiment.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#0b1f2f"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#79c0ff"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#7ee787"/>
+    </marker>
+    <style>
+      .title{font:700 42px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.sub{font:400 20px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3}.h{font:700 24px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.t{font:400 17px Inter,"Noto Sans SC",sans-serif;fill:#c9d1d9}.tiny{font:600 15px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3;letter-spacing:.6px}.mono{font:600 18px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#79c0ff}.flow{fill:none;stroke:#79c0ff;stroke-width:3;marker-end:url(#arrow)}.green{fill:none;stroke:#7ee787;stroke-width:3;marker-end:url(#arrowGreen)}
+    </style>
+  </defs>
+  <rect width="1440" height="810" fill="url(#bg)"/>
+  <circle cx="1290" cy="90" r="180" fill="#1f6feb" opacity=".08"/>
+  <circle cx="140" cy="720" r="220" fill="#2ea043" opacity=".07"/>
+  <text x="80" y="80" class="title">Autoresearch：最小自主实验系统</text>
+  <text x="80" y="116" class="sub">不是自带 Agent Runtime 的框架，而是一份研究协议 + 一个可评分的训练环境</text>
+
+  <g filter="url(#shadow)">
+    <rect x="74" y="204" width="250" height="158" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <rect x="96" y="226" width="80" height="30" rx="15" fill="#1f6feb" opacity=".22"/>
+    <text x="112" y="247" class="tiny" fill="#79c0ff">HUMAN</text>
+    <text x="98" y="295" class="h">编程研究组织</text>
+    <text x="98" y="327" class="t">目标、边界、预算、</text>
+    <text x="98" y="352" class="t">接受规则与停止策略</text>
+
+    <rect x="402" y="204" width="264" height="158" rx="22" fill="#0d1b2a" stroke="#79c0ff" stroke-width="2"/>
+    <text x="430" y="255" class="mono">program.md</text>
+    <text x="430" y="294" class="t">114 行轻量 Skill</text>
+    <text x="430" y="325" class="t">描述实验闭环</text>
+    <text x="430" y="350" class="t">自身不执行循环</text>
+
+    <rect x="752" y="182" width="300" height="202" rx="24" fill="#10243a" stroke="#7ee787" stroke-width="2"/>
+    <rect x="778" y="207" width="154" height="30" rx="15" fill="#238636" opacity=".3"/>
+    <text x="794" y="228" class="tiny" fill="#7ee787">EXTERNAL RUNTIME</text>
+    <text x="778" y="279" class="h">Claude / Codex / …</text>
+    <text x="778" y="314" class="t">推理、文件编辑、Shell、</text>
+    <text x="778" y="341" class="t">上下文与生命周期</text>
+    <text x="778" y="368" class="t">都由外部 Coding Agent 提供</text>
+
+    <rect x="1125" y="204" width="244" height="158" rx="22" fill="#0d1b2a" stroke="#f2cc60" stroke-width="2"/>
+    <text x="1153" y="255" class="mono" fill="#f2cc60">train.py</text>
+    <text x="1153" y="294" class="t">唯一可变实验面</text>
+    <text x="1153" y="325" class="t">模型 / 优化器 /</text>
+    <text x="1153" y="350" class="t">训练循环 / 超参数</text>
+  </g>
+
+  <path d="M324 283H402" class="flow"/>
+  <path d="M666 283H752" class="flow"/>
+  <path d="M1052 283H1125" class="green"/>
+
+  <g filter="url(#shadow)">
+    <rect x="105" y="512" width="296" height="164" rx="22" fill="#0d1b2a" stroke="#ff7b72" stroke-width="2"/>
+    <text x="136" y="559" class="mono" fill="#ff7b72">prepare.py</text>
+    <text x="136" y="598" class="t">固定数据、Tokenizer、</text>
+    <text x="136" y="626" class="t">5 分钟预算与 evaluate_bpb</text>
+    <text x="136" y="654" class="tiny" fill="#ff7b72">PROMPT-LEVEL READ ONLY</text>
+
+    <rect x="515" y="512" width="280" height="164" rx="22" fill="#0d1b2a" stroke="#a371f7" stroke-width="2"/>
+    <text x="547" y="559" class="h">单张 NVIDIA GPU</text>
+    <text x="547" y="598" class="t">固定训练时间</text>
+    <text x="547" y="626" class="t">吞吐与算法共同竞争</text>
+    <text x="547" y="654" class="mono" fill="#a371f7">uv run train.py</text>
+
+    <rect x="910" y="512" width="215" height="164" rx="22" fill="#0d1b2a" stroke="#7ee787" stroke-width="2"/>
+    <text x="942" y="559" class="h">val_bpb</text>
+    <text x="942" y="598" class="t">越低越好</text>
+    <text x="942" y="626" class="t">单次观测</text>
+    <text x="942" y="654" class="tiny" fill="#7ee787">ACCEPT SIGNAL</text>
+
+    <rect x="1212" y="512" width="178" height="164" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <text x="1244" y="559" class="h">Git 棘轮</text>
+    <text x="1244" y="598" class="t">改善：保留</text>
+    <text x="1244" y="626" class="t">退化：回退</text>
+    <text x="1244" y="654" class="t">TSV 记账</text>
+  </g>
+
+  <path d="M1247 362C1247 438 790 438 735 512" class="flow"/>
+  <path d="M401 594H515" class="flow"/>
+  <path d="M795 594H910" class="flow"/>
+  <path d="M1125 594H1212" class="green"/>
+  <path d="M1301 512C1301 430 932 436 910 384" class="green"/>
+
+  <text x="80" y="756" class="sub">控制平面：Markdown + 外部 Agent　｜　数据平面：PyTorch 单卡训练　｜　状态平面：Git + results.tsv</text>
+</svg>

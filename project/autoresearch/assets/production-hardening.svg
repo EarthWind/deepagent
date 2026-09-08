@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">A hardened autoresearch architecture</title>
+  <desc id="desc">A production supervisor proposes experiments through an agent, runs them in an isolated worker with a read-only evaluator, repeats trials, validates hard constraints, stores durable artifacts, and promotes only verified candidates.</desc>
+  <defs>
+    <linearGradient id="bg"><stop stop-color="#07111f"/><stop offset="1" stop-color="#10243a"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#79c0ff"/></marker>
+    <filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity=".25"/></filter>
+    <style>.title{font:700 38px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.sub{font:400 18px Inter,"Noto Sans SC",sans-serif;fill:#9da7b3}.h{font:700 20px Inter,"Noto Sans SC",sans-serif;fill:#f0f6fc}.t{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#c9d1d9}.tiny{font:700 14px Inter,"Noto Sans SC",sans-serif;letter-spacing:.8px}.line{fill:none;stroke:#79c0ff;stroke-width:3;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1440" height="760" fill="url(#bg)"/>
+  <text x="70" y="70" class="title">从 Demo 到生产：把软约束变成可验证的系统边界</text>
+  <text x="70" y="106" class="sub">保留“小变更—快反馈—可回退”的灵魂，补上隔离、统计、持久化与治理</text>
+
+  <g filter="url(#s)">
+    <rect x="70" y="175" width="250" height="150" rx="22" fill="#0d1b2a" stroke="#79c0ff"/>
+    <text x="100" y="216" class="tiny" fill="#79c0ff">CONTROL PLANE</text><text x="100" y="255" class="h">Research Supervisor</text><text x="100" y="289" class="t">预算、队列、终止、审批</text>
+
+    <rect x="410" y="175" width="250" height="150" rx="22" fill="#0d1b2a" stroke="#a371f7"/>
+    <text x="440" y="216" class="tiny" fill="#a371f7">REASONING</text><text x="440" y="255" class="h">Agent / Planner</text><text x="440" y="289" class="t">读证据、提假设、产 patch</text>
+
+    <rect x="750" y="175" width="250" height="150" rx="22" fill="#0d1b2a" stroke="#f2cc60"/>
+    <text x="780" y="216" class="tiny" fill="#f2cc60">ISOLATED WORKER</text><text x="780" y="255" class="h">Ephemeral GPU Job</text><text x="780" y="289" class="t">只写候选目录，网络受限</text>
+
+    <rect x="1090" y="175" width="280" height="150" rx="22" fill="#0d1b2a" stroke="#ff7b72"/>
+    <text x="1120" y="216" class="tiny" fill="#ff7b72">TRUSTED EVALUATOR</text><text x="1120" y="255" class="h">Read-only Metric Service</text><text x="1120" y="289" class="t">隐藏验证集，独立签名结果</text>
+  </g>
+  <path d="M320 250H410" class="line"/><path d="M660 250H750" class="line"/><path d="M1000 250H1090" class="line"/>
+
+  <g filter="url(#s)">
+    <rect x="180" y="455" width="260" height="160" rx="22" fill="#0d1b2a" stroke="#303b4b"/>
+    <text x="210" y="498" class="h">Durable Ledger</text><text x="210" y="532" class="t">patch / env / seed / logs</text><text x="210" y="559" class="t">失败 artifact 也永久可追溯</text><text x="210" y="586" class="t">append-only DB + object store</text>
+
+    <rect x="590" y="455" width="260" height="160" rx="22" fill="#0d1b2a" stroke="#7ee787"/>
+    <text x="620" y="498" class="h">Statistical Gate</text><text x="620" y="532" class="t">重复 seed / median + CI</text><text x="620" y="559" class="t">最小改善阈值 τ</text><text x="620" y="586" class="t">VRAM / latency 硬约束</text>
+
+    <rect x="1000" y="455" width="260" height="160" rx="22" fill="#10291e" stroke="#7ee787" stroke-width="2"/>
+    <text x="1030" y="498" class="h" fill="#7ee787">Promotion</text><text x="1030" y="532" class="t">验证通过才更新 champion</text><text x="1030" y="559" class="t">签名 commit + model artifact</text><text x="1030" y="586" class="t">支持回放、审计与回滚</text>
+  </g>
+  <path d="M1230 325C1230 390 720 378 720 455" class="line"/>
+  <path d="M590 535H440" class="line"/><path d="M850 535H1000" class="line"/>
+  <path d="M1000 590C890 690 260 692 210 615" class="line"/>
+  <text x="70" y="711" class="sub">这不是要求把 1,133 行小项目膨胀成平台；而是当实验成本、Agent 数量或治理要求上升时，逐项外置隐含假设。</text>
+</svg>
