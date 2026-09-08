@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">TradingAgents 单次 propagate 执行时序</title>
+  <desc id="desc">从初始化、分析师工具循环、两轮辩论、交易提案、风险讨论到组合决策和持久化的时序。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131f"/><stop offset="1" stop-color="#121827"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#5eead4"/></marker>
+    <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#f9a8d4"/></marker>
+    <style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e2e8f0}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.lane{font-size:18px;font-weight:750}.s{font-size:15px}.n{font-size:14px;fill:#94a3b8}.life{stroke:#43566d;stroke-width:2;stroke-dasharray:8 8}.req{stroke:#5eead4;stroke-width:2.4;fill:none;marker-end:url(#a)}.ret{stroke:#f9a8d4;stroke-width:2.2;fill:none;stroke-dasharray:7 5;marker-end:url(#b)}</style>
+  </defs>
+  <rect width="1600" height="1120" rx="28" fill="url(#bg)"/>
+  <text x="70" y="62" class="h1">一次 propagate() 如何穿过整家“虚拟投研公司”</text>
+  <text x="70" y="97" class="sub">循环由状态计数器和 tool_calls 决定；每个节点只写回自己的状态增量。</text>
+  <g>
+    <rect x="55" y="130" width="190" height="64" rx="16" fill="#153047" stroke="#38bdf8"/><text x="150" y="169" text-anchor="middle" class="lane">TradingGraph</text>
+    <rect x="285" y="130" width="190" height="64" rx="16" fill="#12353b" stroke="#2dd4bf"/><text x="380" y="169" text-anchor="middle" class="lane">Analyst</text>
+    <rect x="515" y="130" width="190" height="64" rx="16" fill="#11362f" stroke="#34d399"/><text x="610" y="169" text-anchor="middle" class="lane">Tool / Vendor</text>
+    <rect x="745" y="130" width="190" height="64" rx="16" fill="#2b2550" stroke="#a78bfa"/><text x="840" y="169" text-anchor="middle" class="lane">Research Team</text>
+    <rect x="975" y="130" width="190" height="64" rx="16" fill="#3b1f35" stroke="#f472b6"/><text x="1070" y="169" text-anchor="middle" class="lane">Trader / Risk</text>
+    <rect x="1205" y="130" width="190" height="64" rx="16" fill="#392d18" stroke="#fbbf24"/><text x="1300" y="169" text-anchor="middle" class="lane">Portfolio Mgr</text>
+    <rect x="1435" y="130" width="110" height="64" rx="16" fill="#1b2938" stroke="#64748b"/><text x="1490" y="159" text-anchor="middle" class="lane">Disk</text><text x="1490" y="181" text-anchor="middle" class="n">state</text>
+    <line x1="150" y1="194" x2="150" y2="1060" class="life"/><line x1="380" y1="194" x2="380" y2="1060" class="life"/><line x1="610" y1="194" x2="610" y2="1060" class="life"/><line x1="840" y1="194" x2="840" y2="1060" class="life"/><line x1="1070" y1="194" x2="1070" y2="1060" class="life"/><line x1="1300" y1="194" x2="1300" y2="1060" class="life"/><line x1="1490" y1="194" x2="1490" y2="1060" class="life"/>
+  </g>
+  <g class="s">
+    <path d="M150 235H1480" class="req"/><text x="815" y="224" text-anchor="middle">① 结算同标的 pending 决策；读取历史 lesson；解析确定性 instrument identity</text>
+    <path d="M150 285H370" class="req"/><text x="260" y="274" text-anchor="middle">② 初始 AgentState</text>
+    <rect x="305" y="310" width="380" height="128" rx="16" fill="#0f2b32" stroke="#2dd4bf"/><text x="325" y="340" font-weight="750">对每个选中的 analyst（按顺序）</text><text x="325" y="370" class="n">LLM 有 tool_calls → ToolNode → 回到同一 Agent</text><text x="325" y="397" class="n">LLM 无 tool_calls → 写 report → Msg Clear</text><text x="325" y="422" class="n">消息清空，report 字段继续留在全局状态</text>
+    <path d="M380 463H600" class="req"/><text x="490" y="451" text-anchor="middle">tool name + args</text>
+    <path d="M610 505H390" class="ret"/><text x="500" y="493" text-anchor="middle">有来源的数据 / 显式失败哨兵</text>
+    <path d="M380 548H830" class="req"/><text x="605" y="537" text-anchor="middle">③ 四类报告齐备（或仅所选报告）</text>
+    <path d="M840 590H840"/><rect x="765" y="575" width="150" height="72" rx="14" fill="#2b2550" stroke="#a78bfa"/><text x="840" y="603" text-anchor="middle">Bull → Bear</text><text x="840" y="629" text-anchor="middle" class="n">× debate rounds</text>
+    <path d="M840 674H1060" class="req"/><text x="950" y="663" text-anchor="middle">④ ResearchPlan</text>
+    <rect x="992" y="696" width="156" height="76" rx="14" fill="#3b1f35" stroke="#f472b6"/><text x="1070" y="726" text-anchor="middle">TraderProposal</text><text x="1070" y="752" text-anchor="middle" class="n">action / levels</text>
+    <path d="M1070 798H1070"/><rect x="977" y="786" width="186" height="93" rx="14" fill="#392d18" stroke="#fbbf24"/><text x="1070" y="816" text-anchor="middle">Aggressive</text><text x="1070" y="840" text-anchor="middle">→ Conservative → Neutral</text><text x="1070" y="864" text-anchor="middle" class="n">× risk rounds</text>
+    <path d="M1070 905H1290" class="req"/><text x="1180" y="894" text-anchor="middle">⑤ debate + prior lessons</text>
+    <rect x="1222" y="922" width="156" height="84" rx="14" fill="#3a2f19" stroke="#fbbf24"/><text x="1300" y="952" text-anchor="middle">PortfolioDecision</text><text x="1300" y="978" text-anchor="middle" class="n">5-tier rating</text>
+    <path d="M1300 1030H1480" class="req"/><text x="1390" y="1019" text-anchor="middle">⑥ log state + pending</text>
+    <path d="M1490 1060H160" class="ret"/><text x="825" y="1049" text-anchor="middle">返回 final_state + 确定性提取后的 signal（解析失败为 REVIEW）</text>
+  </g>
+</svg>

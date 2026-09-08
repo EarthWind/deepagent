@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030" role="img" aria-labelledby="title desc">
+  <title id="title">TradingAgents 生产化改造蓝图</title>
+  <desc id="desc">在现有投研图基础上加入证据对象、并行分析、确定性风险策略、订单管理、仿真与评测闭环。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131f"/><stop offset="1" stop-color="#111827"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#5eead4"/></marker><style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf5}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.cap{font-size:14px;font-weight:800;letter-spacing:1.7px}.t{font-size:20px;font-weight:750}.s{font-size:15px}.m{font-size:14px;fill:#9badbf}.box{stroke-width:2}.arr{stroke:#5eead4;stroke-width:2.3;fill:none;marker-end:url(#a)}</style></defs>
+  <rect width="1600" height="1030" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">从研究 Demo 到可审计交易系统：建议的六层边界</text>
+  <text x="70" y="100" class="sub">保留 TradingAgents 的角色分工，但把证据、约束、执行和评测从自然语言中剥离出来。</text>
+  <g transform="translate(70 150)">
+    <rect width="1460" height="105" rx="20" fill="#102e2a" stroke="#34d399" class="box"/><text x="28" y="38" class="cap" fill="#6ee7b7">1 · POINT-IN-TIME DATA PLANE</text><text x="28" y="76" class="t">版本化行情 / 财报 / 新闻 / 宏观 → Evidence{id, source, event_time, as_of, value, quality}</text>
+  </g>
+  <path d="M800 255v38" class="arr"/>
+  <g transform="translate(70 293)">
+    <rect width="1460" height="122" rx="20" fill="#12353b" stroke="#2dd4bf" class="box"/><text x="28" y="38" class="cap" fill="#5eead4">2 · PARALLEL ANALYST MAP/REDUCE</text><text x="28" y="76" class="t">Market ∥ Sentiment ∥ News ∥ Fundamentals</text><text x="28" y="103" class="m">独立子状态 + Send/fan-out；Reducer 合并 typed reports，同时保留 evidence IDs 与冲突</text>
+  </g>
+  <path d="M800 415v38" class="arr"/>
+  <g transform="translate(70 453)">
+    <rect width="1460" height="122" rx="20" fill="#29234b" stroke="#a78bfa" class="box"/><text x="28" y="38" class="cap" fill="#c4b5fd">3 · DELIBERATION AND DECISION</text><text x="28" y="76" class="t">Bull/Bear → Research Manager → Trader → Risk perspectives → Portfolio Manager</text><text x="28" y="103" class="m">保留自然语言辩论；最终输出 Proposal schema，不直接产生外部副作用</text>
+  </g>
+  <path d="M800 575v38" class="arr"/>
+  <g transform="translate(70 613)">
+    <rect width="710" height="146" rx="20" fill="#392d18" stroke="#fbbf24" class="box"/><text x="28" y="38" class="cap" fill="#fde68a">4 · DETERMINISTIC RISK GATE</text><text x="28" y="76" class="t">仓位 / 杠杆 / 流动性 / 止损 / 集中度</text><text x="28" y="105" class="s">硬约束失败 → reject / human approval</text><text x="28" y="130" class="m">LLM 只能解释，不能绕过 policy-as-code</text>
+    <rect x="750" width="710" height="146" rx="20" fill="#3b1f35" stroke="#f472b6" class="box"/><text x="778" y="38" class="cap" fill="#f9a8d4">5 · OMS / SIMULATOR ADAPTER</text><text x="778" y="76" class="t">幂等 order_id · broker ack · fill · slippage</text><text x="778" y="105" class="s">paper/live 明确隔离；position/cash ledger 是真相源</text><text x="778" y="130" class="m">所有副作用写审计事件，禁止盲目重放</text>
+  </g>
+  <path d="M800 759v38" class="arr"/>
+  <g transform="translate(70 797)">
+    <rect width="1460" height="138" rx="20" fill="#15243a" stroke="#60a5fa" class="box"/><text x="28" y="38" class="cap" fill="#93c5fd">6 · EVALUATION AND OPERATIONS LOOP</text><text x="28" y="76" class="t">frozen replay corpus · seeds · ablations · cost/latency · data leakage tests · paper trading</text><text x="28" y="105" class="s">统一 Runner 供 CLI/API/批量回测调用；trace 每条证据、Prompt、模型版本、工具结果与最终决策</text><text x="28" y="129" class="m">只有通过 walk-forward、成本/滑点、异常行情和模型回归测试，才考虑受控的小额实盘灰度</text>
+  </g>
+  <text x="70" y="992" class="m">这不是“给现有图再加几个 Agent”，而是把不可控的文本推理包进可验证、可回放、可拒绝的工程边界。</text>
+</svg>

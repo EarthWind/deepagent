@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
+  <title id="title">TradingAgents AgentState 通信契约</title>
+  <desc id="desc">共享状态被拆分为运行身份、消息工作区、分析报告、研究辩论、交易提案、风险辩论和历史经验。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131f"/><stop offset="1" stop-color="#111827"/></linearGradient><style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf5}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.cap{font-size:14px;font-weight:800;letter-spacing:1.6px}.t{font-size:21px;font-weight:750}.s{font-size:15px}.m{font-size:14px;fill:#9aadc0}.box{stroke-width:2}</style></defs>
+  <rect width="1600" height="1050" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">AgentState：把“聊天”升级为显式的数据总线</text>
+  <text x="70" y="100" class="sub">报告字段负责跨团队交接，局部 history 只服务于短时辩论；这正是项目避免“传话游戏”的核心。</text>
+  <g transform="translate(70 145)">
+    <rect width="1460" height="118" rx="22" fill="#15243a" stroke="#60a5fa" class="box"/>
+    <text x="28" y="38" class="cap" fill="#93c5fd">RUN IDENTITY · 初始化写入，所有 Agent 读取</text>
+    <text x="28" y="76" class="t">company_of_interest · asset_type · instrument_context · trade_date</text>
+    <text x="28" y="102" class="m">确定 ticker、资产类型、公司身份与 point-in-time 截止日期，防止工具和叙事漂移</text>
+  </g>
+  <g transform="translate(70 298)">
+    <rect width="455" height="200" rx="22" fill="#12353b" stroke="#2dd4bf" class="box"/>
+    <text x="26" y="38" class="cap" fill="#5eead4">MESSAGES · 临时工作区</text><text x="26" y="76" class="t">MessagesState.messages</text><text x="26" y="110" class="s">Human / AI / ToolMessage</text><text x="26" y="140" class="m">分析师内部 ReAct 工具循环</text><text x="26" y="166" class="m">每个分析师结束后 RemoveMessage</text><text x="26" y="190" class="m">并加入带 ticker/date 的占位消息</text>
+    <rect x="502" width="455" height="200" rx="22" fill="#102f3c" stroke="#38bdf8" class="box"/>
+    <text x="528" y="38" class="cap" fill="#7dd3fc">REPORT BUS · 长生命周期文档</text><text x="528" y="76" class="t">四类 analyst reports</text><text x="528" y="110" class="s">market · sentiment · news · fundamentals</text><text x="528" y="140" class="m">Bull / Bear 与 Risk Team 直接读取</text><text x="528" y="166" class="m">避免完整消息历史无限膨胀</text><text x="528" y="190" class="m">缺少分析师时对应字段为空</text>
+    <rect x="1004" width="456" height="200" rx="22" fill="#2b2550" stroke="#a78bfa" class="box"/>
+    <text x="1030" y="38" class="cap" fill="#c4b5fd">PAST CONTEXT · 跨 Run 经验</text><text x="1030" y="76" class="t">past_context</text><text x="1030" y="110" class="s">同标的决策 + 跨标的 reflection</text><text x="1030" y="140" class="m">仅 Portfolio Manager 消费</text><text x="1030" y="166" class="m">历史运行按 resolution_date 截止</text><text x="1030" y="190" class="m">当前运行可读全部已结算经验</text>
+  </g>
+  <g transform="translate(70 535)">
+    <rect width="710" height="260" rx="22" fill="#29234b" stroke="#a78bfa" class="box"/>
+    <text x="26" y="38" class="cap" fill="#c4b5fd">INVESTMENT DEBATE · 研究分歧</text>
+    <text x="26" y="76" class="t">investment_debate_state</text>
+    <text x="26" y="112" class="s">history · bull_history · bear_history</text><text x="26" y="142" class="s">current_response · judge_decision · count</text>
+    <rect x="26" y="170" width="658" height="62" rx="13" fill="#1e1a39" stroke="#6558a4"/><text x="46" y="198" class="m">输出交接：</text><text x="46" y="222" class="s">Research Manager → investment_plan</text>
+  </g>
+  <g transform="translate(820 535)">
+    <rect width="710" height="260" rx="22" fill="#392d18" stroke="#fbbf24" class="box"/>
+    <text x="26" y="38" class="cap" fill="#fde68a">RISK DEBATE · 风险偏好冲突</text>
+    <text x="26" y="76" class="t">risk_debate_state</text>
+    <text x="26" y="112" class="s">history · aggressive/conservative/neutral_history</text><text x="26" y="142" class="s">latest_speaker · 3 current responses · judge_decision · count</text>
+    <rect x="26" y="170" width="658" height="62" rx="13" fill="#2a2213" stroke="#806827"/><text x="46" y="198" class="m">输出交接：</text><text x="46" y="222" class="s">Portfolio Manager → final_trade_decision</text>
+  </g>
+  <g transform="translate(70 832)">
+    <rect width="1460" height="135" rx="22" fill="#172235" stroke="#64748b" class="box"/>
+    <text x="28" y="40" class="cap" fill="#cbd5e1">TYPED DECISION ISLANDS</text>
+    <text x="28" y="78" class="t">ResearchPlan → TraderProposal → PortfolioDecision</text>
+    <text x="28" y="108" class="m">LLM 用 Pydantic 结构化输出；随后渲染回 Markdown，兼容报告、日志和下游 Prompt。图状态本身仍是 TypedDict + 文本字段。</text>
+  </g>
+  <text x="70" y="1017" class="m">设计取舍：可读、易调试；但大段 Markdown 仍会放大 token 成本，也缺少逐条 evidence/provenance 的机器可验证结构。</text>
+</svg>

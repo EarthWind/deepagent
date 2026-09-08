@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1090" viewBox="0 0 1600 1090" role="img" aria-labelledby="title desc">
+  <title id="title">TradingAgents 数据访问与时间边界</title>
+  <desc id="desc">工具请求经类别和工具级配置路由到显式 vendor chain，再通过错误分类、时间窗口、符号标准化与确定性快照进入 Agent。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06141e"/><stop offset="1" stop-color="#111827"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#67e8f9"/></marker><style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf5}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.cap{font-size:14px;font-weight:800;letter-spacing:1.7px}.t{font-size:20px;font-weight:750}.s{font-size:15px}.m{font-size:14px;fill:#9badbf}.box{stroke-width:2}.arr{stroke:#67e8f9;stroke-width:2.3;fill:none;marker-end:url(#a)}</style></defs>
+  <rect width="1600" height="1090" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">数据正确性不是 Prompt 问题，而是接口契约问题</text>
+  <text x="70" y="100" class="sub">当前代码把 vendor 选择、错误语义、日期窗口与确定性验证放在 LLM 之外。</text>
+  <g transform="translate(70 150)">
+    <rect width="270" height="120" rx="20" fill="#12353b" stroke="#2dd4bf" class="box"/><text x="24" y="38" class="cap" fill="#5eead4">AGENT TOOL CALL</text><text x="24" y="75" class="t">get_*()</text><text x="24" y="101" class="m">ticker · as-of date · args</text>
+  </g>
+  <path d="M340 210h82" class="arr"/>
+  <g transform="translate(422 132)">
+    <rect width="430" height="156" rx="20" fill="#14283a" stroke="#38bdf8" class="box"/><text x="25" y="38" class="cap" fill="#7dd3fc">ROUTER</text><text x="25" y="72" class="t">tool_vendors ＞ data_vendors</text><text x="25" y="103" class="s">显式配置值就是完整 fallback chain</text><text x="25" y="130" class="m">不会偷偷调用未选择的数据源</text>
+  </g>
+  <path d="M852 210h82" class="arr"/>
+  <g transform="translate(934 132)">
+    <rect width="596" height="156" rx="20" fill="#112f2b" stroke="#34d399" class="box"/><text x="25" y="38" class="cap" fill="#6ee7b7">VENDOR ADAPTERS</text><text x="25" y="72" class="t">Yahoo / Alpha Vantage / FRED / Polymarket</text><text x="25" y="103" class="s">StockTwits + Reddit 由 Sentiment Analyst 直接预取</text><text x="25" y="130" class="m">symbol normalization · vendor-specific parsing</text>
+  </g>
+
+  <g transform="translate(70 340)">
+    <rect width="1460" height="240" rx="22" fill="#0e202e" stroke="#3b556b" class="box"/>
+    <text x="28" y="40" class="cap" fill="#cbd5e1">CATEGORY → DEFAULT CHAIN</text>
+    <g transform="translate(28 67)">
+      <rect width="270" height="132" rx="16" fill="#132c3a" stroke="#4f83a1"/><text x="18" y="32" class="t">OHLCV / 技术指标</text><text x="18" y="62" class="s">默认 Yahoo Finance</text><text x="18" y="90" class="m">可选 Alpha Vantage</text><text x="18" y="115" class="m">stale → NO_DATA</text>
+      <rect x="292" width="270" height="132" rx="16" fill="#132c3a" stroke="#4f83a1"/><text x="310" y="32" class="t">基本面 / 新闻</text><text x="310" y="62" class="s">默认 Yahoo Finance</text><text x="310" y="90" class="m">可配置显式 fallback</text><text x="310" y="115" class="m">核心失败会抛出</text>
+      <rect x="584" width="270" height="132" rx="16" fill="#132c3a" stroke="#4f83a1"/><text x="602" y="32" class="t">宏观数据</text><text x="602" y="62" class="s">FRED</text><text x="602" y="90" class="m">vintage pinned to as-of</text><text x="602" y="115" class="m">可选增强：失败降级</text>
+      <rect x="876" width="270" height="132" rx="16" fill="#132c3a" stroke="#4f83a1"/><text x="894" y="32" class="t">预测市场</text><text x="894" y="62" class="s">Polymarket</text><text x="894" y="90" class="m">只保留 forward-looking</text><text x="894" y="115" class="m">可选增强：失败降级</text>
+      <rect x="1168" width="236" height="132" rx="16" fill="#132c3a" stroke="#4f83a1"/><text x="1186" y="32" class="t">社会情绪</text><text x="1186" y="62" class="s">StockTwits / Reddit</text><text x="1186" y="90" class="m">7 日 UTC 窗口</text><text x="1186" y="115" class="m">缺失必须显式标注</text>
+    </g>
+  </g>
+
+  <g transform="translate(70 626)">
+    <rect width="710" height="316" rx="22" fill="#2c2317" stroke="#f59e0b" class="box"/>
+    <text x="28" y="40" class="cap" fill="#fbbf24">POINT-IN-TIME GUARDS</text>
+    <text x="28" y="78" class="t">“截至某天可知道什么？”</text>
+    <text x="28" y="116" class="s">① 新闻 / 社交统一半开区间 [start, end + 1 day)</text>
+    <text x="28" y="150" class="s">② 历史 FRED 请求固定 observation 与 metadata vintage</text>
+    <text x="28" y="184" class="s">③ 财报按发布日期截断；无历史 vintage 的实时 profile 被扣留</text>
+    <text x="28" y="218" class="s">④ OHLCV 逐行标准化日期，拒绝 stale / 丢失最新收盘价</text>
+    <text x="28" y="252" class="s">⑤ 历史经验按 outcome resolution_date 截断</text>
+    <rect x="28" y="273" width="654" height="26" rx="8" fill="#3b2e19"/><text x="355" y="291" text-anchor="middle" class="m">这些防线多数是在论文发布后的 0.3.x / 0.4.x 修复中补齐</text>
+  </g>
+  <g transform="translate(820 626)">
+    <rect width="710" height="316" rx="22" fill="#102e2a" stroke="#34d399" class="box"/>
+    <text x="28" y="40" class="cap" fill="#6ee7b7">FAIL LOUDLY, DEGRADE EXPLICITLY</text>
+    <text x="28" y="78" class="t">LLM 只看见可解释结果</text>
+    <text x="28" y="116" class="s">NoMarketDataError → NO_DATA_AVAILABLE（禁止估算/编造）</text>
+    <text x="28" y="150" class="s">VendorRateLimitError → 尝试显式 chain 的下一个 vendor</text>
+    <text x="28" y="184" class="s">VendorNotConfiguredError → 同上；无可用源则报错</text>
+    <text x="28" y="218" class="s">宏观/预测市场异常 → DATA_UNAVAILABLE 哨兵后继续</text>
+    <text x="28" y="252" class="s">Verified snapshot → 独立计算最新 OHLCV 与常用指标</text>
+    <rect x="28" y="273" width="654" height="26" rx="8" fill="#163a34"/><text x="355" y="291" text-anchor="middle" class="m">工程原则：缺数据是状态，不是让模型自由补全的邀请</text>
+  </g>
+  <text x="70" y="1010" class="m">仍需注意：公共数据源的覆盖、复权、修订与限流并不等于交易级数据质量；“防未来数据”也需要持续回归测试。</text>
+</svg>
