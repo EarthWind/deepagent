@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">TradingAgents 双持久化机制</title>
+  <desc id="desc">对比 LangGraph 检查点恢复与决策日志反思记忆：前者恢复同一运行，后者把已实现收益转为下一次决策经验。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131f"/><stop offset="1" stop-color="#121827"/></linearGradient><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#67e8f9"/></marker><style>text{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#e5edf5}.h1{font-size:36px;font-weight:800}.sub{font-size:17px;fill:#94a3b8}.cap{font-size:14px;font-weight:800;letter-spacing:1.7px}.t{font-size:21px;font-weight:750}.s{font-size:15px}.m{font-size:14px;fill:#9badbf}.box{stroke-width:2}.arr{stroke:#67e8f9;stroke-width:2.3;fill:none;marker-end:url(#a)}</style></defs>
+  <rect width="1600" height="1040" rx="28" fill="url(#bg)"/>
+  <text x="70" y="65" class="h1">两个“记忆”解决的是完全不同的问题</text>
+  <text x="70" y="100" class="sub">Checkpoint 让一次 Run 不重做；Decision Log 让下一次 Run 能从已知结果中学习。</text>
+  <g transform="translate(70 150)">
+    <rect width="710" height="720" rx="24" fill="#10283a" stroke="#38bdf8" class="box"/>
+    <text x="30" y="43" class="cap" fill="#7dd3fc">A · EXECUTION CHECKPOINT</text><text x="30" y="84" class="t">LangGraph SqliteSaver</text>
+    <g transform="translate(30 126)">
+      <rect width="650" height="82" rx="16" fill="#142f43" stroke="#4f83a1"/><text x="22" y="33" class="s">每个图节点成功后保存 state snapshot</text><text x="22" y="60" class="m">~/.tradingagents/cache/checkpoints/&lt;TICKER&gt;.db</text>
+      <path d="M325 82v45" class="arr"/>
+      <rect y="127" width="650" height="98" rx="16" fill="#142f43" stroke="#4f83a1"/><text x="22" y="161" class="s">thread_id = hash(ticker + date + graph signature)</text><text x="22" y="189" class="m">signature: analysts · debate depth · risk depth · asset type</text>
+      <path d="M325 225v45" class="arr"/>
+      <rect y="270" width="650" height="105" rx="16" fill="#142f43" stroke="#4f83a1"/><text x="22" y="304" class="s">失败：保留 checkpoint</text><text x="22" y="332" class="s">再次运行：向 graph 传 None，从最后成功步骤继续</text><text x="22" y="359" class="m">不能重新传初始 state，否则 messages reducer 会重复追加</text>
+      <path d="M325 375v45" class="arr"/>
+      <rect y="420" width="650" height="90" rx="16" fill="#12352f" stroke="#34d399"/><text x="22" y="454" class="s">成功：删除该 thread 的 checkpoint rows</text><text x="22" y="482" class="m">下一次同 ticker/date 从干净状态开始</text>
+    </g>
+    <text x="30" y="682" class="m">目标：容错、恢复、避免重复昂贵工具调用</text><text x="30" y="708" class="m">限制：本地单机 SQLite；不是跨服务生产级协调</text>
+  </g>
+  <g transform="translate(820 150)">
+    <rect width="710" height="720" rx="24" fill="#102d29" stroke="#34d399" class="box"/>
+    <text x="30" y="43" class="cap" fill="#6ee7b7">B · OUTCOME MEMORY</text><text x="30" y="84" class="t">Append-only Markdown Decision Log</text>
+    <g transform="translate(30 126)">
+      <rect width="650" height="82" rx="16" fill="#143630" stroke="#3f7a6b"/><text x="22" y="33" class="s">Run 完成：保存 final decision 为 pending</text><text x="22" y="60" class="m">~/.tradingagents/memory/trading_memory.md</text>
+      <path d="M325 82v45" class="arr"/>
+      <rect y="127" width="650" height="105" rx="16" fill="#143630" stroke="#3f7a6b"/><text x="22" y="161" class="s">下一次运行同 ticker 前：查询第 5 个交易日结果</text><text x="22" y="189" class="s">raw return − benchmark return = alpha</text><text x="22" y="215" class="m">交易窗口未完整走完则继续 pending，不提前结算</text>
+      <path d="M325 232v45" class="arr"/>
+      <rect y="277" width="650" height="105" rx="16" fill="#143630" stroke="#3f7a6b"/><text x="22" y="311" class="s">Quick LLM 生成 2–4 句反思</text><text x="22" y="339" class="m">方向是否正确 · 哪条 thesis 成败 · 下次一条 lesson</text><text x="22" y="365" class="m">临时文件 + replace 原子批量更新</text>
+      <path d="M325 382v45" class="arr"/>
+      <rect y="427" width="650" height="105" rx="16" fill="#21334c" stroke="#818cf8"/><text x="22" y="461" class="s">新 Run 注入 Portfolio Manager</text><text x="22" y="489" class="s">最近 5 条同标的完整记录 + 3 条跨标的 lesson</text><text x="22" y="515" class="m">历史 Run 按 resolution_date 做 point-in-time 过滤</text>
+    </g>
+    <text x="30" y="682" class="m">目标：低成本 episodic memory / verbal reinforcement</text><text x="30" y="708" class="m">限制：只在再次分析同 ticker 时结算其 pending 条目</text>
+  </g>
+  <rect x="70" y="910" width="1460" height="72" rx="16" fill="#2d2417" stroke="#f59e0b"/>
+  <text x="800" y="939" text-anchor="middle" class="s">当前 main 的重要入口差异</text><text x="800" y="965" text-anchor="middle" class="m">Python propagate() 走完整 decision-log 生命周期；交互 CLI 直接 stream 图，当前代码未调用 pending 结算、past_context 注入和 store_decision。</text>
+</svg>
