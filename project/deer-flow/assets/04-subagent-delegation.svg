@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="860" viewBox="0 0 1450 860" role="img" aria-labelledby="title desc">
+  <title id="title">DeerFlow 子 Agent 委派机制</title><desc id="desc">展示 Lead Agent 发起任务，容量控制器调度 SubagentExecutor，并通过状态事件和结构化结果返回的过程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#081525"/><stop offset="1" stop-color="#18263e"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#5eead4"/></marker>
+    <style>.title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.box{fill:#122c45;stroke:#3f5c78;stroke-width:1.5}.hot{fill:#153b4d;stroke:#5eead4;stroke-width:2}.h{font:700 18px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.t{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.small{font:400 12px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.flow{fill:none;stroke:#5eead4;stroke-width:2;marker-end:url(#a)}.dash{fill:none;stroke:#60a5fa;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#a)}.tag{fill:#0f2236;stroke:#334155}.tagt{font:600 12px Inter,"Noto Sans SC",sans-serif;fill:#bae6fd}</style>
+  </defs>
+  <rect width="1450" height="860" rx="26" fill="url(#bg)"/>
+  <text x="60" y="62" class="title">Sub-agent：受控委派，而不是递归“套娃”</text>
+  <text x="60" y="91" class="sub">并行只在收益超过协调成本时成立；子 Agent 共享工作区，但拥有独立消息上下文与执行边界</text>
+
+  <rect x="60" y="145" width="270" height="174" rx="18" class="hot"/><text x="86" y="182" class="h">Lead Agent</text><text x="86" y="213" class="t">判断是否值得委派</text><text x="86" y="241" class="t">调用 task(description, ...)</text>
+  <rect x="86" y="264" width="98" height="31" rx="15" class="tag"/><text x="135" y="284" text-anchor="middle" class="tagt">独立工作</text><rect x="194" y="264" width="110" height="31" rx="15" class="tag"/><text x="249" y="284" text-anchor="middle" class="tagt">可验证产出</text>
+
+  <rect x="395" y="145" width="300" height="174" rx="18" class="box"/><text x="421" y="182" class="h">task_tool</text><text x="421" y="213" class="t">校验 agent allowlist / 安全策略</text><text x="421" y="241" class="t">冻结父级 Sandbox 与请求上下文</text><text x="421" y="269" class="t">登记委派账本与 acceptance criteria</text><text x="421" y="297" class="small">模型、技能、工具组可继承或覆盖</text>
+
+  <rect x="760" y="145" width="300" height="174" rx="18" class="box"/><text x="786" y="182" class="h">Capacity Controller</text><text x="786" y="213" class="t">进程级 FIFO：running / queued</text><text x="786" y="241" class="t">默认 max_running = 3</text><text x="786" y="269" class="t">queue 或 reject admission</text><text x="786" y="297" class="small">排队不占调度线程</text>
+
+  <rect x="1125" y="145" width="265" height="174" rx="18" class="hot"/><text x="1151" y="182" class="h">SubagentExecutor</text><text x="1151" y="213" class="t">独立持久 Event Loop</text><text x="1151" y="241" class="t">再次 create_agent()</text><text x="1151" y="269" class="t">无 task 工具：禁止递归委派</text><text x="1151" y="297" class="small">流式收集每个新步骤</text>
+
+  <path d="M330 232H385" class="flow"/><path d="M695 232H750" class="flow"/><path d="M1060 232H1115" class="flow"/>
+
+  <text x="60" y="385" class="h">共享资源与隔离边界</text>
+  <rect x="60" y="410" width="1330" height="135" rx="18" class="box"/>
+  <rect x="88" y="438" width="245" height="78" rx="13" class="tag"/><text x="108" y="468" class="t">共享：thread workspace</text><text x="108" y="494" class="small">uploads / outputs / Sandbox lease</text>
+  <rect x="359" y="438" width="245" height="78" rx="13" class="tag"/><text x="379" y="468" class="t">隔离：message history</text><text x="379" y="494" class="small">新 System + Task HumanMessage</text>
+  <rect x="630" y="438" width="245" height="78" rx="13" class="tag"/><text x="650" y="468" class="t">边界：time / turn / token</text><text x="650" y="494" class="small">loop 检测与 stop_reason</text>
+  <rect x="901" y="438" width="245" height="78" rx="13" class="tag"/><text x="921" y="468" class="t">证据：execution receipts</text><text x="921" y="494" class="small">工具执行过 ≠ 结论必然正确</text>
+  <rect x="1172" y="438" width="190" height="78" rx="13" class="tag"/><text x="1192" y="468" class="t">验收：deterministic</text><text x="1192" y="494" class="small">file / write / tests</text>
+
+  <text x="60" y="606" class="h">两个返回通道</text>
+  <rect x="60" y="630" width="610" height="142" rx="18" class="box"/><text x="84" y="666" class="h">控制面：Custom Events → UI</text><text x="84" y="696" class="t">task_started → task_running → completed / failed / timed_out</text><text x="84" y="725" class="t">每 5 秒心跳；用户能看到任务仍在推进，无需主 Agent 轮询</text><text x="84" y="752" class="small">事件写入 Journal，并映射成根图可消费的 SSE</text>
+  <rect x="730" y="630" width="660" height="142" rx="18" class="hot"/><text x="754" y="666" class="h">数据面：ToolMessage + 结构化 metadata → Lead</text><text x="754" y="696" class="t">最终报告、状态、模型、Token、stop_reason、receipts、验收 verdict</text><text x="754" y="725" class="t">Lead 做综合判断并对用户承担最终交付责任</text><text x="754" y="752" class="small">历史委派进入耐久账本，防止上下文压缩后重复劳动</text>
+  <path d="M1257 319V350H1410V584H365V620" class="dash"/><path d="M1290 319V365H1430V606H1060V620" class="flow"/>
+  <text x="60" y="818" class="small">默认注册 general-purpose 与 bash；还可由配置、托管定义和自定义 Agent 增补。最终可用集合受请求策略裁剪。</text>
+</svg>

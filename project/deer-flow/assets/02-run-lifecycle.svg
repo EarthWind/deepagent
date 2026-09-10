@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="850" viewBox="0 0 1500 850" role="img" aria-labelledby="title desc">
+  <title id="title">DeerFlow 一次运行的生命周期</title><desc id="desc">展示从浏览器提交，到 Gateway、RunManager、Agent Graph、工具和 SSE Bridge，再回到浏览器的运行时序。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07131f"/><stop offset="1" stop-color="#13243a"/></linearGradient>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#67e8f9"/></marker>
+    <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#f9a8d4"/></marker>
+    <style>.title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.actor{fill:#153149;stroke:#38bdf8;stroke-width:1.5}.ah{font:700 17px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.life{stroke:#38516b;stroke-width:1.5;stroke-dasharray:6 8}.flow{stroke:#67e8f9;stroke-width:2;fill:none;marker-end:url(#arr)}.return{stroke:#f9a8d4;stroke-width:2;fill:none;marker-end:url(#arr2);stroke-dasharray:7 5}.label{font:500 14px Inter,"Noto Sans SC",sans-serif;fill:#dbeafe}.note{fill:#102a3d;stroke:#33556d}.nt{font:400 13px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.phase{font:700 14px Inter,"Noto Sans SC",sans-serif;fill:#5eead4;letter-spacing:.6px}</style>
+  </defs>
+  <rect width="1500" height="850" rx="26" fill="url(#bg)"/>
+  <text x="65" y="62" class="title">一次 DeerFlow Run：不是简单的 request → response</text>
+  <text x="65" y="91" class="sub">运行状态、Checkpoint、执行事件和面向浏览器的流拥有各自职责，最终在 UI 侧汇合</text>
+  <g>
+    <rect x="65" y="125" width="180" height="58" rx="12" class="actor"/><text x="155" y="160" text-anchor="middle" class="ah">Browser / UI</text>
+    <rect x="320" y="125" width="180" height="58" rx="12" class="actor"/><text x="410" y="160" text-anchor="middle" class="ah">FastAPI Gateway</text>
+    <rect x="575" y="125" width="180" height="58" rx="12" class="actor"/><text x="665" y="160" text-anchor="middle" class="ah">RunManager</text>
+    <rect x="830" y="125" width="180" height="58" rx="12" class="actor"/><text x="920" y="160" text-anchor="middle" class="ah">Agent Graph</text>
+    <rect x="1085" y="125" width="180" height="58" rx="12" class="actor"/><text x="1175" y="160" text-anchor="middle" class="ah">Tools / Sandbox</text>
+    <rect x="1320" y="125" width="130" height="58" rx="12" class="actor"/><text x="1385" y="151" text-anchor="middle" class="ah">Stream</text><text x="1385" y="171" text-anchor="middle" class="sub">Bridge</text>
+  </g>
+  <g><path d="M155 183V785" class="life"/><path d="M410 183V785" class="life"/><path d="M665 183V785" class="life"/><path d="M920 183V785" class="life"/><path d="M1175 183V785" class="life"/><path d="M1385 183V785" class="life"/></g>
+
+  <text x="65" y="224" class="phase">① ADMISSION</text>
+  <path d="M155 245H400" class="flow"/><text x="185" y="237" class="label">POST /runs + context</text>
+  <path d="M410 280H655" class="flow"/><text x="445" y="272" class="label">幂等创建 RunRecord</text>
+  <path d="M665 315H910" class="flow"/><text x="705" y="307" class="label">try_start：租约与并发准入</text>
+
+  <text x="65" y="354" class="phase">② HYDRATION</text>
+  <rect x="795" y="335" width="250" height="93" rx="12" class="note"/><text x="815" y="362" class="nt">• 校验 full / delta 模式</text><text x="815" y="386" class="nt">• 绑定 checkpointer 与 store</text><text x="815" y="410" class="nt">• 加载 Agent、回滚点、快照</text>
+  <path d="M920 435H1375" class="flow"/><text x="1000" y="427" class="label">metadata(run_id, thread_id)</text>
+
+  <text x="65" y="477" class="phase">③ AGENT LOOP</text>
+  <path d="M920 500H1165" class="flow"/><text x="956" y="492" class="label">tool call</text>
+  <path d="M1175 535H930" class="return"/><text x="984" y="527" class="label">result + receipt</text>
+  <path d="M920 570H1375" class="flow"/><text x="1006" y="562" class="label">messages / updates / custom</text>
+  <path d="M1385 605H165" class="return"/><text x="668" y="597" class="label">SSE（递增 event id，可 Last-Event-ID 重放）</text>
+
+  <text x="65" y="645" class="phase">④ COMMIT &amp; DELIVERY</text>
+  <rect x="795" y="625" width="250" height="111" rx="12" class="note"/><text x="815" y="652" class="nt">• Checkpoint 按线程串行提交</text><text x="815" y="676" class="nt">• Journal 记录语义事件</text><text x="815" y="700" class="nt">• 输出变化必须被 present_files</text><text x="815" y="724" class="nt">• 写入 success / error / interrupted</text>
+  <path d="M920 750H675" class="return"/><text x="718" y="742" class="label">finalize durable status</text>
+  <path d="M665 780H420" class="return"/><text x="468" y="772" class="label">结束帧 + 清理</text>
+
+  <rect x="65" y="802" width="1385" height="28" rx="8" fill="#0b2032"/><text x="757" y="821" text-anchor="middle" class="nt">设计要点：SSE 断开 ≠ Agent 停止；生产者与消费者由 StreamBridge 解耦</text>
+</svg>

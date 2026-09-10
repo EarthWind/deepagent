@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920" role="img" aria-labelledby="title desc">
+  <title id="title">DeerFlow 中间件与上下文工程</title><desc id="desc">展示动态中间件管线，以及工作消息、压缩摘要、耐久语义和长期记忆之间的关系。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a1526"/><stop offset="1" stop-color="#17233c"/></linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1e3a5f"/><stop offset="1" stop-color="#164e63"/></linearGradient>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#67e8f9"/></marker>
+    <style>.title{font:700 34px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.sub{font:400 15px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.section{font:700 17px Inter,"Noto Sans SC",sans-serif;fill:#5eead4;letter-spacing:.8px}.box{fill:#132c47;stroke:#3b5874;stroke-width:1.5}.hot{fill:url(#g1);stroke:#5eead4;stroke-width:1.7}.h{font:700 17px Inter,"Noto Sans SC",sans-serif;fill:#f8fafc}.t{font:400 14px Inter,"Noto Sans SC",sans-serif;fill:#cbd5e1}.small{font:400 12px Inter,"Noto Sans SC",sans-serif;fill:#94a3b8}.flow{fill:none;stroke:#67e8f9;stroke-width:2;marker-end:url(#a)}.dash{fill:none;stroke:#a78bfa;stroke-width:2;stroke-dasharray:7 6;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1500" height="920" rx="26" fill="url(#bg)"/>
+  <text x="60" y="62" class="title">中间件管线决定行为，上下文分层决定长任务上限</text>
+  <text x="60" y="91" class="sub">当前 main 分支为动态装配：配置、权限、模型能力、Extension 都会改变最终链条</text>
+
+  <text x="60" y="140" class="section">A. 一次模型调用经过的逻辑层（外 → 内 → 外）</text>
+  <g>
+    <rect x="60" y="164" width="196" height="100" rx="14" class="box"/><text x="80" y="195" class="h">输入与上下文</text><text x="80" y="221" class="t">Input Sanitization</text><text x="80" y="244" class="t">Dynamic Context</text>
+    <rect x="280" y="164" width="196" height="100" rx="14" class="box"/><text x="300" y="195" class="h">能力可见性</text><text x="300" y="221" class="t">Skill Activation</text><text x="300" y="244" class="t">Deferred Tool Filter</text>
+    <rect x="500" y="164" width="196" height="100" rx="14" class="box"/><text x="520" y="195" class="h">状态与计划</text><text x="520" y="221" class="t">Sandbox / Thread Data</text><text x="520" y="244" class="t">Todo / Summary / Memory</text>
+    <rect x="720" y="164" width="196" height="100" rx="14" class="hot"/><text x="740" y="195" class="h">LangChain Agent</text><text x="740" y="221" class="t">Model ↔ Tool Loop</text><text x="740" y="244" class="t">LangGraph Checkpoint</text>
+    <rect x="940" y="164" width="196" height="100" rx="14" class="box"/><text x="960" y="195" class="h">工具安全</text><text x="960" y="221" class="t">AuthZ / Read-before-write</text><text x="960" y="244" class="t">Sandbox Audit</text>
+    <rect x="1160" y="164" width="280" height="100" rx="14" class="box"/><text x="1180" y="195" class="h">停止与恢复语义</text><text x="1180" y="221" class="t">Loop / Token / Length / Safety</text><text x="1180" y="244" class="t">Clarification 最后兜底</text>
+  </g>
+  <path d="M256 214H270" class="flow"/><path d="M476 214H490" class="flow"/><path d="M696 214H710" class="flow"/><path d="M916 214H930" class="flow"/><path d="M1136 214H1150" class="flow"/>
+  <rect x="60" y="287" width="1380" height="48" rx="10" fill="#0d2238" stroke="#334155"/><text x="750" y="316" text-anchor="middle" class="t">工程含义：中间件不是装饰器清单；它同时改写 Prompt、工具 Schema、状态更新、错误与停止原因</text>
+
+  <text x="60" y="392" class="section">B. 四类上下文，各自回答不同问题</text>
+  <g>
+    <rect x="60" y="420" width="310" height="190" rx="18" class="hot"/>
+    <text x="84" y="456" class="h">① 工作消息（messages）</text><text x="84" y="485" class="t">当前对话 + 最近工具轨迹</text><text x="84" y="511" class="t">精确但随回合增长</text><text x="84" y="548" class="small">Checkpoint channel: full / delta</text><text x="84" y="575" class="small">目标：保证下一步推理所需局部细节</text>
+    <rect x="400" y="420" width="310" height="190" rx="18" class="box"/>
+    <text x="424" y="456" class="h">② 压缩摘要（summary_text）</text><text x="424" y="485" class="t">旧消息的语义压缩</text><text x="424" y="511" class="t">Token / 消息数 / 比例触发</text><text x="424" y="548" class="small">保留最近消息和 AI/Tool 配对</text><text x="424" y="575" class="small">目标：控制上下文窗口</text>
+    <rect x="740" y="420" width="310" height="190" rx="18" class="box"/>
+    <text x="764" y="456" class="h">③ 耐久语义通道</text><text x="764" y="485" class="t">delegations + skill_context</text><text x="764" y="511" class="t">压缩前捕获，压缩后重注入</text><text x="764" y="548" class="small">只存 Skill 引用，不复制完整正文</text><text x="764" y="575" class="small">目标：避免摘要丢失执行承诺</text>
+    <rect x="1080" y="420" width="360" height="190" rx="18" class="box"/>
+    <text x="1104" y="456" class="h">④ 长期记忆（MemoryManager）</text><text x="1104" y="485" class="t">跨线程用户事实与修正</text><text x="1104" y="511" class="t">middleware 或 tool 模式</text><text x="1104" y="548" class="small">默认 DeerMem；可接 Mem0 / OpenViking</text><text x="1104" y="575" class="small">目标：跨会话个性化与连续性</text>
+  </g>
+  <path d="M370 515H390" class="flow"/><path d="M710 515H730" class="flow"/><path d="M1050 515H1070" class="flow"/>
+
+  <text x="60" y="664" class="section">C. 注入到下一次调用前的组合</text>
+  <rect x="60" y="692" width="260" height="116" rx="16" class="box"/><text x="82" y="726" class="h">稳定前缀</text><text x="82" y="754" class="t">System Prompt + 当前日期</text><text x="82" y="780" class="small">尽量保持 Prompt Cache 命中</text>
+  <rect x="370" y="692" width="260" height="116" rx="16" class="box"/><text x="392" y="726" class="h">低权限动态数据</text><text x="392" y="754" class="t">Memory 用 HumanMessage</text><text x="392" y="780" class="small">防止把用户事实提升为系统指令</text>
+  <rect x="680" y="692" width="260" height="116" rx="16" class="box"/><text x="702" y="726" class="h">耐久提醒</text><text x="702" y="754" class="t">摘要、委派、Skill 引用</text><text x="702" y="780" class="small">让长任务恢复“做过什么”</text>
+  <rect x="990" y="692" width="450" height="116" rx="16" class="hot"/><text x="1012" y="726" class="h">最终 ModelRequest</text><text x="1012" y="754" class="t">可见工具 = 授权 ∩ 已激活 Skill ∩ 已提升 MCP</text><text x="1012" y="780" class="small">失败关闭：元数据冲突或目录漂移时不扩大权限</text>
+  <path d="M320 750H360" class="flow"/><path d="M630 750H670" class="flow"/><path d="M940 750H980" class="flow"/>
+  <path d="M895 610V655H1120V682" class="dash"/>
+  <text x="60" y="862" class="small">注：上图按职责分组，不等同于源码中的每一个具体 Middleware 类；最终顺序以 build_middlewares() 动态结果为准。</text>
+</svg>
