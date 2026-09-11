@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Agent-Reach media transcription pipeline</title>
+  <desc id="desc">A bounded pipeline validates input, downloads with yt-dlp, probes and normalizes audio with ffmpeg, chunks large audio, then sends it to one explicitly selected speech-to-text provider.</desc>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#67c9dc"/></marker>
+    <style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#f2f6f8}.m{fill:#aab5bd}.h1{font-size:38px;font-weight:800}.h2{font-size:21px;font-weight:750}.b{font-size:17px}.s{font-size:15px}.box{fill:#151b20;stroke:#3d4b54;stroke-width:2}.cyan{fill:#10282e;stroke:#57b9cb;stroke-width:2}.amber{fill:#2b2217;stroke:#d79d4d;stroke-width:2}.green{fill:#14281f;stroke:#63bc88;stroke-width:2}.red{fill:#2b1919;stroke:#d06e70;stroke-width:2}.line{fill:none;stroke:#67c9dc;stroke-width:3;marker-end:url(#a)}.dash{fill:none;stroke:#d8a158;stroke-width:2;stroke-dasharray:8 7;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1600" height="900" fill="#0d1114"/>
+  <text class="t h1" x="64" y="70">媒体转写：每一步都设置资源上限，跨供应商回退必须显式授权</text>
+  <text class="t m b" x="64" y="108">本地文件或公共 URL → 下载 → 探测 → 音频归一化 → 分片 → Whisper API</text>
+
+  <rect class="cyan" x="64" y="170" width="230" height="150" rx="12"/>
+  <text class="t h2" x="92" y="215">1. 输入验证</text>
+  <text class="t b" x="92" y="252">本地文件 / HTTP(S)</text>
+  <text class="t m s" x="92" y="282">拒绝 userinfo、内网字面 IP</text>
+  <path class="line" d="M294 245 H350"/>
+
+  <rect class="box" x="350" y="170" width="230" height="150" rx="12"/>
+  <text class="t h2" x="378" y="215">2. yt-dlp</text>
+  <text class="t b" x="378" y="252">禁用播放列表</text>
+  <text class="t m s" x="378" y="282">≤ 512 MiB；≤ 1800 秒</text>
+  <path class="line" d="M580 245 H636"/>
+
+  <rect class="box" x="636" y="170" width="230" height="150" rx="12"/>
+  <text class="t h2" x="664" y="215">3. ffprobe</text>
+  <text class="t b" x="664" y="252">读取真实媒体时长</text>
+  <text class="t m s" x="664" y="282">最长 4 小时</text>
+  <path class="line" d="M866 245 H922"/>
+
+  <rect class="box" x="922" y="170" width="230" height="150" rx="12"/>
+  <text class="t h2" x="950" y="215">4. ffmpeg</text>
+  <text class="t b" x="950" y="252">单声道 / 16 kHz</text>
+  <text class="t m s" x="950" y="282">32 kbps M4A</text>
+  <path class="line" d="M1152 245 H1208"/>
+
+  <rect class="amber" x="1208" y="170" width="328" height="150" rx="12"/>
+  <text class="t h2" x="1236" y="215">5. 有界分片</text>
+  <text class="t b" x="1236" y="252">单片 ≤ 24 MiB</text>
+  <text class="t m s" x="1236" y="282">10 分钟 / 片；≤ 24 片；总计 ≤ 96 MiB</text>
+
+  <path class="line" d="M1372 320 V402"/>
+  <rect class="green" x="998" y="402" width="538" height="196" rx="12"/>
+  <text class="t h2" x="1028" y="448">6. 单一供应商边界</text>
+  <text class="t b" x="1028" y="488">auto：优先已配置的 Groq，再考虑 OpenAI</text>
+  <text class="t m b" x="1028" y="528">默认不跨供应商自动重试，避免隐性外发与二次计费</text>
+  <text class="t m s" x="1028" y="564">只有 allow_provider_fallback=True 才允许跨供应商回退</text>
+
+  <rect class="red" x="64" y="402" width="828" height="196" rx="12"/>
+  <text class="t h2" x="94" y="448">仍需部署方处理的风险</text>
+  <text class="t b" x="94" y="488">• URL 校验不做 DNS 解析：本地 yt-dlp 下载仍需出站网络策略防 DNS rebinding</text>
+  <text class="t b" x="94" y="528">• 媒体内容会发送给云端语音供应商：应增加数据分类、审计与保留策略</text>
+  <text class="t b" x="94" y="568">• 上游站点反爬、版权和条款风险不由资源上限自动消除</text>
+
+  <rect class="box" x="64" y="678" width="1472" height="142" rx="12"/>
+  <text class="t h2" x="94" y="721">为什么这段实现值得借鉴</text>
+  <text class="t b" x="94" y="762">它把“能转写”拆成可审计的预算：下载大小、执行超时、媒体时长、单片大小、分片数量、总上传量与供应商授权。</text>
+  <text class="t m b" x="94" y="798">这是一种适合 Agent 工具的防御性设计：先限定最坏成本，再开放能力。</text>
+</svg>
