@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Agent-Reach install and doctor lifecycle</title>
+  <desc id="desc">Safe mode only checks dependencies. System mode performs explicit user-authorized installation, optional channel setup, skill registration and doctor checks. Credential import remains a separate explicit step.</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#67c9dc"/></marker><style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#f2f6f8}.m{fill:#aab5bd}.h1{font-size:38px;font-weight:800}.h2{font-size:22px;font-weight:750}.b{font-size:17px}.s{font-size:15px}.box{fill:#151b20;stroke:#3c4a52;stroke-width:2}.cyan{fill:#10282e;stroke:#57b8ca;stroke-width:2}.amber{fill:#2c2216;stroke:#d89d4c;stroke-width:2}.red{fill:#29191a;stroke:#cd6d72;stroke-width:2}.line{fill:none;stroke:#67c9dc;stroke-width:3;marker-end:url(#a)}.dash{fill:none;stroke:#79868e;stroke-width:2;stroke-dasharray:8 7;marker-end:url(#a)}</style></defs>
+  <rect width="1600" height="980" fill="#0d1114"/>
+  <text class="t h1" x="64" y="70">安装与体检：授权门控制副作用，Cookie 导入保持显式</text>
+  <text class="t m b" x="64" y="108">默认 install 与 --safe 等价；只有 --system 才进入系统修改路径</text>
+
+  <text class="t h2" x="72" y="170">调用者</text><text class="t h2" x="382" y="170">CLI 编排</text><text class="t h2" x="740" y="170">本机环境</text><text class="t h2" x="1110" y="170">Channel / Doctor</text>
+  <line x1="150" y1="192" x2="150" y2="900" stroke="#334149" stroke-width="2"/>
+  <line x1="470" y1="192" x2="470" y2="900" stroke="#334149" stroke-width="2"/>
+  <line x1="835" y1="192" x2="835" y2="900" stroke="#334149" stroke-width="2"/>
+  <line x1="1230" y1="192" x2="1230" y2="900" stroke="#334149" stroke-width="2"/>
+
+  <rect x="60" y="225" width="180" height="62" class="cyan"/><text class="t b" x="82" y="263">install --env=auto</text>
+  <path class="line" d="M240 256 H445"/>
+  <rect x="445" y="306" width="280" height="72" class="box"/><text class="t b" x="470" y="337">校验 channels 参数</text><text class="t m s" x="470" y="359">先失败，尚未创建 Config / 写文件</text>
+  <path class="line" d="M725 342 H810"/>
+  <rect x="810" y="306" width="250" height="72" class="box"/><text class="t b" x="835" y="337">探测 local / server</text><text class="t m s" x="835" y="359">SSH / container / display / VM</text>
+
+  <rect x="445" y="414" width="280" height="76" class="cyan"/><text class="t b" x="470" y="446">默认 safe 分支</text><text class="t m s" x="470" y="470">只检查 gh / Node / mcporter</text>
+  <path class="dash" d="M725 452 H810"/>
+  <rect x="810" y="414" width="250" height="76" class="box"/><text class="t b" x="835" y="446">无持久写入</text><text class="t m s" x="835" y="470">输出缺失项与人工命令</text>
+
+  <rect x="60" y="525" width="180" height="62" class="amber"/><text class="t b" x="82" y="563">install --system</text>
+  <path class="line" d="M240 556 H445"/>
+  <rect x="445" y="520" width="280" height="76" class="amber"/><text class="t b" x="470" y="552">显式授权分支</text><text class="t m s" x="470" y="576">系统依赖 + 全局工具 + 配置</text>
+  <path class="line" d="M725 558 H810"/>
+  <rect x="810" y="520" width="250" height="92" class="amber"/><text class="t b" x="835" y="550">apt / brew / npm / pipx</text><text class="t m s" x="835" y="575">Exa MCP home scope</text><text class="t m s" x="835" y="597">可选 channel installer 去重</text>
+  <path class="line" d="M1060 566 H1205"/>
+  <rect x="1205" y="520" width="320" height="92" class="box"/><text class="t b" x="1230" y="550">逐 Channel check()</text><text class="t m s" x="1230" y="575">单项异常降级为 error</text><text class="t m s" x="1230" y="597">输出 JSON / Rich 体检报告</text>
+
+  <path class="line" d="M1230 612 V658 H725"/>
+  <rect x="445" y="634" width="280" height="82" class="cyan"/><text class="t b" x="470" y="667">注册 Skill</text><text class="t m s" x="470" y="691">复制 SKILL + references 到已知目录</text>
+  <path class="line" d="M445 676 H240"/>
+  <rect x="60" y="642" width="180" height="72" class="box"/><text class="t b" x="82" y="673">安装结果</text><text class="t m s" x="82" y="695">ok/total + 修复提示</text>
+
+  <rect x="60" y="760" width="180" height="72" class="red"/><text class="t b" x="82" y="790">configure …</text><text class="t m s" x="82" y="813">另一次明确操作</text>
+  <path class="line" d="M240 796 H445"/>
+  <rect x="445" y="754" width="280" height="88" class="red"/><text class="t b" x="470" y="784">隐藏输入 / --stdin</text><text class="t m s" x="470" y="809">Twitter / XHS 禁止自动读取</text><text class="t m s" x="470" y="831">B站 / 雪球限定单平台导入</text>
+  <path class="line" d="M725 798 H810"/>
+  <rect x="810" y="754" width="250" height="88" class="red"/><text class="t b" x="835" y="784">本地私密存储</text><text class="t m s" x="835" y="809">目录 0700 · 文件 0600</text><text class="t m s" x="835" y="831">原子替换 · 拒绝 symlink</text>
+  <path class="dash" d="M1060 798 H1205"/>
+  <rect x="1205" y="754" width="320" height="88" class="box"/><text class="t b" x="1230" y="784">再运行 doctor</text><text class="t m s" x="1230" y="809">保守验证：可能 warn/null</text><text class="t m s" x="1230" y="831">目标任务再做只读实时验收</text>
+
+  <rect x="60" y="900" width="1465" height="45" fill="#12181c" stroke="#344149"/>
+  <text class="t s" x="84" y="928">注意：--dry-run 展示的是计划，不调用 doctor；卸载也提供 --dry-run，且无法证明归属的 mcporter 条目会保留。</text>
+</svg>

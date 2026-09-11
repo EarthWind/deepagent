@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Agent-Reach security and trust boundaries</title>
+  <desc id="desc">The diagram separates mutable remote instructions and packages, the local Agent-Reach control plane, private credentials, upstream tools and external platforms, showing implemented controls and residual risks.</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#67c9dc"/></marker><style>.t{font-family:Inter,"Noto Sans SC","Microsoft YaHei",sans-serif;fill:#f2f6f8}.m{fill:#aab5bd}.h1{font-size:38px;font-weight:800}.h2{font-size:22px;font-weight:750}.b{font-size:17px}.s{font-size:15px}.zone{fill:#11171b;stroke:#3a4850;stroke-width:2}.safe{fill:#10281f;stroke:#62bb87;stroke-width:2}.risk{fill:#2b1a1a;stroke:#d06f70;stroke-width:2}.control{fill:#10282e;stroke:#56bacd;stroke-width:2}.line{fill:none;stroke:#67c9dc;stroke-width:3;marker-end:url(#a)}.dash{fill:none;stroke:#d8a158;stroke-width:2;stroke-dasharray:8 7;marker-end:url(#a)}</style></defs>
+  <rect width="1600" height="980" fill="#0d1114"/>
+  <text class="t h1" x="64" y="70">安全模型：本地凭据保护做得细，供应链与浏览器权限仍是外部边界</text>
+  <text class="t m b" x="64" y="108">绿色为已实现控制；红色为需要部署方补齐的残余风险</text>
+
+  <rect x="60" y="160" width="360" height="720" class="zone"/>
+  <text class="t h2" x="90" y="202">A. 远端可变来源</text>
+  <rect x="90" y="240" width="300" height="100" class="risk"/><text class="t b" x="116" y="276">main 分支安装文档</text><text class="t m s" x="116" y="302">用户把远程指令交给 Agent</text><text class="t m s" x="116" y="324">未固定 commit / digest</text>
+  <rect x="90" y="372" width="300" height="100" class="risk"/><text class="t b" x="116" y="408">GitHub main.zip</text><text class="t m s" x="116" y="434">源码安装，不走项目官方 PyPI</text><text class="t m s" x="116" y="456">更新可改变依赖与 Skill</text>
+  <rect x="90" y="504" width="300" height="116" class="risk"/><text class="t b" x="116" y="540">多生态上游</text><text class="t m s" x="116" y="566">apt / brew / npm / pipx / uvx</text><text class="t m s" x="116" y="590">多数 latest / 开放版本上界</text><text class="t m s" x="116" y="612">后端还依赖平台私有接口</text>
+  <rect x="90" y="658" width="300" height="168" class="safe"/><text class="t b" x="116" y="694">部署方补强</text><text class="t m s" x="116" y="720">固定 Agent-Reach commit/tag</text><text class="t m s" x="116" y="744">镜像/制品 digest + SBOM</text><text class="t m s" x="116" y="768">审阅 Skill diff 后再更新</text><text class="t m s" x="116" y="792">上游工具 allowlist 与版本锁</text><text class="t m s" x="116" y="816">隔离安装账号与运行账号</text>
+
+  <rect x="490" y="160" width="560" height="720" class="zone"/>
+  <text class="t h2" x="520" y="202">B. 本地 Agent-Reach 控制面</text>
+  <rect x="520" y="240" width="235" height="120" class="safe"/><text class="t b" x="546" y="276">授权门</text><text class="t m s" x="546" y="302">默认 safe/check-only</text><text class="t m s" x="546" y="326">--system 才允许修改</text><text class="t m s" x="546" y="348">--dry-run 预览</text>
+  <rect x="785" y="240" width="235" height="120" class="safe"/><text class="t b" x="811" y="276">凭据文件</text><text class="t m s" x="811" y="302">0700 / 0600</text><text class="t m s" x="811" y="326">原子同目录替换</text><text class="t m s" x="811" y="348">拒绝 symlink / 限 1 MiB</text>
+  <rect x="520" y="394" width="235" height="120" class="safe"/><text class="t b" x="546" y="430">最小化读取</text><text class="t m s" x="546" y="456">单平台 Cookie 提取</text><text class="t m s" x="546" y="480">Twitter / XHS 只手工导入</text><text class="t m s" x="546" y="502">输出凭据清洗</text>
+  <rect x="785" y="394" width="235" height="120" class="safe"/><text class="t b" x="811" y="430">输入与资源边界</text><text class="t m s" x="811" y="456">URL public-http 校验</text><text class="t m s" x="811" y="480">响应 / 媒体大小上限</text><text class="t m s" x="811" y="502">子进程 timeout / argv 数组</text>
+  <rect x="520" y="548" width="500" height="118" class="control"/><text class="t b" x="546" y="584">保守 Doctor</text><text class="t m s" x="546" y="610">不执行可能读取 Cookie、写 device-id 或启动 daemon 的状态命令</text><text class="t m s" x="546" y="634">副作用代价：登录态平台常返回 warn + active_backend=null</text>
+  <rect x="520" y="704" width="500" height="122" class="risk"/><text class="t b" x="546" y="740">仍不是沙箱 / 策略执行器</text><text class="t m s" x="546" y="766">Skill 只能“教 Agent 只读”，无法阻止上游 CLI 的写操作</text><text class="t m s" x="546" y="790">未提供域名 egress、速率、预算、审计日志或多租户隔离</text><text class="t m s" x="546" y="814">浏览器 Cookie 等价于账号权限，建议专用小号</text>
+
+  <rect x="1120" y="160" width="420" height="720" class="zone"/>
+  <text class="t h2" x="1150" y="202">C. 数据面与外部世界</text>
+  <rect x="1150" y="240" width="360" height="112" class="risk"/><text class="t b" x="1176" y="276">上游 CLI / MCP / 浏览器桥</text><text class="t m s" x="1176" y="302">继承本机网络与部分环境</text><text class="t m s" x="1176" y="326">具有各自的更新和认证行为</text>
+  <rect x="1150" y="388" width="360" height="112" class="risk"/><text class="t b" x="1176" y="424">第三方平台</text><text class="t m s" x="1176" y="450">反爬、私有 API、账号封禁</text><text class="t m s" x="1176" y="474">服务条款与区域合规由使用方负责</text>
+  <rect x="1150" y="536" width="360" height="112" class="safe"/><text class="t b" x="1176" y="572">推荐运行策略</text><text class="t m s" x="1176" y="598">默认只读命令 allowlist</text><text class="t m s" x="1176" y="622">写操作二次批准 + 目标确认</text>
+  <rect x="1150" y="684" width="360" height="142" class="safe"/><text class="t b" x="1176" y="720">生产观测</text><text class="t m s" x="1176" y="746">记录 backend/version/exit code</text><text class="t m s" x="1176" y="770">目标域与字节/Token 预算</text><text class="t m s" x="1176" y="794">凭据轮换与异常率</text><text class="t m s" x="1176" y="818">真实只读 canary，不只看 which()</text>
+
+  <path class="dash" d="M420 430 H490"/><path class="line" d="M1050 430 H1120"/>
+  <path class="dash" d="M420 286 C455 286 455 260 490 260"/><path class="line" d="M1050 590 C1084 590 1084 590 1120 590"/>
+  <rect x="60" y="914" width="1480" height="1" fill="#344149"/><text class="t m s" x="64" y="946">结论：实现显著降低了本地凭据误读写风险，但“免费且开源”不等于供应链已固定、账号风险为零或执行已沙箱化。</text>
+</svg>
