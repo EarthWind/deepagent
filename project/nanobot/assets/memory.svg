@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" role="img" aria-labelledby="title desc">
+<title id="title">记忆不是一个文件：回放、归档、整理三个层次</title><desc id="desc">压缩解决本轮输入容量；Dream 解决跨轮知识如何沉淀</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="860" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">记忆不是一个文件：回放、归档、整理三个层次</text>
+<text x="64" y="108" class="sub">压缩解决本轮输入容量；Dream 解决跨轮知识如何沉淀</text>
+<rect x="48" y="165" width="360" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="204" class="label">① Session transcript</text>
+<text x="68" y="237" class="body">外部 sessions 目录中的 JSONL</text>
+<text x="68" y="265" class="body">完整记录与回放视图分离</text>
+<text x="68" y="293" class="body">摘要边界 + 近期消息</text>
+<rect x="460" y="165" width="360" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="480" y="204" class="label">② MemoryArchiver</text>
+<text x="480" y="237" class="body">总结已被模型接受的前缀</text>
+<text x="480" y="265" class="body">生成可继续任务的 handoff</text>
+<text x="480" y="293" class="body">失败时保留有界原始归档</text>
+<rect x="872" y="165" width="360" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="183" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="892" y="204" class="label">③ history.jsonl</text>
+<text x="892" y="237" class="body">cursor / timestamp / content</text>
+<text x="892" y="265" class="body">记录归档摘要及来源会话</text>
+<text x="892" y="293" class="body">.cursor：写入进度</text>
+<polyline points="408,240 460,240" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="820,240 872,240" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1052,315 1052,389" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="872" y="389" width="360" height="156" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="407" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="892" y="428" class="label">④ Dream</text>
+<text x="892" y="461" class="body">默认每 2 小时调度</text>
+<text x="892" y="489" class="body">读取尚未消费的归档批次</text>
+<text x="892" y="517" class="body">受限文件工具执行整理</text>
+<rect x="460" y="389" width="360" height="156" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="407" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="480" y="428" class="label">⑤ 知识与技能</text>
+<text x="480" y="461" class="body">SOUL.md / USER.md</text>
+<text x="480" y="489" class="body">memory/MEMORY.md</text>
+<text x="480" y="517" class="body">受限工具也允许编辑 skills/</text>
+<polyline points="872,466 820,466" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="389" width="360" height="156" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="407" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="428" class="label">⑥ GitStore（条件启用）</text>
+<text x="68" y="461" class="body">Agent workspace/.git</text>
+<text x="68" y="489" class="body">审计三个知识文件与消费游标</text>
+<text x="68" y="517" class="body">处于已有仓库时跳过初始化</text>
+<polyline points="460,466 408,466" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="634" width="1184" height="122" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="652" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="673" class="label">完成语义决定消费进度</text>
+<text x="68" y="706" class="body">Dream 正常完成才推进 .dream_cursor；没有文件变化也可以是一次成功消费。</text>
+<text x="68" y="734" class="body">未完成可能留下部分编辑，下一次会再次处理该批历史；文件编辑、游标和 Git 提交不是跨文件事务。</text>
+<text x="48" y="830" class="small">GitStore 的自动跟踪范围不等于 Dream 工具的全部可写范围；图示以 memory.py 的实现为准。</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-labelledby="title desc">
+<title id="title">一轮 Agent 执行：模型只能提出调用，运行时决定是否执行</title><desc id="desc">AgentLoop 编排 turn；AgentRunner 在有限预算内推进多个模型 round</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="840" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">一轮 Agent 执行：模型只能提出调用，运行时决定是否执行</text>
+<text x="64" y="108" class="sub">AgentLoop 编排 turn；AgentRunner 在有限预算内推进多个模型 round</text>
+<rect x="48" y="165" width="360" height="128" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="204" class="label">1. Restore / Build</text>
+<text x="68" y="237" class="body">恢复会话和工作区</text>
+<text x="68" y="265" class="body">冻结 LLMRuntime</text>
+<rect x="460" y="165" width="360" height="128" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="480" y="204" class="label">2. Prepare request</text>
+<text x="480" y="237" class="body">修复回放 / 控制 token</text>
+<text x="480" y="265" class="body">加载 tool schemas</text>
+<rect x="872" y="165" width="360" height="128" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="892" y="204" class="label">3. Provider response</text>
+<text x="892" y="237" class="body">content / tool_calls</text>
+<text x="892" y="265" class="body">finish_reason / usage</text>
+<polyline points="408,228 460,228" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="820,228 872,228" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="872" y="373" width="360" height="148" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="391" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="892" y="412" class="label">4. 工具执行分支</text>
+<text x="892" y="445" class="body">检查 should_execute_tools</text>
+<text x="892" y="473" class="body">awaiting_tools → 执行批次</text>
+<text x="892" y="501" class="body">tools_completed → 观察回填</text>
+<polyline points="1052,293 1052,373" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1064" y="338" class="small">可执行 tool calls</text>
+<rect x="460" y="373" width="360" height="148" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="391" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="480" y="412" class="label">5. 新一轮</text>
+<text x="480" y="445" class="body">处理用户注入与子任务结果</text>
+<text x="480" y="473" class="body">压缩和限流按当前状态判断</text>
+<text x="480" y="501" class="body">继续模型调用</text>
+<polyline points="872,446 820,446" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="640,373 640,293" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="373" width="360" height="148" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="391" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="412" class="label">6. 终止与保存</text>
+<text x="68" y="445" class="body">完成 / 错误 / 空响应 / 上限</text>
+<text x="68" y="473" class="body">final_response checkpoint</text>
+<text x="68" y="501" class="body">保存 transcript，交付回复</text>
+<polyline points="460,446 408,446" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="419" y="430" class="small">结束</text>
+<polyline points="1232,228 1254,228 1254,568 228,568 228,521" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="872" y="593" class="small">无工具的终态响应走保存分支</text>
+<rect x="48" y="615" width="564" height="122" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="633" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="654" class="label">特殊响应仍有明确规则</text>
+<text x="68" y="687" class="body">length：有界续写；refusal / content_filter：不执行工具</text>
+<text x="68" y="715" class="body">普通调用到迭代上限：可追加一次无工具收尾</text>
+<rect x="656" y="615" width="576" height="122" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="656" y="633" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="676" y="654" class="label">目标续跑是额外策略</text>
+<text x="676" y="687" class="body">活跃 sustained goal 可以继续，受独立续跑次数限制</text>
+<text x="676" y="715" class="body">maxToolIterations 约束循环，不等于总 API 请求预算</text>
+<text x="48" y="810" class="small">概念图省略 Hook 和部分重试分支；详细条件以 runner.py / turn_continuation.py 为准。</text>
+</svg>
