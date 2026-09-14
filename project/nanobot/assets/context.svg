@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+<title id="title">上下文工程：身份、项目与消息分开组织</title><desc id="desc">选择项目目录不会自动创建独立的 Agent 身份或记忆空间</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="800" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">上下文工程：身份、项目与消息分开组织</text>
+<text x="64" y="108" class="sub">选择项目目录不会自动创建独立的 Agent 身份或记忆空间</text>
+<rect x="48" y="164" width="360" height="180" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="182" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="68" y="203" class="label">Agent workspace</text>
+<text x="68" y="236" class="body">SOUL.md / USER.md</text>
+<text x="68" y="264" class="body">memory/MEMORY.md</text>
+<text x="68" y="292" class="body">skills/ 与启用的插件 Skills</text>
+<text x="68" y="320" class="body">提供持续的个人上下文</text>
+<rect x="460" y="164" width="360" height="180" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="182" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="480" y="203" class="label">Project workspace</text>
+<text x="480" y="236" class="body">项目 AGENTS.md</text>
+<text x="480" y="264" class="body">文件工具的相对路径根目录</text>
+<text x="480" y="292" class="body">Shell cwd 与 workspace scope</text>
+<text x="480" y="320" class="body">承载本轮项目约束</text>
+<rect x="872" y="164" width="360" height="180" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="182" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="892" y="203" class="label">Turn / Session</text>
+<text x="892" y="236" class="body">summary + recent history</text>
+<text x="892" y="264" class="body">当前用户输入与附件</text>
+<text x="892" y="292" class="body">时间、路由、目标等运行信息</text>
+<text x="892" y="320" class="body">冻结的模型配置</text>
+<polyline points="228,344 228,388 640,388 640,430" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="640,344 640,430" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1052,344 1052,388 640,388" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="240" y="430" width="800" height="125" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="240" y="448" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="260" y="469" class="label">ContextBuilder → ContextGovernor</text>
+<text x="260" y="502" class="body">稳定 system 前缀 + 动态运行信息；工具定义固定排序以利于缓存</text>
+<text x="260" y="530" class="body">修复工具调用配对、外置过长结果、必要时压缩已接受历史</text>
+<polyline points="640,555 640,612" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="240" y="612" width="800" height="90" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="240" y="630" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="260" y="651" class="label">提供给模型的有效请求</text>
+<text x="260" y="684" class="body">输入预算 = contextWindowTokens − maxTokens − 1024；超限检查包含工具定义</text>
+<text x="48" y="770" class="small">工作区分离是上下文与路径策略；不同 session key 仍可能共享同一 Agent 的长期记忆。</text>
+</svg>

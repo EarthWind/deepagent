@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="850" viewBox="0 0 1280 850" role="img" aria-labelledby="title desc">
+<title id="title">权限边界：入口、能力、路径、进程、网络分别约束</title><desc id="desc">现有机制与部署建议分开评估；Prompt 中的限制不能替代执行层控制</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="850" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">权限边界：入口、能力、路径、进程、网络分别约束</text>
+<text x="64" y="108" class="sub">现有机制与部署建议分开评估；Prompt 中的限制不能替代执行层控制</text>
+<rect x="48" y="157" width="245" height="86" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="175" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="196" class="label">入口身份</text>
+<text x="326" y="192" class="label">allowFrom / 配对 / WebSocket token</text>
+<text x="326" y="224" class="body">决定谁能够给 Agent 下达指令</text>
+<rect x="48" y="262" width="245" height="86" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="280" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="301" class="label">工具能力</text>
+<text x="326" y="297" class="label">Registry + scope + Dream 限定文件</text>
+<text x="326" y="329" class="body">决定当前任务获得哪些工具和读写能力</text>
+<rect x="48" y="367" width="245" height="86" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="385" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="68" y="406" class="label">文件路径</text>
+<text x="326" y="402" class="label">resolve → containment → 精确读写白名单</text>
+<text x="326" y="434" class="body">应用级路径检查，不提供完整进程隔离</text>
+<rect x="48" y="472" width="245" height="86" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="490" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="68" y="511" class="label">Shell 进程</text>
+<text x="326" y="507" class="label">可选 bwrap（Linux）/ seatbelt（macOS）</text>
+<text x="326" y="539" class="body">默认 sandbox 为空；Windows 有不同退化语义</text>
+<rect x="48" y="577" width="245" height="86" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="595" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="616" class="label">网络出口</text>
+<text x="326" y="612" class="label">URL/IP 检查 + DNS 固定 + redirect 检查</text>
+<text x="326" y="644" class="body">SSRF 检查不自动覆盖所有 Shell/插件网络行为</text>
+<rect x="48" y="708" width="1184" height="92" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="726" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="747" class="label">工程建议</text>
+<text x="68" y="780" class="body">共享部署增加租户隔离、幂等键、资源配额和统一审计；原生 Python 插件与 stdio MCP 应按宿主代码管理。</text>
+<text x="48" y="820" class="small">以上是源码能力边界分析，不是漏洞利用验证，也不表示已完成完整安全审计。</text>
+</svg>

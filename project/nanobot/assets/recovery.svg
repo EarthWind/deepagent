@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+<title id="title">恢复边界：保存了记录，不等于可以重放副作用</title><desc id="desc">checkpoint 帮助判断已知状态；用户确认决定重启后的继续执行</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="820" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">恢复边界：保存了记录，不等于可以重放副作用</text>
+<text x="64" y="108" class="sub">checkpoint 帮助判断已知状态；用户确认决定重启后的继续执行</text>
+<rect x="48" y="165" width="360" height="152" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="183" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="204" class="label">awaiting_tools</text>
+<text x="68" y="237" class="body">assistant 调用意图已保存</text>
+<text x="68" y="265" class="body">工具执行前的 checkpoint</text>
+<text x="68" y="293" class="body">执行中崩溃：结果可能未知</text>
+<rect x="460" y="165" width="360" height="152" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="460" y="183" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="480" y="204" class="label">tools_completed</text>
+<text x="480" y="237" class="body">整批工具结果已保存</text>
+<text x="480" y="265" class="body">模型可以读取已有观察</text>
+<text x="480" y="293" class="body">没有逐个工具事务提交保证</text>
+<rect x="872" y="165" width="360" height="152" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="183" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="892" y="204" class="label">final_response</text>
+<text x="892" y="237" class="body">最终答案已经持久化</text>
+<text x="892" y="265" class="body">可恢复已保存输出</text>
+<text x="892" y="293" class="body">恢复本身不再调用模型</text>
+<polyline points="408,239 460,239" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="820,239 872,239" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="228,317 228,410" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="640,317 640,410" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1052,317 1052,410" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="48" y="410" width="772" height="120" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="428" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="68" y="449" class="label">WebUI 重启恢复：awaiting_user</text>
+<text x="68" y="482" class="body">工具状态未知、仅有同步 checkpoint 等情况等待确认</text>
+<text x="68" y="510" class="body">确认后从已有上下文继续；框架不承诺外部操作 exactly-once</text>
+<rect x="872" y="410" width="360" height="120" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="872" y="428" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="892" y="449" class="label">recovered</text>
+<text x="892" y="482" class="body">恢复答案并更新界面状态</text>
+<text x="892" y="510" class="body">无需重新执行已完成工作</text>
+<rect x="48" y="612" width="1184" height="122" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="630" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="651" class="label">落盘实现要分别看</text>
+<text x="68" y="684" class="body">Session：临时文件 + os.replace；fsync 可选。高频 checkpoint 使用独立 sidecar，普通写入不强制 fsync。</text>
+<text x="68" y="712" class="body">Memory：常规 history 追加与整文件压缩重写走不同路径；不能把“原子替换”推导为所有写入都抗断电。</text>
+<text x="48" y="790" class="small">恢复流程主要对应 session/recovery.py 的 WebUI RecoveryCoordinator；不要外推为所有通道自动恢复。</text>
+</svg>

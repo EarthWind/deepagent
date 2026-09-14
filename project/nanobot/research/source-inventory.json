@@ -1,0 +1,88 @@
+{
+  "repository": "https://github.com/HKUDS/nanobot",
+  "research_date": "2026-09-14",
+  "commit": "499bf903022f429dd4501fdfbeeccadcb99dd51f",
+  "commit_date": "2026-09-14T17:48:10+08:00",
+  "package_version": "0.3.0",
+  "counts": {
+    "nanobot/agent": {
+      "python_files": 50,
+      "physical_lines_including_comments_and_blanks": 23170
+    },
+    "nanobot/providers": {
+      "python_files": 24,
+      "physical_lines_including_comments_and_blanks": 16284
+    },
+    "nanobot/session": {
+      "python_files": 13,
+      "physical_lines_including_comments_and_blanks": 4676
+    },
+    "nanobot/channels": {
+      "python_files": 79,
+      "physical_lines_including_comments_and_blanks": 26834
+    },
+    "nanobot/webui": {
+      "python_files": 49,
+      "physical_lines_including_comments_and_blanks": 20541
+    },
+    "nanobot": {
+      "python_files": 329,
+      "physical_lines_including_comments_and_blanks": 120110
+    }
+  },
+  "tests_test_files": 331,
+  "key_files": {
+    "nanobot/agent/loop.py": {
+      "sha256": "658468c8ae5eb4111e2227b8c5ab69b97f13828996966bcc9834050d9036a307",
+      "physical_lines": 2388
+    },
+    "nanobot/agent/runner.py": {
+      "sha256": "30c19d0dd90779f9af8fe0f08622e12dffaff20fdb91b13e396d5546dc3615ef",
+      "physical_lines": 1372
+    },
+    "nanobot/agent/context.py": {
+      "sha256": "a868f85bc37f17e954cbf1579538282e3e19b0008db949fba2af463ea618dbed",
+      "physical_lines": 363
+    },
+    "nanobot/agent/context_governance.py": {
+      "sha256": "79cb6c3158f58fd0b346d248c013e74c6c7c487071d771aec5f0d5bd83c5bbfa",
+      "physical_lines": 1004
+    },
+    "nanobot/agent/memory.py": {
+      "sha256": "a0f0058bb5b76cc0154d52454514208f60c03729334e3f442e003f164e1b0366",
+      "physical_lines": 1236
+    },
+    "nanobot/agent/subagent.py": {
+      "sha256": "032650e8bf71d77a0fcd366719f08b84fe3fcb793b7067c07cafb1ca06ac22d6",
+      "physical_lines": 586
+    },
+    "nanobot/agent/tools/execution.py": {
+      "sha256": "432d889a0cb739495d4b460653c96907db9037ecdb86cd476d73a427bca4824e",
+      "physical_lines": 293
+    },
+    "nanobot/agent/tools/registry.py": {
+      "sha256": "257b8cc7f80d0538d281495f88cdd45c221fad11c618f1124a4adbf972e5da4f",
+      "physical_lines": 212
+    },
+    "nanobot/agent/tools/mcp.py": {
+      "sha256": "1b7804ac2b294a7c78fe37cd6a06b0c88c18fc1faeeaf49ef5bf91c9b5b61f67",
+      "physical_lines": 1707
+    },
+    "nanobot/session/manager.py": {
+      "sha256": "24fc4a1c8744072e27e5ba9fe56dc2d16775d9fa26aca9e5157c084c4b419d68",
+      "physical_lines": 1964
+    },
+    "nanobot/session/recovery.py": {
+      "sha256": "b55578602ac3c71a9c2cceba1066393ab0177fbe3ca8a7022d8019ad0ab746c0",
+      "physical_lines": 940
+    },
+    "nanobot/session/turn_continuation.py": {
+      "sha256": "c85d69bb236aa191e3fa317c4552ef9c31a3903144ed08e48ec762a5de1a24a0",
+      "physical_lines": 274
+    },
+    "nanobot/config/schema.py": {
+      "sha256": "e852767667b741494888321adfc719e9f2913748a92680dce93256f1b35ec544",
+      "physical_lines": 707
+    }
+  }
+}

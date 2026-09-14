@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-labelledby="title desc">
+<title id="title">并发有三个层次，隔离能力也不同</title><desc id="desc">会话调度、同轮工具批次、子 Agent 容量分别控制</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#70869e"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif} .title{font-size:32px;font-weight:700;fill:#182d47} .sub{font-size:18px;fill:#526880} .label{font-size:23px;font-weight:700;fill:#182d47} .body{font-size:18px;fill:#526880} .small{font-size:16px;fill:#526880}</style>
+<rect width="1280" height="840" rx="24" fill="#f4f7fc"/>
+<rect x="40" y="40" width="6" height="38" rx="3" fill="#087f8c"/>
+<text x="64" y="72" class="title">并发有三个层次，隔离能力也不同</text>
+<text x="64" y="108" class="sub">会话调度、同轮工具批次、子 Agent 容量分别控制</text>
+<rect x="48" y="164" width="1184" height="124" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="182" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="203" class="label">会话层：同会话串行，不同会话并发</text>
+<text x="68" y="236" class="body">Session A：turn 1 → turn 2    ｜    Session B：turn 1 同时运行</text>
+<text x="68" y="264" class="body">可设置 NANOBOT_MAX_CONCURRENT_REQUESTS；未设置时没有全局并发上限。</text>
+<rect x="48" y="345" width="270" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="363" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="68" y="384" class="label">工具批次 1</text>
+<text x="68" y="417" class="body">read_file A</text>
+<text x="68" y="445" class="body">read_file B</text>
+<text x="68" y="473" class="body">concurrency_safe → gather</text>
+<rect x="372" y="345" width="270" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="372" y="363" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="392" y="384" class="label">工具批次 2</text>
+<text x="392" y="417" class="body">edit_file</text>
+<text x="392" y="445" class="body">有副作用，形成屏障</text>
+<text x="392" y="473" class="body">等前批结束后独立执行</text>
+<rect x="696" y="345" width="270" height="150" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="696" y="363" width="4" height="28" rx="2" fill="#087f8c"/>
+<text x="716" y="384" class="label">工具批次 3</text>
+<text x="716" y="417" class="body">web_search</text>
+<text x="716" y="445" class="body">read_file C</text>
+<text x="716" y="473" class="body">符合属性时再并发</text>
+<polyline points="318,420 372,420" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="642,420 696,420" fill="none" stroke="#70869e" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="992" y="401" class="body">按原始调用顺序</text>
+<text x="992" y="432" class="body">回填模型上下文</text>
+<rect x="48" y="573" width="560" height="152" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="48" y="591" width="4" height="28" rx="2" fill="#3264c8"/>
+<text x="68" y="612" class="label">spawn(wait=false)</text>
+<text x="68" y="645" class="body">后台 Task → 完成事件回到父会话</text>
+<text x="68" y="673" class="body">默认子 Agent 并发容量为 4</text>
+<text x="68" y="701" class="body">独立 Runner / messages / 工具注册表</text>
+<rect x="664" y="573" width="568" height="152" rx="16" fill="white" stroke="#d7e0ec" stroke-width="1.5"/><rect x="664" y="591" width="4" height="28" rx="2" fill="#ba6423"/>
+<text x="684" y="612" class="label">spawn(wait=true)</text>
+<text x="684" y="645" class="body">等待子 Agent 返回，将结果作为本次工具观察</text>
+<text x="684" y="673" class="body">默认不复制父会话全部历史</text>
+<text x="684" y="701" class="body">共享项目文件；不等于独立进程或文件沙盒</text>
+<text x="48" y="810" class="small">图中工具名称是批次示例；是否并发由具体工具的 concurrency_safe 属性决定。</text>
+</svg>

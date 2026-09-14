@@ -1,0 +1,23 @@
+{
+  "final": "19 + 23 = 42。",
+  "stop_reason": "completed",
+  "model_rounds": 3,
+  "actual_tool_calls": [
+    [
+      19,
+      23
+    ]
+  ],
+  "tool_statuses": [
+    "error",
+    "ok"
+  ],
+  "checkpoints": [
+    "awaiting_tools",
+    "tools_completed",
+    "awaiting_tools",
+    "tools_completed",
+    "final_response"
+  ],
+  "usage_note": "Synthetic provider usage; no real LLM was called."
+}
