@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="876" viewBox="0 0 1280 876" role="img" aria-labelledby="title desc">
+<title id="title">持续学习：外部经验改变后续工作</title><desc id="desc">观察、后台分析、注入和演化是不同阶段；其中 Observer 默认关闭。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="876" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  05</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">持续学习：外部经验改变后续工作</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">观察、后台分析、注入和演化是不同阶段；其中 Observer 默认关闭。</text>
+<rect x="48" y="183" width="350" height="172" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="201" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="226" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">01  事件观察</text>
+<text x="70" y="262" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">tool_start / tool_complete</text>
+<text x="70" y="290" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">项目识别、截断、常见值脱敏</text>
+<text x="70" y="318" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">observations.jsonl</text>
+<rect x="465" y="183" width="350" height="172" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="465" y="201" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="487" y="226" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">02  Observer 分析</text>
+<text x="487" y="262" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">需显式启用，默认 enabled=false</text>
+<text x="487" y="290" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">默认 haiku + Read / Write</text>
+<text x="487" y="318" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">轮次、超时与自身观察跳过</text>
+<rect x="882" y="183" width="350" height="172" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="882" y="201" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="904" y="226" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">03  原子 Instinct</text>
+<text x="904" y="262" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">触发条件、行动、证据</text>
+<text x="904" y="290" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">项目 / 全局作用域</text>
+<text x="904" y="318" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">confidence 是排序信号</text>
+<polyline points="400,269 453,269" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="817,269 870,269" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1057,360 1057,400 332,400 332,441" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1057,400 952,400 952,441" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="460" width="565" height="191" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="478" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="503" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">A  下次 SessionStart 注入</text>
+<text x="70" y="539" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">先筛 confidence ≥ 0.7，再去重和排序</text>
+<text x="70" y="567" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">项目范围 +0.25，技术栈匹配 +0.2</text>
+<text x="70" y="595" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">默认最多 6 条，受总字符预算约束</text>
+<text x="70" y="623" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">收益需用后续真实任务衡量</text>
+<rect x="651" y="460" width="581" height="191" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="651" y="478" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="673" y="503" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">B  evolve 生成能力候选</text>
+<text x="673" y="539" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">英文关键词重叠系数 ≥ 0.5</text>
+<text x="673" y="567" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">至少共享 2 个词；簇核心更新为交集</text>
+<text x="673" y="595" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">默认预览；--generate 写入 evolved 目录</text>
+<text x="673" y="623" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">文件生成后仍需审核与配置发现</text>
+<rect x="48" y="691" width="1184" height="90" rx="14" fill="#fff4e9" stroke="#eed6be"/>
+<text x="70" y="727" font-size="20" fill="#b75c27" font-weight="700" text-anchor="start">源码实测：英文相关触发句得到 1 个簇；对应纯中文触发句得到 0 个簇。</text>
+<text x="70" y="758" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">当前 evolve 使用 ASCII 分词；这项局限属于聚类实现，不是模型中文理解能力。</text>
+<path d="M48 818 H1232" stroke="#d9e3ec"/>
+<text x="48" y="849" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">外部经验复用链路 · 不涉及基础模型权重训练</text>
+<text x="1232" y="849" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="908" viewBox="0 0 1280 908" role="img" aria-labelledby="title desc">
+<title id="title">一次响应的事件时间线</title><desc id="desc">以下按 Claude Hook 注册整理；模型工作流由宿主与模型推进，事件项不构成固定业务 DAG。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="908" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  03</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">一次响应的事件时间线</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">以下按 Claude Hook 注册整理；模型工作流由宿主与模型推进，事件项不构成固定业务 DAG。</text>
+<rect x="48" y="171" width="254" height="48" rx="10" fill="#152c40" stroke="#152c40"/>
+<text x="66" y="203" font-size="20" fill="#fff" font-weight="700" text-anchor="start">宿主生命周期</text>
+<rect x="326" y="171" width="535" height="48" rx="10" fill="#087e82" stroke="#087e82"/>
+<text x="344" y="203" font-size="20" fill="#fff" font-weight="700" text-anchor="start">ECC 同步处理</text>
+<rect x="886" y="171" width="346" height="48" rx="10" fill="#3764ad" stroke="#3764ad"/>
+<text x="904" y="203" font-size="20" fill="#fff" font-weight="700" text-anchor="start">异步 / 持久化</text>
+<rect x="48" y="242" width="254" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<text x="67" y="280" font-size="23" fill="#152c40" font-weight="700" text-anchor="start">SessionStart</text>
+<rect x="326" y="242" width="535" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="886" y="242" width="346" height="90" rx="14" fill="#eef5fc" stroke="#d9e3ec"/>
+<text x="344" y="276" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">匹配会话与项目</text>
+<text x="344" y="305" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">预算内注入摘要 / Instinct</text>
+<text x="904" y="276" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">恢复的是线索</text>
+<text x="904" y="305" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">需要核对工作区真实状态</text>
+<rect x="48" y="355" width="254" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<text x="67" y="393" font-size="23" fill="#152c40" font-weight="700" text-anchor="start">PreToolUse</text>
+<rect x="326" y="355" width="535" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="886" y="355" width="346" height="90" rx="14" fill="#eef5fc" stroke="#d9e3ec"/>
+<text x="344" y="389" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">配置保护 / Bash 检查 / GateGuard</text>
+<text x="344" y="418" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">允许、提示或阻止本次工具调用</text>
+<text x="904" y="389" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">观察 tool_start</text>
+<text x="904" y="418" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">受入口与开关条件影响</text>
+<rect x="48" y="468" width="254" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<text x="67" y="506" font-size="23" fill="#152c40" font-weight="700" text-anchor="start">PostToolUse</text>
+<rect x="326" y="468" width="535" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="886" y="468" width="346" height="90" rx="14" fill="#eef5fc" stroke="#d9e3ec"/>
+<text x="344" y="502" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">编辑文件积累、诊断与活动跟踪</text>
+<text x="344" y="531" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">同步 dispatcher</text>
+<text x="904" y="502" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">异步 dispatcher</text>
+<text x="904" y="531" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">观察、质量反馈、记录</text>
+<rect x="48" y="581" width="254" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<text x="67" y="619" font-size="23" fill="#152c40" font-weight="700" text-anchor="start">Stop</text>
+<rect x="326" y="581" width="535" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="886" y="581" width="346" height="90" rx="14" fill="#eef5fc" stroke="#d9e3ec"/>
+<text x="344" y="615" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">批量 formatter / typecheck</text>
+<text x="344" y="644" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">一轮响应结束即可触发</text>
+<text x="904" y="615" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">session-end.js 保存摘要</text>
+<text x="904" y="644" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">成本累计快照等</text>
+<rect x="48" y="694" width="254" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<text x="67" y="732" font-size="23" fill="#152c40" font-weight="700" text-anchor="start">SessionEnd</text>
+<rect x="326" y="694" width="535" height="90" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="886" y="694" width="346" height="90" rx="14" fill="#eef5fc" stroke="#d9e3ec"/>
+<text x="344" y="728" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">会话关闭的独立事件</text>
+<text x="344" y="757" font-size="18" fill="#566a7c" font-weight="400" text-anchor="start">与 Stop 分开理解</text>
+<text x="904" y="728" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">session-end-marker.js</text>
+<text x="904" y="757" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">结束标记</text>
+<text x="48" y="829" font-size="17" fill="#b75c27" font-weight="600" text-anchor="start">PreCompact：在宿主压缩前尝试持久化摘要；该事件可插入实际会话过程。</text>
+<path d="M48 850 H1232" stroke="#d9e3ec"/>
+<text x="48" y="881" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">依据 hooks/hooks.json · “异步”指注册方式，不承诺无损送达</text>
+<text x="1232" y="881" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

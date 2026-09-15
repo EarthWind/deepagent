@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="839" viewBox="0 0 1280 839" role="img" aria-labelledby="title desc">
+<title id="title">记录一致性、执行安全与业务效果是不同问题</title><desc id="desc">这张图分开展示 Node 证据系统与 Rust Alpha 的 recorded-measurements 门控。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="839" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  07</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">记录一致性、执行安全与业务效果是不同问题</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">这张图分开展示 Node 证据系统与 Rust Alpha 的 recorded-measurements 门控。</text>
+<rect x="48" y="184" width="350" height="166" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="202" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="227" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">执行轨迹与产物引用</text>
+<text x="70" y="263" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">事件 envelope</text>
+<text x="70" y="291" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">受限内容与确定性序列化</text>
+<text x="70" y="319" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">来源与任务关联</text>
+<rect x="465" y="184" width="350" height="166" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="465" y="202" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="487" y="227" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">Capsule</text>
+<text x="487" y="263" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">追加 journal.ndjson</text>
+<text x="487" y="291" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">parent_hash 链接前序记录</text>
+<text x="487" y="319" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">可重建 projection</text>
+<rect x="882" y="184" width="350" height="166" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="882" y="202" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="904" y="227" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">Receipt</text>
+<text x="904" y="263" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">绑定日志与产物摘要</text>
+<text x="904" y="291" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">离线检查一致性</text>
+<text x="904" y="319" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">无外部锚点时仍可整体替换</text>
+<polyline points="400,269 451,269" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="817,269 868,269" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="407" width="565" height="218" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="425" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="70" y="450" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">Node Gate：执行不可用</text>
+<text x="70" y="486" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">gate run → requireSupportedIsolation()</text>
+<text x="70" y="514" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">缺少经验证的 OS 隔离后端</text>
+<text x="70" y="542" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">退出 1：gate.isolation_required</text>
+<text x="70" y="570" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">静态 tripwire 与摘要检查仍然存在</text>
+<text x="70" y="598" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">不能把它描述成已运行候选性能评估</text>
+<rect x="651" y="407" width="581" height="218" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="651" y="425" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="673" y="450" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">Rust ecc2：本地记录分数门控</text>
+<text x="673" y="486" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">候选配置 SHA-256 + 相同 seed 的基线</text>
+<text x="673" y="514" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">样本数、均值差与 win rate 条件</text>
+<text x="673" y="542" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">SQLite active pointer + 审计记录</text>
+<text x="673" y="570" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">分数 / health / evidence 由操作员提供</text>
+<text x="673" y="598" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">active pointer 不自动部署到宿主</text>
+<rect x="48" y="665" width="1184" height="81" rx="14" fill="#eaf5f3" stroke="#c7e2de"/>
+<text x="70" y="700" font-size="20" fill="#087e82" font-weight="700" text-anchor="start">真正的改进验收还需要真实任务对照：完成率、回归、返工、成本、时延与知识质量。</text>
+<text x="70" y="728" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">本文通过源码与局部测试确认机制，不将其转换成未经测量的模型性能结论。</text>
+<path d="M48 781 H1232" stroke="#d9e3ec"/>
+<text x="48" y="812" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">依据 eval-harness 与 ecc2/README.md · 两条实现路径分开描述</text>
+<text x="1232" y="812" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

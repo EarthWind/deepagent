@@ -1,0 +1,16 @@
+
+=== Testing install-plan.js ===
+
+  ✓ shows help with no arguments
+  ✓ lists install profiles
+  ✓ lists install modules
+  ✓ lists install components
+  ✓ prints a filtered install plan for a profile and target
+  ✓ emits JSON for explicit module resolution
+  ✓ emits JSON for --skills without pulling parent module
+  ✓ loads planning intent from ecc-install.json
+  ✓ auto-detects planning intent from project ecc-install.json
+  ✓ fails on unknown arguments
+  ✓ fails on invalid install target
+
+Results: Passed: 11, Failed: 0

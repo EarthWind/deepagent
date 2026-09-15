@@ -1,0 +1,19 @@
+
+=== PostToolUse dispatcher tests ===
+
+  ✓ hooks.json exposes one sync and one async PostToolUse entry
+  ✓ dry-run selects the original IDs by tool and phase
+  ✓ actual hooks.json commands preserve Edit dry-run output and IDs
+  ✓ actual hooks.json commands never echo truncated oversized input
+  ✓ profiles and disabled IDs remain scoped to each original hook
+  ✓ Claude plugin hooks_enabled=false suppresses both dispatcher phases
+  ✓ public dispatcher IDs disable their complete phase
+  ✓ dry-run has no PostToolUse side effects
+  ✓ dispatcher isolates failures and preserves explicit output and exit status
+  ✓ failing hook exit code propagates to the real dispatcher process status
+  ✓ console warning hook is safe to require in-process
+  ✓ empty and malformed input fail open
+  ✓ multiple additionalContext outputs merge; raw stdout conflicts warn
+  ✓ requiring the dispatcher module never dispatches; hooks.json calls cli()
+
+Results: Passed: 14, Failed: 0

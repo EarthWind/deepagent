@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="864" viewBox="0 0 1280 864" role="img" aria-labelledby="title desc">
+<title id="title">ECC：围绕宿主 Agent 组织工程能力</title><desc id="desc">能力资产影响模型行为；事件脚本处理确定性动作；持久化为后续任务提供线索。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="864" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  01</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">ECC：围绕宿主 Agent 组织工程能力</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">能力资产影响模型行为；事件脚本处理确定性动作；持久化为后续任务提供线索。</text>
+<rect x="48" y="176" width="278" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="194" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="219" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">Rules</text>
+<text x="70" y="255" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">长期规范与技术栈约定</text>
+<text x="70" y="283" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">rules/common + language</text>
+<rect x="350" y="176" width="278" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="350" y="194" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="372" y="219" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">Skills</text>
+<text x="372" y="255" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">任务方法与辅助资源</text>
+<text x="372" y="283" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">SKILL.md + scripts</text>
+<rect x="652" y="176" width="278" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="652" y="194" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="674" y="219" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">Commands</text>
+<text x="674" y="255" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">显式调用与兼容入口</text>
+<text x="674" y="283" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">由宿主解析和发现</text>
+<rect x="954" y="176" width="278" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="954" y="194" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="976" y="219" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">Agents</text>
+<text x="976" y="255" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">专业角色与工具范围</text>
+<text x="976" y="283" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">由宿主实例化或选择</text>
+<polyline points="640,330 640,370" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="388" width="744" height="180" rx="14" fill="#152c40" stroke="#152c40"/>
+<rect x="48" y="406" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="431" font-size="22" fill="#fff" font-weight="700" text-anchor="start">宿主 Agent：Claude Code / Codex / 其他客户端</text>
+<text x="70" y="467" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">用户输入 → 模型推理 → 工具执行 → 结果反馈</text>
+<text x="70" y="495" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">主循环、权限、模型连接和交互由具体宿主管理</text>
+<text x="70" y="523" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">ECC 的主流插件路径在这些能力周围增加工作方法与运行机制</text>
+<rect x="824" y="388" width="408" height="180" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="824" y="406" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="846" y="431" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">适配层</text>
+<text x="846" y="467" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">事件 JSON ↔ 宿主返回协议</text>
+<text x="846" y="495" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">目录布局、插件缓存与安装状态</text>
+<text x="846" y="523" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">每个宿主具备的能力并不相同</text>
+<polyline points="395,572 395,604" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1028,572 1028,604" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="622" width="376" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="640" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="665" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">运行 Hook</text>
+<text x="70" y="701" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">检查、拦截、编辑积累</text>
+<text x="70" y="729" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">同步与异步事件处理</text>
+<rect x="452" y="622" width="376" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="452" y="640" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="474" y="665" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">知识与经验</text>
+<text x="474" y="701" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">会话摘要 / Instinct / Vault</text>
+<text x="474" y="729" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">按范围和预算重新读取</text>
+<rect x="856" y="622" width="376" height="150" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="856" y="640" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="878" y="665" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">操作与证据</text>
+<text x="878" y="701" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">worktree、会话、指标</text>
+<text x="878" y="729" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">日志、收据与评估边界</text>
+<path d="M48 806 H1232" stroke="#d9e3ec"/>
+<text x="48" y="837" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">原创源码示意 · 核心关系图，不表示所有模块默认启用</text>
+<text x="1232" y="837" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

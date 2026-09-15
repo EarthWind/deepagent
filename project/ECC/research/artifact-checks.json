@@ -1,0 +1,29 @@
+{
+  "assets-check": {
+    "figures": 7,
+    "errors": []
+  },
+  "page-desktop": {
+    "width": 1440,
+    "clientWidth": 1425,
+    "scrollWidth": 1425,
+    "diagrams": 7,
+    "errors": []
+  },
+  "page-mobile": {
+    "width": 390,
+    "clientWidth": 375,
+    "scrollWidth": 375,
+    "diagrams": 7,
+    "errors": [],
+    "method": "390px same-origin iframe viewport; desktop Chrome minimum outer width is 500px"
+  },
+  "content_checks": {
+    "local_markdown_link_errors": 0,
+    "svg_xml_errors": 0,
+    "embedded_svg_count": 7,
+    "cited_unique_source_files": 70,
+    "python_syntax": "passed",
+    "javascript_syntax": "passed"
+  }
+}

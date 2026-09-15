@@ -1,0 +1,22 @@
+
+=== eval-harness receipt ===
+
+  ✓ build and verify a receipt with artifact and gate digests
+  ✓ altered receipt, artifact, gate receipt, and journal each fail at the named check
+  ✓ a journal that advanced past the receipt is a stale checkpoint, and the prefix still verifies
+  ✓ detached signature interface: wrong key fails at the signature check
+  ✓ receipt refuses to build over a broken journal
+  ✓ producer persists projection and source and exported receipts verify
+  ✓ verifier rejects missing corrupt or forged projections without healing input
+  ✓ projection and receipt identities are checked against validated metadata
+  ✓ receipt schema rejects invalid counts, identities and required digests before indexing
+  ✓ unreadable artifact input returns a named failure without an exception
+  ✓ empty journals verify with a persisted projection and bound receipt identity
+  ✓ journal receipt digest covers raw bytes, including invalid UTF-8 substitutions
+  ✓ producer validates explicit artifact digest before persisting projection
+  ✓ invalid UTF-8 in capsule.json is rejected without rewriting the file
+  ✓ invalid UTF-8 in projection.json is rejected without rewriting the file
+  ✓ pre-fix v1 bundle and unsigned/synthetic-signed receipt bytes are unchanged
+  ✓ legacy receipt hash cannot authenticate an added own __proto__ field
+
+receipt: Results: Passed: 17, Failed: 0

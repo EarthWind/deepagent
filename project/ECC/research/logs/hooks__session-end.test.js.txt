@@ -1,0 +1,12 @@
+
+=== Testing session-end.js ===
+
+  ✓ preserves $-sequences in user messages when rewriting the summary block
+  ✓ writes a session for a multi-message transcript
+  ✓ writes a session for one user message with tool activity
+  ✓ writes a session for a normal one-message prompt without tool activity
+  ✓ skips a one-message summarizer-style transcript without prompt matching
+  ✓ does not rewrite an existing session for a rejected transcript
+  ✓ keeps fallback behavior when transcript metadata is malformed
+
+Results: Passed: 7, Failed: 0

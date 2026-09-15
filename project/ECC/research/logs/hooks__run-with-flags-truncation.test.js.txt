@@ -1,0 +1,12 @@
+
+run-with-flags truncation (fail-open) tests:
+  ✓ oversized payload exits 0 with empty stdout for an enabled hook
+  ✓ oversized payload never echoes truncated stdin when hook args are missing
+  ✓ oversized payload never echoes truncated stdin for a disabled hook
+  ✓ normal-sized payload still passes through unchanged
+  ✓ a security hook can still block on an oversized payload (no blanket skip)
+  ✓ payload just under the cap echoes through completely (no 64KB pipe cut)
+  ✓ disabled-hook passthrough of a >64KB payload stays valid JSON
+
+  7 passed, 0 failed
+

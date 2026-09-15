@@ -1,0 +1,443 @@
+{
+  "repository": "https://github.com/affaan-m/ECC",
+  "research_date": "2026-09-15",
+  "timezone": "Asia/Shanghai",
+  "commit": "8321021c54d670126ce3b2969d5deb880b4b0c2a",
+  "commit_date": "2026-09-12T07:45:40-04:00",
+  "commit_subject": "fix(memory): classify directory traversal failures",
+  "package_name": "ecc-universal",
+  "package_version": "2.2.1",
+  "license": "MIT",
+  "counting_note": "Each glob is independent. Translation/adaptor mirrors are not added to root asset counts. Tests are file counts, not case counts.",
+  "counts": {
+    "agents/*.md": 68,
+    "skills/*/SKILL.md": 292,
+    "commands/*.md": 94,
+    "legacy-command-shims/commands/*.md": 12,
+    "rules/*/*.md": 121,
+    "scripts/hooks/*.js": 51,
+    "tests/**/*.test.js": 286
+  },
+  "cited_files": [
+    {
+      "path": "README.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/README.md",
+      "sha256": "0af25aa87d75486d5e60d4f6389f6a0366b06da32a16ca47b17dbb48376463b2",
+      "lines": 2012
+    },
+    {
+      "path": "package.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/package.json",
+      "sha256": "48304bce4029699927bfac1fa22607bb77f21fed7a95fe51ae9e76f8c8de0ea2",
+      "lines": 532
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/LICENSE",
+      "sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+      "lines": 21
+    },
+    {
+      "path": "src/llm/core/interface.py",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/src/llm/core/interface.py",
+      "sha256": "81638d6261f84781405017b569b6c899d46f1b0d7b62aef939fefde074250b80",
+      "lines": 60
+    },
+    {
+      "path": "agents/planner.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/agents/planner.md",
+      "sha256": "63aba865206bac9cb5887542fb01b97656e7701faff98e091aa77057ba9860bc",
+      "lines": 221
+    },
+    {
+      "path": "commands/plan.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/commands/plan.md",
+      "sha256": "8158d2df36af26669cf45ccf7e7d89f9884ecd4b5eae80f2c8d4a4f6d09a228c",
+      "lines": 206
+    },
+    {
+      "path": "skills/search-first/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/search-first/SKILL.md",
+      "sha256": "d66d744228b9cf860acf35f8a90cbbe8195e61367860da9d3632f9fc65706733",
+      "lines": 183
+    },
+    {
+      "path": "skills/verification-loop/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/verification-loop/SKILL.md",
+      "sha256": "f0d56107f79e607d4de6c5543b8edfb1b58ab9ae4019b39831689cd91116543e",
+      "lines": 129
+    },
+    {
+      "path": "skills/plan-orchestrate/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/plan-orchestrate/SKILL.md",
+      "sha256": "d104fb71594fd9385c4a7c23e4835907be124b8effb34f49fa5cf7d28e3494e3",
+      "lines": 263
+    },
+    {
+      "path": "legacy-command-shims/commands/orchestrate.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/legacy-command-shims/commands/orchestrate.md",
+      "sha256": "d1d95cf500e98fa89eec16971c39e4be54659d334b3e9d0abbe96e4fcf54616a",
+      "lines": 24
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.claude-plugin/plugin.json",
+      "sha256": "0fb0db636fdca4d0339f1dfd304f11c2806a15796ab6bf26f0cd576c61e35fad",
+      "lines": 46
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.codex-plugin/plugin.json",
+      "sha256": "a58539fdc6ea405a1331972314cf8fc34a64f442c394fcd73cb091dcb53758af",
+      "lines": 50
+    },
+    {
+      "path": "scripts/lib/install-manifests.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install-manifests.js",
+      "sha256": "31d8248bef164290bfed3bb89c46b95276b130be77af2462c96d44cbeeb62734",
+      "lines": 757
+    },
+    {
+      "path": "scripts/lib/install/plan.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/plan.js",
+      "sha256": "4dd0133e790a797d33a6cb39aac464341201cdcf4ca522c946b7c9192f8456d6",
+      "lines": 358
+    },
+    {
+      "path": "scripts/lib/install/apply.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/apply.js",
+      "sha256": "c224e52a80064c7583abab093ccc3ec9c28d324412128bd2848a047b3f80b00f",
+      "lines": 689
+    },
+    {
+      "path": "scripts/lib/install/ownership-guard.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/ownership-guard.js",
+      "sha256": "9fd7bae8f91b25846c57aa9cdd1033200658b4d4d3c92d560038958eb2ae63ca",
+      "lines": 159
+    },
+    {
+      "path": "scripts/lib/install-state.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install-state.js",
+      "sha256": "dd929c637c3a845a376d9e0fca071dfdf5710444bbafed4187294654516c6a8e",
+      "lines": 354
+    },
+    {
+      "path": "manifests/install-profiles.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/manifests/install-profiles.json",
+      "sha256": "874431e67c3574c39c4437e96afa3d6aa6ccaa7b2fa7609d11bf6fe52f476eaf",
+      "lines": 106
+    },
+    {
+      "path": "scripts/lib/install/hook-consent.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/hook-consent.js",
+      "sha256": "5ec9f95ac995c7ae840c19ccd1974abf5cd006bab6efc8dc423b2b5305448327",
+      "lines": 202
+    },
+    {
+      "path": "hooks/hooks.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/hooks/hooks.json",
+      "sha256": "52b6ff46fd76d2ff2d9316a546bb8cf91036b6b338a4c07ef4281d0dd8009096",
+      "lines": 254
+    },
+    {
+      "path": "hooks/codex-hooks.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/hooks/codex-hooks.json",
+      "sha256": "57edf21eb83d9c8144cfdc19f621700a854b6fd4abc4c368ddaeb5c74488b43c",
+      "lines": 18
+    },
+    {
+      "path": "scripts/lib/hook-flags.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/hook-flags.js",
+      "sha256": "1f5fbf2d2ebd0ab07a3e54406db18c2932ae7bf965513ec12c521da1be54425d",
+      "lines": 153
+    },
+    {
+      "path": "scripts/hooks/plugin-hook-bootstrap.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/plugin-hook-bootstrap.js",
+      "sha256": "556c0ff1bb2879e19f99549bbbbf7d48c616c21d29442c554e27fed141029c5a",
+      "lines": 328
+    },
+    {
+      "path": "scripts/hooks/run-with-flags.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/run-with-flags.js",
+      "sha256": "0b30fae9163681b118307e62f23d055682d42faf004218b11d3ce76378f2f209",
+      "lines": 275
+    },
+    {
+      "path": "scripts/hooks/bash-hook-dispatcher.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/bash-hook-dispatcher.js",
+      "sha256": "b6e4163536d8092b63cfca205372d699f38550d6dd0fe2e74abde2f029f6ecbe",
+      "lines": 211
+    },
+    {
+      "path": "scripts/hooks/posttooluse-dispatcher.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/posttooluse-dispatcher.js",
+      "sha256": "74262d37a1f02d63b44ce498178cb3327b429c6d278c7aed5453905efe71b725",
+      "lines": 290
+    },
+    {
+      "path": "scripts/hooks/config-protection.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/config-protection.js",
+      "sha256": "04e6c0fbe1f3e9ef1dcfe3c015464838ad9045571efa443259e46bfaa1da4ea3",
+      "lines": 176
+    },
+    {
+      "path": "scripts/hooks/block-no-verify.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/block-no-verify.js",
+      "sha256": "3c948133543b3ba06493001420561ed38764d00416093508309d0fa32256c73c",
+      "lines": 579
+    },
+    {
+      "path": "scripts/hooks/gateguard-fact-force.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/gateguard-fact-force.js",
+      "sha256": "15faa517e321ecab9ccfd68931b47fdd8976ba3f9105a59359919f9e734fc3e8",
+      "lines": 1347
+    },
+    {
+      "path": "scripts/hooks/quality-gate.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/quality-gate.js",
+      "sha256": "66874c9ff75bf74483b17a699b217865ae6a47cfe1462fd2b1f037511aecb582",
+      "lines": 168
+    },
+    {
+      "path": "scripts/hooks/post-edit-accumulator.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/post-edit-accumulator.js",
+      "sha256": "b69e6128795c7d9a5db9af45e4f709a6192d427ac998962c3564926aaa9d35a4",
+      "lines": 78
+    },
+    {
+      "path": "scripts/hooks/stop-format-typecheck.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/stop-format-typecheck.js",
+      "sha256": "a02d73b611527ba5816781893ea347b646fa7ddce7bcb50820d8c9079c798f0d",
+      "lines": 251
+    },
+    {
+      "path": "scripts/hooks/session-start.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-start.js",
+      "sha256": "fcdf42219b0b9625407a217461e6c717b3547f580bd6ec178e37354df5e6667a",
+      "lines": 798
+    },
+    {
+      "path": "scripts/hooks/session-end.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-end.js",
+      "sha256": "e457fad77b8e25634e651af12e235cac8daeb523edd04bae381a6aaf6e9b9cab",
+      "lines": 355
+    },
+    {
+      "path": "scripts/lib/llm-summary.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/llm-summary.js",
+      "sha256": "ce2caaae62f8f50ff48cf07ce9cf1ae2b8e37162bd897e59055f6cf68725db97",
+      "lines": 177
+    },
+    {
+      "path": "scripts/hooks/pre-compact.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/pre-compact.js",
+      "sha256": "98eee132c60edc683066233b227e65f0a4e752683efe97384509577bbbfb8bd6",
+      "lines": 178
+    },
+    {
+      "path": "scripts/hooks/suggest-compact.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/suggest-compact.js",
+      "sha256": "e031a96b7d05b689a457eb4c2c02dd8e1171cd5e68633f30b60a3f0f6ce4471a",
+      "lines": 276
+    },
+    {
+      "path": "scripts/lib/observer-sessions.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/observer-sessions.js",
+      "sha256": "f8d12ce13a257a33f41e6b796891aa8af001c48a8237f24afd4216a2e5f3bfaa",
+      "lines": 212
+    },
+    {
+      "path": "skills/continuous-learning-v2/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/SKILL.md",
+      "sha256": "ddad12451a0d582c6ef1b197b7be193bef613cbc74eba4117fcb74fc7a4ecd00",
+      "lines": 377
+    },
+    {
+      "path": "skills/continuous-learning-v2/config.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/config.json",
+      "sha256": "6f17e7a99aafe252ecd0b9212fb5f606be50b8ce1685f5a6435e46e87ffeb970",
+      "lines": 8
+    },
+    {
+      "path": "scripts/hooks/observe-runner.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/observe-runner.js",
+      "sha256": "0ac9f619f326a5465f04ddc4cdade192132b6a47d011067af00b7a5d17f5efed",
+      "lines": 199
+    },
+    {
+      "path": "skills/continuous-learning-v2/hooks/observe.sh",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/hooks/observe.sh",
+      "sha256": "90575005307d1df31166a2da239cf8c362608524f6aeaa849df3d0b4e3e35f79",
+      "lines": 675
+    },
+    {
+      "path": "skills/continuous-learning-v2/agents/start-observer.sh",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/agents/start-observer.sh",
+      "sha256": "1f9a22da11e23d3551b8f8d0951a656150a532b326818627d9914ffd484a86e6",
+      "lines": 252
+    },
+    {
+      "path": "skills/continuous-learning-v2/agents/observer-loop.sh",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/agents/observer-loop.sh",
+      "sha256": "a6d119252c8ff2eda7aa7b345c2254fd6bdaf14056f6b5bf54835a2738ff310d",
+      "lines": 545
+    },
+    {
+      "path": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "sha256": "a2e90e34ee589827592248dbc801bee90f1d5db6d2330e2d5004e4694b8e06f9",
+      "lines": 2290
+    },
+    {
+      "path": "scripts/lib/instinct-relevance.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/instinct-relevance.js",
+      "sha256": "64aae588687ba3ebb9f0975488c4e55d96f512d9851cde8aaacfa2bc040b4573",
+      "lines": 173
+    },
+    {
+      "path": "scripts/lib/memory-vault.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault.js",
+      "sha256": "83461fea071d2a96ca29a9e9767df770a0363b98721e3eebd2b371ddc48453ab",
+      "lines": 808
+    },
+    {
+      "path": "scripts/lib/memory-vault-format.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault-format.js",
+      "sha256": "a5589f0cd0fd8a414436775e74243c39b068c86ddc99a4732d71ee54409a50c2",
+      "lines": 309
+    },
+    {
+      "path": "scripts/memory.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/memory.js",
+      "sha256": "c5266a07230d5917c84665fff55c4f17a50a6f74bc55bf403d3d4a6b9cc2620c",
+      "lines": 504
+    },
+    {
+      "path": "scripts/memory-mcp.mjs",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/memory-mcp.mjs",
+      "sha256": "c25a536546f12d1b0354bae35426f02a2d4263808cc9cb5ad9482562e26cb023",
+      "lines": 688
+    },
+    {
+      "path": ".mcp.json",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.mcp.json",
+      "sha256": "22cd77a2e1fa9387cbfe08b7601132d4459349a50d8faf59cdb66b5dd2e80670",
+      "lines": 8
+    },
+    {
+      "path": "docs/architecture/cross-harness.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/docs/architecture/cross-harness.md",
+      "sha256": "90df6f1d149830c57a1d57d4241da7fe43532a4828ca62e513c5ff89fdb717c3",
+      "lines": 187
+    },
+    {
+      "path": ".cursor/hooks/adapter.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.cursor/hooks/adapter.js",
+      "sha256": "f22e2a83d43a5603968648d1e785c35276ea0452d8069bac8ea0849d68bde464",
+      "lines": 81
+    },
+    {
+      "path": ".opencode/plugins/ecc-hooks.ts",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.opencode/plugins/ecc-hooks.ts",
+      "sha256": "0345093b34e537d350c5b5aa0296511f558aa767e5104fb5ef05069013f3b5b6",
+      "lines": 624
+    },
+    {
+      "path": "skills/team-agent-orchestration/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/team-agent-orchestration/SKILL.md",
+      "sha256": "4fc52cb4eaba14f8a08ede50423a8be9198175e6c9b5dbbdfb3d00aa81c75055",
+      "lines": 111
+    },
+    {
+      "path": "skills/dynamic-workflow-mode/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/dynamic-workflow-mode/SKILL.md",
+      "sha256": "bdf7902e4e213c6f2e7bdc417757004d118e8e36267239b707670e2875ebf7bf",
+      "lines": 124
+    },
+    {
+      "path": "scripts/orchestrate-worktrees.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/orchestrate-worktrees.js",
+      "sha256": "a510d697ffd52c9588ad5a6739d697df3424f00571c39fd0249a3916d867fc97",
+      "lines": 108
+    },
+    {
+      "path": "scripts/lib/tmux-worktree-orchestrator.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/tmux-worktree-orchestrator.js",
+      "sha256": "82f96abe2c69d2e8aefed72b7d58214bf2c0adfded1ffa4895999eed96fc95ee",
+      "lines": 598
+    },
+    {
+      "path": "scripts/lib/state-store/index.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/state-store/index.js",
+      "sha256": "180a207c4732daae5ee683f895e0fd2fef0c831e989eb92fa9d7c3fbbdd93b8d",
+      "lines": 367
+    },
+    {
+      "path": "scripts/lib/state-store/migrations.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/state-store/migrations.js",
+      "sha256": "31e3e814165eb365fe37c7ec5b31a3f8419e5fbe3b2613b75cb4c775356e00ef",
+      "lines": 209
+    },
+    {
+      "path": "scripts/hooks/cost-tracker.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/cost-tracker.js",
+      "sha256": "3a6007ef6c7ae3c38fc8e2a076a4aa51c37753e86a22cacca51ab438d6573a71",
+      "lines": 257
+    },
+    {
+      "path": "scripts/lib/eval-harness/index.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/index.js",
+      "sha256": "27d70a9b417930092089ba1fd0cafc5fb1e2eb2abcd648e95ffc04dfc6648b0d",
+      "lines": 24
+    },
+    {
+      "path": "scripts/lib/eval-harness/capsule.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/capsule.js",
+      "sha256": "fd0bbbde8f383226fbcb093210e0f16594acd9f6ea0ae209e47a37cc39834b0c",
+      "lines": 410
+    },
+    {
+      "path": "scripts/lib/eval-harness/receipt.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/receipt.js",
+      "sha256": "eacacccf8a6d06f38e83c8cee1bb3a6c608e9125115a989fd7f8a7f7e371d5e7",
+      "lines": 180
+    },
+    {
+      "path": "scripts/eval-harness.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/eval-harness.js",
+      "sha256": "1904d2c81c5401864d783be301034a26695ab7073d533663827876e35f020956",
+      "lines": 155
+    },
+    {
+      "path": "scripts/lib/eval-harness/gate.js",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/gate.js",
+      "sha256": "76d6613aa7aacb9863c61859d20e554826c6f08e71c10221f0b6fea4d04e3c4f",
+      "lines": 258
+    },
+    {
+      "path": "ecc2/Cargo.toml",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/Cargo.toml",
+      "sha256": "4e821509efe7bed04c03901a3a4d38eaa77e10e9f86ab5a17c9a3d9a4b2c6c18",
+      "lines": 61
+    },
+    {
+      "path": "ecc2/README.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/README.md",
+      "sha256": "b80abaae654e01bc09de2808dbdea326577a0effb4fd82d8317d612fb2243c2b",
+      "lines": 114
+    },
+    {
+      "path": "ecc2/src/harness_eval.rs",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/src/harness_eval.rs",
+      "sha256": "5535d6aa34dda9d8cc13ed45c0e91fb62c08e0404be150226d768ff9069dfec2",
+      "lines": 579
+    },
+    {
+      "path": "skills/security-scan/SKILL.md",
+      "url": "https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/security-scan/SKILL.md",
+      "sha256": "74bc3006fb15eef9cea6bf70a4e9cc45ec118ef00733d1c8226c9dc428f8d658",
+      "lines": 166
+    }
+  ]
+}

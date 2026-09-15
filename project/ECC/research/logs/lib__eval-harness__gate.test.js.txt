@@ -1,0 +1,10 @@
+  ✓ directory digests are stable and distinguish baseline from candidate
+  ✓ variant and taskset inspection remains available without execution
+  ✓ known reward-hack fixture is inspectable but cannot run
+  ✓ effect-class expansion remains visible in static tripwire inspection
+  ✓ honest example also refuses without OS containment and writes no false receipt
+  ✓ malformed tasksets and missing variant manifests reject during inspection
+  ✓ manifest replacement after validation never changes the object read
+  ✓ manifest descriptors close when parsing fails
+
+gate: Results: Passed: 8, Failed: 0

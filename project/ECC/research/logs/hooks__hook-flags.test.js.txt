@@ -1,0 +1,81 @@
+
+=== Testing hook-flags.js ===
+
+VALID_PROFILES:
+  ✓ is a Set
+  ✓ contains minimal, standard, strict
+  ✓ contains exactly 3 profiles
+
+Hook preference sources:
+  ✓ hooks default enabled when no preference source exists
+  ✓ Claude plugin options control enabled state and profile
+  ✓ explicit ECC environment overrides Claude plugin options
+  ✓ managed hook config is used after explicit and plugin preferences
+  ✓ a hook evaluation reads managed config only once
+  ✓ malformed managed config emits one sanitized diagnostic
+  ✓ boolean parsing recognizes supported values and uses its fallback
+  ✓ run-with-flags suppresses wrapper hooks when plugin hooks are off
+
+normalizeId:
+  ✓ returns empty string for null
+  ✓ returns empty string for undefined
+  ✓ returns empty string for empty string
+  ✓ trims whitespace
+  ✓ converts to lowercase
+  ✓ handles mixed case with whitespace
+  ✓ converts numbers to string
+  ✓ returns empty string for whitespace-only input
+
+getHookProfile:
+  ✓ defaults to standard when env var not set
+  ✓ returns minimal when set to minimal
+  ✓ returns standard when set to standard
+  ✓ returns strict when set to strict
+  ✓ is case-insensitive
+  ✓ trims whitespace from env var
+  ✓ defaults to standard for invalid value
+  ✓ defaults to standard for empty string
+
+getDisabledHookIds:
+  ✓ returns empty Set when env var not set
+  ✓ returns empty Set for empty string
+  ✓ returns empty Set for whitespace-only string
+  ✓ parses single hook id
+  ✓ parses multiple comma-separated hook ids
+  ✓ trims whitespace around hook ids
+  ✓ normalizes hook ids to lowercase
+  ✓ filters out empty entries from trailing commas
+
+parseProfiles:
+  ✓ returns fallback for null input
+  ✓ returns fallback for undefined input
+  ✓ uses custom fallback when provided
+  ✓ parses comma-separated string
+  ✓ parses single string value
+  ✓ parses array of profiles
+  ✓ filters invalid profiles from string
+  ✓ filters invalid profiles from array
+  ✓ returns fallback when all string values are invalid
+  ✓ returns fallback when all array values are invalid
+  ✓ is case-insensitive for string input
+  ✓ is case-insensitive for array input
+  ✓ trims whitespace in string input
+  ✓ handles null values in array
+
+isHookEnabled:
+  ✓ returns true by default for a hook (standard profile)
+  ✓ returns true for empty hookId
+  ✓ returns true for null hookId
+  ✓ returns false when hook is in disabled list
+  ✓ disabled check is case-insensitive
+  ✓ returns true when hook is not in disabled list
+  ✓ returns false when current profile is not in allowed profiles
+  ✓ returns true when current profile is in allowed profiles
+  ✓ returns true when current profile matches single allowed profile
+  ✓ disabled hooks take precedence over profile match
+  ✓ uses default profiles (standard, strict) when none specified
+  ✓ allows standard profile by default
+  ✓ allows strict profile by default
+  ✓ accepts array profiles option
+
+Results: Passed: 63, Failed: 0

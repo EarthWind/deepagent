@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="846" viewBox="0 0 1280 846" role="img" aria-labelledby="title desc">
+<title id="title">三种知识存储，三种不同用途</title><desc id="desc">控制平面数据库另管会话与操作状态；不能把所有持久化统一叫作向量记忆。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="846" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  04</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">三种知识存储，三种不同用途</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">控制平面数据库另管会话与操作状态；不能把所有持久化统一叫作向量记忆。</text>
+<rect x="48" y="178" width="372" height="57" rx="14" fill="#087e82" stroke="#087e82"/>
+<text x="70" y="215" font-size="23" fill="#fff" font-weight="700" text-anchor="start">会话摘要</text>
+<rect x="454" y="178" width="372" height="57" rx="14" fill="#3764ad" stroke="#3764ad"/>
+<text x="476" y="215" font-size="23" fill="#fff" font-weight="700" text-anchor="start">Instinct 经验</text>
+<rect x="860" y="178" width="372" height="57" rx="14" fill="#b75c27" stroke="#b75c27"/>
+<text x="882" y="215" font-size="23" fill="#fff" font-weight="700" text-anchor="start">Memory Vault</text>
+<rect x="48" y="253" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="271" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="296" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">从哪里来</text>
+<text x="70" y="332" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">宿主 JSONL transcript</text>
+<text x="70" y="360" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">机械提取 / 条件性 LLM 摘要</text>
+<rect x="454" y="253" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="454" y="271" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="476" y="296" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">从哪里来</text>
+<text x="476" y="332" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">Pre / Post 工具观察</text>
+<text x="476" y="360" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">显式启用 Observer 后提炼</text>
+<rect x="860" y="253" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="860" y="271" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="882" y="296" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">从哪里来</text>
+<text x="882" y="332" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">CLI / MCP 显式写入</text>
+<text x="882" y="360" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">结构化 Markdown 文档</text>
+<rect x="48" y="414" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="432" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="457" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">主要保存</text>
+<text x="70" y="493" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">任务线索、工具与文件</text>
+<text x="70" y="521" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">项目、分支、worktree</text>
+<rect x="454" y="414" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="454" y="432" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="476" y="457" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">主要保存</text>
+<text x="476" y="493" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">trigger / action / evidence</text>
+<text x="476" y="521" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">confidence + scope</text>
+<rect x="860" y="414" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="860" y="432" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="882" y="457" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">主要保存</text>
+<text x="882" y="493" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">decision / fact / handoff 等</text>
+<text x="882" y="521" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">source / target / links / trust</text>
+<rect x="48" y="575" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="593" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="618" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">如何使用</text>
+<text x="70" y="654" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">SessionStart 匹配历史记录</text>
+<text x="70" y="682" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">默认上下文总预算 8,000 字符</text>
+<rect x="454" y="575" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="454" y="593" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="476" y="618" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">如何使用</text>
+<text x="476" y="654" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">筛选与排序后注入少量经验</text>
+<text x="476" y="682" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">evolve 产生待使用的资产</text>
+<rect x="860" y="575" width="372" height="141" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="860" y="593" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="882" y="618" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">如何使用</text>
+<text x="882" y="654" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">显式 search → read</text>
+<text x="882" y="682" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">词法排序 + 目标宿主过滤</text>
+<text x="48" y="775" font-size="15" fill="#b75c27" font-weight="600" text-anchor="start">上下文线索 ≠ 完整事件事实；confidence ≠ 正确概率；unreviewed ≠ 已验证。</text>
+<path d="M48 788 H1232" stroke="#d9e3ec"/>
+<text x="48" y="819" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">依据 session-start/end、continuous-learning-v2、memory-vault</text>
+<text x="1232" y="819" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

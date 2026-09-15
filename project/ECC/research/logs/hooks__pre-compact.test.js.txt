@@ -1,0 +1,11 @@
+  ✓ selects the session matching the current worktree, not the newest
+  ✓ returns null when no session matches the current worktree (no foreign write)
+  ✓ falls back to a legacy session (no Worktree header) with matching project name
+  ✓ does not project-match a session that has an explicit non-matching Worktree
+  ✓ does not project-match a session whose Worktree header is present but blank
+  ✓ does not project-match a session whose Worktree header has no value and no space
+  ✓ worktree match wins over a newer session AND over a legacy project match
+  ✓ skips unreadable session files
+  ✓ returns null for an empty session list
+
+Results: Passed: 9, Failed: 0

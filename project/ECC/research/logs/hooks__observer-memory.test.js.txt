@@ -1,0 +1,54 @@
+
+=== Observer Memory Fix Tests (#521) ===
+
+--- observe.sh signal throttling ---
+  ✓ observe.sh contains SIGNAL_EVERY_N throttle variable
+  ✓ observe.sh uses a counter file instead of signaling every call
+  ✓ observe.sh only signals when counter reaches threshold
+  ✓ observe.sh default throttle is 20 observations per signal
+  ✓ observe.sh touches observer activity marker on each observation
+  ✓ observe.sh avoids persistence-looking cleanup and lazy-start signatures
+
+--- observer-loop.sh re-entrancy guard ---
+  ✓ observer-loop.sh defines ANALYZING guard variable
+  ✓ on_usr1 checks ANALYZING before starting analysis
+  ✓ on_usr1 sets ANALYZING=1 before and ANALYZING=0 after analysis
+  ✓ observer-loop checks pending analysis before sleeping
+
+--- observer-loop.sh cooldown throttle ---
+  ✓ observer-loop.sh defines ANALYSIS_COOLDOWN
+  ✓ on_usr1 enforces cooldown between analyses
+  ✓ default cooldown is 60 seconds
+  ✓ observer-loop.sh defines idle timeout fallback
+  ✓ observer-loop.sh checks session lease directory before self-termination
+
+--- observer-loop.sh tail-based sampling ---
+  ✓ analyze_observations uses tail to sample recent observations
+  ✓ default max analysis lines is 500
+  ✓ analysis temp file is created and cleaned up
+  ✓ observer-loop uses project-local temp directory for analysis artifacts
+  ✓ observer-loop loads prompt content before invoking claude
+  ✓ observer-loop prompt requires direct instinct writes without asking permission
+  ✓ prompt references analysis_file not full OBSERVATIONS_FILE
+  ✓ observer uses an absolute analysis path outside Windows
+  ✓ observer-loop wait helper retries SIGUSR1-interrupted waits while claude child is alive
+  ✓ observer-loop wait helper preserves real nonzero claude exits
+
+--- Signal counter file behavior ---
+  ✓ counter file increments and resets correctly
+  ✓ counter file handles missing/corrupt file gracefully
+
+--- observe.sh end-to-end throttle (shell execution) ---
+  ✓ observe.sh creates counter file and increments on each call
+
+--- Observer Haiku invocation flags ---
+  ✓ claude invocation includes --allowedTools flag
+  ✓ allowedTools includes Read permission
+  ✓ allowedTools includes Write permission
+  ✓ claude invocation still includes ECC_SKIP_OBSERVE and ECC_HOOK_PROFILE guards
+
+=== Test Results ===
+Passed: 32
+Failed: 0
+Total:  32
+
