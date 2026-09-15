@@ -1,0 +1,15 @@
+
+=== Testing config-protection ===
+
+  ✓ blocks protected config file edits through run-with-flags
+  ✓ passes through safe file edits unchanged
+  ✓ blocks truncated protected config payloads instead of failing open
+  ✓ allows first-time creation of a protected config file
+  ✓ allows first-time creation when the parent directory does not exist yet
+  ✓ blocks protected paths that exist as a dangling symlink
+    (skipped: case-sensitive filesystem)
+  ✓ blocks case-variant writes that resolve to an existing protected config
+  ✓ still blocks writes to an existing protected config file
+  ✓ legacy hooks do not echo raw input when they fail without stdout
+
+Results: Passed: 9, Failed: 0

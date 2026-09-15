@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ECC 2.2.1 源码研究：安装、Hooks、持续学习、Memory Vault、跨宿主适配、编排与评估，附源码实验和 7 张架构图。">
+<title>ECC 源码深度解读 · Agent 工程研究</title><style>
+:root{color-scheme:light;--ink:#183146;--muted:#586c7c;--teal:#087e82;--line:#dce5ed;--bg:#f4f7fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;line-height:1.9;font-size:16px}
+a{color:#086e8c;text-decoration:none;text-underline-offset:3px}a:hover{text-decoration:underline}a:focus-visible,summary:focus-visible{outline:3px solid #df9548;outline-offset:4px}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 32px;background:#142d42;color:#edf5fa;border-bottom:4px solid #149396;font-size:13px;letter-spacing:.05em}.top a{color:#edf5fa}.brand{font-weight:750;letter-spacing:.14em}.version{color:#bfd4e4}
+.layout{display:grid;grid-template-columns:252px minmax(0,900px);gap:36px;max-width:1252px;margin:32px auto;padding:0 24px 70px}aside{position:sticky;top:92px;height:calc(100vh - 120px);overflow:auto;padding:8px 12px 24px 0;scrollbar-width:thin}aside h2{font-size:12px;color:var(--teal);letter-spacing:.12em;margin:0 0 12px}nav a{display:block;font-size:13px;line-height:1.65;color:#526879;padding:7px 10px;border-left:2px solid transparent}nav a:hover,nav a.active{background:#e6f1f2;border-left-color:var(--teal);color:#05676b;text-decoration:none}.aside-note{font-size:12px;line-height:1.8;color:var(--muted);margin:20px 10px}
+main{min-width:0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:38px 44px 50px;box-shadow:0 12px 32px #18314605}h1{font-size:32px;line-height:1.5;letter-spacing:-.02em;margin:0 0 26px}h2{font-size:25px;line-height:1.5;margin:48px 0 18px;padding-top:10px;border-top:1px solid var(--line)}h3{font-size:20px;line-height:1.55;margin:32px 0 14px}p{margin:15px 0}strong{font-weight:720;color:#123d50}blockquote{margin:22px 0;padding:12px 20px;border-left:4px solid #1d9295;background:#edf6f5;color:#446373;font-size:14px;overflow-wrap:anywhere}blockquote p{margin:7px 0}ul,ol{padding-left:1.5em}li{margin:7px 0}
+code{font-family:'DejaVu Sans Mono',Consolas,monospace;font-size:.84em;background:#edf2f6;padding:.16em .32em;border-radius:4px;overflow-wrap:anywhere}pre{max-width:100%;overflow:auto;padding:21px 23px;background:#142d42;color:#e1edf5;border-radius:11px;line-height:1.75;font-size:14px}pre code{padding:0;background:transparent;color:inherit;border-radius:0;overflow-wrap:normal;font-size:inherit}img{max-width:100%;height:auto;display:block;margin:26px auto;border-radius:12px}main a{overflow-wrap:anywhere}.table-wrap{max-width:100%;overflow:auto;margin:22px 0;border:1px solid var(--line);border-radius:9px}table{border-collapse:collapse;min-width:100%;font-size:14px;line-height:1.8}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);min-width:115px}th{background:#edf4f8;font-weight:700;color:#24465d}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#f9fbfc}hr{border:0;border-top:1px solid var(--line);margin:38px 0}.mobile-toc{display:none}.footer{font-size:12px;color:var(--muted);text-align:center;margin-top:42px}progress{position:fixed;top:0;left:0;z-index:10;width:100%;height:3px;border:0;background:transparent;appearance:none}progress::-webkit-progress-bar{background:transparent}progress::-webkit-progress-value{background:#f2b769}
+@media(min-width:1450px){.layout{grid-template-columns:260px minmax(0,970px);max-width:1330px}main{padding:42px 52px}}
+@media(max-width:1000px){.layout{display:block;max-width:890px;margin-top:20px;padding:0 18px 35px}aside{display:none}.mobile-toc{display:block;background:#edf5f6;border:1px solid var(--line);border-radius:9px;padding:12px 16px;margin-bottom:22px}.mobile-toc summary{cursor:pointer;font-weight:650;color:var(--teal)}main{padding:28px}h1{font-size:29px}}
+@media(max-width:560px){body{font-size:15px}.top{padding:12px 16px;gap:10px}.version{font-size:11px}.layout{padding:0 10px;margin-top:12px}main{padding:23px 17px;border-radius:11px}h1{font-size:25px}h2{font-size:22px;margin-top:35px}h3{font-size:18px}blockquote{padding:10px 14px}pre{padding:15px;font-size:12px}th,td{padding:10px;min-width:110px}table{font-size:13px}}
+@media print{.top,aside,.mobile-toc,progress{display:none}.layout{display:block;max-width:none;padding:0;margin:0}main{padding:0;border:0;box-shadow:none}body{background:#fff;font-size:11pt}a{color:inherit}h2,h3{break-after:avoid}img,pre,tr{break-inside:avoid}.table-wrap{overflow:visible}pre{white-space:pre-wrap;background:#f3f5f7;color:#162f43}h1{font-size:23pt}h2{font-size:18pt}}
+figure{margin:26px 0}.diagram-button{display:block;width:100%;padding:0;border:0;border-radius:12px;background:transparent;cursor:zoom-in}.diagram-button img{margin:0}.diagram-button:focus-visible{outline:3px solid #df9548;outline-offset:5px}figcaption{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}dialog{padding:0;width:min(1400px,96vw);max-width:96vw;max-height:94vh;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}dialog::backdrop{background:#071827c9}.zoom-bar{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:12px 18px;background:#fff;border-bottom:1px solid var(--line);font-size:14px}.zoom-bar button{font:inherit;padding:5px 16px;cursor:pointer;border:1px solid var(--line);border-radius:6px;color:var(--ink);background:#f4f7fa;flex:none}.zoom-body{overflow:auto;max-height:calc(94vh - 90px);padding:12px}.zoom-body img{max-width:none;width:1280px;margin:0 auto}.zoom-hint{font-size:12px;margin:5px 15px 9px;color:var(--muted)}
+</style></head>
+<body><progress max="1" value="0" aria-label="阅读进度"></progress>
+<header class="top"><span class="brand">ECC / ENGINEERING NOTES</span><span class="version">2.2.1 · 8321021 · 2026-09-15</span><a href="README.md">Markdown</a></header>
+<div class="layout"><aside><h2>源码研究 / 17 个主题</h2><nav aria-label="章节导航"><a href="#position">1. 先建立正确的理解：ECC 在 Agent 的哪一层？</a>
+<a href="#source-map">2. 源码地图：先找职责，再看数量</a>
+<a href="#assets">3. 能力资产：Rules、Skills、Commands、Agents 各自解决什么？</a>
+<a href="#installation">4. 安装系统：将能力目录编译成宿主可以使用的文件</a>
+<a href="#lifecycle">5. 从一次任务看执行流程</a>
+<a href="#hooks">6. Hook 的实现：协议适配、调度、开销和失败语义</a>
+<a href="#quality">7. 质量机制：把反馈放在最合适的时间点</a>
+<a href="#sessions">8. 上下文与会话记忆：把短期对话变成下次可用的线索</a>
+<a href="#learning">9. Continuous Learning v2：观察、提炼、筛选，再演化</a>
+<a href="#vault">10. Memory Vault：面向跨宿主的文件化记忆服务</a>
+<a href="#adapters">11. 跨宿主适配：迁移知识容易，迁移执行语义更难</a>
+<a href="#orchestration">12. 多 Agent 与控制平面：流程约定、执行脚本、Alpha 控制台</a>
+<a href="#evaluation">13. 评估与可观测性：先证明发生了什么，再谈有没有改进</a>
+<a href="#security">14. 安全边界：哪些真的执行，哪些仍然依赖宿主？</a>
+<a href="#experiments">15. 我实际验证了什么？</a>
+<a href="#adoption">16. 从 Agent 工程师视角，怎样落地和借鉴？</a>
+<a href="#conclusion">17. 总结：ECC 最值得研究的是什么？</a></nav><p class="aside-note">固定提交研究<br>7 张原创架构图<br>16 组上游测试<br>5 组源码实验</p></aside>
+<main><details class="mobile-toc"><summary>打开章节目录</summary><nav aria-label="移动版章节导航"><a href="#position">1. 先建立正确的理解：ECC 在 Agent 的哪一层？</a>
+<a href="#source-map">2. 源码地图：先找职责，再看数量</a>
+<a href="#assets">3. 能力资产：Rules、Skills、Commands、Agents 各自解决什么？</a>
+<a href="#installation">4. 安装系统：将能力目录编译成宿主可以使用的文件</a>
+<a href="#lifecycle">5. 从一次任务看执行流程</a>
+<a href="#hooks">6. Hook 的实现：协议适配、调度、开销和失败语义</a>
+<a href="#quality">7. 质量机制：把反馈放在最合适的时间点</a>
+<a href="#sessions">8. 上下文与会话记忆：把短期对话变成下次可用的线索</a>
+<a href="#learning">9. Continuous Learning v2：观察、提炼、筛选，再演化</a>
+<a href="#vault">10. Memory Vault：面向跨宿主的文件化记忆服务</a>
+<a href="#adapters">11. 跨宿主适配：迁移知识容易，迁移执行语义更难</a>
+<a href="#orchestration">12. 多 Agent 与控制平面：流程约定、执行脚本、Alpha 控制台</a>
+<a href="#evaluation">13. 评估与可观测性：先证明发生了什么，再谈有没有改进</a>
+<a href="#security">14. 安全边界：哪些真的执行，哪些仍然依赖宿主？</a>
+<a href="#experiments">15. 我实际验证了什么？</a>
+<a href="#adoption">16. 从 Agent 工程师视角，怎样落地和借鉴？</a>
+<a href="#conclusion">17. 总结：ECC 最值得研究的是什么？</a></nav></details><h1>ECC 源码深度解读：把 Coding Agent 的工作方法做成可安装、可执行、可积累的工程系统</h1>
+<blockquote>
+<p>调研日期：2026-09-15（Asia/Shanghai）<br />
+源码基线：<a href="https://github.com/affaan-m/ECC/tree/8321021c54d670126ce3b2969d5deb880b4b0c2a"><code>8321021c54d670126ce3b2969d5deb880b4b0c2a</code></a>，提交时间 2026-09-12，<code>ecc-universal</code> 版本 <code>2.2.1</code>。<br />
+本文沿真实源码调用链展开，区分已经执行的机制、交给模型遵循的约定、尚未完成的方向。架构图均为本次调研原创；配套实验直接调用固定提交中的实现。</p>
+</blockquote>
+<figure><button type="button" class="diagram-button" aria-label="放大：ECC 总体架构：能力资产、宿主 Agent、运行时机制与持久化"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijg2NCIgdmlld0JveD0iMCAwIDEyODAgODY0IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPkVDQ++8muWbtOe7leWuv+S4uyBBZ2VudCDnu4Tnu4flt6XnqIvog73lips8L3RpdGxlPjxkZXNjIGlkPSJkZXNjIj7og73lipvotYTkuqflvbHlk43mqKHlnovooYzkuLrvvJvkuovku7bohJrmnKzlpITnkIbnoa7lrprmgKfliqjkvZzvvJvmjIHkuYXljJbkuLrlkI7nu63ku7vliqHmj5Dkvpvnur/ntKLjgII8L2Rlc2M+CjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93IiBtYXJrZXJXaWR0aD0iMTAiIG1hcmtlckhlaWdodD0iMTAiIHJlZlg9IjgiIHJlZlk9IjUiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj48cGF0aCBkPSJNMSAxIEw4IDUgTDEgOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjEuNSIvPjwvbWFya2VyPjwvZGVmcz4KPHN0eWxlPnRleHR7Zm9udC1mYW1pbHk6J05vdG8gU2FucyBDSksgU0MnLCdNaWNyb3NvZnQgWWFIZWknLHNhbnMtc2VyaWZ9IC5tb25ve2ZvbnQtZmFtaWx5OidEZWphVnUgU2FucyBNb25vJyxtb25vc3BhY2V9PC9zdHlsZT4KPHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iODY0IiByeD0iMjAiIGZpbGw9IiNmNWY4ZmIiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyODAiIGhlaWdodD0iOCIgZmlsbD0iIzA4N2U4MiIvPgoKPHRleHQgeD0iNDgiIHk9IjQ5IiBmb250LXNpemU9IjE0IiBmaWxsPSIjMDg3ZTgyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkVDQyAgLyAgU09VUkNFIFNUVURZICAvICAwMTwvdGV4dD4KPHRleHQgeD0iNDgiIHk9Ijk5IiBmb250LXNpemU9IjMyIiBmaWxsPSIjMTUyYzQwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkVDQ++8muWbtOe7leWuv+S4uyBBZ2VudCDnu4Tnu4flt6XnqIvog73lips8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSIxMzMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6IO95Yqb6LWE5Lqn5b2x5ZON5qih5Z6L6KGM5Li677yb5LqL5Lu26ISa5pys5aSE55CG56Gu5a6a5oCn5Yqo5L2c77yb5oyB5LmF5YyW5Li65ZCO57ut5Lu75Yqh5o+Q5L6b57q/57Si44CCPC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iMTc2IiB3aWR0aD0iMjc4IiBoZWlnaHQ9IjE1MCIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjE5NCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcwIiB5PSIyMTkiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+UnVsZXM8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSIyNTUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6ZW/5pyf6KeE6IyD5LiO5oqA5pyv5qCI57qm5a6aPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iMjgzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnJ1bGVzL2NvbW1vbiArIGxhbmd1YWdlPC90ZXh0Pgo8cmVjdCB4PSIzNTAiIHk9IjE3NiIgd2lkdGg9IjI3OCIgaGVpZ2h0PSIxNTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjM1MCIgeT0iMTk0IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iMzcyIiB5PSIyMTkiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+U2tpbGxzPC90ZXh0Pgo8dGV4dCB4PSIzNzIiIHk9IjI1NSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7ku7vliqHmlrnms5XkuI7ovoXliqnotYTmupA8L3RleHQ+Cjx0ZXh0IHg9IjM3MiIgeT0iMjgzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlNLSUxMLm1kICsgc2NyaXB0czwvdGV4dD4KPHJlY3QgeD0iNjUyIiB5PSIxNzYiIHdpZHRoPSIyNzgiIGhlaWdodD0iMTUwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI2NTIiIHk9IjE5NCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjY3NCIgeT0iMjE5IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMDg3ZTgyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkNvbW1hbmRzPC90ZXh0Pgo8dGV4dCB4PSI2NzQiIHk9IjI1NSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mmL7lvI/osIPnlKjkuI7lhbzlrrnlhaXlj6M8L3RleHQ+Cjx0ZXh0IHg9IjY3NCIgeT0iMjgzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPueUseWuv+S4u+ino+aekOWSjOWPkeeOsDwvdGV4dD4KPHJlY3QgeD0iOTU0IiB5PSIxNzYiIHdpZHRoPSIyNzgiIGhlaWdodD0iMTUwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI5NTQiIHk9IjE5NCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9Ijk3NiIgeT0iMjE5IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMDg3ZTgyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkFnZW50czwvdGV4dD4KPHRleHQgeD0iOTc2IiB5PSIyNTUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LiT5Lia6KeS6Imy5LiO5bel5YW36IyD5Zu0PC90ZXh0Pgo8dGV4dCB4PSI5NzYiIHk9IjI4MyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7nlLHlrr/kuLvlrp7kvovljJbmiJbpgInmi6k8L3RleHQ+Cjxwb2x5bGluZSBwb2ludHM9IjY0MCwzMzAgNjQwLDM3MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxyZWN0IHg9IjQ4IiB5PSIzODgiIHdpZHRoPSI3NDQiIGhlaWdodD0iMTgwIiByeD0iMTQiIGZpbGw9IiMxNTJjNDAiIHN0cm9rZT0iIzE1MmM0MCIvPgo8cmVjdCB4PSI0OCIgeT0iNDA2IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjQzMSIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lrr/kuLsgQWdlbnTvvJpDbGF1ZGUgQ29kZSAvIENvZGV4IC8g5YW25LuW5a6i5oi356uvPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNDY3IiBmb250LXNpemU9IjE3IiBmaWxsPSIjZGNlN2YwIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPueUqOaIt+i+k+WFpSDihpIg5qih5Z6L5o6o55CGIOKGkiDlt6XlhbfmiafooYwg4oaSIOe7k+aenOWPjemmiDwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjQ5NSIgZm9udC1zaXplPSIxNyIgZmlsbD0iI2RjZTdmMCIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuLvlvqrnjq/jgIHmnYPpmZDjgIHmqKHlnovov57mjqXlkozkuqTkupLnlLHlhbfkvZPlrr/kuLvnrqHnkIY8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI1MjMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiNkY2U3ZjAiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+RUNDIOeahOS4u+a1geaPkuS7tui3r+W+hOWcqOi/meS6m+iDveWKm+WRqOWbtOWinuWKoOW3peS9nOaWueazleS4jui/kOihjOacuuWItjwvdGV4dD4KPHJlY3QgeD0iODI0IiB5PSIzODgiIHdpZHRoPSI0MDgiIGhlaWdodD0iMTgwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI4MjQiIHk9IjQwNiIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMzc2NGFkIi8+Cjx0ZXh0IHg9Ijg0NiIgeT0iNDMxIiBmb250LXNpemU9IjIyIiBmaWxsPSIjMzc2NGFkIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPumAgumFjeWxgjwvdGV4dD4KPHRleHQgeD0iODQ2IiB5PSI0NjciIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LqL5Lu2IEpTT04g4oaUIOWuv+S4u+i/lOWbnuWNj+iurjwvdGV4dD4KPHRleHQgeD0iODQ2IiB5PSI0OTUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+55uu5b2V5biD5bGA44CB5o+S5Lu257yT5a2Y5LiO5a6J6KOF54q25oCBPC90ZXh0Pgo8dGV4dCB4PSI4NDYiIHk9IjUyMyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mr4/kuKrlrr/kuLvlhbflpIfnmoTog73lipvlubbkuI3nm7jlkIw8L3RleHQ+Cjxwb2x5bGluZSBwb2ludHM9IjM5NSw1NzIgMzk1LDYwNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+Cjxwb2x5bGluZSBwb2ludHM9IjEwMjgsNTcyIDEwMjgsNjA0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHJlY3QgeD0iNDgiIHk9IjYyMiIgd2lkdGg9IjM3NiIgaGVpZ2h0PSIxNTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjQ4IiB5PSI2NDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzA4N2U4MiIvPgo8dGV4dCB4PSI3MCIgeT0iNjY1IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMDg3ZTgyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPui/kOihjCBIb29rPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNzAxIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuajgOafpeOAgeaLpuaIquOAgee8lui+keenr+e0rzwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjcyOSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lkIzmraXkuI7lvILmraXkuovku7blpITnkIY8L3RleHQ+CjxyZWN0IHg9IjQ1MiIgeT0iNjIyIiB3aWR0aD0iMzc2IiBoZWlnaHQ9IjE1MCIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDUyIiB5PSI2NDAiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzM3NjRhZCIvPgo8dGV4dCB4PSI0NzQiIHk9IjY2NSIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzM3NjRhZCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7nn6Xor4bkuI7nu4/pqow8L3RleHQ+Cjx0ZXh0IHg9IjQ3NCIgeT0iNzAxIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS8muivneaRmOimgSAvIEluc3RpbmN0IC8gVmF1bHQ8L3RleHQ+Cjx0ZXh0IHg9IjQ3NCIgeT0iNzI5IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaMieiMg+WbtOWSjOmihOeul+mHjeaWsOivu+WPljwvdGV4dD4KPHJlY3QgeD0iODU2IiB5PSI2MjIiIHdpZHRoPSIzNzYiIGhlaWdodD0iMTUwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI4NTYiIHk9IjY0MCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjYjc1YzI3Ii8+Cjx0ZXh0IHg9Ijg3OCIgeT0iNjY1IiBmb250LXNpemU9IjIyIiBmaWxsPSIjYjc1YzI3IiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaTjeS9nOS4juivgeaNrjwvdGV4dD4KPHRleHQgeD0iODc4IiB5PSI3MDEiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+d29ya3RyZWXjgIHkvJror53jgIHmjIfmoIc8L3RleHQ+Cjx0ZXh0IHg9Ijg3OCIgeT0iNzI5IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaXpeW/l+OAgeaUtuaNruS4juivhOS8sOi+ueeVjDwvdGV4dD4KPHBhdGggZD0iTTQ4IDgwNiBIMTIzMiIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjQ4IiB5PSI4MzciIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Y6f5Yib5rqQ56CB56S65oSPIMK3IOaguOW/g+WFs+ezu+Wbvu+8jOS4jeihqOekuuaJgOacieaooeWdl+m7mOiupOWQr+eUqDwvdGV4dD4KPHRleHQgeD0iMTIzMiIgeT0iODM3IiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0iZW5kIj44MzIxMDIxIMK3IDIwMjYtMDktMTU8L3RleHQ+Cjwvc3ZnPg==" alt="ECC 总体架构：能力资产、宿主 Agent、运行时机制与持久化" /></button><figcaption>ECC 总体架构：能力资产、宿主 Agent、运行时机制与持久化 · 点击放大</figcaption></figure>
+<h2>阅读导航</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>想了解的问题</th>
+<th>对应章节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ECC 到底提供什么，与 Agent Runtime 有何关系？</td>
+<td><a href="#position">1. 定位</a>、<a href="#source-map">2. 源码地图</a></td>
+</tr>
+<tr>
+<td>Rules、Skills、Agents 如何成为可用能力？</td>
+<td><a href="#assets">3. 能力资产</a>、<a href="#installation">4. 安装系统</a></td>
+</tr>
+<tr>
+<td>一次工具调用被怎样处理？</td>
+<td><a href="#lifecycle">5. 执行流程</a>、<a href="#hooks">6. Hook 实现</a>、<a href="#quality">7. 质量机制</a></td>
+</tr>
+<tr>
+<td>记忆、上下文与“持续学习”如何落地？</td>
+<td><a href="#sessions">8. 会话记忆</a>、<a href="#learning">9. Instinct</a>、<a href="#vault">10. Memory Vault</a></td>
+</tr>
+<tr>
+<td>多客户端、多 Agent 和评估能做到什么？</td>
+<td><a href="#adapters">11. 适配</a>、<a href="#orchestration">12. 编排</a>、<a href="#evaluation">13. 评估</a></td>
+</tr>
+<tr>
+<td>如何验证和借鉴？</td>
+<td><a href="#security">14. 安全边界</a>、<a href="#experiments">15. 实验</a>、<a href="#adoption">16. 落地建议</a>、<a href="#conclusion">17. 总结</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>配套文件：<a href="index.html">离线网页版</a> · <a href="examples/README.md">可运行源码实验</a> · <a href="research/verification.md">验证记录</a> · <a href="research/sources.md">源码索引</a>。</p>
+<p><a id="position"></a></p>
+<h2>1. 先建立正确的理解：ECC 在 Agent 的哪一层？</h2>
+<p>ECC 的历史名称是 Everything Claude Code，当前仓库使用 <code>affaan-m/ECC</code>，npm 包名仍是 <code>ecc-universal</code>。从专业 Agent 工程的角度，我把它概括为：<strong>部署在 Coding Agent 周围的工程工作流、运行时扩展和经验资产管理系统。</strong> <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/README.md">项目说明</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/package.json">包入口</a></p>
+<p>一个基础 Coding Agent 通常负责模型调用、工具执行、对话历史、权限询问与交互界面。ECC 在这些能力之上补充：</p>
+<ol>
+<li><strong>工作方法</strong>：如何调研、拆任务、写测试、审查代码和验证结果。</li>
+<li><strong>运行干预</strong>：在工具调用前检查，在调用后记录，在响应结束后批量处理。</li>
+<li><strong>经验积累</strong>：保存会话摘要、记录工具轨迹、提炼 Instinct，再将经验写成可复用文件。</li>
+<li><strong>配置工程</strong>：将这些资产安装到不同宿主，记录文件归属，提供检查、修复和卸载入口。</li>
+<li><strong>操作与证据</strong>：跟踪会话、worktree、工作项、成本，以及可验证的执行记录。</li>
+</ol>
+<p>这里的 <strong>harness</strong> 可以理解为模型的“运行支架”：模型能看什么、能调用什么、何时收到反馈、如何保留状态，都由它决定。ECC 很大一部分工作是增强现有 harness，而主流插件使用路径中的 LLM 主循环仍由 Claude Code、Codex 等宿主掌握。</p>
+<p>这一边界也解释了为什么不能用“有没有一个 <code>while tool_calls</code> 循环”衡量 ECC：它的主线是扩展现有 Agent。仓库另有 Python <code>src/llm/</code> Provider 抽象、Node 操作工具和 Rust <code>ecc2/</code> 控制台，但不能因此把所有入口画成共同经过一个自研 ECC 推理内核。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/src/llm/core/interface.py">Python Provider 接口</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/README.md">Rust 子项目说明</a></p>
+<h3>1.1 本文的核心判断</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>判断</th>
+<th>工程含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>能力资产与运行脚本共同组成 ECC</td>
+<td>只看 Markdown 会低估实现；只看脚本也会漏掉模型的工作约定</td>
+</tr>
+<tr>
+<td>Hook 是确定性控制的重要落点</td>
+<td>提示词可以要求先检查，Hook 可以在特定调用入口真正阻止动作</td>
+</tr>
+<tr>
+<td>跨会话能力有多套存储</td>
+<td>会话摘要、Instinct、Memory Vault、控制平面数据库不能混为一个“记忆库”</td>
+</tr>
+<tr>
+<td>持续学习主要改变外部知识与工作方法</td>
+<td>当前研究路径没有更新基础模型权重</td>
+</tr>
+<tr>
+<td>跨宿主支持存在显著差异</td>
+<td>文件能安装、Skill 能发现、Hook 能触发，是三个不同的验收条件</td>
+</tr>
+<tr>
+<td>产品版本与子系统成熟度应分开</td>
+<td><code>ecc-universal 2.2.1</code> 与仍标为 Alpha 的 Rust <code>ecc2/</code> 同时存在</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些判断来自后文的源码拆解；它们不是对模型完成率或性能提升的实测结论。</p>
+<p><a id="source-map"></a></p>
+<h2>2. 源码地图：先找职责，再看数量</h2>
+<p>在固定提交上，以<strong>顶层标准资产路径</strong>计数：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>内容</th>
+<th style="text-align:right">文件数</th>
+<th>统计口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent 定义</td>
+<td style="text-align:right">68</td>
+<td><code>agents/*.md</code></td>
+</tr>
+<tr>
+<td>Skill 定义</td>
+<td style="text-align:right">292</td>
+<td><code>skills/*/SKILL.md</code></td>
+</tr>
+<tr>
+<td>活跃 commands 目录</td>
+<td style="text-align:right">94</td>
+<td><code>commands/*.md</code></td>
+</tr>
+<tr>
+<td>归档命令兼容文件</td>
+<td style="text-align:right">12</td>
+<td><code>legacy-command-shims/commands/*.md</code>，与上一项分开</td>
+</tr>
+<tr>
+<td>Rules</td>
+<td style="text-align:right">121</td>
+<td><code>rules/*/*.md</code></td>
+</tr>
+<tr>
+<td>顶层 Hook 脚本</td>
+<td style="text-align:right">51</td>
+<td><code>scripts/hooks/*.js</code></td>
+</tr>
+<tr>
+<td>JavaScript 测试文件</td>
+<td style="text-align:right">286</td>
+<td><code>tests/**/*.test.js</code>，文件数不等于测试用例数</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些数字由本地源码统计，不能与翻译镜像、<code>.agents</code> 等适配目录重复相加。<a href="research/snapshot.json">快照清单</a></p>
+<pre><code class="language-text">ECC/
+├── agents/                         专业角色、工具范围、模型建议
+├── skills/                         方法论与可执行辅助资源
+├── commands/                       当前命令入口
+├── legacy-command-shims/            已迁移入口的兼容材料
+├── rules/                          通用规范与语言/框架规范
+├── contexts/                       工作模式上下文
+├── hooks/                          宿主事件注册、元数据
+├── scripts/
+│   ├── hooks/                      Hook 的真实实现
+│   ├── lib/install*/               选择、规划、写入和生命周期
+│   ├── lib/memory-vault*.js         文件化记忆与检索
+│   ├── lib/observer-sessions.js     观察进程的项目与会话状态
+│   ├── lib/eval-harness/            执行证据、哈希链、收据与静态检查
+│   ├── lib/state-store/             控制平面状态库
+│   ├── memory-mcp.mjs              记忆的 MCP 服务
+│   └── orchestrate-worktrees.js     worktree / tmux 编排入口
+├── manifests/                      安装组件、模块与 Profile 清单
+├── .claude-plugin/ .codex-plugin/   原生插件声明
+├── .cursor/ .opencode/ ...          宿主适配
+├── src/llm/                        Python Provider 与工具相关模块
+└── ecc2/                           Rust 控制平面 Alpha
+</code></pre>
+<p>建议的阅读顺序是：<strong>插件声明 → 事件注册 → 调度器 → 具体 Hook → 存储 → 测试</strong>。这样可以持续回答“这个文件在真实安装中是否会执行”，避免把存在于仓库中的材料都当成默认生效功能。</p>
+<p><a id="assets"></a></p>
+<h2>3. 能力资产：Rules、Skills、Commands、Agents 各自解决什么？</h2>
+<h3>3.1 四种文件承担不同职责</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>资产</th>
+<th>回答的问题</th>
+<th>典型形式</th>
+<th>执行者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rule</td>
+<td>长期遵循哪些工程原则？</td>
+<td><code>rules/common/</code> 加语言规则</td>
+<td>宿主加载后由模型遵循</td>
+</tr>
+<tr>
+<td>Skill</td>
+<td>完成一类任务的方法是什么？</td>
+<td><code>SKILL.md</code>，可附脚本和资料</td>
+<td>模型解释步骤，工具执行具体动作</td>
+</tr>
+<tr>
+<td>Command</td>
+<td>用户如何显式触发流程？</td>
+<td><code>commands/plan.md</code></td>
+<td>宿主命令解析和模型</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>哪种角色、上下文和工具范围适合任务？</td>
+<td><code>agents/planner.md</code></td>
+<td>宿主创建或选择角色</td>
+</tr>
+</tbody>
+</table></div>
+<p>例如 <code>planner.md</code> 的元数据声明 <code>tools: Read, Grep, Glob</code> 和 <code>model: opus</code>，正文定义需求分析、架构调查、步骤与验收标准。这提供了一个偏只读的规划角色。<strong>角色定义本身不负责进程调度，也不等于另一个独立模型权重。</strong> 工具范围及模型字段如何落实，还要看宿主如何解释。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/agents/planner.md">Planner 定义</a></p>
+<p>下面是本文原创的结构示意，字段形式参考 ECC：</p>
+<pre><code class="language-yaml">---
+name: api-change-reviewer
+description: Review API changes and their compatibility impact.
+tools: Read, Grep, Glob
+model: opus
+---
+
+先找调用方，再检查公开接口、错误语义和迁移测试。
+输出文件位置、影响范围、证据与修复建议。
+</code></pre>
+<h3>3.2 Skill 的价值在于“行为契约”</h3>
+<p><code>search-first</code> 将编码前调研分成工具可用性检查、需求分析、寻找现成实现、评估和选择。<code>verification-loop</code> 则组织验证流程。模型依靠这些材料调整工作顺序，但它们不会仅因被安装就自动启动一个后台工作流引擎。<code>search-first</code> 正文也明确指出工具预检查属于 Agent 指导。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/search-first/SKILL.md">Search First</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/verification-loop/SKILL.md">Verification Loop</a></p>
+<p>因此，工程上要把两件事分别验收：</p>
+<ul>
+<li><strong>可发现性</strong>：宿主是否发现该 Skill，描述是否能准确匹配任务。</li>
+<li><strong>执行有效性</strong>：模型是否选中它、是否完成步骤、是否产生了可核验的证据。</li>
+</ul>
+<p>增加 Skill 数量只直接扩大能力目录，不直接证明任务质量提高。</p>
+<h3>3.3 命令与 Skill 正在迁移，不能机械地一一对应</h3>
+<p>这个快照里有 <code>commands/plan.md</code>，但没有 <code>skills/plan/SKILL.md</code>。<code>plan</code> 命令要求先分析并呈现计划，默认在当前上下文运行，明确不默认调用子 Agent。这和“<code>/plan</code> 一定创建 planner 子 Agent”的常见理解不同。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/commands/plan.md">Plan 命令</a></p>
+<p><code>orchestrate</code> 则已经位于 <code>legacy-command-shims/commands/</code>，兼容文件将用户引向 <code>dmux-workflows</code> 和 <code>autonomous-agent-harness</code>。与此同时，<code>plan-orchestrate</code> Skill 仍描述生成 <code>/orchestrate custom</code> 调用。这是应当核对安装表面的迁移差异：<strong>源码中一段命令示例存在，不足以保证当前安装就有那个命令。</strong> <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/legacy-command-shims/commands/orchestrate.md">兼容入口</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/plan-orchestrate/SKILL.md">Plan Orchestrate</a></p>
+<p>对大型 Prompt/Skill 仓库，这种“入口—文档—目录”的一致性维护，是实实在在的产品工程问题。</p>
+<p><a id="installation"></a></p>
+<h2>4. 安装系统：将能力目录编译成宿主可以使用的文件</h2>
+<figure><button type="button" class="diagram-button" aria-label="放大：选择性安装流程与文件归属"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgyNiIgdmlld0JveD0iMCAwIDEyODAgODI2IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPuWuieijheS5n+aYr+W3peeoi+ezu+e7n++8muiuoeWIkuOAgeWGmeWFpeS4juaWh+S7tuW9kuWxnjwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPuWbvuS4reS4uiBFQ0Mg566h55CG5a6J6KOF6Lev5b6E77yb5Y6f55Sf5o+S5Lu255Sx5a6/5Li7566h55CG5YW25a6J6KOF55Sf5ZG95ZGo5pyf44CCPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+PHBhdGggZD0iTTEgMSBMOCA1IEwxIDkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L21hcmtlcj48L2RlZnM+CjxzdHlsZT50ZXh0e2ZvbnQtZmFtaWx5OidOb3RvIFNhbnMgQ0pLIFNDJywnTWljcm9zb2Z0IFlhSGVpJyxzYW5zLXNlcmlmfSAubW9ub3tmb250LWZhbWlseTonRGVqYVZ1IFNhbnMgTW9ubycsbW9ub3NwYWNlfTwvc3R5bGU+CjxyZWN0IHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgyNiIgcng9IjIwIiBmaWxsPSIjZjVmOGZiIi8+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgiIGZpbGw9IiMwODdlODIiLz4KCjx0ZXh0IHg9IjQ4IiB5PSI0OSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5FQ0MgIC8gIFNPVVJDRSBTVFVEWSAgLyAgMDI8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSI5OSIgZm9udC1zaXplPSIzMiIgZmlsbD0iIzE1MmM0MCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lronoo4XkuZ/mmK/lt6XnqIvns7vnu5/vvJrorqHliJLjgIHlhpnlhaXkuI7mlofku7blvZLlsZ48L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSIxMzMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Zu+5Lit5Li6IEVDQyDnrqHnkIblronoo4Xot6/lvoTvvJvljp/nlJ/mj5Lku7bnlLHlrr/kuLvnrqHnkIblhbblronoo4XnlJ/lkb3lkajmnJ/jgII8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIxODYiIHdpZHRoPSIzNTAiIGhlaWdodD0iMTY0IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0OCIgeT0iMjA0IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjIyOSIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij4wMSAg6YCJ5oup6IO95YqbPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iMjY1IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnRhcmdldCArIGluc3RhbGwgcHJvZmlsZTwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjI5MyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5jb21wb25lbnRzIC8gbW9kdWxlczwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjMyMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lronoo4UgbWluaW1hbCDkuI3lkKsgaG9va3MtcnVudGltZTwvdGV4dD4KPHJlY3QgeD0iNDY1IiB5PSIxODYiIHdpZHRoPSIzNTAiIGhlaWdodD0iMTY0IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0NjUiIHk9IjIwNCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMzc2NGFkIi8+Cjx0ZXh0IHg9IjQ4NyIgeT0iMjI5IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMzc2NGFkIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPjAyICDnlJ/miJDorqHliJI8L3RleHQ+Cjx0ZXh0IHg9IjQ4NyIgeT0iMjY1IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuino+aekOa4heWNleS4juS+nei1ljwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIyOTMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+55SxIHRhcmdldCBhZGFwdGVyIOWGs+WumuebruW9lTwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIzMjEiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+Y29weS1maWxlIC8gbWVyZ2UtanNvbiAvIHNldHRpbmdzPC90ZXh0Pgo8cmVjdCB4PSI4ODIiIHk9IjE4NiIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIxNjQiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg4MiIgeT0iMjA0IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiNiNzVjMjciLz4KPHRleHQgeD0iOTA0IiB5PSIyMjkiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+MDMgIOajgOafpei+ueeVjDwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSIyNjUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+SG9vayDlronoo4XmnaHku7Y8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iMjkzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuWPr+S/oeagueebruW9leWSjOW3suaciSBpbnN0YWxsLXN0YXRlPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjMyMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lhpnlhaXliY3mo4Dmn6XnlKjmiLfmlofku7blvZLlsZ48L3RleHQ+Cjxwb2x5bGluZSBwb2ludHM9IjQwMCwyNjggNDUzLDI2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+Cjxwb2x5bGluZSBwb2ludHM9IjgxNywyNjggODcwLDI2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+Cjxwb2x5bGluZSBwb2ludHM9IjEwNTgsMzU0IDEwNTgsNDE4IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHJlY3QgeD0iNjkwIiB5PSI0MzQiIHdpZHRoPSI1NDIiIGhlaWdodD0iMTQ2IiByeD0iMTQiIGZpbGw9IiMxNTJjNDAiIHN0cm9rZT0iIzE1MmM0MCIvPgo8cmVjdCB4PSI2OTAiIHk9IjQ1MiIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcxMiIgeT0iNDc3IiBmb250LXNpemU9IjIyIiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaJp+ihjOWGmeWFpSDihpIg6K6w5b2VIGluc3RhbGwtc3RhdGU8L3RleHQ+Cjx0ZXh0IHg9IjcxMiIgeT0iNTEzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjZGNlN2YwIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuiusOW9leadpea6kOOAgeebruagh+i3r+W+hOOAgeeuoeeQhuW9kuWxnuS4juWGheWuueaRmOimgTwvdGV4dD4KPHRleHQgeD0iNzEyIiB5PSI1NDEiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiNkY2U3ZjAiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+ZG9jdG9yIC8gcmVwYWlyIC8gdW5pbnN0YWxsIOS9v+eUqOWQjOS4gOS7veW9kuWxnue6v+e0ojwvdGV4dD4KPHJlY3QgeD0iNDgiIHk9IjQzNCIgd2lkdGg9IjU3OCIgaGVpZ2h0PSIxNDYiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjQ4IiB5PSI0NTIiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iI2I3NWMyNyIvPgo8dGV4dCB4PSI3MCIgeT0iNDc3IiBmb250LXNpemU9IjIyIiBmaWxsPSIjYjc1YzI3IiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPumBh+WIsOacquW9kuWxniBFQ0Mg55qE5bey5pyJ5paH5Lu2PC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNTEzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPui3s+i/h+W5tuaKpeWRiu+8m+S4jeimhueblu+8jOS5n+S4jeWcqCBzdGF0ZSDkuK3orqTpooY8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI1NDEiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6KeE5YiS5ZCO5paw5Ye6546w55qE55So5oi35paH5Lu277ya5YaZ5YWl5YmN5YaN5qyh5ouS57udPC90ZXh0Pgo8cG9seWxpbmUgcG9pbnRzPSI4ODIsMzQ5IDg0MCwzOTMgMzM3LDM5MyAzMzcsNDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNyA1IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cmVjdCB4PSI0OCIgeT0iNjIwIiB3aWR0aD0iMTE4NCIgaGVpZ2h0PSIxMTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjQ4IiB5PSI2MzgiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzM3NjRhZCIvPgo8dGV4dCB4PSI3MCIgeT0iNjYzIiBmb250LXNpemU9IjIyIiBmaWxsPSIjMzc2NGFkIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS4pOS4qiBQcm9maWxlIOaYr+S4pOS4que7tOW6pjwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjY5OSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lronoo4UgUHJvZmlsZSDpgInmi6nmqKHlnZfvvJtIb29rIFByb2ZpbGUg6YCJ5oup6L+Q6KGM6aG544CC5a6J6KOF5oiQ5Yqf44CB5a6/5Li75Y+R546w44CBSG9vayDmiafooYzpnIDopoHliIbliKvpqozor4HjgII8L3RleHQ+CjxwYXRoIGQ9Ik00OCA3NjggSDEyMzIiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI0OCIgeT0iNzk5IiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS+neaNriBpbnN0YWxsLW1hbmlmZXN0cyAvIGluc3RhbGwvcGxhbiAvIGluc3RhbGwvYXBwbHkgLyBvd25lcnNoaXAtZ3VhcmQ8L3RleHQ+Cjx0ZXh0IHg9IjEyMzIiIHk9Ijc5OSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9ImVuZCI+ODMyMTAyMSDCtyAyMDI2LTA5LTE1PC90ZXh0Pgo8L3N2Zz4=" alt="选择性安装流程与文件归属" /></button><figcaption>选择性安装流程与文件归属 · 点击放大</figcaption></figure>
+<h3>4.1 两条主要分发路径</h3>
+<p><strong>原生插件路径</strong>依赖宿主的 marketplace、插件缓存与启用状态。Claude 插件声明暴露 Skills 和 Commands，并提供 Hook 开关及档位选项；事件注册位于 <code>hooks/hooks.json</code>。Codex 插件声明则显式引用 <code>skills/</code>、<code>.mcp.json</code> 和 <code>hooks/codex-hooks.json</code>。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.claude-plugin/plugin.json">Claude 插件</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.codex-plugin/plugin.json">Codex 插件</a></p>
+<p><strong>选择性安装路径</strong>由 ECC 自己规划文件放置：用户选择 target、profile、组件，再由适配器转换成复制、JSON 合并、Claude settings 更新等操作。核心路径可以按以下顺序阅读：</p>
+<pre><code class="language-text">用户安装参数
+  → install request / config
+  → install-manifests：解析组件、模块、依赖与 target
+  → install/plan：物化文件与配置操作
+  → target adapter：确定宿主目录与安装策略
+  → install/apply：执行归属检查和写入
+  → install-state：记录安装来源、目标与内容摘要
+  → doctor / repair / uninstall
+</code></pre>
+<p>这套结构的价值是：能力资产不必分别维护十几套完整副本；差异主要落到 target adapter 和内容变换中。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install-manifests.js">清单解析</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/plan.js">操作计划</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/apply.js">写入实现</a></p>
+<h3>4.2 最容易混淆的两个 Profile</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>控制对象</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安装 Profile</td>
+<td>安装哪些模块</td>
+<td><code>minimal / core / developer / security / research / full</code>，另有 <code>opencode</code></td>
+</tr>
+<tr>
+<td>Hook Profile</td>
+<td>已安装 Hook 中哪些执行</td>
+<td><code>minimal / standard / strict</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>manifests/install-profiles.json</code> 中的安装 <code>minimal</code> <strong>不包含 <code>hooks-runtime</code></strong>；但运行时 Hook <code>minimal</code> 是一份允许列表，一些基本 Hook 仍可在该档位运行。两者恰好同名，却处在不同阶段。安装 <code>core</code> 包含 Hook 模块；是否实际配置并启用，还受 target 支持与 Hook consent 控制。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/manifests/install-profiles.json">安装 Profile</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/hook-flags.js">Hook 开关</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/hook-consent.js">Hook 安装检查</a></p>
+<h3>4.3 文件归属比“成功复制”更重要</h3>
+<p>假设用户已有一个自定义 Skill，安装器恰好要写到同一路径。简单 <code>cp -r</code> 会造成两个问题：覆盖用户内容；将该文件错误记录成 ECC 所有，卸载时再误删它。</p>
+<p><code>prepareUserOwnedFileGuard()</code> 因此读取上次 install-state：</p>
+<ol>
+<li>校验 state 中的 target 和根目录与本次计划一致。</li>
+<li>收集此前明确记录为 ECC 管理的目标文件。</li>
+<li>对已经存在、却没有被记录为 ECC 管理的 <code>copy-file</code> 目标，跳过并报告。</li>
+<li>将跳过的目标从最终 state 中剔除，防止“没有写过，却认领了所有权”。</li>
+<li>写入前再检查是否出现新用户文件，处理规划与执行之间的竞争。</li>
+</ol>
+<p>这里提供的是明确的<strong>文件所有权边界</strong>。它不意味着所有已管理文件的手工修改都会在重装时保留；源码明确允许此前管理的文件由重装、修复更新。也不应将多文件安装描述为一个整体 ACID 事务。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install/ownership-guard.js">归属保护实现</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/install-state.js">安装状态</a></p>
+<h3>4.4 上下文成本从安装阶段就开始了</h3>
+<p>安装整个目录后，宿主至少可能把能力名称和描述暴露给模型。Skill 正文按需读取，并不意味着目录广告零成本。ECC 支持选择性安装，正是为了按任务和团队技术栈收缩能力面。</p>
+<p>我的建议是先确定能力组合：通用规则、当前语言、测试和审查，再增加确实使用的能力。是否省 Token、是否改善选择准确率，应通过同任务对照验证；本文没有把目录缩减换算成未经实测的百分比收益。</p>
+<p><a id="lifecycle"></a></p>
+<h2>5. 从一次任务看执行流程</h2>
+<figure><button type="button" class="diagram-button" aria-label="放大：ECC 在宿主生命周期中的介入点"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjkwOCIgdmlld0JveD0iMCAwIDEyODAgOTA4IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPuS4gOasoeWTjeW6lOeahOS6i+S7tuaXtumXtOe6vzwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPuS7peS4i+aMiSBDbGF1ZGUgSG9vayDms6jlhozmlbTnkIbvvJvmqKHlnovlt6XkvZzmtYHnlLHlrr/kuLvkuI7mqKHlnovmjqjov5vvvIzkuovku7bpobnkuI3mnoTmiJDlm7rlrprkuJrliqEgREFH44CCPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+PHBhdGggZD0iTTEgMSBMOCA1IEwxIDkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L21hcmtlcj48L2RlZnM+CjxzdHlsZT50ZXh0e2ZvbnQtZmFtaWx5OidOb3RvIFNhbnMgQ0pLIFNDJywnTWljcm9zb2Z0IFlhSGVpJyxzYW5zLXNlcmlmfSAubW9ub3tmb250LWZhbWlseTonRGVqYVZ1IFNhbnMgTW9ubycsbW9ub3NwYWNlfTwvc3R5bGU+CjxyZWN0IHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjkwOCIgcng9IjIwIiBmaWxsPSIjZjVmOGZiIi8+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgiIGZpbGw9IiMwODdlODIiLz4KCjx0ZXh0IHg9IjQ4IiB5PSI0OSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5FQ0MgIC8gIFNPVVJDRSBTVFVEWSAgLyAgMDM8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSI5OSIgZm9udC1zaXplPSIzMiIgZmlsbD0iIzE1MmM0MCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuIDmrKHlk43lupTnmoTkuovku7bml7bpl7Tnur88L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSIxMzMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Lul5LiL5oyJIENsYXVkZSBIb29rIOazqOWGjOaVtOeQhu+8m+aooeWei+W3peS9nOa1geeUseWuv+S4u+S4juaooeWei+aOqOi/m++8jOS6i+S7tumhueS4jeaehOaIkOWbuuWumuS4muWKoSBEQUfjgII8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIxNzEiIHdpZHRoPSIyNTQiIGhlaWdodD0iNDgiIHJ4PSIxMCIgZmlsbD0iIzE1MmM0MCIgc3Ryb2tlPSIjMTUyYzQwIi8+Cjx0ZXh0IHg9IjY2IiB5PSIyMDMiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNmZmYiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5a6/5Li755Sf5ZG95ZGo5pyfPC90ZXh0Pgo8cmVjdCB4PSIzMjYiIHk9IjE3MSIgd2lkdGg9IjUzNSIgaGVpZ2h0PSI0OCIgcng9IjEwIiBmaWxsPSIjMDg3ZTgyIiBzdHJva2U9IiMwODdlODIiLz4KPHRleHQgeD0iMzQ0IiB5PSIyMDMiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNmZmYiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+RUNDIOWQjOatpeWkhOeQhjwvdGV4dD4KPHJlY3QgeD0iODg2IiB5PSIxNzEiIHdpZHRoPSIzNDYiIGhlaWdodD0iNDgiIHJ4PSIxMCIgZmlsbD0iIzM3NjRhZCIgc3Ryb2tlPSIjMzc2NGFkIi8+Cjx0ZXh0IHg9IjkwNCIgeT0iMjAzIiBmb250LXNpemU9IjIwIiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuW8guatpSAvIOaMgeS5heWMljwvdGV4dD4KPHJlY3QgeD0iNDgiIHk9IjI0MiIgd2lkdGg9IjI1NCIgaGVpZ2h0PSI5MCIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHRleHQgeD0iNjciIHk9IjI4MCIgZm9udC1zaXplPSIyMyIgZmlsbD0iIzE1MmM0MCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5TZXNzaW9uU3RhcnQ8L3RleHQ+CjxyZWN0IHg9IjMyNiIgeT0iMjQyIiB3aWR0aD0iNTM1IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI4ODYiIHk9IjI0MiIgd2lkdGg9IjM0NiIgaGVpZ2h0PSI5MCIgcng9IjE0IiBmaWxsPSIjZWVmNWZjIiBzdHJva2U9IiNkOWUzZWMiLz4KPHRleHQgeD0iMzQ0IiB5PSIyNzYiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Yy56YWN5Lya6K+d5LiO6aG555uuPC90ZXh0Pgo8dGV4dCB4PSIzNDQiIHk9IjMwNSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pooTnrpflhoXms6jlhaXmkZjopoEgLyBJbnN0aW5jdDwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSIyNzYiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5oGi5aSN55qE5piv57q/57SiPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjMwNSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pnIDopoHmoLjlr7nlt6XkvZzljLrnnJ/lrp7nirbmgIE8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIzNTUiIHdpZHRoPSIyNTQiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjY3IiB5PSIzOTMiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxNTJjNDAiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+UHJlVG9vbFVzZTwvdGV4dD4KPHJlY3QgeD0iMzI2IiB5PSIzNTUiIHdpZHRoPSI1MzUiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg4NiIgeT0iMzU1IiB3aWR0aD0iMzQ2IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNlZWY1ZmMiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSIzNDQiIHk9IjM4OSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7phY3nva7kv53miqQgLyBCYXNoIOajgOafpSAvIEdhdGVHdWFyZDwvdGV4dD4KPHRleHQgeD0iMzQ0IiB5PSI0MTgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5YWB6K6444CB5o+Q56S65oiW6Zi75q2i5pys5qyh5bel5YW36LCD55SoPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjM4OSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7op4Llr58gdG9vbF9zdGFydDwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSI0MTgiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Y+X5YWl5Y+j5LiO5byA5YWz5p2h5Lu25b2x5ZONPC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iNDY4IiB3aWR0aD0iMjU0IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI2NyIgeT0iNTA2IiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTUyYzQwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlBvc3RUb29sVXNlPC90ZXh0Pgo8cmVjdCB4PSIzMjYiIHk9IjQ2OCIgd2lkdGg9IjUzNSIgaGVpZ2h0PSI5MCIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iODg2IiB5PSI0NjgiIHdpZHRoPSIzNDYiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2VlZjVmYyIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjM0NCIgeT0iNTAyIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPue8lui+keaWh+S7tuenr+e0r+OAgeiviuaWreS4jua0u+WKqOi3n+i4qjwvdGV4dD4KPHRleHQgeD0iMzQ0IiB5PSI1MzEiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5ZCM5q2lIGRpc3BhdGNoZXI8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iNTAyIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuW8guatpSBkaXNwYXRjaGVyPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjUzMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7op4Llr5/jgIHotKjph4/lj43ppojjgIHorrDlvZU8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSI1ODEiIHdpZHRoPSIyNTQiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjY3IiB5PSI2MTkiIGZvbnQtc2l6ZT0iMjMiIGZpbGw9IiMxNTJjNDAiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+U3RvcDwvdGV4dD4KPHJlY3QgeD0iMzI2IiB5PSI1ODEiIHdpZHRoPSI1MzUiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg4NiIgeT0iNTgxIiB3aWR0aD0iMzQ2IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNlZWY1ZmMiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSIzNDQiIHk9IjYxNSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mibnph48gZm9ybWF0dGVyIC8gdHlwZWNoZWNrPC90ZXh0Pgo8dGV4dCB4PSIzNDQiIHk9IjY0NCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuIDova7lk43lupTnu5PmnZ/ljbPlj6/op6blj5E8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iNjE1IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnNlc3Npb24tZW5kLmpzIOS/neWtmOaRmOimgTwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSI2NDQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5oiQ5pys57Sv6K6h5b+r54Wn562JPC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iNjk0IiB3aWR0aD0iMjU0IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI2NyIgeT0iNzMyIiBmb250LXNpemU9IjIzIiBmaWxsPSIjMTUyYzQwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlNlc3Npb25FbmQ8L3RleHQ+CjxyZWN0IHg9IjMyNiIgeT0iNjk0IiB3aWR0aD0iNTM1IiBoZWlnaHQ9IjkwIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI4ODYiIHk9IjY5NCIgd2lkdGg9IjM0NiIgaGVpZ2h0PSI5MCIgcng9IjE0IiBmaWxsPSIjZWVmNWZjIiBzdHJva2U9IiNkOWUzZWMiLz4KPHRleHQgeD0iMzQ0IiB5PSI3MjgiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Lya6K+d5YWz6Zet55qE54us56uL5LqL5Lu2PC90ZXh0Pgo8dGV4dCB4PSIzNDQiIHk9Ijc1NyIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuI4gU3RvcCDliIblvIDnkIbop6M8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iNzI4IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnNlc3Npb24tZW5kLW1hcmtlci5qczwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSI3NTciIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+57uT5p2f5qCH6K6wPC90ZXh0Pgo8dGV4dCB4PSI0OCIgeT0iODI5IiBmb250LXNpemU9IjE3IiBmaWxsPSIjYjc1YzI3IiBmb250LXdlaWdodD0iNjAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlByZUNvbXBhY3TvvJrlnKjlrr/kuLvljovnvKnliY3lsJ3or5XmjIHkuYXljJbmkZjopoHvvJvor6Xkuovku7blj6/mj5LlhaXlrp7pmYXkvJror53ov4fnqIvjgII8L3RleHQ+CjxwYXRoIGQ9Ik00OCA4NTAgSDEyMzIiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI0OCIgeT0iODgxIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS+neaNriBob29rcy9ob29rcy5qc29uIMK3IOKAnOW8guatpeKAneaMh+azqOWGjOaWueW8j++8jOS4jeaJv+ivuuaXoOaNn+mAgei+vjwvdGV4dD4KPHRleHQgeD0iMTIzMiIgeT0iODgxIiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0iZW5kIj44MzIxMDIxIMK3IDIwMjYtMDktMTU8L3RleHQ+Cjwvc3ZnPg==" alt="ECC 在宿主生命周期中的介入点" /></button><figcaption>ECC 在宿主生命周期中的介入点 · 点击放大</figcaption></figure>
+<p>以“给项目补一个 API 并验证”为例，可以拆成两条同时存在的线。</p>
+<p><strong>模型工作线</strong>：理解需求 → 读取相关 Skill/Rule → 调查 → 写测试和代码 → 审查 → 验证。具体步骤由模型和用户交互推进。</p>
+<p><strong>Hook 事件线</strong>：由宿主在生命周期节点发送 JSON，ECC 脚本处理后返回上下文、诊断或拦截结果。以下是固定提交的 Claude 注册内容摘要，而不是所有宿主的统一事件协议。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/hooks/hooks.json">Claude Hook 注册</a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>ECC 代表行为</th>
+<th>应注意的语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SessionStart</code></td>
+<td>项目识别、历史上下文、Instinct 注入、计划会话状态</td>
+<td>通过宿主接受的 additional context 返回</td>
+</tr>
+<tr>
+<td><code>PreToolUse</code></td>
+<td>Bash 检查、配置保护、GateGuard、压缩提醒、观察</td>
+<td>同步检查可影响本次调用；观察项有异步配置</td>
+</tr>
+<tr>
+<td><code>PostToolUse</code></td>
+<td>编辑积累、诊断、活动跟踪、指标与观察</td>
+<td>固定提交分成一个同步 dispatcher 和一个异步 dispatcher</td>
+</tr>
+<tr>
+<td><code>PostToolUseFailure</code></td>
+<td>MCP 健康检查、Skill 失败跟踪</td>
+<td>失败路径也有记录入口</td>
+</tr>
+<tr>
+<td><code>PreCompact</code></td>
+<td>压缩前尝试持久化摘要</td>
+<td>压缩动作由宿主执行</td>
+</tr>
+<tr>
+<td><code>Stop</code></td>
+<td>批量格式化/类型检查、会话摘要、成本记录、通知</td>
+<td>一次响应结束就可能触发，不能等同于退出进程</td>
+</tr>
+<tr>
+<td><code>SessionEnd</code></td>
+<td>会话结束标记</td>
+<td>与名叫 <code>session-end.js</code> 的脚本不是同一概念</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后一点尤其容易读错：<strong><code>scripts/hooks/session-end.js</code> 实际注册在 <code>Stop</code> 上。</strong> 它在活跃会话中持续更新摘要；真正 <code>SessionEnd</code> 事件注册的是 <code>session-end-marker.js</code>。</p>
+<p><a id="hooks"></a></p>
+<h2>6. Hook 的实现：协议适配、调度、开销和失败语义</h2>
+<h3>6.1 从配置字符串到脚本执行</h3>
+<p>许多 Hook 的配置最终经过：</p>
+<pre><code class="language-text">hooks.json 中的根目录解析
+  → plugin-hook-bootstrap.js
+  → run-with-flags.js hookId relativeScript profiles
+  → hook.run(raw, context) 或 legacy 子进程
+  → 输出转换
+  → 宿主读取 stdout / stderr / exit code
+</code></pre>
+<p>实际注册存在专用路径，例如 Bash dispatcher 和 PostToolUse dispatcher，不能把每个事件都强行套进同一个 wrapper。<code>plugin-hook-bootstrap.js</code> 处理路径和运行环境，并抑制原始输入回显；<code>run-with-flags.js</code> 负责开关判断、目标脚本检查和新旧脚本执行方式兼容。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/plugin-hook-bootstrap.js">Bootstrap</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/run-with-flags.js">通用 Runner</a></p>
+<h3>6.2 开关是明确的布尔逻辑</h3>
+<p>Hook 的配置优先级是：相关 <code>ECC_*</code> 环境变量 → Claude 插件选项 → 管理安装的 <code>ecc/setup.json</code> → 默认值。默认总开关开启，Hook Profile 为 <code>standard</code>，非法 Profile 回退到 <code>standard</code>。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/hook-flags.js">开关解析</a></p>
+<p>以下为等价逻辑示意：</p>
+<pre><code class="language-javascript">enabled = globalSwitch
+  &amp;&amp; !disabledHookIds.has(hookId)
+  &amp;&amp; hookAllowedProfiles.includes(selectedProfile);
+</code></pre>
+<p>注意它是<strong>每个 Hook 的允许列表</strong>，并不是代码里一个自动递进的安全等级体系。某 Hook 是否在 <code>strict</code> 执行，要看自己的 profiles。</p>
+<h3>6.3 内部返回值不等于宿主协议</h3>
+<p>脚本内部可以返回字符串或对象，例如：</p>
+<pre><code class="language-javascript">// 结构示意，不是直接发送给所有宿主的通用协议
+return { additionalContext: '请先检查调用方', exitCode: 0 };
+return { stderr: 'BLOCKED: ...', exitCode: 2 };
+</code></pre>
+<p>Runner 再将 <code>additionalContext</code> 编码成带 <code>hookSpecificOutput</code> 的宿主结果。Bash dispatcher 将多个提示合并；PostToolUse dispatcher 会合并合法的 additional context，多段无法合并的原始 stdout 则保留最后一段并记录诊断。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/bash-hook-dispatcher.js">Bash 调度器</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/posttooluse-dispatcher.js">PostToolUse 调度器</a></p>
+<p>设计经验是：<strong>内部 Hook 接口可以统一，面向宿主的线协议必须单独适配。</strong> 否则把输入事件原封不动写回 stdout，可能产生 schema 错误，也可能让工具大结果重复进入 transcript。</p>
+<h3>6.4 如何减少高频 Hook 的开销？</h3>
+<p>ECC 使用了三种具体手段：</p>
+<ul>
+<li><strong>函数调用替代部分子进程</strong>：脚本导出 <code>run</code> 时，通用 Runner 尝试 <code>require()</code> 后执行，也支持 <code>async run()</code>；旧脚本仍通过 <code>spawnSync</code> 兼容。</li>
+<li><strong>事件处理合并</strong>：多个 Bash 前置检查合在一个 dispatcher；PostToolUse 组织为同步、异步两组。</li>
+<li><strong>把昂贵工作移到批次</strong>：编辑阶段记下文件集合，响应结束时按项目和 tsconfig 批量执行格式化、类型检查。</li>
+</ul>
+<p>异步组的含义是宿主可异步调度该命令；组内源码仍然按 Hook 列表迭代，不能据此声称每个 Hook 都并行执行。直接 <code>require()</code> 也不代表所有进程开销消失：外层 bootstrap、旧脚本和 Shell/Python 观察路径仍有启动成本。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/run-with-flags.js">Runner</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/posttooluse-dispatcher.js">PostToolUse 调度</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/stop-format-typecheck.js">批量检查</a></p>
+<h3>6.5 “失败放行”与“失败拒绝”应逐段分析</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>当前表现</th>
+<th>工程解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hook 被禁用、目标脚本缺失、Runner 拒绝越出插件根目录</td>
+<td>多数为诊断后退出 0</td>
+<td>可用性优先；不代表检查完成</td>
+</tr>
+<tr>
+<td>直接调用 <code>run()</code> 抛错</td>
+<td>通用 Runner 捕获后放行</td>
+<td>不能把通用 Runner 本身当作强安全门</td>
+</tr>
+<tr>
+<td>Legacy 子进程启动失败、信号终止、缺失退出状态</td>
+<td>Runner 返回非零</td>
+<td>与直接调用分支的失败语义不同</td>
+</tr>
+<tr>
+<td>配置保护发现输入被截断</td>
+<td>返回 2</td>
+<td>该安全 Hook 选择拒绝不完整输入</td>
+</tr>
+<tr>
+<td>Bash 前置子 Hook 返回非零</td>
+<td>提前结束后续检查</td>
+<td>拦截优先</td>
+</tr>
+<tr>
+<td>PostToolUse 某个子 Hook 返回非零</td>
+<td>记录并继续其他项，保留错误码</td>
+<td>调用已发生，主要用于后续反馈</td>
+</tr>
+</tbody>
+</table></div>
+<p>通用 Runner 设有约一百万字符量级的输入限制；其实现按 JavaScript 字符串长度截取，而 PostToolUse dispatcher 使用字节计数及 <code>StringDecoder</code>。因此，不应将所有代码中的 <code>MAX_STDIN = 1024 * 1024</code> 一概描述为严格相同的 UTF-8 字节上限。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/run-with-flags.js">Runner</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/config-protection.js">配置保护</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/posttooluse-dispatcher.js">PostToolUse</a></p>
+<p>更重要的是：系统应让“已检查并通过”“被配置禁用”“运行失败而放行”在日志中可区分。退出 0 单独无法表达这三种状态。</p>
+<p><a id="quality"></a></p>
+<h2>7. 质量机制：把反馈放在最合适的时间点</h2>
+<h3>7.1 阻止“为了通过检查而修改检查器”</h3>
+<p><code>config-protection.js</code> 维护一组 linter/formatter 配置文件名。对于已存在的 ESLint、Prettier、Biome、Ruff 等配置，Edit/Write/MultiEdit 路径上的检查可以返回 2，要求修复源代码；首次创建配置则允许。</p>
+<p>细节包括大小写不敏感文件名匹配、用 <code>lstat</code> 识别悬空符号链接、只将 <code>ENOENT</code> 视为不存在，以及输入截断时拒绝执行。<code>pyproject.toml</code> 被有意排除，因为它混合项目元数据和工具配置。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/config-protection.js">配置保护源码</a></p>
+<p>这是很实际的防止目标偏移措施：任务要求“让代码符合规则”，模型却可能走向“让规则接受代码”。但这个 Hook 只覆盖其注册的工具入口，不能阻止一个拥有通用 Shell 写权限的进程从其他通道修改文件。</p>
+<h3>7.2 保护已有 Git 检查流程</h3>
+<p><code>block-no-verify.js</code> 检测 Git 检查绕过选项。它包含 Shell 单词解析和 Git 参数语义处理，区分真实选项与提交消息中的文本；Bash dispatcher 将它列为 <code>minimal,standard,strict</code> 都执行的项目。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/block-no-verify.js">Git 检查保护</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/bash-hook-dispatcher.js">注册顺序</a></p>
+<p>这里值得借鉴的是把常见绕过方式写成可测试的确定性规则，而不是仅在系统提示词里写“不要跳过检查”。</p>
+<h3>7.3 GateGuard 要求具体事实</h3>
+<p>GateGuard 针对文件变更要求先调查调用方、公开接口和数据约束；针对破坏性命令要求明确目标与回退计划，并保存会话状态。它通过将动作变成“先提供事实，再执行”来减少盲改。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/gateguard-fact-force.js">GateGuard</a></p>
+<p>事实要求和状态记录仍不能自动证明回答正确。团队应观察误拦截、额外轮次和跳过率，在明确范围内调整豁免；把“提示更长”当作“风险更低”同样需要证据。</p>
+<h3>7.4 格式化与类型检查为什么放到 Stop？</h3>
+<p><code>post-edit-accumulator.js</code> 记录本轮改过的文件。<code>stop-format-typecheck.js</code> 读取后去重，按项目根目录聚合 formatter，按 tsconfig 聚合 TypeScript 检查。读取后清理 accumulator，以免重复 Stop 再处理同一批。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/post-edit-accumulator.js">编辑积累</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/stop-format-typecheck.js">Stop 批量处理</a></p>
+<p>这比每次改动都完整运行一遍类型检查更符合高频编辑场景。与此同时，<code>quality-gate.js</code> 在工具缺失时允许跳过，<code>ECC_QUALITY_GATE_STRICT=true</code> 的若干分支主要输出诊断；批量 formatter 失败也有非阻塞处理。<strong>这些反馈机制应与真实 CI 验收并用，不能把脚本名称中的 Gate 当作已经通过的强制质量保证。</strong> <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/quality-gate.js">Quality Gate</a></p>
+<p><a id="sessions"></a></p>
+<h2>8. 上下文与会话记忆：把短期对话变成下次可用的线索</h2>
+<figure><button type="button" class="diagram-button" aria-label="放大：ECC 的三套知识持久化路径及读取方式"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijg0NiIgdmlld0JveD0iMCAwIDEyODAgODQ2IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPuS4ieenjeefpeivhuWtmOWCqO+8jOS4ieenjeS4jeWQjOeUqOmAlDwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPuaOp+WItuW5s+mdouaVsOaNruW6k+WPpueuoeS8muivneS4juaTjeS9nOeKtuaAge+8m+S4jeiDveaKiuaJgOacieaMgeS5heWMlue7n+S4gOWPq+S9nOWQkemHj+iusOW/huOAgjwvZGVzYz4KPGRlZnM+PG1hcmtlciBpZD0iYXJyb3ciIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSIxMCIgcmVmWD0iOCIgcmVmWT0iNSIgb3JpZW50PSJhdXRvLXN0YXJ0LXJldmVyc2UiPjxwYXRoIGQ9Ik0xIDEgTDggNSBMMSA5IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9tYXJrZXI+PC9kZWZzPgo8c3R5bGU+dGV4dHtmb250LWZhbWlseTonTm90byBTYW5zIENKSyBTQycsJ01pY3Jvc29mdCBZYUhlaScsc2Fucy1zZXJpZn0gLm1vbm97Zm9udC1mYW1pbHk6J0RlamFWdSBTYW5zIE1vbm8nLG1vbm9zcGFjZX08L3N0eWxlPgo8cmVjdCB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI4NDYiIHJ4PSIyMCIgZmlsbD0iI2Y1ZjhmYiIvPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTI4MCIgaGVpZ2h0PSI4IiBmaWxsPSIjMDg3ZTgyIi8+Cgo8dGV4dCB4PSI0OCIgeT0iNDkiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+RUNDICAvICBTT1VSQ0UgU1RVRFkgIC8gIDA0PC90ZXh0Pgo8dGV4dCB4PSI0OCIgeT0iOTkiIGZvbnQtc2l6ZT0iMzIiIGZpbGw9IiMxNTJjNDAiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LiJ56eN55+l6K+G5a2Y5YKo77yM5LiJ56eN5LiN5ZCM55So6YCUPC90ZXh0Pgo8dGV4dCB4PSI0OCIgeT0iMTMzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaOp+WItuW5s+mdouaVsOaNruW6k+WPpueuoeS8muivneS4juaTjeS9nOeKtuaAge+8m+S4jeiDveaKiuaJgOacieaMgeS5heWMlue7n+S4gOWPq+S9nOWQkemHj+iusOW/huOAgjwvdGV4dD4KPHJlY3QgeD0iNDgiIHk9IjE3OCIgd2lkdGg9IjM3MiIgaGVpZ2h0PSI1NyIgcng9IjE0IiBmaWxsPSIjMDg3ZTgyIiBzdHJva2U9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjIxNSIgZm9udC1zaXplPSIyMyIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kvJror53mkZjopoE8L3RleHQ+CjxyZWN0IHg9IjQ1NCIgeT0iMTc4IiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjU3IiByeD0iMTQiIGZpbGw9IiMzNzY0YWQiIHN0cm9rZT0iIzM3NjRhZCIvPgo8dGV4dCB4PSI0NzYiIHk9IjIxNSIgZm9udC1zaXplPSIyMyIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5JbnN0aW5jdCDnu4/pqow8L3RleHQ+CjxyZWN0IHg9Ijg2MCIgeT0iMTc4IiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjU3IiByeD0iMTQiIGZpbGw9IiNiNzVjMjciIHN0cm9rZT0iI2I3NWMyNyIvPgo8dGV4dCB4PSI4ODIiIHk9IjIxNSIgZm9udC1zaXplPSIyMyIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5NZW1vcnkgVmF1bHQ8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIyNTMiIHdpZHRoPSIzNzIiIGhlaWdodD0iMTQxIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0OCIgeT0iMjcxIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjI5NiIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7ku47lk6rph4zmnaU8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSIzMzIiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5a6/5Li7IEpTT05MIHRyYW5zY3JpcHQ8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSIzNjAiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5py65qKw5o+Q5Y+WIC8g5p2h5Lu25oCnIExMTSDmkZjopoE8L3RleHQ+CjxyZWN0IHg9IjQ1NCIgeT0iMjUzIiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjE0MSIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDU0IiB5PSIyNzEiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzM3NjRhZCIvPgo8dGV4dCB4PSI0NzYiIHk9IjI5NiIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzM3NjRhZCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7ku47lk6rph4zmnaU8L3RleHQ+Cjx0ZXh0IHg9IjQ3NiIgeT0iMzMyIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlByZSAvIFBvc3Qg5bel5YW36KeC5a+fPC90ZXh0Pgo8dGV4dCB4PSI0NzYiIHk9IjM2MCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mmL7lvI/lkK/nlKggT2JzZXJ2ZXIg5ZCO5o+Q54K8PC90ZXh0Pgo8cmVjdCB4PSI4NjAiIHk9IjI1MyIgd2lkdGg9IjM3MiIgaGVpZ2h0PSIxNDEiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg2MCIgeT0iMjcxIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiNiNzVjMjciLz4KPHRleHQgeD0iODgyIiB5PSIyOTYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LuO5ZOq6YeM5p2lPC90ZXh0Pgo8dGV4dCB4PSI4ODIiIHk9IjMzMiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5DTEkgLyBNQ1Ag5pi+5byP5YaZ5YWlPC90ZXh0Pgo8dGV4dCB4PSI4ODIiIHk9IjM2MCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7nu5PmnoTljJYgTWFya2Rvd24g5paH5qGjPC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iNDE0IiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjE0MSIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjQzMiIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcwIiB5PSI0NTciIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Li76KaB5L+d5a2YPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNDkzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS7u+WKoee6v+e0ouOAgeW3peWFt+S4juaWh+S7tjwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjUyMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pobnnm67jgIHliIbmlK/jgIF3b3JrdHJlZTwvdGV4dD4KPHJlY3QgeD0iNDU0IiB5PSI0MTQiIHdpZHRoPSIzNzIiIGhlaWdodD0iMTQxIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0NTQiIHk9IjQzMiIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMzc2NGFkIi8+Cjx0ZXh0IHg9IjQ3NiIgeT0iNDU3IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMzc2NGFkIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS4u+imgeS/neWtmDwvdGV4dD4KPHRleHQgeD0iNDc2IiB5PSI0OTMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+dHJpZ2dlciAvIGFjdGlvbiAvIGV2aWRlbmNlPC90ZXh0Pgo8dGV4dCB4PSI0NzYiIHk9IjUyMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5jb25maWRlbmNlICsgc2NvcGU8L3RleHQ+CjxyZWN0IHg9Ijg2MCIgeT0iNDE0IiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjE0MSIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iODYwIiB5PSI0MzIiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iI2I3NWMyNyIvPgo8dGV4dCB4PSI4ODIiIHk9IjQ1NyIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2I3NWMyNyIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuLvopoHkv53lrZg8L3RleHQ+Cjx0ZXh0IHg9Ijg4MiIgeT0iNDkzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPmRlY2lzaW9uIC8gZmFjdCAvIGhhbmRvZmYg562JPC90ZXh0Pgo8dGV4dCB4PSI4ODIiIHk9IjUyMSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5zb3VyY2UgLyB0YXJnZXQgLyBsaW5rcyAvIHRydXN0PC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iNTc1IiB3aWR0aD0iMzcyIiBoZWlnaHQ9IjE0MSIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjU5MyIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcwIiB5PSI2MTgiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5aaC5L2V5L2/55SoPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNjU0IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPlNlc3Npb25TdGFydCDljLnphY3ljoblj7LorrDlvZU8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI2ODIiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6buY6K6k5LiK5LiL5paH5oC76aKE566XIDgsMDAwIOWtl+espjwvdGV4dD4KPHJlY3QgeD0iNDU0IiB5PSI1NzUiIHdpZHRoPSIzNzIiIGhlaWdodD0iMTQxIiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0NTQiIHk9IjU5MyIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMzc2NGFkIi8+Cjx0ZXh0IHg9IjQ3NiIgeT0iNjE4IiBmb250LXNpemU9IjIyIiBmaWxsPSIjMzc2NGFkIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuWmguS9leS9v+eUqDwvdGV4dD4KPHRleHQgeD0iNDc2IiB5PSI2NTQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+562b6YCJ5LiO5o6S5bqP5ZCO5rOo5YWl5bCR6YeP57uP6aqMPC90ZXh0Pgo8dGV4dCB4PSI0NzYiIHk9IjY4MiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5ldm9sdmUg5Lqn55Sf5b6F5L2/55So55qE6LWE5LqnPC90ZXh0Pgo8cmVjdCB4PSI4NjAiIHk9IjU3NSIgd2lkdGg9IjM3MiIgaGVpZ2h0PSIxNDEiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg2MCIgeT0iNTkzIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiNiNzVjMjciLz4KPHRleHQgeD0iODgyIiB5PSI2MTgiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5aaC5L2V5L2/55SoPC90ZXh0Pgo8dGV4dCB4PSI4ODIiIHk9IjY1NCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mmL7lvI8gc2VhcmNoIOKGkiByZWFkPC90ZXh0Pgo8dGV4dCB4PSI4ODIiIHk9IjY4MiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7or43ms5XmjpLluo8gKyDnm67moIflrr/kuLvov4fmu6Q8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSI3NzUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI2MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LiK5LiL5paH57q/57SiIOKJoCDlrozmlbTkuovku7bkuovlrp7vvJtjb25maWRlbmNlIOKJoCDmraPnoa7mpoLnjofvvJt1bnJldmlld2VkIOKJoCDlt7Lpqozor4HjgII8L3RleHQ+CjxwYXRoIGQ9Ik00OCA3ODggSDEyMzIiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI0OCIgeT0iODE5IiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS+neaNriBzZXNzaW9uLXN0YXJ0L2VuZOOAgWNvbnRpbnVvdXMtbGVhcm5pbmctdjLjgIFtZW1vcnktdmF1bHQ8L3RleHQ+Cjx0ZXh0IHg9IjEyMzIiIHk9IjgxOSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9ImVuZCI+ODMyMTAyMSDCtyAyMDI2LTA5LTE1PC90ZXh0Pgo8L3N2Zz4=" alt="ECC 的三套知识持久化路径及读取方式" /></button><figcaption>ECC 的三套知识持久化路径及读取方式 · 点击放大</figcaption></figure>
+<h3>8.1 会话摘要是一种有损投影</h3>
+<p><code>session-end.js</code> 读取宿主的 JSONL transcript，机械提取：</p>
+<ul>
+<li>最近 10 条有效用户消息，每条保留前 200 个字符。</li>
+<li>最多 20 个工具名称。</li>
+<li>最多 30 个通过 Edit/Write 识别出的文件路径。</li>
+<li>用户消息数、项目、分支和 worktree 元信息。</li>
+</ul>
+<p>它过滤 tool-result 载体和部分宿主噪声，兼容直接字段与嵌套 <code>message.content</code>，并只更新 Markdown 中被标记的摘要块，保留手工补充部分。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-end.js">会话写入</a></p>
+<p>这份记录擅长回答“用户做过什么、涉及哪些文件”。它不能完整表示 Shell 所有副作用，也没有保留每次工具结果。因此，恢复摘要应触发核对当前 Git/工作区状态，不能把它直接当成事实数据库。</p>
+<h3>8.2 可选的 LLM 摘要有真实调用成本</h3>
+<p>同一脚本在上下文剩余低于默认 20%，或用户消息数达到默认 50 的倍数时，尝试调用 <code>generateSessionSummary()</code>。辅助模块通过 <code>claude --model &lt;model&gt; -p</code> 调用已配置的 Claude CLI，默认模型标识为 <code>haiku</code>；失败则回退机械摘要。压缩前 Hook 也会尝试生成更丰富的摘要。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-end.js">摘要触发</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/llm-summary.js">LLM 摘要模块</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/pre-compact.js">PreCompact</a></p>
+<p>辅助模块最多选择最近 25 个用户/助手 turn，并将输入控制在约 7,000 字符量级；<code>ECC_SKIP_LLM_SUMMARY</code> 用来防止摘要子进程再次触发摘要。这里存在多层时间预算：辅助模块内部允许的等待时间与外层 Hook、Runner 的超时并不相同，不能仅看内部的 90 秒就认为宿主一定会等满。</p>
+<p>工程结论是：<strong>自动摘要属于另一次推理任务</strong>，会引入延迟、成本、失败以及递归控制问题；没有单独 API Key 不等于没有模型调用成本。</p>
+<h3>8.3 新会话只恢复有限上下文</h3>
+<p><code>session-start.js</code> 负责匹配历史记录与注入：</p>
+<ol>
+<li>默认清理超过 30 天的旧会话文件，可配置保留策略。</li>
+<li>在最近 7 天的候选中，依据当前 worktree / 项目选择匹配会话。</li>
+<li>对明确的 resume、clear、compact 等非 startup 场景，避免再次注入上一会话摘要。</li>
+<li>选择高置信度 Instinct，并补充有限数量的 learned skill 摘要。</li>
+<li>对合成的 additional context 应用默认 <strong>8,000 字符</strong>预算。</li>
+</ol>
+<p>这个预算不是 Token 预算。中文、代码、英文的字符与 Token 比例不同，生产实现若对上下文成本敏感，应结合宿主实际 usage 统计。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-start.js">SessionStart</a></p>
+<p><code>suggest-compact.js</code> 则依据工具调用次数和 transcript usage 提醒在合适时机压缩，<code>pre-compact.js</code> 按 worktree 选择要更新的摘要文件。它们围绕宿主压缩工作，未替换宿主自己的压缩算法。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/suggest-compact.js">压缩建议</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/pre-compact.js">压缩前持久化</a></p>
+<p><a id="learning"></a></p>
+<h2>9. Continuous Learning v2：观察、提炼、筛选，再演化</h2>
+<figure><button type="button" class="diagram-button" aria-label="放大：观察记录到 Instinct、上下文注入和演化产物"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijg3NiIgdmlld0JveD0iMCAwIDEyODAgODc2IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPuaMgee7reWtpuS5oO+8muWklumDqOe7j+mqjOaUueWPmOWQjue7reW3peS9nDwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPuinguWvn+OAgeWQjuWPsOWIhuaekOOAgeazqOWFpeWSjOa8lOWMluaYr+S4jeWQjOmYtuaute+8m+WFtuS4rSBPYnNlcnZlciDpu5jorqTlhbPpl63jgII8L2Rlc2M+CjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93IiBtYXJrZXJXaWR0aD0iMTAiIG1hcmtlckhlaWdodD0iMTAiIHJlZlg9IjgiIHJlZlk9IjUiIG9yaWVudD0iYXV0by1zdGFydC1yZXZlcnNlIj48cGF0aCBkPSJNMSAxIEw4IDUgTDEgOSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjEuNSIvPjwvbWFya2VyPjwvZGVmcz4KPHN0eWxlPnRleHR7Zm9udC1mYW1pbHk6J05vdG8gU2FucyBDSksgU0MnLCdNaWNyb3NvZnQgWWFIZWknLHNhbnMtc2VyaWZ9IC5tb25ve2ZvbnQtZmFtaWx5OidEZWphVnUgU2FucyBNb25vJyxtb25vc3BhY2V9PC9zdHlsZT4KPHJlY3Qgd2lkdGg9IjEyODAiIGhlaWdodD0iODc2IiByeD0iMjAiIGZpbGw9IiNmNWY4ZmIiLz4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEyODAiIGhlaWdodD0iOCIgZmlsbD0iIzA4N2U4MiIvPgoKPHRleHQgeD0iNDgiIHk9IjQ5IiBmb250LXNpemU9IjE0IiBmaWxsPSIjMDg3ZTgyIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPkVDQyAgLyAgU09VUkNFIFNUVURZICAvICAwNTwvdGV4dD4KPHRleHQgeD0iNDgiIHk9Ijk5IiBmb250LXNpemU9IjMyIiBmaWxsPSIjMTUyYzQwIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaMgee7reWtpuS5oO+8muWklumDqOe7j+mqjOaUueWPmOWQjue7reW3peS9nDwvdGV4dD4KPHRleHQgeD0iNDgiIHk9IjEzMyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7op4Llr5/jgIHlkI7lj7DliIbmnpDjgIHms6jlhaXlkozmvJTljJbmmK/kuI3lkIzpmLbmrrXvvJvlhbbkuK0gT2JzZXJ2ZXIg6buY6K6k5YWz6Zet44CCPC90ZXh0Pgo8cmVjdCB4PSI0OCIgeT0iMTgzIiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjE3MiIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjIwMSIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcwIiB5PSIyMjYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+MDEgIOS6i+S7tuinguWvnzwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjI2MiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij50b29sX3N0YXJ0IC8gdG9vbF9jb21wbGV0ZTwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjI5MCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pobnnm67or4bliKvjgIHmiKrmlq3jgIHluLjop4HlgLzohLHmlY88L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSIzMTgiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+b2JzZXJ2YXRpb25zLmpzb25sPC90ZXh0Pgo8cmVjdCB4PSI0NjUiIHk9IjE4MyIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIxNzIiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjQ2NSIgeT0iMjAxIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiNiNzVjMjciLz4KPHRleHQgeD0iNDg3IiB5PSIyMjYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+MDIgIE9ic2VydmVyIOWIhuaekDwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIyNjIiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6ZyA5pi+5byP5ZCv55So77yM6buY6K6kIGVuYWJsZWQ9ZmFsc2U8L3RleHQ+Cjx0ZXh0IHg9IjQ4NyIgeT0iMjkwIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPum7mOiupCBoYWlrdSArIFJlYWQgLyBXcml0ZTwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIzMTgiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6L2u5qyh44CB6LaF5pe25LiO6Ieq6Lqr6KeC5a+f6Lez6L+HPC90ZXh0Pgo8cmVjdCB4PSI4ODIiIHk9IjE4MyIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIxNzIiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg4MiIgeT0iMjAxIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMzNzY0YWQiLz4KPHRleHQgeD0iOTA0IiB5PSIyMjYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMzNzY0YWQiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+MDMgIOWOn+WtkCBJbnN0aW5jdDwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSIyNjIiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6Kem5Y+R5p2h5Lu244CB6KGM5Yqo44CB6K+B5o2uPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjI5MCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pobnnm64gLyDlhajlsYDkvZznlKjln588L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iMzE4IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPmNvbmZpZGVuY2Ug5piv5o6S5bqP5L+h5Y+3PC90ZXh0Pgo8cG9seWxpbmUgcG9pbnRzPSI0MDAsMjY5IDQ1MywyNjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cG9seWxpbmUgcG9pbnRzPSI4MTcsMjY5IDg3MCwyNjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cG9seWxpbmUgcG9pbnRzPSIxMDU3LDM2MCAxMDU3LDQwMCAzMzIsNDAwIDMzMiw0NDEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cG9seWxpbmUgcG9pbnRzPSIxMDU3LDQwMCA5NTIsNDAwIDk1Miw0NDEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cmVjdCB4PSI0OCIgeT0iNDYwIiB3aWR0aD0iNTY1IiBoZWlnaHQ9IjE5MSIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjQ3OCIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjMDg3ZTgyIi8+Cjx0ZXh0IHg9IjcwIiB5PSI1MDMiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+QSAg5LiL5qyhIFNlc3Npb25TdGFydCDms6jlhaU8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI1MzkiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5YWI562bIGNvbmZpZGVuY2Ug4omlIDAuN++8jOWGjeWOu+mHjeWSjOaOkuW6jzwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjU2NyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pobnnm67ojIPlm7QgKzAuMjXvvIzmioDmnK/moIjljLnphY0gKzAuMjwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjU5NSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pu5jorqTmnIDlpJogNiDmnaHvvIzlj5fmgLvlrZfnrKbpooTnrpfnuqbmnZ88L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI2MjMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5pS255uK6ZyA55So5ZCO57ut55yf5a6e5Lu75Yqh6KGh6YePPC90ZXh0Pgo8cmVjdCB4PSI2NTEiIHk9IjQ2MCIgd2lkdGg9IjU4MSIgaGVpZ2h0PSIxOTEiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjY1MSIgeT0iNDc4IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMzNzY0YWQiLz4KPHRleHQgeD0iNjczIiB5PSI1MDMiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMzNzY0YWQiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+QiAgZXZvbHZlIOeUn+aIkOiDveWKm+WAmemAiTwvdGV4dD4KPHRleHQgeD0iNjczIiB5PSI1MzkiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6Iux5paH5YWz6ZSu6K+N6YeN5Y+g57O75pWwIOKJpSAwLjU8L3RleHQ+Cjx0ZXh0IHg9IjY3MyIgeT0iNTY3IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuiHs+WwkeWFseS6qyAyIOS4quivje+8m+ewh+aguOW/g+abtOaWsOS4uuS6pOmbhjwvdGV4dD4KPHRleHQgeD0iNjczIiB5PSI1OTUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6buY6K6k6aKE6KeI77ybLS1nZW5lcmF0ZSDlhpnlhaUgZXZvbHZlZCDnm67lvZU8L3RleHQ+Cjx0ZXh0IHg9IjY3MyIgeT0iNjIzIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaWh+S7tueUn+aIkOWQjuS7jemcgOWuoeaguOS4jumFjee9ruWPkeeOsDwvdGV4dD4KPHJlY3QgeD0iNDgiIHk9IjY5MSIgd2lkdGg9IjExODQiIGhlaWdodD0iOTAiIHJ4PSIxNCIgZmlsbD0iI2ZmZjRlOSIgc3Ryb2tlPSIjZWVkNmJlIi8+Cjx0ZXh0IHg9IjcwIiB5PSI3MjciIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5rqQ56CB5a6e5rWL77ya6Iux5paH55u45YWz6Kem5Y+R5Y+l5b6X5YiwIDEg5Liq57CH77yb5a+55bqU57qv5Lit5paH6Kem5Y+R5Y+l5b6X5YiwIDAg5Liq57CH44CCPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNzU4IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuW9k+WJjSBldm9sdmUg5L2/55SoIEFTQ0lJIOWIhuivje+8m+i/memhueWxgOmZkOWxnuS6juiBmuexu+WunueOsO+8jOS4jeaYr+aooeWei+S4reaWh+eQhuino+iDveWKm+OAgjwvdGV4dD4KPHBhdGggZD0iTTQ4IDgxOCBIMTIzMiIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjQ4IiB5PSI4NDkiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5aSW6YOo57uP6aqM5aSN55So6ZO+6LevIMK3IOS4jea2ieWPiuWfuuehgOaooeWei+adg+mHjeiuree7gzwvdGV4dD4KPHRleHQgeD0iMTIzMiIgeT0iODQ5IiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0iZW5kIj44MzIxMDIxIMK3IDIwMjYtMDktMTU8L3RleHQ+Cjwvc3ZnPg==" alt="观察记录到 Instinct、上下文注入和演化产物" /></button><figcaption>观察记录到 Instinct、上下文注入和演化产物 · 点击放大</figcaption></figure>
+<h3>9.1 “学习”的对象是什么？</h3>
+<p>在这条实现中，学习对象是 <strong>Instinct：带触发条件、行动建议、证据、置信度与作用域的原子经验文件</strong>。例如本文原创的示意：</p>
+<pre><code class="language-yaml">---
+id: migration-tests-first
+trigger: when changing database migration scripts
+confidence: 0.85
+domain: testing
+scope: project
+source: session-observation
+---
+
+## Action
+先覆盖升级和回退路径，再修改迁移脚本。
+
+## Evidence
+两次相关任务的缺陷都来自遗漏回退检查。
+</code></pre>
+<p>模型下次读到它后，可能采用更合适的做法。这是一条 <strong>外部记忆影响后续推理</strong> 的链路，不涉及基础模型梯度更新。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/SKILL.md">CLv2 设计材料</a></p>
+<h3>9.2 第一步：工具事件观察</h3>
+<p>注册的 Node <code>observe-runner.js</code> 探测可用 Shell，再调用 <code>observe.sh pre|post</code>。Shell 脚本使用 Python 解析事件，记录 <code>tool_start</code> 或 <code>tool_complete</code>，保存 session、tool、项目与相应输入/输出。一个值得留意的细节是：中间解析结果提取了 <code>tool_use_id</code>，但最终构造的 observation 没有写入它；需要精确关联并发工具的开始和结束时，这条信息链还不完整。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/observe-runner.js">观察桥接</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/hooks/observe.sh">事件记录</a></p>
+<p>实现中的关键控制包括：</p>
+<ul>
+<li>默认只接受所列交互入口；<code>ECC_SKIP_OBSERVE=1</code>、minimal Profile、子 Agent 标识和排除路径可跳过。</li>
+<li>输入和输出字符串各截取最多约 5,000 字符；解析失败的调试记录另有较小上限。</li>
+<li>对常见 <code>api_key/token/password/authorization</code> 等值做正则脱敏。</li>
+<li>observation 文件约达到 10 MB 时归档，旧归档有清理逻辑。</li>
+<li>通过锁和计数节流观察进程的启动、唤醒，避免每个工具事件都触发一次分析。</li>
+</ul>
+<p>这已经超过“写一行 JSONL”的简单实现。但 Skill 文档中的“100% reliable”不能按字面当成可靠性承诺：实际代码有主动跳过、运行时缺失、超时、截断和异步退出路径。</p>
+<h3>9.3 项目隔离：减少经验串用</h3>
+<p>CLv2 的默认数据根目录按以下顺序解析：绝对路径的 <code>CLV2_HOMUNCULUS_DIR</code>、<code>XDG_DATA_HOME/ecc-homunculus</code>、<code>~/.local/share/ecc-homunculus</code>。历史版本的 <code>~/.claude/homunculus</code> 有迁移路径。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/SKILL.md">CLv2 目录约定</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/observer-sessions.js">会话/项目工具</a></p>
+<p>项目标识优先利用明确项目上下文、Git remote 或仓库路径等信息，形成短哈希。项目内目录存放 observations 和 personal/inherited instincts，全局目录存放通用经验。实际入口会先规范化事件中的 cwd；例如 observe 对非 Git cwd 的处理与文档中的显式 override 描述存在入口条件差异，排障时应跟到调用处。</p>
+<p>这套设计把“React 项目偏好”和“全局工程习惯”分开。但项目 ID 是检索与归类标识，不是身份认证或访问控制机制。</p>
+<h3>9.4 第二步：Observer 默认关闭，需要单独启用</h3>
+<p>仓库 <code>skills/continuous-learning-v2/config.json</code> 的实际默认值是：</p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.1&quot;,
+  &quot;observer&quot;: {
+    &quot;enabled&quot;: false,
+    &quot;run_interval_minutes&quot;: 5,
+    &quot;min_observations_to_analyze&quot;: 20
+  }
+}
+</code></pre>
+<p><strong>有 observation 文件，不能证明后台正在生成 Instinct。</strong> Hook 的事件捕获和后台 Observer 的 enabled 开关是分开的。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/config.json">默认配置</a></p>
+<p>启用后，<code>start-observer.sh</code>、<code>observer-loop.sh</code> 管理后台循环。分析使用默认 <code>haiku</code>，带最大轮次、超时监督和 <code>Read,Write</code> 工具列表；子进程设置 <code>ECC_SKIP_OBSERVE=1</code> 与 minimal Profile，避免观察自身。会话 lease、空闲退出、启动失败诊断也在这条路径里。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/agents/start-observer.sh">Observer 启动</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/agents/observer-loop.sh">Observer 循环</a></p>
+<p><code>Read,Write</code> 是能力限制的一部分，具体哪些路径可写仍要由宿主权限约束。后台分析也不能天然判断输入中的指令可信：工具输出可能携带提示注入，写入的经验需要保留来源和复核途径。</p>
+<h3>9.5 第三步：SessionStart 选择哪些经验注入？</h3>
+<p>当前实现先筛选 <code>confidence &gt;= 0.7</code>，默认最多注入 6 条。同 ID 的项目经验优先于全局经验。默认开启位置/技术栈相关性排序：项目作用域加 <code>0.25</code>，技术栈匹配加 <code>0.2</code>，与 confidence 相加排序；最后用作用域和 ID 稳定打破平局。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-start.js">注入选择</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/instinct-relevance.js">相关性实现</a></p>
+<pre><code class="language-text">注入排序分数 = confidence + 项目范围加分 + 技术栈匹配加分
+</code></pre>
+<p>这里的分数只用于排序，甚至可以大于 1；它不是校准过的成功概率。SessionStart 还没有完整的新用户任务，所以这里的“相关”主要表示当前位置和技术栈相关，不能描述成对当前需求做了语义检索。</p>
+<h3>9.6 第四步：<code>evolve</code> 的聚类算法很具体</h3>
+<p>Python CLI 要求至少有 3 条 Instinct 才开始分析。对每条 trigger：</p>
+<ol>
+<li>用 <code>[a-z0-9]+</code> 取单词。</li>
+<li>去除短词和一组英文停用词。</li>
+<li>贪心寻找与当前词集合最接近的已有簇。</li>
+<li>使用重叠系数：<code>共享关键词数 / 两个集合中较小的大小</code>。</li>
+<li>达到 <code>0.5</code> 且至少共享 2 个关键词才归并；簇的核心关键词更新为交集。</li>
+</ol>
+<pre><code class="language-python"># 本文对实际算法的简化，不是 ECC 原文件的完整复制
+overlap = len(words &amp; cluster_words) / min(len(words), len(cluster_words))
+if overlap &gt;= 0.5 and len(words &amp; cluster_words) &gt;= 2:
+    cluster.append(instinct)
+    cluster_words &amp;= words
+</code></pre>
+<p>至少 2 条经验的簇成为 Skill 候选；workflow 域且 confidence 至少 <code>0.7</code> 的经验可成为 Command 候选；至少 3 条且平均 confidence 至少 <code>0.75</code> 的簇可成为 Agent 候选。默认 <code>evolve</code> 预览，<code>--generate</code> 才写入 evolved 目录。项目到全局的 promotion 另有至少 2 个项目和 <code>0.8</code> 置信度阈值等逻辑。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/scripts/instinct-cli.py">Instinct CLI</a></p>
+<p><strong>生成文件与安装启用是两个步骤。</strong> 不能把 evolved 目录写出文件等同于宿主已经发现并使用它。</p>
+<h3>9.7 一个实际验证的中文局限</h3>
+<p>本文使用同样各 3 条经验的两个 fixture：英文组包含两个相关的数据库迁移测试 trigger 和一个无关 trigger；中文组使用对应的纯中文句子。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>输入</th>
+<th style="text-align:right">实际得到的 Skill 簇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>英文 trigger</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>纯中文 trigger</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table></div>
+<p>原因是当前 ASCII 分词正则无法提取纯中文关键词。这并不意味着 ECC 的所有功能不支持中文，也不意味着模型无法理解中文；它只揭示 <strong><code>evolve</code> 这段确定性聚类代码的语言边界</strong>。<a href="examples/probe.cjs">实验源码</a> · <a href="research/probe-results.json">实测输出</a></p>
+<p>此外，贪心聚类受输入顺序影响；共享通用词可能误聚类；confidence 依赖经验生成和维护过程。生产演化应加入稳定性测试、质量审核和回归任务，不能仅凭阈值把文件自动提升为团队规则。</p>
+<p><a id="vault"></a></p>
+<h2>10. Memory Vault：面向跨宿主的文件化记忆服务</h2>
+<h3>10.1 为什么还需要一套 Vault？</h3>
+<p>会话摘要偏向连续工作，Instinct 偏向行为经验；Memory Vault 提供更显式的知识对象：context、decision、fact、handoff、lesson、note、preference、runbook。它通过 CLI 和 MCP 提供写入、查询、读取与诊断，不依赖某一次 Claude transcript 的结构。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault.js">Vault 核心</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault-format.js">格式定义</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/memory.js">CLI</a></p>
+<p>默认目录如下：</p>
+<pre><code class="language-text">仓库根目录/.ecc/memory/
+├── project/       本项目私有记录；写入器维护忽略规则
+└── team/          项目中的团队记录位置
+
+~/.ecc/memory/     user 范围；跨项目的用户记录
+</code></pre>
+<p><code>team</code> 是作用域与目录组织方式，本身不包含团队账号体系、云同步或多租户授权。默认召回作用域为 project 和 team，user 范围在 MCP 服务中需要额外启用。</p>
+<h3>10.2 数据对象具有显式来源与信任状态</h3>
+<p>Markdown frontmatter 保存 <code>ecc.memory.v1</code> schema、稳定 ID、kind、scope、来源宿主、目标宿主、tags、links、时间等元数据，正文保存内容。</p>
+<p>特别重要的是：当前 <code>MEMORY_TRUST_STATES</code> <strong>只允许 <code>unreviewed</code></strong>。保存接口创建的记忆始终处于这一状态；没有实现一套“自动分析后变成 verified”的信任提升流程。status 的 <code>active / rejected / superseded</code> 也不能与 trust 混淆。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault-format.js">格式与枚举</a></p>
+<h3>10.3 写入：验证后以 create-only 发布</h3>
+<figure><button type="button" class="diagram-button" aria-label="放大：Memory Vault 的写入安全与查询数据流"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijg5MSIgdmlld0JveD0iMCAwIDEyODAgODkxIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPk1lbW9yeSBWYXVsdO+8muWPl+e6puadn+eahOWGmeWFpeS4juWPr+ino+mHiuajgOe0ojwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPnByb2plY3QgLyB0ZWFtIC8gdXNlciDojIPlm7TnlLHnm67lvZXnu4Tnu4fvvJtNQ1Ag5pyN5Yqh56uv5YaN6ZmQ5Yi25YWB6K646IyD5Zu05LiO5p2l5rqQ5a6/5Li744CCPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+PHBhdGggZD0iTTEgMSBMOCA1IEwxIDkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L21hcmtlcj48L2RlZnM+CjxzdHlsZT50ZXh0e2ZvbnQtZmFtaWx5OidOb3RvIFNhbnMgQ0pLIFNDJywnTWljcm9zb2Z0IFlhSGVpJyxzYW5zLXNlcmlmfSAubW9ub3tmb250LWZhbWlseTonRGVqYVZ1IFNhbnMgTW9ubycsbW9ub3NwYWNlfTwvc3R5bGU+CjxyZWN0IHdpZHRoPSIxMjgwIiBoZWlnaHQ9Ijg5MSIgcng9IjIwIiBmaWxsPSIjZjVmOGZiIi8+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgiIGZpbGw9IiMwODdlODIiLz4KCjx0ZXh0IHg9IjQ4IiB5PSI0OSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5FQ0MgIC8gIFNPVVJDRSBTVFVEWSAgLyAgMDY8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSI5OSIgZm9udC1zaXplPSIzMiIgZmlsbD0iIzE1MmM0MCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5NZW1vcnkgVmF1bHTvvJrlj5fnuqbmnZ/nmoTlhpnlhaXkuI7lj6/op6Pph4rmo4DntKI8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSIxMzMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+cHJvamVjdCAvIHRlYW0gLyB1c2VyIOiMg+WbtOeUseebruW9lee7hOe7h++8m01DUCDmnI3liqHnq6/lho3pmZDliLblhYHorrjojIPlm7TkuI7mnaXmupDlrr/kuLvjgII8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIxODAiIHdpZHRoPSIzNDciIGhlaWdodD0iMTY4IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0OCIgeT0iMTk4IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjIyMyIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5tZW1vcnlfc2F2ZTwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjI1OSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5BSlYg5Y+C5pWw5qCh6aqMPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iMjg3IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnNvdXJjZUhhcm5lc3Mg55Sx5pyN5Yqh56uv56Gu5a6aPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iMzE1IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnRydXN0IOWni+e7iOS4uiB1bnJldmlld2VkPC90ZXh0Pgo8cmVjdCB4PSI0NjUiIHk9IjE4MCIgd2lkdGg9IjM0NyIgaGVpZ2h0PSIxNjgiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjQ2NSIgeT0iMTk4IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiNiNzVjMjciLz4KPHRleHQgeD0iNDg3IiB5PSIyMjMiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6KeE6IyD5YyW5LiO6Lev5b6E5qOA5p+lPC90ZXh0Pgo8dGV4dCB4PSI0ODciIHk9IjI1OSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lrZfmrrXkuIrpmZDjgIFJRCDkuI7mnprkuL48L3RleHQ+Cjx0ZXh0IHg9IjQ4NyIgeT0iMjg3IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuW4uOingeWvhumSpeaooeW8j+ajgOa1izwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIzMTUiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Y+v5L+h5qC555uu5b2VIC8g5paH5Lu26Lqr5Lu95qCh6aqMPC90ZXh0Pgo8cmVjdCB4PSI4ODIiIHk9IjE4MCIgd2lkdGg9IjM1MCIgaGVpZ2h0PSIxNjgiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9Ijg4MiIgeT0iMTk4IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMzNzY0YWQiLz4KPHRleHQgeD0iOTA0IiB5PSIyMjMiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMzNzY0YWQiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+Y3JlYXRlLW9ubHkg5Y+R5biDPC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjI1OSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7kuLTml7bmlofku7Yg4oaSIHdyaXRlIOKGkiBmc3luYzwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSIyODciIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+aGFyZCBsaW5rIOKGkiDmnIDnu4jnm67moIc8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iMzE1IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuW3suacieWQjOi3r+W+hOebruagh+aXtuaLkue7neimhuebljwvdGV4dD4KPHBvbHlsaW5lIHBvaW50cz0iNDAwLDI2NCA0NTAsMjY0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHBvbHlsaW5lIHBvaW50cz0iODE3LDI2NCA4NjgsMjY0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3Mzg3OWEiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz4KPHJlY3QgeD0iNDgiIHk9IjQwNCIgd2lkdGg9IjExODQiIGhlaWdodD0iMTEyIiByeD0iMTQiIGZpbGw9IiMxNTJjNDAiIHN0cm9rZT0iIzE1MmM0MCIvPgo8cmVjdCB4PSI0OCIgeT0iNDIyIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjQ0NyIgZm9udC1zaXplPSIyMiIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5NYXJrZG93biBWYXVsdCAgLyAgZWNjLm1lbW9yeS52MTwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjQ4MyIgZm9udC1zaXplPSIxNyIgZmlsbD0iI2RjZTdmMCIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5raW5kIMK3IHNjb3BlIMK3IHNvdXJjZV9oYXJuZXNzIMK3IHRhcmdldF9oYXJuZXNzZXMgwrcgdGFncyDCtyBsaW5rcyDCtyBzdGF0dXMgwrcgY3JlYXRlZF9hdCDCtyBib2R5PC90ZXh0Pgo8cG9seWxpbmUgcG9pbnRzPSIxMDU3LDM1MiAxMDU3LDM5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+Cjxwb2x5bGluZSBwb2ludHM9IjMyMCw1MjAgMzIwLDU1OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+Cjxwb2x5bGluZSBwb2ludHM9Ijk0NSw1MjAgOTQ1LDU1OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzM4NzlhIiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+CjxyZWN0IHg9IjQ4IiB5PSI1NzciIHdpZHRoPSI1NjUiIGhlaWdodD0iMTc2IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0OCIgeT0iNTk1IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjYyMCIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5tZW1vcnlfc2VhcmNoIOKGkiBtZW1vcnlfcmVhZDwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjY1NiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mnInnlYzmlofku7bmiavmj48gKyBhY3RpdmUgLyB0YXJnZXQg6L+H5rukPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNjg0IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuagh+mimOOAgeagh+etvuOAgeWFg+aVsOaNruOAgeato+aWh+WKoOadg+ivjeazleaOkuW6jzwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjcxMiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lhYjmkZjopoHmo4DntKLvvIzlho3mjIkgSUQg6K+75YWo5paH5ZKMIGJhY2tsaW5rczwvdGV4dD4KPHJlY3QgeD0iNjUxIiB5PSI1NzciIHdpZHRoPSI1ODEiIGhlaWdodD0iMTc2IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI2NTEiIHk9IjU5NSIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjYjc1YzI3Ii8+Cjx0ZXh0IHg9IjY3MyIgeT0iNjIwIiBmb250LXNpemU9IjIyIiBmaWxsPSIjYjc1YzI3IiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPm1lbW9yeV9kb2N0b3I8L3RleHQ+Cjx0ZXh0IHg9IjY3MyIgeT0iNjU2IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuaKpeWRiuagvOW8j+aNn+Wdj+OAgemHjeWkjSBJROOAgeaWremTvuWSjOespuWPt+mTvuaOpTwvdGV4dD4KPHRleHQgeD0iNjczIiB5PSI2ODQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5p+l6K+i5LiN5a6M5pW05pe25LiN6IO95YGH6KOF6K6w5b2V5LiN5a2Y5ZyoPC90ZXh0Pgo8dGV4dCB4PSI2NzMiIHk9IjcxMiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7or4rmlq3kuI3oh6rliqjmiornn6Xor4bmj5DljYfkuLogdHJ1c3RlZDwvdGV4dD4KPHRleHQgeD0iNDgiIHk9IjgwNyIgZm9udC1zaXplPSIxNSIgZmlsbD0iI2I3NWMyNyIgZm9udC13ZWlnaHQ9IjYwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lvZPliY3lrp7njrDmsqHmnIkgZW1iZWRkaW5nIC8g5ZCR6YeP57Si5byV77ybdGVhbSBzY29wZSDmnKzouqvkuI3mj5Dkvpvlm6LpmJ/otKblj7fjgIHkupHlkIzmraXmiJblpJrnp5/miLfpmpTnprvjgII8L3RleHQ+CjxwYXRoIGQ9Ik00OCA4MzMgSDEyMzIiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8dGV4dCB4PSI0OCIgeT0iODY0IiBmb250LXNpemU9IjE0IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuS+neaNriBtZW1vcnktbWNwLm1qcyAvIG1lbW9yeS12YXVsdC5qcyAvIG1lbW9yeS12YXVsdC1mb3JtYXQuanM8L3RleHQ+Cjx0ZXh0IHg9IjEyMzIiIHk9Ijg2NCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9ImVuZCI+ODMyMTAyMSDCtyAyMDI2LTA5LTE1PC90ZXh0Pgo8L3N2Zz4=" alt="Memory Vault 的写入安全与查询数据流" /></button><figcaption>Memory Vault 的写入安全与查询数据流 · 点击放大</figcaption></figure>
+<p>真实写入路径包含：</p>
+<ol>
+<li>规范化对象、限制字段、验证 ID、kind、scope。</li>
+<li>检测常见密钥格式，发现可疑值就拒绝保存。</li>
+<li>检查目标根目录和中间目录，拒绝不符合可信根边界的符号链接路径。</li>
+<li>使用随机临时文件、<code>O_EXCL</code>、可用时的 <code>O_NOFOLLOW</code>，并核对文件描述符与路径的身份。</li>
+<li>完成写入并 <code>fsync</code> 后，通过 <code>linkSync(temporary, destination)</code> 发布目标。</li>
+<li>删除临时文件；如果目标已存在则拒绝覆盖。</li>
+</ol>
+<p><strong>这里的发布操作是硬链接，不是通常示例里的 rename 覆盖。</strong> 好处是目标路径已存在时自然失败。代价是依赖文件系统对相关操作的支持；本次没有覆盖 Windows、网络文件系统等平台。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault.js">create-only 写入</a></p>
+<p>create-only 直接约束的是目标文件路径。底层库若显式指定相同 ID、不同 kind，会产生不同目录下的文件；全局 ID 冲突需要读取与 doctor 进一步识别。MCP 保存接口不允许调用者指定 ID，正常路径使用生成的 ID，但手工编辑仍可能引入重复。</p>
+<h3>10.4 检索：确定性词法排序</h3>
+<p>当前 Vault 每次读取有限范围的 Markdown 文件并计算词法分数，没有向量索引或 embedding 请求。源码给出的扫描边界包括最多 5,000 个遍历项、16 MiB 扫描文本以及有限的诊断数量；单次结果最多 100 条。发生截断时会返回 diagnostics。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault.js">扫描与检索</a></p>
+<p>对去重后的 query token，评分可以写成：</p>
+<pre><code class="language-text">score = phraseScore
+      + Σtoken [8 × 标题含 token
+                + 6 × tags 精确含 token
+                + 3 × 元数据文本含 token
+                + min(正文出现次数, 5)]
+
+phraseScore：完整 query 命中标题为 20；否则命中正文为 5；否则为 0。
+</code></pre>
+<p>先过滤 active、kind、trust（若调用方指定）、targetHarness，再按分数、更新时间、ID 排序。检索结果提供摘要；<code>memory_read</code> 按 ID 读取正文和派生 backlinks。这里的 targetHarness 是可见性过滤，不能替代操作系统隔离。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault.js">评分、查询与读取</a></p>
+<p>这一实现部署成本低、排序可解释、无需额外推理请求，适合规模有限的团队知识文件；代价是每次扫描成本、同义改写召回较弱，以及中文分词质量需要单独评估。Vault 使用 Unicode 字母/数字分组，和上一章的 ASCII Instinct 分词器不同，不能把两者的语言限制完全等同。</p>
+<h3>10.5 MCP：用协议给不同 Agent 同一套记忆入口</h3>
+<p><code>memory-mcp.mjs</code> 直接实现标准输入输出上的 JSON-RPC 服务，使用 AJV 验证 Tool 参数，包含初始化、协议版本协商、工具列举、工具调用以及消息/输出/排队上限处理。它暴露四个工具：<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/memory-mcp.mjs">Memory MCP</a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>职责</th>
+<th>关键约束</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory_save</code></td>
+<td>创建记忆</td>
+<td>create-only；来源宿主由服务端决定；trust 为 unreviewed</td>
+</tr>
+<tr>
+<td><code>memory_search</code></td>
+<td>检索知识</td>
+<td>作用域授权、目标宿主过滤、有界结果</td>
+</tr>
+<tr>
+<td><code>memory_read</code></td>
+<td>按 ID 取正文与反向链接</td>
+<td>区分完整查询与不可完成的查询</td>
+</tr>
+<tr>
+<td><code>memory_doctor</code></td>
+<td>检查损坏、重复、断链和符号链接</td>
+<td>诊断结果有界，不直接改写知识</td>
+</tr>
+</tbody>
+</table></div>
+<p>服务要求设置 <code>ECC_MEMORY_HARNESS</code>；默认禁止 user scope，只有服务端 <code>ECC_MEMORY_ALLOW_USER_SCOPE=1</code> 才允许。Tool 参数使用 <code>additionalProperties: false</code>，模型不能通过增加一个自称 trusted 或 sourceHarness 的字段获得更高信任。</p>
+<p>还要核对是否配置了这个 MCP：<strong>这份快照的 Claude 插件 <code>mcpServers</code> 是空对象，Codex 所引用的根 <code>.mcp.json</code> 只有 Chrome DevTools 配置。</strong> Memory MCP 文件和二进制入口存在，不代表两个原生插件默认都已经连接它。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.claude-plugin/plugin.json">Claude 插件</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.codex-plugin/plugin.json">Codex 插件</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.mcp.json">根 MCP 配置</a></p>
+<p>这也揭示了一条通用工程原则：服务代码、安装产物、客户端连接和模型调用，必须分别验证。</p>
+<p><a id="adapters"></a></p>
+<h2>11. 跨宿主适配：迁移知识容易，迁移执行语义更难</h2>
+<h3>11.1 固定提交中的支持情况</h3>
+<p>下面结合官方支持矩阵和实际注册文件整理；它描述 ECC 的这份快照，不代表对各宿主最新版本能力上限的判断。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/README.md#platform-support">官方支持矩阵</a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>宿主</th>
+<th>ECC 的定位</th>
+<th>当前需要特别核对的边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td>主要稳定路径</td>
+<td>插件目录、事件钩子、规则选择，以及不同安装方法是否重复叠加</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>支持原生插件</td>
+<td>此快照的 <code>codex-hooks.json</code> <strong>只注册 SessionStart</strong>；不是 Claude 全套 Hook</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>Beta 项目适配</td>
+<td>发现行为与版本相关；输入映射和安装路径影响可用 Hook</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>Beta 构建插件</td>
+<td>TypeScript 插件需构建，能力目录和宿主模型配置均有独立条件</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td>Instruction-only</td>
+<td>主要是 instructions/prompts，不能默认获得 ECC 的运行钩子与角色调度</td>
+</tr>
+<tr>
+<td>Gemini、Zed、Kimi、Hermes 等</td>
+<td>Experimental/minimal adapter</td>
+<td>文件放置和指令可移植性，不等于功能完全对齐</td>
+</tr>
+</tbody>
+</table></div>
+<p>这里最有代表性的是 Codex：旧架构文档仍出现“instruction-backed”的表述，但当前原生插件已引用一个只含 SessionStart 的 Hook 文件。准确结论应同时包含“已经有原生 Hook 注册”和“范围很窄”。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/hooks/codex-hooks.json">Codex Hook 文件</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/docs/architecture/cross-harness.md">跨宿主架构文档</a></p>
+<h3>11.2 Cursor：事件字段转换与已有脚本复用</h3>
+<p><code>.cursor/hooks/adapter.js</code> 将 Cursor 的 <code>command / args.command</code>、<code>path / file / args.filePath</code> 等字段变成 ECC 已有脚本使用的 <code>tool_input</code>，并转交执行。它会传播特定拦截退出码。这个方案复用了实现，但 adapter 自身仍有输出转发、超时、开关语义等独立细节。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.cursor/hooks/adapter.js">Cursor Adapter</a></p>
+<p>这意味着“同一个检查脚本”并不保证“同一个最终用户体验”。要测试的是完整的事件转换与结果返回链。</p>
+<h3>11.3 OpenCode：插件事件映射</h3>
+<p><code>.opencode/plugins/ecc-hooks.ts</code> 在 OpenCode 插件系统中接收 <code>tool.execute.before / after</code>、会话等事件，维护自身运行状态并组合检查。它是需要构建的 TypeScript 插件，实现方式和 Claude 的外部命令 Hook 不完全相同。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/.opencode/plugins/ecc-hooks.ts">OpenCode 插件</a></p>
+<p>从平台工程角度，适配层至少要保存四项契约：</p>
+<ol>
+<li><strong>事件契约</strong>：什么时候触发，是否可能重放或漏发。</li>
+<li><strong>字段契约</strong>：工具名称、参数、输出、session ID、cwd 如何映射。</li>
+<li><strong>控制契约</strong>：什么结果能阻止执行，什么只显示提示。</li>
+<li><strong>状态契约</strong>：数据写在哪里，怎样避免跨项目串用和重复记录。</li>
+</ol>
+<p>Skill Markdown 可以大体复用，以上四项通常需要逐宿主验证。</p>
+<p><a id="orchestration"></a></p>
+<h2>12. 多 Agent 与控制平面：流程约定、执行脚本、Alpha 控制台</h2>
+<h3>12.1 三个层次不要混在一起</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>当前实现</th>
+<th>能证明什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>团队工作方法</td>
+<td><code>team-agent-orchestration</code>、<code>dynamic-workflow-mode</code> 等 Skill</td>
+<td>定义 owner、scope、状态、验收、handoff 的操作约定</td>
+</tr>
+<tr>
+<td>确定性执行工具</td>
+<td><code>orchestrate-worktrees.js</code>、tmux/worktree 库</td>
+<td>将明确计划变成工作目录、任务文件与启动命令</td>
+</tr>
+<tr>
+<td>控制台与状态管理</td>
+<td>Node state-store、操作脚本、Rust <code>ecc2/</code></td>
+<td>提供会话和工作可视化、持久状态及更多操作入口，成熟度各异</td>
+</tr>
+</tbody>
+</table></div>
+<p>不能因为有一个“团队编排” Skill 就推断存在完整的分布式任务调度器；也不能因为它以 Markdown 开始，就忽视真实的启动与状态代码。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/team-agent-orchestration/SKILL.md">团队约定</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/dynamic-workflow-mode/SKILL.md">动态工作流</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/orchestrate-worktrees.js">worktree 执行入口</a></p>
+<h3>12.2 worktree 编排的真实流程</h3>
+<p><code>orchestrate-worktrees.js</code> 读取一个 JSON plan，再调用 <code>buildOrchestrationPlan()</code>。计划包含仓库根、协调目录、worker 名、分支、worktree、任务文件和启动命令等信息：</p>
+<pre><code class="language-text">计划配置
+  → workerPlans
+  → 为每个 worker 生成任务 / handoff / 状态路径
+  → 生成 git worktree 与 tmux 命令
+  → 默认打印 dry-run
+  → --write-only 只生成协调材料
+  → --execute 才实际执行计划
+</code></pre>
+<p>实现提供 Shell 引用辅助和模板变量，检查 seedPaths 不越出 repoRoot。模板仍是操作员提供的可执行启动指令；worktree 分离的是工作副本和分支，无法隔离网络、凭证或系统进程。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/tmux-worktree-orchestrator.js">编排库</a></p>
+<p>工作流的难点常常不在同时启动几个 Agent，而在集成：谁拥有哪部分修改，依赖何时完成，哪些证据足以通过审查，冲突由谁解决。ECC 的团队 Skill 将这些问题放在工作项和 handoff 契约中，这部分很值得团队直接借鉴。</p>
+<h3>12.3 Node 状态库与 Rust 控制台</h3>
+<p>Node <code>scripts/lib/state-store/</code> 使用 <code>sql.js</code>，默认数据库位置在 <code>.claude/ecc/state.db</code>。迁移包含 sessions、skill_runs、skill_versions、decisions、install_state、governance_events 等表。它服务于操作状态与治理记录，不能与 Markdown Memory Vault 混为一套存储引擎。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/state-store/index.js">状态库</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/state-store/migrations.js">表结构迁移</a></p>
+<p>Rust <code>ecc2/</code> 的包名是 <code>ecc-tui</code>，包版本 <code>0.1.0</code>，依赖 Ratatui、Tokio、rusqlite、git2 等，提供终端 dashboard、session start/stop/resume 和 daemon。其 README 明确标注 Alpha，尚缺更丰富的团队调度、审查界面、深层记忆和发布包装等能力。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/Cargo.toml">Rust 依赖</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/README.md">Alpha 边界</a></p>
+<p><strong>主 npm 包的 <code>2.2.1</code> 版本号，不能用来证明 Rust 控制平面已经正式完成。</strong></p>
+<p><a id="evaluation"></a></p>
+<h2>13. 评估与可观测性：先证明发生了什么，再谈有没有改进</h2>
+<figure><button type="button" class="diagram-button" aria-label="放大：证据记录、可验证收据与执行评估的边界"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgzOSIgdmlld0JveD0iMCAwIDEyODAgODM5IiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0idGl0bGUgZGVzYyI+Cjx0aXRsZSBpZD0idGl0bGUiPuiusOW9leS4gOiHtOaAp+OAgeaJp+ihjOWuieWFqOS4juS4muWKoeaViOaenOaYr+S4jeWQjOmXrumimDwvdGl0bGU+PGRlc2MgaWQ9ImRlc2MiPui/meW8oOWbvuWIhuW8gOWxleekuiBOb2RlIOivgeaNruezu+e7n+S4jiBSdXN0IEFscGhhIOeahCByZWNvcmRlZC1tZWFzdXJlbWVudHMg6Zeo5o6n44CCPC9kZXNjPgo8ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjEwIiBtYXJrZXJIZWlnaHQ9IjEwIiByZWZYPSI4IiByZWZZPSI1IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+PHBhdGggZD0iTTEgMSBMOCA1IEwxIDkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L21hcmtlcj48L2RlZnM+CjxzdHlsZT50ZXh0e2ZvbnQtZmFtaWx5OidOb3RvIFNhbnMgQ0pLIFNDJywnTWljcm9zb2Z0IFlhSGVpJyxzYW5zLXNlcmlmfSAubW9ub3tmb250LWZhbWlseTonRGVqYVZ1IFNhbnMgTW9ubycsbW9ub3NwYWNlfTwvc3R5bGU+CjxyZWN0IHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgzOSIgcng9IjIwIiBmaWxsPSIjZjVmOGZiIi8+CjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMjgwIiBoZWlnaHQ9IjgiIGZpbGw9IiMwODdlODIiLz4KCjx0ZXh0IHg9IjQ4IiB5PSI0OSIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5FQ0MgIC8gIFNPVVJDRSBTVFVEWSAgLyAgMDc8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSI5OSIgZm9udC1zaXplPSIzMiIgZmlsbD0iIzE1MmM0MCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7orrDlvZXkuIDoh7TmgKfjgIHmiafooYzlronlhajkuI7kuJrliqHmlYjmnpzmmK/kuI3lkIzpl67popg8L3RleHQ+Cjx0ZXh0IHg9IjQ4IiB5PSIxMzMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+6L+Z5byg5Zu+5YiG5byA5bGV56S6IE5vZGUg6K+B5o2u57O757uf5LiOIFJ1c3QgQWxwaGEg55qEIHJlY29yZGVkLW1lYXN1cmVtZW50cyDpl6jmjqfjgII8L3RleHQ+CjxyZWN0IHg9IjQ4IiB5PSIxODQiIHdpZHRoPSIzNTAiIGhlaWdodD0iMTY2IiByeD0iMTQiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q5ZTNlYyIvPgo8cmVjdCB4PSI0OCIgeT0iMjAyIiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMwODdlODIiLz4KPHRleHQgeD0iNzAiIHk9IjIyNyIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7miafooYzovajov7nkuI7kuqfnianlvJXnlKg8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSIyNjMiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LqL5Lu2IGVudmVsb3BlPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iMjkxIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuWPl+mZkOWGheWuueS4juehruWumuaAp+W6j+WIl+WMljwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjMxOSIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7mnaXmupDkuI7ku7vliqHlhbPogZQ8L3RleHQ+CjxyZWN0IHg9IjQ2NSIgeT0iMTg0IiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjE2NiIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDY1IiB5PSIyMDIiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzM3NjRhZCIvPgo8dGV4dCB4PSI0ODciIHk9IjIyNyIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzM3NjRhZCIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5DYXBzdWxlPC90ZXh0Pgo8dGV4dCB4PSI0ODciIHk9IjI2MyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7ov73liqAgam91cm5hbC5uZGpzb248L3RleHQ+Cjx0ZXh0IHg9IjQ4NyIgeT0iMjkxIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPnBhcmVudF9oYXNoIOmTvuaOpeWJjeW6j+iusOW9lTwvdGV4dD4KPHRleHQgeD0iNDg3IiB5PSIzMTkiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5Y+v6YeN5bu6IHByb2plY3Rpb248L3RleHQ+CjxyZWN0IHg9Ijg4MiIgeT0iMTg0IiB3aWR0aD0iMzUwIiBoZWlnaHQ9IjE2NiIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iODgyIiB5PSIyMDIiIHdpZHRoPSI0IiBoZWlnaHQ9IjI4IiByeD0iMiIgZmlsbD0iIzA4N2U4MiIvPgo8dGV4dCB4PSI5MDQiIHk9IjIyNyIgZm9udC1zaXplPSIyMiIgZmlsbD0iIzA4N2U4MiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij5SZWNlaXB0PC90ZXh0Pgo8dGV4dCB4PSI5MDQiIHk9IjI2MyIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7nu5Hlrprml6Xlv5fkuI7kuqfnianmkZjopoE8L3RleHQ+Cjx0ZXh0IHg9IjkwNCIgeT0iMjkxIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuemu+e6v+ajgOafpeS4gOiHtOaApzwvdGV4dD4KPHRleHQgeD0iOTA0IiB5PSIzMTkiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5peg5aSW6YOo6ZSa54K55pe25LuN5Y+v5pW05L2T5pu/5o2iPC90ZXh0Pgo8cG9seWxpbmUgcG9pbnRzPSI0MDAsMjY5IDQ1MSwyNjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cG9seWxpbmUgcG9pbnRzPSI4MTcsMjY5IDg2OCwyNjkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzczODc5YSIgc3Ryb2tlLXdpZHRoPSIyIiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPgo8cmVjdCB4PSI0OCIgeT0iNDA3IiB3aWR0aD0iNTY1IiBoZWlnaHQ9IjIxOCIgcng9IjE0IiBmaWxsPSIjZmZmIiBzdHJva2U9IiNkOWUzZWMiLz4KPHJlY3QgeD0iNDgiIHk9IjQyNSIgd2lkdGg9IjQiIGhlaWdodD0iMjgiIHJ4PSIyIiBmaWxsPSIjYjc1YzI3Ii8+Cjx0ZXh0IHg9IjcwIiB5PSI0NTAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNiNzVjMjciIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+Tm9kZSBHYXRl77ya5omn6KGM5LiN5Y+v55SoPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNDg2IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPmdhdGUgcnVuIOKGkiByZXF1aXJlU3VwcG9ydGVkSXNvbGF0aW9uKCk8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI1MTQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+57y65bCR57uP6aqM6K+B55qEIE9TIOmalOemu+WQjuerrzwvdGV4dD4KPHRleHQgeD0iNzAiIHk9IjU0MiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7pgIDlh7ogMe+8mmdhdGUuaXNvbGF0aW9uX3JlcXVpcmVkPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNTcwIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPumdmeaAgSB0cmlwd2lyZSDkuI7mkZjopoHmo4Dmn6Xku43nhLblrZjlnKg8L3RleHQ+Cjx0ZXh0IHg9IjcwIiB5PSI1OTgiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5LiN6IO95oqK5a6D5o+P6L+w5oiQ5bey6L+Q6KGM5YCZ6YCJ5oCn6IO96K+E5LywPC90ZXh0Pgo8cmVjdCB4PSI2NTEiIHk9IjQwNyIgd2lkdGg9IjU4MSIgaGVpZ2h0PSIyMTgiIHJ4PSIxNCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDllM2VjIi8+CjxyZWN0IHg9IjY1MSIgeT0iNDI1IiB3aWR0aD0iNCIgaGVpZ2h0PSIyOCIgcng9IjIiIGZpbGw9IiMzNzY0YWQiLz4KPHRleHQgeD0iNjczIiB5PSI0NTAiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiMzNzY0YWQiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+UnVzdCBlY2My77ya5pys5Zyw6K6w5b2V5YiG5pWw6Zeo5o6nPC90ZXh0Pgo8dGV4dCB4PSI2NzMiIHk9IjQ4NiIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7lgJnpgInphY3nva4gU0hBLTI1NiArIOebuOWQjCBzZWVkIOeahOWfuue6vzwvdGV4dD4KPHRleHQgeD0iNjczIiB5PSI1MTQiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5qC35pys5pWw44CB5Z2H5YC85beu5LiOIHdpbiByYXRlIOadoeS7tjwvdGV4dD4KPHRleHQgeD0iNjczIiB5PSI1NDIiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+U1FMaXRlIGFjdGl2ZSBwb2ludGVyICsg5a6h6K6h6K6w5b2VPC90ZXh0Pgo8dGV4dCB4PSI2NzMiIHk9IjU3MCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzU2NmE3YyIgZm9udC13ZWlnaHQ9IjQwMCIgdGV4dC1hbmNob3I9InN0YXJ0Ij7liIbmlbAgLyBoZWFsdGggLyBldmlkZW5jZSDnlLHmk43kvZzlkZjmj5Dkvps8L3RleHQ+Cjx0ZXh0IHg9IjY3MyIgeT0iNTk4IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPmFjdGl2ZSBwb2ludGVyIOS4jeiHquWKqOmDqOe9suWIsOWuv+S4uzwvdGV4dD4KPHJlY3QgeD0iNDgiIHk9IjY2NSIgd2lkdGg9IjExODQiIGhlaWdodD0iODEiIHJ4PSIxNCIgZmlsbD0iI2VhZjVmMyIgc3Ryb2tlPSIjYzdlMmRlIi8+Cjx0ZXh0IHg9IjcwIiB5PSI3MDAiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMwODdlODIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+55yf5q2j55qE5pS56L+b6aqM5pS26L+Y6ZyA6KaB55yf5a6e5Lu75Yqh5a+554Wn77ya5a6M5oiQ546H44CB5Zue5b2S44CB6L+U5bel44CB5oiQ5pys44CB5pe25bu25LiO55+l6K+G6LSo6YeP44CCPC90ZXh0Pgo8dGV4dCB4PSI3MCIgeT0iNzI4IiBmb250LXNpemU9IjE3IiBmaWxsPSIjNTY2YTdjIiBmb250LXdlaWdodD0iNDAwIiB0ZXh0LWFuY2hvcj0ic3RhcnQiPuacrOaWh+mAmui/h+a6kOeggeS4juWxgOmDqOa1i+ivleehruiupOacuuWItu+8jOS4jeWwhuWFtui9rOaNouaIkOacque7j+a1i+mHj+eahOaooeWei+aAp+iDvee7k+iuuuOAgjwvdGV4dD4KPHBhdGggZD0iTTQ4IDc4MSBIMTIzMiIgc3Ryb2tlPSIjZDllM2VjIi8+Cjx0ZXh0IHg9IjQ4IiB5PSI4MTIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJzdGFydCI+5L6d5o2uIGV2YWwtaGFybmVzcyDkuI4gZWNjMi9SRUFETUUubWQgwrcg5Lik5p2h5a6e546w6Lev5b6E5YiG5byA5o+P6L+wPC90ZXh0Pgo8dGV4dCB4PSIxMjMyIiB5PSI4MTIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM1NjZhN2MiIGZvbnQtd2VpZ2h0PSI0MDAiIHRleHQtYW5jaG9yPSJlbmQiPjgzMjEwMjEgwrcgMjAyNi0wOS0xNTwvdGV4dD4KPC9zdmc+" alt="证据记录、可验证收据与执行评估的边界" /></button><figcaption>证据记录、可验证收据与执行评估的边界 · 点击放大</figcaption></figure>
+<h3>13.1 成本记录：累积值不能直接再次累加</h3>
+<p><code>cost-tracker.js</code> 从 transcript 解析 usage，处理输入、输出和缓存 Token，并对可能重复的消息记录去重。若存在足够新的宿主成本缓存，会优先采用宿主值，否则使用本地价格表估算。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/cost-tracker.js">成本记录</a></p>
+<p>这个 Hook 在 Stop 时写入会话累计快照，所以计算每个 session 的成本应取相应最后一条记录，再进行跨会话聚合；直接求和每次 Stop 的累计值会重复计费。价格表与宿主计费语义都会变化，本地估算不应当作账单核对依据。</p>
+<p>本文不引用源码中的具体模型单价作为当前价格建议，也未实际进行模型付费调用。</p>
+<h3>13.2 执行胶囊：可重建的事实记录</h3>
+<p>Node <code>eval-harness</code> 包含 envelope、capsule、replay、receipt、retrospective 等模块。Capsule 使用追加的 <code>journal.ndjson</code>，每条记录带前一条的哈希；投影可以从日志确定性重建，验证检测篡改、乱序和尾部截断。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/index.js">模块入口</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/capsule.js">Capsule 实现</a></p>
+<p>这适合保存一次尝试的轨迹、产物引用与验证证据。收据将相关摘要绑定起来，支持离线核验；回顾模块可以对选定 capsule 进行报告式分组。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/receipt.js">Receipt</a></p>
+<p>不过，哈希链主要提供内容一致性和局部篡改可见性。如果攻击者能替换整个日志与所有摘要，又没有外部可信锚点，它无法独立证明历史真实发生过。产物哈希也不能证明业务需求正确。</p>
+<h3>13.3 一个必须如实写出的状态：Node Gate 执行已禁用</h3>
+<p><code>scripts/eval-harness.js</code> 的 <code>gate run</code> 在读取配置前调用 <code>requireSupportedIsolation()</code>。当前实现没有经过验证的 OS containment backend，因此返回 <code>gate.isolation_required</code>，拒绝候选代码执行。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/eval-harness.js">Gate CLI</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/eval-harness/gate.js">Gate 实现</a></p>
+<p>本文对一个根本不存在的 config 路径执行这条命令，得到退出码 1 和同样的 isolation 错误，验证了它确实先拒绝执行。这不是“跑评估失败的一次偶然环境问题”，而是这份源码的明确行为。<a href="research/probe-results.json">实验结果</a></p>
+<p>源码仍保留静态检查、variant digest、tripwire 等能力。静态扫描没发现风险，不代表候选代码已被安全沙盒约束，也不代表性能改进通过实测。</p>
+<h3>13.4 Rust 的评估注册表是另一条路径</h3>
+<p><code>ecc2</code> 提供配置 SHA-256 注册、使用相同 seed 比较候选与基线、按样本数/均值差/win rate 做门控，以及在记录的 health 不满足时恢复先前 active pointer。CLI 当前使用本地提供的 recorded measurements；证据引用与分数是操作员输入，active pointer 也不是自动部署到正在运行的宿主。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/README.md">Rust 评估说明</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/ecc2/src/harness_eval.rs">Rust 评估代码</a></p>
+<p>因此，Node 的禁用执行 Gate、Rust 的记录分数门控、Skill 中的验证流程，是三个有交集但不同的东西。它们不能合并描述成“ECC 已经自动搜索、评估并在线部署最优 Agent 策略”。</p>
+<p><a id="security"></a></p>
+<h2>14. 安全边界：哪些真的执行，哪些仍然依赖宿主？</h2>
+<h3>14.1 三层措施</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>层</th>
+<th>例子</th>
+<th>能力与边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型指导</td>
+<td>Agent 的提示防御、Skill 的来源检查</td>
+<td>改善模型行为，执行仍有概率性</td>
+</tr>
+<tr>
+<td>确定性检查</td>
+<td>Git 检查保护、配置保护、Vault 参数和路径校验</td>
+<td>对实际覆盖的入口和模式有效</td>
+</tr>
+<tr>
+<td>宿主/OS 边界</td>
+<td>文件权限、审批、沙盒、网络限制</td>
+<td>决定进程最终能访问什么；ECC 文本不能替代</td>
+</tr>
+</tbody>
+</table></div>
+<p>一个可以访问文件系统的恶意进程，不会因为 <code>trust: unreviewed</code> 就失去写权限；一个拥有通用 Shell 的 Agent，也可能通过 Hook 未覆盖的通道产生副作用。所以安全评估要沿真实调用入口做覆盖分析。</p>
+<h3>14.2 AgentShield 是关联工具，需分清仓库范围</h3>
+<p><code>security-scan</code> Skill 指导使用独立的 <code>ecc-agentshield</code> 包，检查 CLAUDE.md、settings、MCP 配置、Hook 和 Agent 文件等。ECC 的 <code>package.json</code> 运行依赖中没有把 AgentShield 扫描内核作为本包依赖。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/security-scan/SKILL.md">安全扫描 Skill</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/package.json">运行依赖</a></p>
+<p>因此，本文将它视为 ECC 的安全集成入口，而没有把另一个仓库的扫描算法或模型对抗评估当作本次已经审计和执行的功能。</p>
+<h3>14.3 记忆污染需要跨整条链控制</h3>
+<p>风险链可以很具体：不可信工具输出 → observation → Observer 提炼 → 高 confidence Instinct → 下次 SessionStart 注入。如果来源中的错误要求被概括成“团队偏好”，它就获得了跨会话影响。</p>
+<p>ECC 有观察跳过、脱敏、项目范围、信任标签等措施，但这些不能统一保证所有持久化内容安全。例如 Vault 的常见密钥检测与 observe 的键值脱敏是不同实现；session 摘要主要过滤宿主噪声和 ANSI 字符，不能继承 Vault 的全部拒绝规则。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/skills/continuous-learning-v2/hooks/observe.sh">Observation</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/hooks/session-end.js">会话摘要</a> · <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/scripts/lib/memory-vault-format.js">Vault 格式检查</a></p>
+<p>如果将 ECC 用于团队项目，我建议把“新增团队知识”的审核、来源记录、失效处理和回归样例作为独立流程。这里是基于源码边界的工程建议，不是声称 ECC 已经内置完整审批系统。</p>
+<p><a id="experiments"></a></p>
+<h2>15. 我实际验证了什么？</h2>
+<h3>15.1 可复现研究方法</h3>
+<p>本次对公开仓库做浅克隆并固定 commit，在临时目录安装锁文件对应的生产依赖，禁用 npm lifecycle scripts。之后运行选定上游测试，并编写直接调用上游实现的实验脚本。依赖下载和 Node 子进程因环境沙箱限制经过了执行权限提升；这属于研究环境要求，不是 ECC 的产品功能。</p>
+<p>没有安装 ECC 到日常 Claude/Codex 配置，也没有启动真实 Observer、模型任务或外部 AgentShield 服务。测试和示例的边界在 <a href="research/verification.md">verification.md</a> 中逐项记录。</p>
+<h3>15.2 16 组上游测试全部通过</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>验证主题</th>
+<th>所选测试文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hook 开关与调度</td>
+<td>hook-flags、bash-hook-dispatcher、posttooluse-dispatcher</td>
+</tr>
+<tr>
+<td>输入与拦截</td>
+<td>run-with-flags-truncation、config-protection</td>
+</tr>
+<tr>
+<td>会话记忆</td>
+<td>session-end、pre-compact、observer-memory</td>
+</tr>
+<tr>
+<td>显式记忆服务</td>
+<td>memory-vault、memory-mcp</td>
+</tr>
+<tr>
+<td>经验演化</td>
+<td>instinct-cli-evolve、instinct-cli-evolve-generate</td>
+</tr>
+<tr>
+<td>安装与多工作区</td>
+<td>install-plan、tmux-worktree-orchestrator</td>
+</tr>
+<tr>
+<td>证据与执行边界</td>
+<td>eval-harness/gate、eval-harness/receipt</td>
+</tr>
+</tbody>
+</table></div>
+<p>这是 <strong>16 个测试文件的退出码均为 0</strong>，不是整个 <code>npm test</code> 全通过，也不是 16 次真实模型任务成功。原始日志和每个文件的输出计数均已保留。<a href="research/test-results.json">结果 JSON</a> · <a href="research/run_upstream_checks.py">执行器</a></p>
+<h3>15.3 五组直接源码实验</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>实验</th>
+<th>实际结果</th>
+<th>证明范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hook Profile</td>
+<td>默认 standard；所测 Hook 在 minimal 关闭、strict 开启；总开关可关闭</td>
+<td>开关解析行为</td>
+</tr>
+<tr>
+<td>真实 Hook Runner</td>
+<td>新建配置退出 0；修改已有配置退出 2；禁用后退出 0</td>
+<td>config-protection 与 runner 的组合</td>
+</tr>
+<tr>
+<td>Memory Vault</td>
+<td>unreviewed、目标宿主过滤、拒绝同路径覆盖、拒绝模拟密钥；示例词法分数 35</td>
+<td>所列固定输入的库行为</td>
+</tr>
+<tr>
+<td>Instinct 聚类</td>
+<td>英文 fixture 1 个簇，纯中文 fixture 0 个簇</td>
+<td>当前分词和聚类路径</td>
+</tr>
+<tr>
+<td>Eval Gate</td>
+<td>在读取不存在的配置前返回 <code>gate.isolation_required</code></td>
+<td>当前执行禁用策略</td>
+</tr>
+</tbody>
+</table></div>
+<p>示例脚本使用真实 ECC 模块，不以重新实现一份算法来“验证”原实现。它创建隔离临时目录并清理，完整结果见 <a href="research/probe-results.json">probe-results.json</a>。</p>
+<pre><code class="language-bash"># 在自己的研究目录准备源码；完整 SHA 才是本文的实现基线。
+git clone https://github.com/affaan-m/ECC.git ecc-source
+git -C ecc-source checkout 8321021c54d670126ce3b2969d5deb880b4b0c2a
+npm ci --prefix ecc-source --ignore-scripts --omit=dev
+
+# 从 deepagent 仓库根目录执行；将路径替换为自己的源码目录。
+node project/ECC/examples/probe.cjs /absolute/path/to/ecc-source
+python3 project/ECC/research/run_upstream_checks.py /absolute/path/to/ecc-source \
+  --output /tmp/ecc-reproduced-checks
+</code></pre>
+<p>示例按本文 commit 做校验，避免将未来实现的输出与本文结论混用。最小实验只依赖 Node、Python 和 Git；Memory MCP 等完整选定测试还需要上游生产依赖。</p>
+<p><a id="adoption"></a></p>
+<h2>16. 从 Agent 工程师视角，怎样落地和借鉴？</h2>
+<h3>16.1 使用 ECC：分层启用并定义验收</h3>
+<p>下面是一条基于已读源码的采用顺序，适合先在试验项目验证：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>具体工作</th>
+<th>应收集的证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 能力目录</td>
+<td>确定宿主和安装路径，选择当前语言与必要 Skills</td>
+<td>宿主发现列表、实际选中记录</td>
+</tr>
+<tr>
+<td>2. 工具反馈</td>
+<td>检查真实事件与 Hook Profile，运行已知通过/拒绝样例</td>
+<td>触发日志、退出码、误拦截率</td>
+</tr>
+<tr>
+<td>3. 会话连续性</td>
+<td>用含明确未完成事项的任务验证保存与恢复</td>
+<td>下一会话能找到正确项目记录，且能核对真实状态</td>
+</tr>
+<tr>
+<td>4. 经验学习</td>
+<td>先审查 observations，再显式启用 Observer</td>
+<td>生成经验质量、错误经验率、额外调用成本</td>
+</tr>
+<tr>
+<td>5. 团队知识</td>
+<td>显式接入 Vault，并安排共享记录审核</td>
+<td>作用域过滤、错误召回、重复与失效记录诊断</td>
+</tr>
+<tr>
+<td>6. 多 Agent</td>
+<td>先规定 owner、文件范围、handoff 和合并验收</td>
+<td>可集成产物、冲突次数、等待与返工时间</td>
+</tr>
+</tbody>
+</table></div>
+<p>官方在这个版本中提供 <code>npx ecc-universal@2.2.1 setup</code> 作为 Claude 配置入口，以及 <code>install --guided</code> 的多宿主流程。不同路径写入的缓存、项目文件与配置不同，操作前应先查看其 dry-run 或预览。一个宿主选择一种安装方式，避免原生插件与完整手动复制重复叠加。<a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/README.md">安装说明</a></p>
+<p>这里保留的是版本基线下的入口说明。npm 发布版本与 <code>main</code> 上任意 commit 不必一一对应；要研究本文行为，应使用前一章的 SHA 固定源码。</p>
+<h3>16.2 自己实现一套类似系统，优先复用哪些设计？</h3>
+<p><strong>第一，区分行为建议和确定性动作。</strong> 将“要先调查”写进 Skill，将字段校验、边界检查、文件发布等实现成代码；每段结果都记录是通过、拒绝、跳过还是失败。</p>
+<p><strong>第二，制定内部事件契约。</strong> 包括 <code>event_id / session_id / tool_call_id / project / tool / input / result / timestamp</code>，然后逐宿主转换。ECC 多种入口和数据路径说明，没有共同契约时，字段差异会慢慢侵入核心逻辑。</p>
+<p><strong>第三，将记忆用途拆开。</strong> 会话工作状态、稳定知识、行为偏好具有不同生命周期。先用结构化文件做有界检索，达到规模和召回要求后再考虑索引或向量化；无需先把所有内容塞进一个 embedding store。</p>
+<p><strong>第四，把上下文预算变成可测参数。</strong> 常驻规则、能力描述、自动注入和工具输出都计入总成本。除上限外，还应度量“每条被注入知识是否被使用、是否帮助完成任务”。</p>
+<p><strong>第五，配置变更同样需要归属与版本。</strong> 安装器的用户文件保护、内容摘要、修复和卸载路径，应该和主能力同时设计。</p>
+<p><strong>第六，经验演化必须经过质量验收。</strong> 生成候选 → 检查来源和作用域 → 运行回归任务 → 人工或受控发布 → 保留回退。这是本文建议的完整闭环，不能误写成 ECC 每条路径都已自动完成。</p>
+<h3>16.3 怎样评价“ECC 是否让 Agent 更好”？</h3>
+<p>应在固定宿主、模型、代码快照和任务集下做对照：基础配置、精选 Skills/Rules、再加入 Hook、再加入记忆。不要一次打开所有功能后只看体感。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>建议观测指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完成质量</td>
+<td>任务验收通过率、隐藏回归、人工返工量</td>
+</tr>
+<tr>
+<td>成本与时延</td>
+<td>总 Token、模型调用次数、Hook 延迟分位数、端到端时间</td>
+</tr>
+<tr>
+<td>稳定性</td>
+<td>Hook 错误/跳过、重复记录、恢复错误项目、后台进程异常</td>
+</tr>
+<tr>
+<td>知识质量</td>
+<td>错误记忆率、无关注入率、经验冲突、过期记录比例</td>
+</tr>
+<tr>
+<td>团队效率</td>
+<td>集成冲突、handoff 缺失、重复实现、审查等待时间</td>
+</tr>
+</tbody>
+</table></div>
+<p>指标只是测量框架，本文没有用上游单元测试通过率代替这些业务结果。即使代码行为正确，额外检查也可能增加延迟，经验注入也可能占用上下文；最终价值要在真实工作负载中衡量。</p>
+<p><a id="conclusion"></a></p>
+<h2>17. 总结：ECC 最值得研究的是什么？</h2>
+<p>ECC 展示了一种可行的 Agent 产品建设路线：<strong>将人的工程经验组织成可发现资产，再用事件脚本、持久化和验证工具，补足只靠模型遵循流程的薄弱环节。</strong></p>
+<p>它最值得借鉴的实现包括：</p>
+<ul>
+<li>选择性安装与文件归属检查，让能力目录可以持续维护。</li>
+<li>Hook 协议适配、进程复用和批量检查，控制高频运行成本。</li>
+<li>会话摘要、Instinct 和 Vault 的不同用途，使“记住什么”更具体。</li>
+<li>可解释的筛选、词法检索和聚类，让经验复用有可检查的中间状态。</li>
+<li>证据记录与明确的执行禁用边界，避免把“存在评估接口”误说成“已具备安全自动优化”。</li>
+</ul>
+<p>它当前的主要工程挑战也同样具体：文档与入口迁移存在差异；Hook 的失败和输出语义仍需逐路径理解；记忆治理和语言适配有限；跨宿主能力不一致；Rust 控制平面仍在 Alpha 阶段。</p>
+<p>所以，从专业 Agent 工程师的角度，理解 ECC 的关键是持续追问四件事：<strong>由谁执行、在哪个入口执行、什么证据被保存、失败时系统究竟怎样继续。</strong> 沿着这四个问题读源码，才能把一套庞大的 Agent 工程资源，变成自己系统中可验证的设计。</p>
+<hr />
+<h2>资料与复现文件</h2>
+<p>本文的外部依据以官方仓库固定提交为主，正文链接均对应具体源码或文档。完整分类索引见 <a href="research/sources.md">sources.md</a>，文件哈希和统计见 <a href="research/snapshot.json">snapshot.json</a>。引用的 ECC 源码遵循上游 <a href="https://github.com/affaan-m/ECC/blob/8321021c54d670126ce3b2969d5deb880b4b0c2a/LICENSE">MIT License</a>；本文图示和实验脚本为研究配套原创，不是 ECC 官方图或官方性能测试。</p>
+<pre><code class="language-text">project/ECC/
+├── README.md                       博客正文
+├── index.html                      离线可读网页，图像嵌入其中
+├── assets/                         7 张 SVG 架构与流程图
+├── examples/
+│   ├── README.md                   源码实验说明
+│   └── probe.cjs                   五组直接调用源码的实验
+├── research/
+│   ├── sources.md                  按主题分类的固定提交链接
+│   ├── snapshot.json               版本、计数、源码文件哈希
+│   ├── verification.md             验证方法、结果和边界
+│   ├── probe-results.json          实验输出
+│   ├── test-results.json           16 组测试结果
+│   ├── artifact-checks.json        图像、页面与交互检查结果
+│   ├── logs/                       原始测试日志
+│   └── run_upstream_checks.py      可复现的测试执行器
+└── tools/
+    ├── build_assets.py             SVG 生成脚本
+    └── build_html.py               离线网页生成脚本
+</code></pre>
+
+<p class="footer">ECC 源码研究 · 本页图像与样式已嵌入，可离线阅读。源码链接需联网，实验文件位于旁边的目录。</p></main></div>
+<dialog id="diagram-viewer" aria-label="架构图原尺寸查看器"><div class="zoom-bar"><span class="zoom-title">架构图</span><button type="button">关闭</button></div><div class="zoom-body"><img alt="放大的架构图"></div><p class="zoom-hint">可横向、纵向滚动查看；按 Esc 关闭。</p></dialog>
+<script>
+const progress = document.querySelector('progress');
+function updateProgress(){const span=document.documentElement.scrollHeight-innerHeight;progress.value=span>0?scrollY/span:0;}
+addEventListener('scroll',updateProgress,{passive:true});addEventListener('resize',updateProgress);updateProgress();
+const navLinks=[...document.querySelectorAll('aside nav a')];
+const observer=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){for(const a of navLinks)a.classList.toggle('active',a.hash==='#'+e.target.id)}}},{rootMargin:'-10% 0px -70% 0px'});
+for(const element of document.querySelectorAll('main a[id]'))observer.observe(element);
+const viewer=document.querySelector('#diagram-viewer');
+for(const button of document.querySelectorAll('.diagram-button'))button.addEventListener('click',()=>{const img=button.querySelector('img');viewer.querySelector('img').src=img.src;viewer.querySelector('img').alt=img.alt;viewer.querySelector('.zoom-title').textContent=img.alt;viewer.showModal();});
+viewer.querySelector('button').addEventListener('click',()=>viewer.close());
+viewer.addEventListener('click',event=>{if(event.target===viewer)viewer.close();});
+</script></body></html>

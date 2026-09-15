@@ -1,0 +1,40 @@
+
+=== Testing ECC memory vault core ===
+
+  PASS resolves project, team, and user roots from the nearest project boundary
+  PASS uses the working directory for non-git projects instead of a global bucket
+  PASS honors explicit project and user vault root overrides
+  PASS initializes every memory kind without creating opaque database files
+  PASS round-trips the strict ecc.memory.v1 Markdown frontmatter contract
+  PASS accepts CRLF frontmatter delimiters and line endings
+  PASS requires the closing frontmatter marker to occupy an exact delimiter line
+  PASS rejects malformed, unknown-schema, and invalid metadata documents
+  PASS creates an unreviewed memory in the scope and kind directory
+  PASS never overwrites a duplicate ID
+  PASS never follows a pre-existing destination symlink during create-only publication
+  PASS fails closed when the project memory gitignore is preseeded with unsafe rules
+  PASS the canonical project guard is honored by git status and check-ignore
+  PASS rejects a vault path that traverses a symlink before creating directories
+  PASS rejects a symlinked ancestor when roots come back from initializeVault
+  PASS fails closed when callers provide roots without a boundary policy
+  PASS rejects traversal IDs, oversized bodies, NUL bytes, and suspected secrets
+  PASS quarantines imported secrets and metadata that disagrees with its vault location
+  PASS matches a Windows path-vs-handle stat pair where only dev differs
+  PASS matches a Windows stat pair on a non-system volume
+  PASS separates files that share an inode across two reported devices
+  PASS separates distinct inodes reported from the same device
+  PASS reads a regular file whose handle and path stats are compared
+  PASS opens regular text files without following a stable symlink
+  PASS rejects malformed UTF-8 instead of altering durable text
+  PASS opens a file descriptor before inspecting path metadata
+  PASS detects a swapped file whose inode differs beyond Number precision
+  PASS rejects a FIFO body path without blocking
+  PASS requires explicit user scope for recall
+  PASS search ranks title and tags above body-only matches and filters harness targets
+  PASS reads backlinks derived from links without mutating either document
+  PASS doctor reports malformed files, broken links, duplicate IDs, and skipped symlinks
+  PASS doctor caps traversal before an oversized directory can dominate recall
+  PASS doctor caps hostile diagnostics and reports total counts
+  PASS doctor enforces one aggregate scan-byte budget across a request
+
+Results: Passed: 35, Failed: 0

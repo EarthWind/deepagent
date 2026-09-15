@@ -1,0 +1,19 @@
+
+=== Testing ECC memory MCP server ===
+
+  PASS registers the bounded read/write/search/doctor tool surface
+  PASS accepts reserved tools/list params and rejects malformed values
+  PASS accepts the reserved _meta param on ping and rejects malformed values (#2810)
+  PASS accepts the reserved _meta param on tools/call and rejects malformed values
+  PASS starts when the npm bin invokes the server through a symlink
+  PASS rejects an oversized partial line and recovers at the next message boundary
+  PASS shares a saved handoff through MCP search and read
+  PASS rejects caller identity spoofing and hides other-harness memories
+  PASS filters harness-visible backlinks before applying the response cap
+  PASS denies user scope unless the server explicitly grants it
+  PASS requires server identity and strictly validates JSON-RPC envelopes
+  PASS bounds queued transport work under a single-chunk request flood
+  PASS bounds serialized tool responses before writing to stdout
+  PASS returns a structured tool error without a stack trace for secret-bearing writes
+
+Results: Passed: 14, Failed: 0

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="891" viewBox="0 0 1280 891" role="img" aria-labelledby="title desc">
+<title id="title">Memory Vault：受约束的写入与可解释检索</title><desc id="desc">project / team / user 范围由目录组织；MCP 服务端再限制允许范围与来源宿主。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="891" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  06</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">Memory Vault：受约束的写入与可解释检索</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">project / team / user 范围由目录组织；MCP 服务端再限制允许范围与来源宿主。</text>
+<rect x="48" y="180" width="347" height="168" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="198" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="223" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">memory_save</text>
+<text x="70" y="259" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">AJV 参数校验</text>
+<text x="70" y="287" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">sourceHarness 由服务端确定</text>
+<text x="70" y="315" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">trust 始终为 unreviewed</text>
+<rect x="465" y="180" width="347" height="168" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="465" y="198" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="487" y="223" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">规范化与路径检查</text>
+<text x="487" y="259" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">字段上限、ID 与枚举</text>
+<text x="487" y="287" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">常见密钥模式检测</text>
+<text x="487" y="315" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">可信根目录 / 文件身份校验</text>
+<rect x="882" y="180" width="350" height="168" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="882" y="198" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="904" y="223" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">create-only 发布</text>
+<text x="904" y="259" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">临时文件 → write → fsync</text>
+<text x="904" y="287" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">hard link → 最终目标</text>
+<text x="904" y="315" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">已有同路径目标时拒绝覆盖</text>
+<polyline points="400,264 450,264" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="817,264 868,264" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="404" width="1184" height="112" rx="14" fill="#152c40" stroke="#152c40"/>
+<rect x="48" y="422" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="447" font-size="22" fill="#fff" font-weight="700" text-anchor="start">Markdown Vault  /  ecc.memory.v1</text>
+<text x="70" y="483" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">kind · scope · source_harness · target_harnesses · tags · links · status · created_at · body</text>
+<polyline points="1057,352 1057,390" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="320,520 320,558" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="945,520 945,558" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="577" width="565" height="176" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="595" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="620" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">memory_search → memory_read</text>
+<text x="70" y="656" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">有界文件扫描 + active / target 过滤</text>
+<text x="70" y="684" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">标题、标签、元数据、正文加权词法排序</text>
+<text x="70" y="712" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">先摘要检索，再按 ID 读全文和 backlinks</text>
+<rect x="651" y="577" width="581" height="176" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="651" y="595" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="673" y="620" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">memory_doctor</text>
+<text x="673" y="656" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">报告格式损坏、重复 ID、断链和符号链接</text>
+<text x="673" y="684" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">查询不完整时不能假装记录不存在</text>
+<text x="673" y="712" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">诊断不自动把知识提升为 trusted</text>
+<text x="48" y="807" font-size="15" fill="#b75c27" font-weight="600" text-anchor="start">当前实现没有 embedding / 向量索引；team scope 本身不提供团队账号、云同步或多租户隔离。</text>
+<path d="M48 833 H1232" stroke="#d9e3ec"/>
+<text x="48" y="864" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">依据 memory-mcp.mjs / memory-vault.js / memory-vault-format.js</text>
+<text x="1232" y="864" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

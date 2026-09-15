@@ -1,0 +1,137 @@
+{
+  "source_commit": "8321021c54d670126ce3b2969d5deb880b4b0c2a",
+  "started_at": "2026-09-15T15:41:26.242726+00:00",
+  "node": "v24.18.0",
+  "python": "3.14.4",
+  "scope": "Selected upstream suites; not the full npm test suite or live model evaluation",
+  "suites": [
+    {
+      "suite": "tests/hooks/hook-flags.test.js",
+      "exit_code": 0,
+      "seconds": 0.046,
+      "reported_passed": 63,
+      "reported_failed": 0,
+      "log": "logs/hooks__hook-flags.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/bash-hook-dispatcher.test.js",
+      "exit_code": 0,
+      "seconds": 0.26,
+      "reported_passed": 6,
+      "reported_failed": 0,
+      "log": "logs/hooks__bash-hook-dispatcher.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/posttooluse-dispatcher.test.js",
+      "exit_code": 0,
+      "seconds": 1.419,
+      "reported_passed": 14,
+      "reported_failed": 0,
+      "log": "logs/hooks__posttooluse-dispatcher.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/run-with-flags-truncation.test.js",
+      "exit_code": 0,
+      "seconds": 0.2,
+      "reported_passed": 7,
+      "reported_failed": 0,
+      "log": "logs/hooks__run-with-flags-truncation.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/config-protection.test.js",
+      "exit_code": 0,
+      "seconds": 0.241,
+      "reported_passed": 9,
+      "reported_failed": 0,
+      "log": "logs/hooks__config-protection.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/session-end.test.js",
+      "exit_code": 0,
+      "seconds": 0.252,
+      "reported_passed": 7,
+      "reported_failed": 0,
+      "log": "logs/hooks__session-end.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/pre-compact.test.js",
+      "exit_code": 0,
+      "seconds": 0.031,
+      "reported_passed": 9,
+      "reported_failed": 0,
+      "log": "logs/hooks__pre-compact.test.js.txt"
+    },
+    {
+      "suite": "tests/hooks/observer-memory.test.js",
+      "exit_code": 0,
+      "seconds": 0.657,
+      "reported_passed": 32,
+      "reported_failed": 0,
+      "log": "logs/hooks__observer-memory.test.js.txt"
+    },
+    {
+      "suite": "tests/lib/memory-vault.test.js",
+      "exit_code": 0,
+      "seconds": 0.819,
+      "reported_passed": 35,
+      "reported_failed": 0,
+      "log": "logs/lib__memory-vault.test.js.txt"
+    },
+    {
+      "suite": "tests/scripts/memory-mcp.test.js",
+      "exit_code": 0,
+      "seconds": 1.148,
+      "reported_passed": 14,
+      "reported_failed": 0,
+      "log": "logs/scripts__memory-mcp.test.js.txt"
+    },
+    {
+      "suite": "tests/scripts/instinct-cli-evolve.test.js",
+      "exit_code": 0,
+      "seconds": 0.477,
+      "reported_passed": 4,
+      "reported_failed": 0,
+      "log": "logs/scripts__instinct-cli-evolve.test.js.txt"
+    },
+    {
+      "suite": "tests/scripts/instinct-cli-evolve-generate.test.js",
+      "exit_code": 0,
+      "seconds": 0.868,
+      "reported_passed": 10,
+      "reported_failed": 0,
+      "log": "logs/scripts__instinct-cli-evolve-generate.test.js.txt"
+    },
+    {
+      "suite": "tests/scripts/install-plan.test.js",
+      "exit_code": 0,
+      "seconds": 0.534,
+      "reported_passed": 11,
+      "reported_failed": 0,
+      "log": "logs/scripts__install-plan.test.js.txt"
+    },
+    {
+      "suite": "tests/lib/tmux-worktree-orchestrator.test.js",
+      "exit_code": 0,
+      "seconds": 0.026,
+      "reported_passed": 14,
+      "reported_failed": 0,
+      "log": "logs/lib__tmux-worktree-orchestrator.test.js.txt"
+    },
+    {
+      "suite": "tests/lib/eval-harness/gate.test.js",
+      "exit_code": 0,
+      "seconds": 0.045,
+      "reported_passed": 8,
+      "reported_failed": 0,
+      "log": "logs/lib__eval-harness__gate.test.js.txt"
+    },
+    {
+      "suite": "tests/lib/eval-harness/receipt.test.js",
+      "exit_code": 0,
+      "seconds": 0.05,
+      "reported_passed": 17,
+      "reported_failed": 0,
+      "log": "logs/lib__eval-harness__receipt.test.js.txt"
+    }
+  ]
+}

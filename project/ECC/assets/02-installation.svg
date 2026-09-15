@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="826" viewBox="0 0 1280 826" role="img" aria-labelledby="title desc">
+<title id="title">安装也是工程系统：计划、写入与文件归属</title><desc id="desc">图中为 ECC 管理安装路径；原生插件由宿主管理其安装生命周期。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M1 1 L8 5 L1 9" fill="none" stroke="#73879a" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif} .mono{font-family:'DejaVu Sans Mono',monospace}</style>
+<rect width="1280" height="826" rx="20" fill="#f5f8fb"/>
+<rect x="0" y="0" width="1280" height="8" fill="#087e82"/>
+
+<text x="48" y="49" font-size="14" fill="#087e82" font-weight="700" text-anchor="start">ECC  /  SOURCE STUDY  /  02</text>
+<text x="48" y="99" font-size="32" fill="#152c40" font-weight="700" text-anchor="start">安装也是工程系统：计划、写入与文件归属</text>
+<text x="48" y="133" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">图中为 ECC 管理安装路径；原生插件由宿主管理其安装生命周期。</text>
+<rect x="48" y="186" width="350" height="164" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="204" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="70" y="229" font-size="22" fill="#087e82" font-weight="700" text-anchor="start">01  选择能力</text>
+<text x="70" y="265" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">target + install profile</text>
+<text x="70" y="293" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">components / modules</text>
+<text x="70" y="321" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">安装 minimal 不含 hooks-runtime</text>
+<rect x="465" y="186" width="350" height="164" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="465" y="204" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="487" y="229" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">02  生成计划</text>
+<text x="487" y="265" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">解析清单与依赖</text>
+<text x="487" y="293" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">由 target adapter 决定目录</text>
+<text x="487" y="321" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">copy-file / merge-json / settings</text>
+<rect x="882" y="186" width="350" height="164" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="882" y="204" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="904" y="229" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">03  检查边界</text>
+<text x="904" y="265" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">Hook 安装条件</text>
+<text x="904" y="293" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">可信根目录和已有 install-state</text>
+<text x="904" y="321" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">写入前检查用户文件归属</text>
+<polyline points="400,268 453,268" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="817,268 870,268" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1058,354 1058,418" fill="none" stroke="#73879a" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="690" y="434" width="542" height="146" rx="14" fill="#152c40" stroke="#152c40"/>
+<rect x="690" y="452" width="4" height="28" rx="2" fill="#087e82"/>
+<text x="712" y="477" font-size="22" fill="#fff" font-weight="700" text-anchor="start">执行写入 → 记录 install-state</text>
+<text x="712" y="513" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">记录来源、目标路径、管理归属与内容摘要</text>
+<text x="712" y="541" font-size="17" fill="#dce7f0" font-weight="400" text-anchor="start">doctor / repair / uninstall 使用同一份归属线索</text>
+<rect x="48" y="434" width="578" height="146" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="452" width="4" height="28" rx="2" fill="#b75c27"/>
+<text x="70" y="477" font-size="22" fill="#b75c27" font-weight="700" text-anchor="start">遇到未归属 ECC 的已有文件</text>
+<text x="70" y="513" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">跳过并报告；不覆盖，也不在 state 中认领</text>
+<text x="70" y="541" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">规划后新出现的用户文件：写入前再次拒绝</text>
+<polyline points="882,349 840,393 337,393 337,420" fill="none" stroke="#73879a" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="48" y="620" width="1184" height="110" rx="14" fill="#fff" stroke="#d9e3ec"/>
+<rect x="48" y="638" width="4" height="28" rx="2" fill="#3764ad"/>
+<text x="70" y="663" font-size="22" fill="#3764ad" font-weight="700" text-anchor="start">两个 Profile 是两个维度</text>
+<text x="70" y="699" font-size="17" fill="#566a7c" font-weight="400" text-anchor="start">安装 Profile 选择模块；Hook Profile 选择运行项。安装成功、宿主发现、Hook 执行需要分别验证。</text>
+<path d="M48 768 H1232" stroke="#d9e3ec"/>
+<text x="48" y="799" font-size="14" fill="#566a7c" font-weight="400" text-anchor="start">依据 install-manifests / install/plan / install/apply / ownership-guard</text>
+<text x="1232" y="799" font-size="14" fill="#566a7c" font-weight="400" text-anchor="end">8321021 · 2026-09-15</text>
+</svg>

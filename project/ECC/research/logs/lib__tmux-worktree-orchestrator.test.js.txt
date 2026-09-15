@@ -1,0 +1,21 @@
+=== Testing tmux-worktree-orchestrator.js ===
+
+Helpers:
+  ✓ slugify normalizes mixed punctuation and casing
+  ✓ renderTemplate replaces supported placeholders
+  ✓ renderTemplate rejects unknown placeholders
+
+Plan generation:
+  ✓ buildOrchestrationPlan creates worktrees, branches, and tmux commands
+  ✓ buildOrchestrationPlan requires at least one worker
+  ✓ buildOrchestrationPlan normalizes global and worker seed paths
+  ✓ buildOrchestrationPlan rejects worker names that collapse to the same slug
+  ✓ buildOrchestrationPlan exposes shell-safe launcher aliases alongside raw defaults
+  ✓ buildOrchestrationPlan shell-quotes the orchestration banner command
+  ✓ normalizeSeedPaths rejects paths outside the repo root
+  ✓ materializePlan keeps worker instructions inside the worktree boundary
+  ✓ overlaySeedPaths copies local overlays into the worker worktree
+  ✓ executePlan rolls back partial setup when orchestration fails mid-run
+  ✓ executePlan does not mark pre-existing resources for rollback when worktree creation fails
+
+=== Results: 14 passed, 0 failed ===

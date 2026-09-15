@@ -1,0 +1,11 @@
+
+=== Testing Bash hook dispatchers ===
+
+  ✓ pre dispatcher blocks --no-verify before other Bash checks
+  ✓ pre dispatcher emits no stdout for a plain command (regression: issue #2239)
+  ✓ pre dispatcher still honors per-hook disable flags
+  ✓ pre dispatcher respects hook profiles inside the consolidated path
+  ✓ post dispatcher writes both bash audit and cost logs in one pass
+  ✓ post dispatcher preserves PR-created hints after consolidated execution
+
+Results: Passed: 6, Failed: 0

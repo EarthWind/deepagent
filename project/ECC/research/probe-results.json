@@ -1,0 +1,40 @@
+{
+  "commit": "8321021c54d670126ce3b2969d5deb880b4b0c2a",
+  "node": "v24.18.0",
+  "experiments": [
+    {
+      "name": "hook profiles",
+      "defaultProfile": "standard",
+      "minimal": false,
+      "strict": true,
+      "globallyDisabled": false
+    },
+    {
+      "name": "real hook runner",
+      "newConfig": 0,
+      "existingConfig": 2,
+      "disabledHook": 0
+    },
+    {
+      "name": "memory vault",
+      "trust": "unreviewed",
+      "matchingHarnessResults": 1,
+      "otherHarnessResults": 0,
+      "lexicalScore": 35,
+      "overwriteRejected": true,
+      "secretCanaryRejected": true
+    },
+    {
+      "name": "instinct keyword clustering",
+      "englishClusters": 1,
+      "chineseClusters": 0,
+      "note": "Pure Chinese triggers have no tokens under the current ASCII tokenizer."
+    },
+    {
+      "name": "evaluation execution boundary",
+      "exitCode": 1,
+      "error": "gate.isolation_required",
+      "configWasAbsent": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+
+=== Testing instinct-cli.py evolve generation ===
+
+  ✓ generated command names are cut on a word boundary
+  ✓ a cut landing on a separator keeps the whole word
+  ✓ every command candidate is generated, not just the first five
+  ✓ --limit caps generation and reports what it skipped
+  ✓ colliding slugs produce distinct files instead of overwriting
+  ✓ preview states how many candidates it left out
+  ✓ preview names match the files --generate writes
+  ✓ generated skills carry loadable name + description frontmatter
+  ✓ generated agents carry name + description alongside model/tools
+  ✓ generated descriptions quote YAML comment markers
+
+Passed: 10
+Failed: 0

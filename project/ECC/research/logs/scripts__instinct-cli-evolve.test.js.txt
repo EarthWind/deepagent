@@ -1,0 +1,10 @@
+
+=== Testing instinct-cli.py evolve clustering ===
+
+  ✓ instincts with overlapping trigger keywords form one cluster
+  ✓ unrelated triggers do not cluster together
+  ✓ a single shared keyword is not enough to cluster
+  ✓ preview command name matches the file --generate writes
+
+Passed: 4
+Failed: 0
