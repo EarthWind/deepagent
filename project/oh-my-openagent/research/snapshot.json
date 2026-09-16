@@ -1,0 +1,566 @@
+{
+  "repository": "https://github.com/code-yeongyu/oh-my-openagent.git",
+  "research_date": "2026-09-16",
+  "timezone": "Asia/Shanghai",
+  "branch_at_capture": "dev",
+  "commit": "bee849b228d1cb076a8f2ac839335f43399febe1",
+  "commit_time": "2026-09-16T23:46:32+09:00",
+  "root_package_name": "oh-my-opencode",
+  "root_package_version": "5.0.0-beta.67",
+  "native_version": "5.0.0-0.beta.67",
+  "workspace_count": 28,
+  "evidence_files": [
+    {
+      "id": "package",
+      "path": "package.json",
+      "说明": "根包版本、工作区、依赖与构建脚本",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/package.json",
+      "sha256": "4cbb7a90dd05129db8ee3cb043456080eae1bb5623a38a45dd891033207e31f9",
+      "lines": 250
+    },
+    {
+      "id": "upstream-readme",
+      "path": "README.md",
+      "说明": "产品入口与三个版本的官方描述",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/README.md",
+      "sha256": "7ce4dc0a68ae0e679539dd5bb6f98f630e801879937085ed0cb0bdfeb42a4609",
+      "lines": 506
+    },
+    {
+      "id": "license",
+      "path": "LICENSE.md",
+      "说明": "根目录许可证",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/LICENSE.md",
+      "sha256": "b61ac928f152d13517328263e6bee9175b928f9ab696a2d2ca2b6cfd961ddc32",
+      "lines": 82
+    },
+    {
+      "id": "notices",
+      "path": "THIRD-PARTY-NOTICES.md",
+      "说明": "第三方组件归属",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/THIRD-PARTY-NOTICES.md",
+      "sha256": "5cba3d05e48cb53d89acaf701ff727bc09a571b0b35f2ce71c9737a79901ab1b",
+      "lines": 135
+    },
+    {
+      "id": "entry",
+      "path": "packages/omo-opencode/src/index.ts",
+      "说明": "OpenCode 插件导出",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/index.ts",
+      "sha256": "c637b4ce3fba0ac4890cbe59bfbddb7bc8a0fe7db062ea2d2e4b24e152d7d51a",
+      "lines": 20
+    },
+    {
+      "id": "bootstrap",
+      "path": "packages/omo-opencode/src/testing/create-plugin-module.ts",
+      "说明": "真实启动与销毁流程",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/testing/create-plugin-module.ts",
+      "sha256": "19bf11c1c0e0e5d12fc48b95b2e7505e5895a91866ba354dd5cac8a03f7cd637",
+      "lines": 353
+    },
+    {
+      "id": "interface",
+      "path": "packages/omo-opencode/src/plugin-interface.ts",
+      "说明": "宿主事件接口",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-interface.ts",
+      "sha256": "7b670c7651da330774cf9fbe84b5e7abe8af6d721e682d6af6cd621ed83cdabc",
+      "lines": 110
+    },
+    {
+      "id": "managers",
+      "path": "packages/omo-opencode/src/create-managers.ts",
+      "说明": "后台任务、tmux、MCP 等管理器",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/create-managers.ts",
+      "sha256": "e81841a0942a55f16d3aee63d9843941d62a187066304bbe440d62a1424e2a59",
+      "lines": 227
+    },
+    {
+      "id": "tools",
+      "path": "packages/omo-opencode/src/plugin/tool-registry.ts",
+      "说明": "工具注册、开关与数量裁剪",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-registry.ts",
+      "sha256": "4ee8f107e597759e3811cb58b286061998ad27828855386fad1237b45b043f7a",
+      "lines": 91
+    },
+    {
+      "id": "hooks",
+      "path": "packages/omo-opencode/src/create-hooks.ts",
+      "说明": "Hook 组合",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/create-hooks.ts",
+      "sha256": "7df45e0ca18959c76f9601f8b5282e44913f6ab7730f68ba60377e9d7c9576bc",
+      "lines": 103
+    },
+    {
+      "id": "config-handler",
+      "path": "packages/omo-opencode/src/plugin-handlers/config-handler.ts",
+      "说明": "配置注入顺序",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-handlers/config-handler.ts",
+      "sha256": "edd07ecac672db7cc996523535f0c41fc21a11dae6ae8118034a699887f30a63",
+      "lines": 162
+    },
+    {
+      "id": "agents",
+      "path": "packages/omo-opencode/src/agents/builtin-agents.ts",
+      "说明": "内建角色工厂与元数据",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/builtin-agents.ts",
+      "sha256": "49bd3f0c2702ca3241d435ec3d8507fdc9df10eed32826e7dc6923bf280ce2b3",
+      "lines": 182
+    },
+    {
+      "id": "sisyphus",
+      "path": "packages/omo-opencode/src/agents/sisyphus-agent-factory.ts",
+      "说明": "主 Agent 的提示词与参数构建",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/sisyphus-agent-factory.ts",
+      "sha256": "be3547dceeaa08f49683f88e6d7da0eb1dc32b3df79474718da0e2d6d9d45704",
+      "lines": 178
+    },
+    {
+      "id": "prompt-builder",
+      "path": "packages/omo-opencode/src/agents/dynamic-agent-prompt-builder.ts",
+      "说明": "动态委派和能力目录",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/dynamic-agent-prompt-builder.ts",
+      "sha256": "9a221551d67a23cf9d2c0d31f10eba6da809b8877788ca51f58f0780c41de086",
+      "lines": 31
+    },
+    {
+      "id": "agent-assembly",
+      "path": "packages/omo-opencode/src/plugin-handlers/agent-config-assembly.ts",
+      "说明": "Agent 配置装配",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-handlers/agent-config-assembly.ts",
+      "sha256": "6208269012063a99a453e9782a9917798cc47c9a952808c4077c499c42f5779f",
+      "lines": 244
+    },
+    {
+      "id": "commands",
+      "path": "packages/omo-opencode/src/features/builtin-commands/commands.ts",
+      "说明": "当前命令注册",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/builtin-commands/commands.ts",
+      "sha256": "b0f8dc11c7cc1ccea8d3a9e22feb36f672465cd91ce947dea2331517746b25f7",
+      "lines": 135
+    },
+    {
+      "id": "delegate",
+      "path": "packages/omo-opencode/src/tools/delegate-task/tools.ts",
+      "说明": "task 工具调用分支",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/tools.ts",
+      "sha256": "75d42d9fd24ae98a6d995a349c5d55640df9443b6f79d53e53aeb720c4399202",
+      "lines": 234
+    },
+    {
+      "id": "category",
+      "path": "packages/omo-opencode/src/tools/delegate-task/category-resolver.ts",
+      "说明": "分类、模型和提示词解析",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/category-resolver.ts",
+      "sha256": "9ba4d49504e95b4c0aab6ab54e1a7edba58a0a971e5222d323220f4fd68beb28",
+      "lines": 289
+    },
+    {
+      "id": "model-requirements",
+      "path": "packages/model-core/src/category-model-requirements.ts",
+      "说明": "分类模型候选链",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/model-core/src/category-model-requirements.ts",
+      "sha256": "b50335b54431a241053dd95ee3ec6c7c32a3d3a376badf21e3c1db022f0567ba",
+      "lines": 142
+    },
+    {
+      "id": "model-selection",
+      "path": "packages/omo-opencode/src/tools/delegate-task/model-selection.ts",
+      "说明": "委派模型选择",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/model-selection.ts",
+      "sha256": "ab6013baecccba44f075172de7dea34058cfd0573e2479d94b71784e13b36925",
+      "lines": 22
+    },
+    {
+      "id": "background",
+      "path": "packages/omo-opencode/src/features/background-agent/manager.ts",
+      "说明": "后台任务主协调器",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/manager.ts",
+      "sha256": "857e3f872fb264b1a7f90126717d29fddc3460da85bfa6967fbd38470a94a3f2",
+      "lines": 3272
+    },
+    {
+      "id": "spawner",
+      "path": "packages/omo-opencode/src/features/background-agent/spawner.ts",
+      "说明": "创建子会话并提交任务",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/spawner.ts",
+      "sha256": "b542ec15f5ba2dc0bdaabda9bd4d130883895c2679ef434c1fc082ea400f2512",
+      "lines": 268
+    },
+    {
+      "id": "attempt",
+      "path": "packages/omo-opencode/src/features/background-agent/attempt-lifecycle.ts",
+      "说明": "尝试、会话绑定和状态投影",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/attempt-lifecycle.ts",
+      "sha256": "8212b8a5108c1b1419cbbaaf08f09cd0690ea7e7121f062a3663430ea06b7e34",
+      "lines": 174
+    },
+    {
+      "id": "concurrency",
+      "path": "packages/omo-opencode/src/features/background-agent/concurrency.ts",
+      "说明": "配额键、队列与取消",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/concurrency.ts",
+      "sha256": "1e5c3642042babaa4b53f965b19df089cf341bec379a35956b748b913be624bb",
+      "lines": 175
+    },
+    {
+      "id": "poller",
+      "path": "packages/omo-opencode/src/features/background-agent/task-poller.ts",
+      "说明": "失活检测与回收",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/task-poller.ts",
+      "sha256": "7bdee659ffd9970cafe7c942a3dd5b41be45097c15f358aae86fe3c437742d60",
+      "lines": 330
+    },
+    {
+      "id": "wake",
+      "path": "packages/omo-opencode/src/features/background-agent/parent-wake-notifier.ts",
+      "说明": "结果通知与父会话唤醒",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/parent-wake-notifier.ts",
+      "sha256": "e892b2cdeb8d6e7c8ed3ef795668d72e9edf804f5d9dc208b07d78f6e4285d2a",
+      "lines": 193
+    },
+    {
+      "id": "team-config",
+      "path": "packages/team-core/src/config.ts",
+      "说明": "团队配置与默认值",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/config.ts",
+      "sha256": "a08262710fea1ae79db00cb6f6f1828c37a88687f9b7ca8df36c6092b54e398a",
+      "lines": 17
+    },
+    {
+      "id": "team-claim",
+      "path": "packages/team-core/src/team-tasklist/claim.ts",
+      "说明": "任务认领锁和二次检查",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-tasklist/claim.ts",
+      "sha256": "603cbcf41e042e1f7a0de2ec5c134f89d5019370cba7f5277ef10a8d2e12419f",
+      "lines": 97
+    },
+    {
+      "id": "mailbox",
+      "path": "packages/team-core/src/team-mailbox/send.ts",
+      "说明": "收件箱、背压和广播权限",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-mailbox/send.ts",
+      "sha256": "68a9e6cbb1605866a336084dcf01f5f8325376f3bedaff24d723d1fbe0beca4e",
+      "lines": 184
+    },
+    {
+      "id": "mailbox-ledger",
+      "path": "packages/team-core/src/team-mailbox/consumed-ledger.ts",
+      "说明": "已消费消息记录",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-mailbox/consumed-ledger.ts",
+      "sha256": "fa9c93cb7467a300635811ee89a90ffb9ec388b8c47bc7525e371446cc146632",
+      "lines": 27
+    },
+    {
+      "id": "worktree",
+      "path": "packages/team-core/src/team-worktree/manager.ts",
+      "说明": "可选 Git 工作树隔离",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-worktree/manager.ts",
+      "sha256": "85a958bbf7847cd0706ee455fa4f160bfb1a3591e67335224b017c3c09ffecd0",
+      "lines": 63
+    },
+    {
+      "id": "dag-tool",
+      "path": "packages/omo-senpi/src/components/task/dag-tool.ts",
+      "说明": "对外 workflow 工具",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts",
+      "sha256": "40d8f2e244c92ea8855aa7fe6538b3e5dc9bd2a3a6147d6e01dae1615ac3b54f",
+      "lines": 206
+    },
+    {
+      "id": "dag-graph",
+      "path": "packages/senpi-task/src/dag/graph.ts",
+      "说明": "图编译与拓扑检查",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/graph.ts",
+      "sha256": "12523a79d30ca35dd5cbf5f2e51637881d7dc3680f6ad276994aeaa38b241eb5",
+      "lines": 355
+    },
+    {
+      "id": "dag-types",
+      "path": "packages/senpi-task/src/dag/types.ts",
+      "说明": "节点、运行和路由契约",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/types.ts",
+      "sha256": "68f42fca76e4cc41634bd8c943366d95b2c197525b781b0953457211d2355cfd",
+      "lines": 375
+    },
+    {
+      "id": "dag-scheduler",
+      "path": "packages/senpi-task/src/dag/scheduler.ts",
+      "说明": "依赖前沿调度",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/scheduler.ts",
+      "sha256": "13898919e5bc7f1835ba466079b00bc6b66230e09f1b3a6127725e34ae59ece6",
+      "lines": 1027
+    },
+    {
+      "id": "dag-journal",
+      "path": "packages/senpi-task/src/dag/journal.ts",
+      "说明": "WAL、检查点和订阅",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/journal.ts",
+      "sha256": "c07c05501d34090f3d3189cac5359f80d11729454580625185ca0fd4838308d2",
+      "lines": 262
+    },
+    {
+      "id": "dag-manager",
+      "path": "packages/senpi-task/src/dag/manager.ts",
+      "说明": "幂等运行、图修订与状态",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/manager.ts",
+      "sha256": "353be6e4757d91ac8c7c4b3563ffde8010e7cadb8e82888f5ac9ca3dfcfdd037",
+      "lines": 738
+    },
+    {
+      "id": "dag-recovery",
+      "path": "packages/senpi-task/src/dag/recovery.ts",
+      "说明": "中断恢复",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/recovery.ts",
+      "sha256": "335848ed04aeb8d3faa7f21865bcc74524a36f336c0e112077fbc129d1e0a77d",
+      "lines": 563
+    },
+    {
+      "id": "hash",
+      "path": "packages/hashline-core/src/hash-computation.ts",
+      "说明": "行哈希规范化与输出",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/hash-computation.ts",
+      "sha256": "faf4c01919b59375a07e0012381f1c0ddc77655bc04e4658ec444681ebc2f372",
+      "lines": 155
+    },
+    {
+      "id": "hash-validation",
+      "path": "packages/hashline-core/src/validation.ts",
+      "说明": "锚点校验与兼容哈希",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/validation.ts",
+      "sha256": "e8273bc53a48f8b3aefecdb157e9e900620e05a1e0efa0e4b1765130a01bffc9",
+      "lines": 181
+    },
+    {
+      "id": "hash-apply",
+      "path": "packages/hashline-core/src/edit-operations.ts",
+      "说明": "批量编辑验证及顺序",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/edit-operations.ts",
+      "sha256": "66cdae2fa9df12d9884eda40475556802ade58421bb44e90ec1af291ab86af2a",
+      "lines": 103
+    },
+    {
+      "id": "hash-tool",
+      "path": "packages/omo-opencode/src/tools/hashline-edit/tools.ts",
+      "说明": "OpenCode 编辑工具 Schema",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/hashline-edit/tools.ts",
+      "sha256": "36c75bb0ecf43854ec7cc77df99890bfb05d7de75527d9093e27239a764ca11e",
+      "lines": 42
+    },
+    {
+      "id": "mcps",
+      "path": "packages/omo-opencode/src/mcp/index.ts",
+      "说明": "内建 MCP 注册",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/mcp/index.ts",
+      "sha256": "0ff2558f4563dcb37c28eb315cebf55aeac6aae8dd336d083961af8a199a31d8",
+      "lines": 55
+    },
+    {
+      "id": "skill-context",
+      "path": "packages/omo-opencode/src/plugin/skill-context.ts",
+      "说明": "多来源 Skill 发现与合并",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/skill-context.ts",
+      "sha256": "3c2363abfbc85579e94699e3a159e7a03ce273a0626946274cd7e52763820516",
+      "lines": 205
+    },
+    {
+      "id": "skill-mcp",
+      "path": "packages/omo-opencode/src/tools/skill-mcp/tools.ts",
+      "说明": "Skill 内声明的 MCP 调用",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/skill-mcp/tools.ts",
+      "sha256": "7dfe43a9619084e386def23fedcdfa9816374ec05c8466a6a9812cdbe3d5175f",
+      "lines": 192
+    },
+    {
+      "id": "before",
+      "path": "packages/omo-opencode/src/plugin/tool-execute-before.ts",
+      "说明": "工具前 Hook 与参数改写",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-execute-before.ts",
+      "sha256": "df367bd7719519096b0c1dc2de283d6375b273b32906ff6f8e0853a6107c72ec",
+      "lines": 177
+    },
+    {
+      "id": "after",
+      "path": "packages/omo-opencode/src/plugin/tool-execute-after.ts",
+      "说明": "工具后 Hook 及错误处理",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-execute-after.ts",
+      "sha256": "dda8a7a5baf01657fea1085d585732db8c2a9b7d653dee5741783fa3323d3ade",
+      "lines": 155
+    },
+    {
+      "id": "transform",
+      "path": "packages/omo-opencode/src/plugin/messages-transform.ts",
+      "说明": "模型输入消息变换",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/messages-transform.ts",
+      "sha256": "209b01d1a5adfa48dfbf27c8d22d061fdc04f62ed039202026df991b5cb33711",
+      "lines": 267
+    },
+    {
+      "id": "compaction",
+      "path": "packages/omo-opencode/src/hooks/compaction-todo-preserver/hook.ts",
+      "说明": "压缩前后 Todo 保护",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/hooks/compaction-todo-preserver/hook.ts",
+      "sha256": "123e618b26f4767ab26f01e236df8c9822f4f5abb1520195c70e70e0823491e2",
+      "lines": 245
+    },
+    {
+      "id": "continuation",
+      "path": "packages/omo-opencode/src/hooks/todo-continuation-enforcer/idle-event.ts",
+      "说明": "继续执行条件与停止条件",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/hooks/todo-continuation-enforcer/idle-event.ts",
+      "sha256": "46afd0989467f74ee3ffda43879e079e73f109ffee2c34bd86834095a63d26d9",
+      "lines": 249
+    },
+    {
+      "id": "memory-component",
+      "path": "packages/omo-senpi/src/components/memory/index.ts",
+      "说明": "Senpi 记忆组件接线与身份绑定",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/memory/index.ts",
+      "sha256": "46725205b5a37ead78f1890335588dba15bd8e2cf1b16d29b7d68d0310083371",
+      "lines": 306
+    },
+    {
+      "id": "memory-wiring",
+      "path": "packages/omo-senpi/src/components/memory/wiring.ts",
+      "说明": "检索、反思、写入与关闭协调",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/memory/wiring.ts",
+      "sha256": "9a71ffd2367c6a782771a30f26ead592c15599d5725b9412aede5c79a26daec5",
+      "lines": 266
+    },
+    {
+      "id": "memory-compile",
+      "path": "packages/memory-core/src/compile/compile.ts",
+      "说明": "Git revision 到模型上下文",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/compile/compile.ts",
+      "sha256": "9f47d9fac3943f6c61e6d8f0d1c7579d6fe165b20618c0c85dde8688657aa8ed",
+      "lines": 120
+    },
+    {
+      "id": "memory-plan",
+      "path": "packages/memory-core/src/recall/planner.ts",
+      "说明": "确定性召回查询规划",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/recall/planner.ts",
+      "sha256": "7b5d9c1c28fc074dff696abe82145fa217ceb4db486e1f6ae42e0641e56dcc22",
+      "lines": 177
+    },
+    {
+      "id": "memory-search",
+      "path": "packages/memory-core/src/search/engine.ts",
+      "说明": "词法全扫描检索",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/search/engine.ts",
+      "sha256": "e3ea516d50d4c5e7cbf95192fec3c5338609b3838d00379e68bbfa7e28b78bcd",
+      "lines": 92
+    },
+    {
+      "id": "memory-query",
+      "path": "packages/memory-core/src/search/query.ts",
+      "说明": "AND 匹配、短语与排序公式",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/search/query.ts",
+      "sha256": "e22693d2a44b01fd08ce132137457929be0da7adb623e3dd52b0d49f21913d82",
+      "lines": 178
+    },
+    {
+      "id": "memory-reflect",
+      "path": "packages/memory-core/src/reflection/machine.ts",
+      "说明": "反思触发、预留与合并",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/reflection/machine.ts",
+      "sha256": "f3f4a3e025fb0aaa8ca6649367e521d94a5e784facd5a76cb9712d0407bf0226",
+      "lines": 328
+    },
+    {
+      "id": "memory-worktree",
+      "path": "packages/memory-core/src/reflection/worktree-integration.ts",
+      "说明": "反思工作树的合并",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/reflection/worktree-integration.ts",
+      "sha256": "b4c1de20aeda33b05895f6ffae5fd611299cff57c092b67ec69b30593c202787",
+      "lines": 192
+    },
+    {
+      "id": "codex-plugin",
+      "path": "packages/omo-codex/plugin/.codex-plugin/plugin.json",
+      "说明": "Codex 插件实际清单",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.codex-plugin/plugin.json",
+      "sha256": "b16aae0005cdfb6ebbf1fbe6355eb693468c3fec907e33fc2bbd3f189898081d",
+      "lines": 70
+    },
+    {
+      "id": "codex-mcp",
+      "path": "packages/omo-codex/plugin/.mcp.json",
+      "说明": "Codex MCP 定义",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.mcp.json",
+      "sha256": "3be54190b12add65b795aea02f291ce5f2c3f003de42ee9cdc8a9fd2973d22c0",
+      "lines": 21
+    },
+    {
+      "id": "codex-pointer",
+      "path": "packages/omo-codex/plugin/components/ultrawork/src/skill-pointer.ts",
+      "说明": "短上下文指针与全文降级",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/components/ultrawork/src/skill-pointer.ts",
+      "sha256": "8fea4d4cad26611974f95076111abc7929b57d8c59c33ce66f992098f42e293f",
+      "lines": 56
+    },
+    {
+      "id": "senpi-components",
+      "path": "packages/omo-senpi/src/extension/component-list.ts",
+      "说明": "Senpi 扩展组件装配",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/extension/component-list.ts",
+      "sha256": "af6ce1d1eceded2428d7424d0f4a918826914eacf4e44af894d2a9302fb61847",
+      "lines": 55
+    },
+    {
+      "id": "senpi-task",
+      "path": "packages/omo-senpi/src/components/task/index.ts",
+      "说明": "Senpi task、workflow 与团队接线",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/index.ts",
+      "sha256": "56ae0870f3702958af7a349280ca201a6bb8a5fbae5c4263a495be7f4983c679",
+      "lines": 320
+    },
+    {
+      "id": "native-package",
+      "path": "packages/omo-native/package.json",
+      "说明": "原生发行版版本与固定引擎依赖",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/package.json",
+      "sha256": "9e61a1ea6253cb8b70d9e0569f6e77151cb3b922eeb7904801ca1706b27e03f3",
+      "lines": 27
+    },
+    {
+      "id": "native-launcher",
+      "path": "packages/omo-native/bin/lib/launcher.js",
+      "说明": "原生启动器、状态目录和扩展加载",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/bin/lib/launcher.js",
+      "sha256": "e2bc0c70cee3b6fe4f934a407e48efa749b0243a65b4ac45a9833b40c5fdc498",
+      "lines": 192
+    },
+    {
+      "id": "config-validation",
+      "path": "packages/omo-opencode/src/config/validate.ts",
+      "说明": "验证、迁移与用户字段保护",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/validate.ts",
+      "sha256": "4ebc04567611a732beb91a8cc2cbab185ac95e49b727d4b7777f36e95ac29a74",
+      "lines": 203
+    },
+    {
+      "id": "config-merge",
+      "path": "packages/omo-opencode/src/plugin-config/config-merger.ts",
+      "说明": "配置深合并与禁用列表并集",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-config/config-merger.ts",
+      "sha256": "e4f96f07f3838e894cc77a5bdefbe2e5b247b8c8f1f6fde2cf2ff6a9e9fcd432",
+      "lines": 25
+    },
+    {
+      "id": "config-chain",
+      "path": "packages/omo-opencode/src/plugin-config/omo-config-chain.ts",
+      "说明": "统一配置到 OpenCode 的视图",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-config/omo-config-chain.ts",
+      "sha256": "1f328d502f07a7bab67c2905a438a27593f80e8e8833c39208a2b946ffbe8b77",
+      "lines": 150
+    },
+    {
+      "id": "config-background",
+      "path": "packages/omo-opencode/src/config/schema/background-task.ts",
+      "说明": "并发、失活与深度配置",
+      "url": "https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/schema/background-task.ts",
+      "sha256": "c2cddfec4414802a697b53a16ee8ebafb4faa2b5f47c24a8d9d98fe9f877486f",
+      "lines": 31
+    }
+  ]
+}

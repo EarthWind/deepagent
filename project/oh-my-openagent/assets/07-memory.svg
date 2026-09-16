@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="880" viewBox="0 0 1280 880" role="img" aria-labelledby="title desc">
+<title id="title">外部记忆：源文件、上下文视图和后台写入</title><desc id="desc">本图对应 Senpi 已接线的 memory-core；不代表其他宿主自动具备相同流程。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="880" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   07</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">外部记忆：源文件、上下文视图和后台写入</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">本图对应 Senpi 已接线的 memory-core；不代表其他宿主自动具备相同流程。</text>
+<rect x="44" y="184" width="340" height="176" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="198" width="5" height="148" rx="2" fill="#087f83"/>
+<text x="64" y="221" fill="#087f83" font-size="23" font-weight="700">版本化记忆仓库</text>
+<text x="64" y="256" fill="#152c46" font-size="20" font-weight="400">Git revision / 可审计文件</text>
+<text x="64" y="284" fill="#152c46" font-size="20" font-weight="400">system：身份、稳定信息</text>
+<text x="64" y="312" fill="#152c46" font-size="20" font-weight="400">外部主题、人物与其他记录</text>
+<rect x="469" y="184" width="341" height="176" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="469" y="198" width="5" height="148" rx="2" fill="#2866bb"/>
+<text x="489" y="221" fill="#2866bb" font-size="23" font-weight="700">上下文编译</text>
+<text x="489" y="256" fill="#152c46" font-size="20" font-weight="400">读取固定 revision</text>
+<text x="489" y="284" fill="#152c46" font-size="20" font-weight="400">self / memory / metadata</text>
+<text x="489" y="312" fill="#152c46" font-size="20" font-weight="400">外部路径投影与缓存</text>
+<rect x="895" y="184" width="341" height="176" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="895" y="198" width="5" height="148" rx="2" fill="#7354b4"/>
+<text x="915" y="221" fill="#7354b4" font-size="23" font-weight="700">模型输入与会话</text>
+<text x="915" y="256" fill="#152c46" font-size="20" font-weight="400">当前任务 + 编译记忆</text>
+<text x="915" y="284" fill="#152c46" font-size="20" font-weight="400">按需召回的上下文</text>
+<text x="915" y="312" fill="#152c46" font-size="20" font-weight="400">记忆是外部状态，不是权重</text>
+<path d="M384,270 L465,270" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M810,270 L891,270" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="437" width="340" height="205" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="451" width="5" height="177" rx="2" fill="#2866bb"/>
+<text x="64" y="474" fill="#2866bb" font-size="23" font-weight="700">词法召回路径</text>
+<text x="64" y="509" fill="#152c46" font-size="20" font-weight="400">近邻文本 → 查询规划</text>
+<text x="64" y="537" fill="#152c46" font-size="20" font-weight="400">AND 词 / 短语匹配</text>
+<text x="64" y="565" fill="#152c46" font-size="20" font-weight="400">全扫描、排序、hidden 过滤</text>
+<text x="64" y="593" fill="#152c46" font-size="20" font-weight="400">不要求 embedding 索引</text>
+<rect x="469" y="437" width="341" height="205" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="469" y="451" width="5" height="177" rx="2" fill="#7354b4"/>
+<text x="489" y="474" fill="#7354b4" font-size="23" font-weight="700">Journal 与反思调度</text>
+<text x="489" y="509" fill="#152c46" font-size="20" font-weight="400">对话增量 / 待处理游标</text>
+<text x="489" y="537" fill="#152c46" font-size="20" font-weight="400">步数 / 压缩 / 手动触发</text>
+<text x="489" y="565" fill="#152c46" font-size="20" font-weight="400">active + pending 预留</text>
+<text x="489" y="593" fill="#152c46" font-size="20" font-weight="400">请求合并、预算与关闭处理</text>
+<rect x="895" y="437" width="341" height="205" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="895" y="451" width="5" height="177" rx="2" fill="#087f83"/>
+<text x="915" y="474" fill="#087f83" font-size="23" font-weight="700">反思结果集成</text>
+<text x="915" y="509" fill="#152c46" font-size="20" font-weight="400">独立工作树与已验证 tip</text>
+<text x="915" y="537" fill="#152c46" font-size="20" font-weight="400">writer lock / 收据检查</text>
+<text x="915" y="565" fill="#152c46" font-size="20" font-weight="400">干净状态检查与合并</text>
+<text x="915" y="593" fill="#152c46" font-size="20" font-weight="400">区分冲突、失败与已集成</text>
+<path d="M1065,360 L1065,399 L639,399 L639,433" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M810,539 L891,539" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M214,437 L214,388 L853,388 L853,327 L894,327" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M1065,642 L1065,680 L25,680 L25,304 L40,304" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<text x="449" y="706" fill="#52677e" font-size="18" font-weight="400">已验证的变更合入后，形成新的记忆版本</text>
+<rect x="44" y="723" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="755" fill="#087f83" font-size="21" font-weight="700">版本可追踪，不等于事实必然正确</text>
+<text x="66" y="785" fill="#152c46" font-size="18" font-weight="400">写入与反思影响后续模型输入；仍需要纠错、来源与过期机制。本文未测长期任务收益。</text>
+<text x="44" y="855" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  memory/compile · recall/planner · search/engine · reflection；omo-senpi wiring</text>
+</g></svg>

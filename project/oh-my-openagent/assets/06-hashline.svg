@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+<title id="title">Hashline：让编辑引用模型刚刚读到的行</title><desc id="desc">把“定位哪里修改”与“该行是否仍可匹配”连接到工具协议。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="800" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   06</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">Hashline：让编辑引用模型刚刚读到的行</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">把“定位哪里修改”与“该行是否仍可匹配”连接到工具协议。</text>
+<rect x="44" y="185" width="558" height="156" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="199" width="5" height="128" rx="2" fill="#2866bb"/>
+<text x="64" y="222" fill="#2866bb" font-size="23" font-weight="700">① 读取结果</text>
+<text x="64" y="257" fill="#152c46" font-size="20" font-weight="400">1#QH|const count = 1;</text>
+<text x="64" y="285" fill="#152c46" font-size="20" font-weight="400">2#TK|return count;</text>
+<rect x="674" y="185" width="562" height="156" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="674" y="199" width="5" height="128" rx="2" fill="#087f83"/>
+<text x="694" y="222" fill="#087f83" font-size="23" font-weight="700">② 编辑请求</text>
+<text x="694" y="257" fill="#152c46" font-size="20" font-weight="400">op: replace   ·   pos: 1#QH</text>
+<text x="694" y="285" fill="#152c46" font-size="20" font-weight="400">lines: [&quot;const count = 2;&quot;]</text>
+<path d="M602,265 L670,265" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="408" width="558" height="164" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="422" width="5" height="136" rx="2" fill="#7354b4"/>
+<text x="64" y="445" fill="#7354b4" font-size="23" font-weight="700">③ 核心应用顺序</text>
+<text x="64" y="480" fill="#152c46" font-size="20" font-weight="400">收集锚点 → 对原内容统一验证</text>
+<text x="64" y="508" fill="#152c46" font-size="20" font-weight="400">检查重叠 → 去重 → 从后往前编辑</text>
+<text x="64" y="536" fill="#152c46" font-size="20" font-weight="400">返回新内容与 no-op / 去重报告</text>
+<rect x="674" y="408" width="562" height="164" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="674" y="422" width="5" height="136" rx="2" fill="#a35f13"/>
+<text x="694" y="445" fill="#a35f13" font-size="23" font-weight="700">④ 不匹配时拒绝</text>
+<text x="694" y="480" fill="#152c46" font-size="20" font-weight="400">返回变化行附近的上下文与新锚点</text>
+<text x="694" y="508" fill="#152c46" font-size="20" font-weight="400">模型重新读取，再构造编辑</text>
+<text x="694" y="536" fill="#152c46" font-size="20" font-weight="400">实验已验证 fresh 成功 / stale 拒绝</text>
+<path d="M955,341 L955,372 L323,372 L323,404" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M602,490 L670,490" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="632" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="664" fill="#b64c4b" font-size="21" font-weight="700">能力边界 · 256 个短标识桶</text>
+<text x="66" y="694" fill="#152c46" font-size="18" font-weight="400">const value = 12; 与 const value = 14; 均得到 HX。短哈希不能证明文件完整性或写入原子性。</text>
+<text x="44" y="775" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  hash-computation.ts · validation.ts · edit-operations.ts；示例锚点来自实测</text>
+</g></svg>
