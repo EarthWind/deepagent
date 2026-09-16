@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+<title id="title">OpenCode：装配能力，再接入事件循环</title><desc id="desc">控制流程以宿主事件为入口；Hook 的异常策略和生效条件各不相同。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="820" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   02</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">OpenCode：装配能力，再接入事件循环</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">控制流程以宿主事件为入口；Hook 的异常策略和生效条件各不相同。</text>
+<rect x="44" y="185" width="268" height="155" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="199" width="5" height="127" rx="2" fill="#2866bb"/>
+<text x="64" y="222" fill="#2866bb" font-size="23" font-weight="700">① 配置与启动</text>
+<text x="64" y="257" fill="#152c46" font-size="18" font-weight="400">读取、合并、校验、迁移</text>
+<text x="64" y="285" fill="#152c46" font-size="18" font-weight="400">准备宿主与运行上下文</text>
+<rect x="352" y="185" width="268" height="155" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="352" y="199" width="5" height="127" rx="2" fill="#7354b4"/>
+<text x="372" y="222" fill="#7354b4" font-size="23" font-weight="700">② Managers</text>
+<text x="372" y="257" fill="#152c46" font-size="18" font-weight="400">后台任务 / MCP / tmux</text>
+<text x="372" y="285" fill="#152c46" font-size="18" font-weight="400">明确资源生命周期</text>
+<rect x="660" y="185" width="268" height="155" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="660" y="199" width="5" height="127" rx="2" fill="#087f83"/>
+<text x="680" y="222" fill="#087f83" font-size="23" font-weight="700">③ Tools + Hooks</text>
+<text x="680" y="257" fill="#152c46" font-size="18" font-weight="400">能力发现、注册和过滤</text>
+<text x="680" y="285" fill="#152c46" font-size="18" font-weight="400">依赖配置进行装配</text>
+<rect x="968" y="185" width="268" height="155" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="968" y="199" width="5" height="127" rx="2" fill="#2866bb"/>
+<text x="988" y="222" fill="#2866bb" font-size="23" font-weight="700">④ 宿主接口</text>
+<text x="988" y="257" fill="#152c46" font-size="18" font-weight="400">消息、工具、生命周期</text>
+<text x="988" y="285" fill="#152c46" font-size="18" font-weight="400">压缩与退出清理</text>
+<path d="M312,262 L348,262" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M620,262 L656,262" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M928,262 L964,262" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M1102,340 L1102,385" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<text x="46" y="399" fill="#52677e" font-size="20" font-weight="700">一次执行的主要接缝</text>
+<rect x="44" y="425" width="356" height="150" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="439" width="5" height="122" rx="2" fill="#2866bb"/>
+<text x="64" y="462" fill="#2866bb" font-size="23" font-weight="700">模型输入</text>
+<text x="64" y="497" fill="#152c46" font-size="20" font-weight="400">消息变换 / 能力描述</text>
+<text x="64" y="525" fill="#152c46" font-size="20" font-weight="400">关键词、参数与上下文注入</text>
+<rect x="462" y="425" width="356" height="150" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="462" y="439" width="5" height="122" rx="2" fill="#087f83"/>
+<text x="482" y="462" fill="#087f83" font-size="23" font-weight="700">工具调用</text>
+<text x="482" y="497" fill="#152c46" font-size="20" font-weight="400">before：检查与参数处理</text>
+<text x="482" y="525" fill="#152c46" font-size="20" font-weight="400">宿主执行 → after：结果增强</text>
+<rect x="880" y="425" width="356" height="150" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="880" y="439" width="5" height="122" rx="2" fill="#7354b4"/>
+<text x="900" y="462" fill="#7354b4" font-size="23" font-weight="700">生命周期事件</text>
+<text x="900" y="497" fill="#152c46" font-size="20" font-weight="400">完成 / 错误 / idle / 压缩</text>
+<text x="900" y="525" fill="#152c46" font-size="20" font-weight="400">通知、恢复、继续或结束</text>
+<path d="M400,495 L458,495" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M818,495 L876,495" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M1058,575 L1058,618 L222,618 L222,575" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<text x="478" y="643" fill="#52677e" font-size="18" font-weight="400">满足继续条件时进入下一轮</text>
+<rect x="44" y="682" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="714" fill="#087f83" font-size="21" font-weight="700">关键区分</text>
+<text x="66" y="744" fill="#152c46" font-size="18" font-weight="400">提示词规定工作方法；工具前 Hook 可阻止动作；底层权限和模型循环仍由宿主负责。</text>
+<text x="44" y="795" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  create-plugin-module.ts · plugin-interface.ts · tool-execute-before.ts</text>
+</g></svg>

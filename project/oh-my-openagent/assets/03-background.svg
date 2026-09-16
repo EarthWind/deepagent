@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">把逻辑任务与每次执行尝试分开</title><desc id="desc">旧会话可能迟到；当前 attempt 的身份决定哪些状态可以投影回 Task。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="810" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   03</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">把逻辑任务与每次执行尝试分开</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">旧会话可能迟到；当前 attempt 的身份决定哪些状态可以投影回 Task。</text>
+<rect x="44" y="184" width="338" height="170" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="198" width="5" height="142" rx="2" fill="#2866bb"/>
+<text x="64" y="221" fill="#2866bb" font-size="23" font-weight="700">Task：bg_…</text>
+<text x="64" y="256" fill="#152c46" font-size="20" font-weight="400">父会话、任务描述、逻辑状态</text>
+<text x="64" y="284" fill="#152c46" font-size="20" font-weight="400">currentAttemptID</text>
+<text x="64" y="312" fill="#152c46" font-size="20" font-weight="400">聚合尝试历史</text>
+<rect x="461" y="184" width="354" height="170" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="461" y="198" width="5" height="142" rx="2" fill="#a35f13"/>
+<text x="481" y="221" fill="#a35f13" font-size="23" font-weight="700">Attempt #1</text>
+<text x="481" y="256" fill="#152c46" font-size="20" font-weight="400">模型 A → ses_old</text>
+<text x="481" y="284" fill="#152c46" font-size="20" font-weight="400">超时 / 错误 → 保留历史</text>
+<text x="481" y="312" fill="#152c46" font-size="20" font-weight="400">迟到 completed 不覆盖新任务</text>
+<rect x="882" y="184" width="354" height="170" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="882" y="198" width="5" height="142" rx="2" fill="#087f83"/>
+<text x="902" y="221" fill="#087f83" font-size="23" font-weight="700">Attempt #2 · 当前</text>
+<text x="902" y="256" fill="#152c46" font-size="20" font-weight="400">模型 B → ses_new</text>
+<text x="902" y="284" fill="#152c46" font-size="20" font-weight="400">pending → running → 终止</text>
+<text x="902" y="312" fill="#152c46" font-size="20" font-weight="400">只有当前尝试投影回 Task</text>
+<path d="M382,267 L457,267" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M815,267 L878,267" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="419" width="562" height="177" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="433" width="5" height="149" rx="2" fill="#7354b4"/>
+<text x="64" y="456" fill="#7354b4" font-size="23" font-weight="700">接纳与队列</text>
+<text x="64" y="491" fill="#152c46" font-size="20" font-weight="400">模型覆盖 → 独立 model key</text>
+<text x="64" y="519" fill="#152c46" font-size="20" font-weight="400">否则可使用 provider key；释放时优先交接槽位</text>
+<text x="64" y="547" fill="#152c46" font-size="20" font-weight="400">不是“全局 + Provider + 模型”三层共同限流</text>
+<rect x="646" y="419" width="590" height="177" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="646" y="433" width="5" height="149" rx="2" fill="#087f83"/>
+<text x="666" y="456" fill="#087f83" font-size="23" font-weight="700">结束与交接</text>
+<text x="666" y="491" fill="#152c46" font-size="20" font-weight="400">活动 / 会话存在性检测 → 终止与资源回收</text>
+<text x="666" y="519" fill="#152c46" font-size="20" font-weight="400">结果通知 → 忙碌检查 / 去重 → 唤醒父会话</text>
+<text x="666" y="547" fill="#152c46" font-size="20" font-weight="400">父任务读取结果并继续验证</text>
+<path d="M1059,354 L1059,415" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="655" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="687" fill="#087f83" font-size="21" font-weight="700">局部实测</text>
+<text x="66" y="717" fill="#152c46" font-size="18" font-weight="400">旧 attempt 完成后，Task 仍指向 ses_new 且为 running；配额覆盖行为也已直接调用源码验证。</text>
+<text x="44" y="785" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  attempt-lifecycle.ts · concurrency.ts · parent-wake-notifier.ts</text>
+</g></svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="850" viewBox="0 0 1280 850" role="img" aria-labelledby="title desc">
+<title id="title">同一套工程能力，三种宿主接入方式</title><desc id="desc">将资产与可复用机制下沉；将会话、事件、工具注册留在适配层。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="850" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   01</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">同一套工程能力，三种宿主接入方式</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">将资产与可复用机制下沉；将会话、事件、工具注册留在适配层。</text>
+<rect x="44" y="180" width="376" height="134" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="194" width="5" height="106" rx="2" fill="#2866bb"/>
+<text x="64" y="217" fill="#2866bb" font-size="23" font-weight="700">OpenCode · Ultimate</text>
+<text x="64" y="252" fill="#152c46" font-size="20" font-weight="400">TypeScript 插件 / SDK 会话</text>
+<text x="64" y="280" fill="#152c46" font-size="20" font-weight="400">工具 + 生命周期 Hook</text>
+<rect x="452" y="180" width="376" height="134" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="452" y="194" width="5" height="106" rx="2" fill="#7354b4"/>
+<text x="472" y="217" fill="#7354b4" font-size="23" font-weight="700">Codex · Light</text>
+<text x="472" y="252" fill="#152c46" font-size="20" font-weight="400">插件清单 / 事件组件</text>
+<text x="472" y="280" fill="#152c46" font-size="20" font-weight="400">Skills + MCP + 宿主协作</text>
+<rect x="860" y="180" width="376" height="134" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="860" y="194" width="5" height="106" rx="2" fill="#087f83"/>
+<text x="880" y="217" fill="#087f83" font-size="23" font-weight="700">Native · Senpi Beta</text>
+<text x="880" y="252" fill="#152c46" font-size="20" font-weight="400">omo-ai 启动固定 Senpi 引擎</text>
+<text x="880" y="280" fill="#152c46" font-size="20" font-weight="400">任务图 + 记忆扩展接线</text>
+<path d="M232,315 V342 H1048 V315 M640,315 V342" stroke="#70849a" stroke-width="2.2" fill="none"/>
+<text x="44" y="365" fill="#52677e" font-size="15" font-weight="400">共享能力层</text>
+<path d="M232,343 L232,374" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M640,343 L640,374" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M1048,343 L1048,374" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="378" width="376" height="135" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="392" width="5" height="107" rx="2" fill="#2866bb"/>
+<text x="64" y="415" fill="#2866bb" font-size="23" font-weight="700">行为与路由</text>
+<text x="64" y="450" fill="#152c46" font-size="20" font-weight="400">prompts-core / model-core</text>
+<text x="64" y="478" fill="#152c46" font-size="20" font-weight="400">角色、分类、Skill、模型候选链</text>
+<rect x="452" y="378" width="376" height="135" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="452" y="392" width="5" height="107" rx="2" fill="#7354b4"/>
+<text x="472" y="415" fill="#7354b4" font-size="23" font-weight="700">执行与协作</text>
+<text x="472" y="450" fill="#152c46" font-size="20" font-weight="400">team-core / delegate-core</text>
+<text x="472" y="478" fill="#152c46" font-size="20" font-weight="400">任务认领、消息、配额与重试</text>
+<rect x="860" y="378" width="376" height="135" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="860" y="392" width="5" height="107" rx="2" fill="#087f83"/>
+<text x="880" y="415" fill="#087f83" font-size="23" font-weight="700">记忆与工具</text>
+<text x="880" y="450" fill="#152c46" font-size="20" font-weight="400">memory-core / hashline-core</text>
+<text x="880" y="478" fill="#152c46" font-size="20" font-weight="400">版本化文件、检索、编辑锚点</text>
+<rect x="44" y="552" width="1192" height="100" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="566" width="5" height="72" rx="2" fill="#a35f13"/>
+<text x="64" y="589" fill="#a35f13" font-size="23" font-weight="700">宿主专用的执行系统</text>
+<text x="64" y="624" fill="#152c46" font-size="20" font-weight="400">OpenCode BackgroundManager  /  Codex 原生协作  /  senpi-task 的任务与 DAG 引擎</text>
+<rect x="44" y="693" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="725" fill="#087f83" font-size="21" font-weight="700">运行边界</text>
+<text x="66" y="755" fill="#152c46" font-size="18" font-weight="400">模型推理、基础工具与权限依赖宿主；共享包存在，不表示三个版本全部启用相同能力。</text>
+<text x="44" y="825" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  package.json · plugin-interface.ts · component-list.ts</text>
+</g></svg>

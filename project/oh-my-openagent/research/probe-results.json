@@ -1,0 +1,17 @@
+{
+  "commit": "bee849b228d1cb076a8f2ac839335f43399febe1",
+  "node": "v24.18.0",
+  "passed": 10,
+  "results": [
+    {"name":"provider queue handoff","status":"passed","evidence":"Two models share one provider slot; release transfers that slot to the waiter."},
+    {"name":"model override is a separate quota key","status":"passed","evidence":"Provider=1 and model override=2 can admit three tasks across two keys; quotas are not hierarchical."},
+    {"name":"cancelled waiter does not consume the next slot","status":"passed","evidence":"Cancellation rejects the selected waiter; the next waiter still receives the slot."},
+    {"name":"old attempt cannot overwrite current task projection","status":"passed","evidence":{"attempts":2,"currentSession":"ses_new","currentStatus":"running"}},
+    {"name":"DAG compile: fork and join","status":"passed","evidence":{"waves":[{"index":0,"nodeIds":["A","B"]},{"index":1,"nodeIds":["C"]},{"index":2,"nodeIds":["D"]}],"criticalPath":["A","C","D"]}},
+    {"name":"DAG compile: reject cycle, unknown dependency and duplicate id","status":"passed","evidence":["cycle","unknown_dependency","duplicate_node_id"]},
+    {"name":"hashline applies a fresh anchor and rejects a stale anchor","status":"passed","evidence":{"readOutput":"1#QH|const count = 1;\n2#TK|return count;","anchor":"1#QH"}},
+    {"name":"short hash collision exists; it is not an integrity proof","status":"passed","evidence":{"hash":"HX","first":"const value = 12;","second":"const value = 14;"}},
+    {"name":"lexical memory search: AND, phrase and hidden filtering","status":"passed","evidence":"AND terms and exact phrase adjacency; hidden conversations excluded unless explicitly included."},
+    {"name":"recall planner is deterministic and handles non-ASCII text","status":"passed","evidence":{"queries":["排队失败","重试机制","\"排队失败 重试机制\""],"withTools":["排队失败","重试机制","scheduler","admission","\"排队失败 重试机制\""]}}
+  ]
+}

@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="固定提交的 oh-my-openagent 中文源码研究：多宿主架构、Agent 编排、DAG、Hashline、上下文与记忆，附可复现源码实验。">
+<title>oh-my-openagent 源码深度解析</title>
+<style>
+:root{--ink:#162c43;--muted:#5a6c80;--accent:#087f83;--line:#dce5ed;--paper:#fff;--bg:#f4f7fa}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.9 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+a{color:#146b9b;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible{outline:3px solid #13a6b1;outline-offset:3px}
+.topbar{background:#142c45;color:white;padding:18px 5vw;display:flex;gap:22px;justify-content:space-between;align-items:center}.topbar a{color:#b9ece8}.brand{font-size:13px;letter-spacing:.14em;font-weight:700}.edition{font-size:13px;color:#d6e2ec}
+.layout{display:grid;grid-template-columns:250px minmax(0,1060px);gap:34px;max-width:1410px;margin:42px auto;padding:0 24px}
+nav{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:13px;padding:10px 4px 20px}nav strong{font-size:14px;color:var(--accent)}nav a{display:block;padding:8px 8px;border-left:2px solid var(--line);color:var(--muted);line-height:1.5}nav a:hover{background:#e7f1f4;color:var(--ink)}
+main{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:48px 54px;min-width:0;box-shadow:0 8px 35px #18334b06}
+h1{font-size:38px;line-height:1.45;letter-spacing:-.03em;margin:0 0 26px}h2{font-size:27px;line-height:1.5;margin:65px 0 22px;padding-top:22px;border-top:1px solid var(--line)}h3{font-size:21px;line-height:1.6;margin:36px 0 16px}
+p{margin:19px 0}blockquote{margin:25px 0;padding:12px 22px;border-left:4px solid var(--accent);background:#eff7f7;color:#38586c;font-size:14px}blockquote p{margin:8px 0}
+strong{font-weight:700;color:#152c43}img{width:100%;height:auto;display:block;margin:28px 0;border:1px solid var(--line);border-radius:12px}.figure-link{display:block}.figure-link:hover img{border-color:var(--accent)}
+code{font-family:"DejaVu Sans Mono",Consolas,monospace;font-size:.86em;overflow-wrap:anywhere;background:#eff3f7;border-radius:4px;padding:2px 5px}pre{padding:22px 24px;background:#142a40;color:#e6edf5;overflow:auto;border-radius:10px;line-height:1.75;font-size:14px}pre code{background:none;color:inherit;padding:0;overflow-wrap:normal;font-size:inherit}
+.table-scroll{overflow-x:auto;margin:24px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.75}th{text-align:left;background:#eef4f7;color:#28465e;font-weight:700}td,th{padding:12px 14px;border:1px solid var(--line);min-width:120px}tr:nth-child(even) td{background:#fafcfd}
+ul,ol{padding-left:1.5em}li{margin:10px 0}hr{border:0;border-top:1px solid var(--line);margin:45px 0}.footer{font-size:13px;color:var(--muted);text-align:center;padding:0 20px 40px}.mobile-nav{display:none}
+@media(max-width:1050px){.layout{grid-template-columns:minmax(0,1fr);max-width:980px}.sidebar{display:none}.mobile-nav{display:block;padding:14px 24px;background:white;border-bottom:1px solid var(--line)}.mobile-nav nav{position:static;max-height:340px}.layout{margin-top:24px}}
+@media(max-width:640px){body{font-size:16px}.topbar{padding:14px 18px;display:block}.edition{margin-top:7px}.layout{padding:0 10px;gap:0}main{padding:27px 20px;border-radius:10px}h1{font-size:28px}h2{font-size:23px;margin-top:45px}h3{font-size:19px}pre{padding:16px;font-size:12px}blockquote{padding:9px 14px}table{font-size:13px}img{border-radius:6px;margin:20px 0}}
+@media print{.topbar,.sidebar,.mobile-nav{display:none}.layout{display:block;margin:0;padding:0;max-width:none}main{border:0;padding:0;box-shadow:none}body{font-size:11pt;background:white}h1{font-size:25pt}h2{break-after:avoid}img,blockquote{break-inside:avoid}pre{white-space:pre-wrap;color:#111;background:#eee}.table-scroll{overflow:visible}a{color:#164e76}}
+</style></head><body>
+<header class="topbar"><div class="brand">DEEP AGENT / SOURCE STUDY</div><div class="edition">2026-09-16 · bee849b228d1 · <a href="README.md">Markdown</a> · <a href="research/verification.md">验证记录</a></div></header>
+<details class="mobile-nav"><summary>展开文章目录</summary><nav><a class="level-2" href="#heading-1">阅读导航</a>
+<a class="level-2" href="#heading-2">1. 先确定研究对象：名字变了，架构也在变</a>
+<a class="level-2" href="#heading-6">2. 源码地图：按工程职责阅读，而不是按角色名阅读</a>
+<a class="level-2" href="#heading-7">3. OpenCode 插件如何进入一次真实执行？</a>
+<a class="level-2" href="#heading-11">4. Agent 是角色配置，运行实例由宿主创建</a>
+<a class="level-2" href="#heading-15">5. 一次 task 委派如何变成子会话？</a>
+<a class="level-2" href="#heading-19">6. 后台任务：可靠性集中在状态、配额与结果交接</a>
+<a class="level-2" href="#heading-24">7. Team Mode：从主从委派扩展为有状态的协作</a>
+<a class="level-2" href="#heading-28">8. Senpi 的图执行：从提示词里的计划走向调度器里的依赖</a>
+<a class="level-2" href="#heading-34">9. 工具工程：让模型更容易产生可执行、可校验的动作</a>
+<a class="level-2" href="#heading-39">10. 上下文管理与持续执行：既要保住目标，也要知道何时停止</a>
+<a class="level-2" href="#heading-43">11. 记忆系统：Git 存储、上下文编译、词法召回与后台反思</a>
+<a class="level-2" href="#heading-49">12. 三宿主适配：共享核心不等于能力完全相同</a>
+<a class="level-2" href="#heading-54">13. 配置、权限和可观测性：控制应落在能执行它的层</a>
+<a class="level-2" href="#heading-59">14. 把机制串起来：一个接口改造任务如何推进？</a>
+<a class="level-2" href="#heading-60">15. 可复现验证：直接运行源码，而不是验证一个相似的玩具实现</a>
+<a class="level-2" href="#heading-62">16. 专业 Agent 工程视角：哪些设计值得借鉴，哪些还需自己证明？</a></nav></details>
+<div class="layout"><nav class="sidebar" aria-label="文章目录"><strong>OH-MY-OPENAGENT</strong><a class="level-2" href="#heading-1">阅读导航</a>
+<a class="level-2" href="#heading-2">1. 先确定研究对象：名字变了，架构也在变</a>
+<a class="level-2" href="#heading-6">2. 源码地图：按工程职责阅读，而不是按角色名阅读</a>
+<a class="level-2" href="#heading-7">3. OpenCode 插件如何进入一次真实执行？</a>
+<a class="level-2" href="#heading-11">4. Agent 是角色配置，运行实例由宿主创建</a>
+<a class="level-2" href="#heading-15">5. 一次 task 委派如何变成子会话？</a>
+<a class="level-2" href="#heading-19">6. 后台任务：可靠性集中在状态、配额与结果交接</a>
+<a class="level-2" href="#heading-24">7. Team Mode：从主从委派扩展为有状态的协作</a>
+<a class="level-2" href="#heading-28">8. Senpi 的图执行：从提示词里的计划走向调度器里的依赖</a>
+<a class="level-2" href="#heading-34">9. 工具工程：让模型更容易产生可执行、可校验的动作</a>
+<a class="level-2" href="#heading-39">10. 上下文管理与持续执行：既要保住目标，也要知道何时停止</a>
+<a class="level-2" href="#heading-43">11. 记忆系统：Git 存储、上下文编译、词法召回与后台反思</a>
+<a class="level-2" href="#heading-49">12. 三宿主适配：共享核心不等于能力完全相同</a>
+<a class="level-2" href="#heading-54">13. 配置、权限和可观测性：控制应落在能执行它的层</a>
+<a class="level-2" href="#heading-59">14. 把机制串起来：一个接口改造任务如何推进？</a>
+<a class="level-2" href="#heading-60">15. 可复现验证：直接运行源码，而不是验证一个相似的玩具实现</a>
+<a class="level-2" href="#heading-62">16. 专业 Agent 工程视角：哪些设计值得借鉴，哪些还需自己证明？</a></nav><main><h1>oh-my-openagent 源码深度解析：从多 Agent 编排到可恢复的执行系统</h1>
+<blockquote>
+<p>调研日期：2026-09-16（Asia/Shanghai）。<br>
+源码基线：<code>dev</code> 分支本次获取的提交 <strong><code>bee849b228d1cb076a8f2ac839335f43399febe1</code></strong>，提交时间 <code>2026-09-16T23:46:32+09:00</code>。根包版本 <code>5.0.0-beta.67</code>；独立发行包 <code>omo-ai</code> 为 <code>5.0.0-0.beta.67</code>。这些是源码快照中的版本，不能直接等同于 npm 的当前稳定版本。<br>
+方法：官方仓库与固定提交源码交叉阅读，直接运行部分源码机制实验。本文区分<strong>源码事实、局部实测、工程推论</strong>；未做真实模型任务完成率、成本或完整宿主兼容性评测。</p>
+</blockquote>
+<p><a class="figure-link" href="assets/01-architecture.svg" target="_blank" rel="noopener"><img src="assets/01-architecture.svg" alt="oh-my-openagent 的三种宿主形态与共享工程核心" loading="lazy"></a></p>
+<p>一个 Coding Agent 在演示里很容易成立：给模型一段任务描述，暴露读文件、改代码和执行命令的工具，再把结果送回模型。但当任务持续几个小时、包含多个子任务、横跨不同模型、发生上下文压缩时，真正的问题开始出现：谁负责子任务？失败后重试的是哪一次执行？旧会话的完成事件还能不能改变新状态？停止响应究竟表示完成，还是正在等待结果？</p>
+<p><strong>oh-my-openagent 的主要工程价值，是把这些问题逐步变成可执行的运行机制。</strong> 提示词、角色和 Skill 是其中一层；任务状态、事件接线、工具约束、消息投递、持久化和恢复同样重要。本文从这些机制出发，追踪它如何围绕宿主 Agent 建立更完整的执行系统。</p>
+<p>配套阅读：<a href="index.html">离线网页版</a> · <a href="examples/README.md">直接调用源码的实验</a> · <a href="research/verification.md">验证记录</a> · <a href="research/sources.md">源码索引</a> · <a href="research/snapshot.json">快照与文件指纹</a>。图均为本次调研原创，SVG 随文保存，不依赖在线图床。</p>
+<h2 id="heading-1">阅读导航</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>想解决的问题</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目是什么，三个版本如何区分？</td>
+<td><a href="#position">1. 定位与版本</a>、<a href="#source-map">2. 源码地图</a></td>
+</tr>
+<tr>
+<td>插件如何进入宿主运行时？</td>
+<td><a href="#lifecycle">3. 启动与 Hook</a></td>
+</tr>
+<tr>
+<td>Agent、分类、模型和 Skill 如何组合？</td>
+<td><a href="#agents">4. 角色系统</a>、<a href="#delegation">5. 委派链路</a></td>
+</tr>
+<tr>
+<td>并发、重试、通知和协作如何可靠运行？</td>
+<td><a href="#background">6. 后台任务</a>、<a href="#teams">7. Team Mode</a></td>
+</tr>
+<tr>
+<td>新版图执行具体怎么实现？</td>
+<td><a href="#dag">8. Senpi DAG</a></td>
+</tr>
+<tr>
+<td>编辑、上下文和记忆如何处理？</td>
+<td><a href="#tools">9. 工具工程</a>、<a href="#context">10. 上下文</a>、<a href="#memory">11. 记忆</a></td>
+</tr>
+<tr>
+<td>跨宿主迁移和项目配置有哪些边界？</td>
+<td><a href="#adapters">12. 适配层</a>、<a href="#configuration">13. 配置与权限</a></td>
+</tr>
+<tr>
+<td>如何复现、验证与借鉴？</td>
+<td><a href="#walkthrough">14. 完整案例</a>、<a href="#experiments">15. 源码实验</a>、<a href="#assessment">16. 工程判断</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="position"></a></p>
+<h2 id="heading-2">1. 先确定研究对象：名字变了，架构也在变</h2>
+<h3 id="heading-3">1.1 GitHub 名、npm 名与入口名不是一回事</h3>
+<p>当前仓库是 <code>code-yeongyu/oh-my-openagent</code>，根 <code>package.json</code> 的 <code>name</code> 仍为 <code>oh-my-opencode</code>。同一个启动脚本映射了 <code>oh-my-opencode</code>、<code>oh-my-openagent</code>、<code>omo-agent-toolkit</code>、<code>lazycodex</code>、<code>lazycodex-ai</code> 五个 bin 名称。独立发行版则在 <code>packages/omo-native</code>，包名为 <code>omo-ai</code>，提供 <code>omo</code> 命令。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/package.json">根包声明</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/package.json">独立包声明</a></p>
+<p>因此，检索源码时看到 <code>@oh-my-opencode/*</code>、旧配置名或 Sisyphus 相关目录，并不意味着找错项目。研究时需要分别辨认<strong>产品名称、包命名空间、安装别名、宿主入口和状态目录</strong>。</p>
+<h3 id="heading-4">1.2 当前有三条产品路径</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>形态</th>
+<th>宿主与入口</th>
+<th>OMO 主要负责什么</th>
+<th>本文研究边界</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ultimate / OpenCode</td>
+<td>作为 OpenCode 插件加载</td>
+<td>角色、分类委派、后台任务、Hook、工具与团队协作</td>
+<td>以 <code>omo-opencode</code> 的真实注册链为主</td>
+</tr>
+<tr>
+<td>Light / Codex</td>
+<td>Codex 插件命名空间 <code>omo</code></td>
+<td>Hook 组件、Skills、MCP、配置和安装适配</td>
+<td>不把 OpenCode 的全部工具当作 Codex 也具备</td>
+</tr>
+<tr>
+<td>Senpi / Native，Beta</td>
+<td><code>omo-ai</code> 启动固定版本 Senpi 并加载 OMO 扩展</td>
+<td>在独立发行入口中组合任务引擎、图执行、记忆等能力</td>
+<td>区分 OMO 扩展与外部 Senpi 引擎</td>
+</tr>
+</tbody>
+</table></div>
+<p>三个版本的产品定位来自官方说明；实际入口可分别追到 <code>plugin-interface.ts</code>、Codex 插件清单和 Native 启动器。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/README.md">官方入口</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-interface.ts">OpenCode 接口</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.codex-plugin/plugin.json">Codex 清单</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/bin/lib/launcher.js">Native 启动器</a></p>
+<p>从 Agent 工程角度，可以把 OMO 理解为 <strong>harness 增强与编排层</strong>：它决定模型获得哪些工作规则、可调用哪些扩展工具、如何启动子任务、何时继续执行，以及哪些状态跨轮次保存。OpenCode 与 Codex 路径依赖宿主自己的模型执行循环；Native 路径也通过发行包复用 Senpi 引擎。不能把整套系统画成三个客户端共同调用一个 OMO 自研 <code>while (tool_calls)</code> 内核。</p>
+<h3 id="heading-5">1.3 本文特别防止的三种误读</h3>
+<p>第一，<code>ultrawork</code> 是一组工作约定、触发逻辑和配套执行机制的入口。关键词本身不产生任务正确性的证明。</p>
+<p>第二，仓库里出现某个模块，只说明实现存在。它是否启用、是否暴露为工具、是否被当前宿主执行，需要继续看注册链和配置条件。</p>
+<p>第三，本次基线处于 Beta 演进阶段。比如源码内部保留 <code>dag</code> 命名，但 Senpi 的模型侧工具名已经是 <strong><code>workflow</code></strong>；旧 <code>ralph_loop</code> 配置有向 <code>goal</code> 迁移的兼容逻辑。使用旧文章中的入口和默认值，可能得到不同结果。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts">图工具</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/validate.ts">配置迁移</a></p>
+<p><a id="source-map"></a></p>
+<h2 id="heading-6">2. 源码地图：按工程职责阅读，而不是按角色名阅读</h2>
+<p>根包声明了 <strong>28 个 workspaces</strong>。这是 <code>package.json.workspaces</code> 的数组长度，不是仓库全部目录数，也不是独立服务数。我们选取了 69 个关键证据文件保存路径、行数和 SHA-256，便于复查。<a href="research/snapshot.json">快照</a></p>
+<pre><code class="language-text">packages/
+├── omo-opencode/        OpenCode 插件、CLI、角色、Hook、后台任务
+├── omo-codex/           Codex 安装器、插件清单和独立 Hook 组件
+├── omo-senpi/           Senpi 扩展接线、workflow、记忆运行时
+├── omo-native/          omo-ai 发行包与固定引擎启动器
+├── senpi-task/          任务状态、执行器、生命周期、DAG 与恢复
+├── model-core/          模型要求、候选链和能力相关逻辑
+├── prompts-core/        跨宿主共享提示词资产
+├── omo-config-core/     统一配置、宿主视图与模型引用
+├── delegate-core/       委派相关共享逻辑
+├── team-core/           团队状态、任务认领、邮箱与工作树
+├── memory-core/         Git 记忆、召回、反思与文件操作
+├── hashline-core/       行锚点、校验和编辑算法
+├── rules-engine/        规则匹配与注入基础
+├── skills-loader-core/  Skill 发现与内建能力选择
+├── mcp-client-core/     MCP 客户端与连接管理
+├── lsp-core/            语言服务基础能力
+├── lsp-tools-mcp/       LSP 的工具协议表面
+├── lsp-daemon/          LSP 服务进程入口
+└── shared-skills/       可被多个宿主消费的 Skill 资产
+</code></pre>
+<p>这张地图揭示了一个设计方向：<strong>能跨宿主复用的算法、状态和资产下沉到 core；依赖宿主事件、工具 API 和会话结构的代码保留在适配层。</strong> 但 <code>senpi-task</code> 明确与 Senpi 任务运行方式相连，不应仅因位于独立 package 就称为完全通用的任务引擎。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/package.json">工作区定义</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/index.ts">Senpi 接线</a></p>
+<p>建议阅读顺序是：<strong>入口 → 注册点 → 调用分支 → 状态存储 → 失败处理 → 测试</strong>。例如研究 Hashline，不能只读哈希函数；还要确认 <code>hashline_edit</code> 是否开启、读工具如何返回锚点、编辑前如何校验和拒绝。</p>
+<p><a id="lifecycle"></a></p>
+<h2 id="heading-7">3. OpenCode 插件如何进入一次真实执行？</h2>
+<p><a class="figure-link" href="assets/02-lifecycle.svg" target="_blank" rel="noopener"><img src="assets/02-lifecycle.svg" alt="OpenCode 插件启动、消息进入、工具前后处理与继续执行" loading="lazy"></a></p>
+<h3 id="heading-8">3.1 入口很短，装配逻辑很长</h3>
+<p><code>packages/omo-opencode/src/index.ts</code> 调用 <code>createPluginModule()</code>，导出模块及其 server 入口。真正的启动流程在 <code>src/testing/create-plugin-module.ts</code>。这个文件虽然放在 <code>testing</code> 路径下，当前正式入口确实导入它，不能按目录名认定它只服务于测试。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/index.ts">入口</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/testing/create-plugin-module.ts">启动实现</a></p>
+<p>启动阶段要完成的工作包括：初始化配置上下文、迁移旧工作区、检测重复插件、准备客户端认证、加载配置、准备运行时 Skill 来源、创建 Managers、Tools 和 Hooks，再把它们组合成宿主接口。退出时还要清理后台资源和已注册的 Hook。</p>
+<p>用本文原创的伪代码表示关键依赖：</p>
+<pre><code class="language-typescript">const config = loadAndValidateConfig(project);
+const managers = createManagers(host, config);
+const capabilities = await discoverAndRegisterTools(managers, config);
+const hooks = composeHooks(managers, capabilities, config);
+return bindHostEvents({ managers, tools: capabilities.tools, hooks });
+</code></pre>
+<p>这里的核心并非工厂函数数量，而是<strong>装配顺序与生命周期归属</strong>：Hook 需要知道有哪些 Skill；委派工具需要后台管理器；配置阶段又要把最终 Agent、MCP、命令写给宿主。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/create-managers.ts">Managers</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-registry.ts">工具注册</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/create-hooks.ts">Hook 组合</a></p>
+<h3 id="heading-9">3.2 两类“配置加载”要分开</h3>
+<p>第一类是读取 OMO 配置：解析配置层、解析模型引用、处理宿主视图、验证字段、合并和迁移。</p>
+<p>第二类是 <code>config</code> Hook：在宿主配置对象上应用 Provider、插件组件、Agent、工具权限、MCP 和命令。这一步是在“构建宿主最终可执行能力”。实现还缓存 Agent 装配结果；缓存重放时需要恢复排序、注册名称等副作用。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-config/omo-config-chain.ts">配置链</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/validate.ts">验证</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-handlers/config-handler.ts">配置 Hook</a></p>
+<p>Agent 构造中有一个很具体的工程细节：初始化阶段使用缓存和可用模型信息，源码明确避免此时再调用 OpenCode 客户端 API，以免配置加载与服务初始化互相等待。它说明插件初始化本身也是并发系统，不能无条件在所有工厂函数里查询宿主服务。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/builtin-agents.ts">内建 Agent 构造</a></p>
+<h3 id="heading-10">3.3 Hook 是事件处理管线，不是统一的“拦截器黑盒”</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>宿主事件</th>
+<th>OMO 的典型处理</th>
+<th>工程意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chat.message</code> / <code>chat.params</code></td>
+<td>关键词、会话状态和推理参数调整</td>
+<td>使行为与当前模型、模式一致</td>
+</tr>
+<tr>
+<td><code>tool.execute.before</code></td>
+<td>参数规范化、写入保护、规则注入、团队工具门控</td>
+<td>在副作用发生前约束动作</td>
+</tr>
+<tr>
+<td><code>tool.execute.after</code></td>
+<td>输出处理、注释检查、Hashline 读增强、元数据恢复</td>
+<td>改善下一轮模型观察</td>
+</tr>
+<tr>
+<td><code>experimental.chat.messages.transform</code></td>
+<td>上下文、团队邮箱、工具消息配对修复等</td>
+<td>维护最终模型输入</td>
+</tr>
+<tr>
+<td><code>event</code></td>
+<td>会话生命周期、后台任务和失败事件处理</td>
+<td>推进状态机与异步结果交接</td>
+</tr>
+<tr>
+<td><code>experimental.session.compacting</code></td>
+<td>压缩前补充上下文、保护任务状态</td>
+<td>降低压缩导致的任务遗忘</td>
+</tr>
+</tbody>
+</table></div>
+<p>表格列出的是代表性职责，不意味着每项永远开启。部分 Hook 由配置控制，压缩相关接口另在启动装配处接入。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-interface.ts">接口</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-execute-before.ts">工具前</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-execute-after.ts">工具后</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/messages-transform.ts">消息变换</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/testing/create-plugin-module.ts">启动实现</a></p>
+<p>错误策略也有差别：工具前处理可以抛错阻止动作；工具后处理包含捕获和日志逻辑；消息变换中部分项被标为 fatal。因而不能概括成“所有 Hook 错误都中断”或“所有错误都忽略”。插件作者必须逐事件定义失败时该阻止、降级还是重试。</p>
+<p><a id="agents"></a></p>
+<h2 id="heading-11">4. Agent 是角色配置，运行实例由宿主创建</h2>
+<h3 id="heading-12">4.1 角色与分类各管一层</h3>
+<p><code>builtin-agents.ts</code> 维护角色工厂和元数据。Sisyphus、Hephaestus、Atlas 的配置还会结合可用 Agent、Skill 和分类构造。当前 <code>agentSources</code> 表列出了 10 个角色；Prometheus 则在 <code>agent-config-assembly.ts</code> 中按 planner 开关单独构建，开关缺省为 true。这解释了官方“11 agents”与工厂表行数的差别，但实际可用角色仍受配置和模型可用性影响。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/builtin-agents.ts">角色工厂</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-handlers/agent-config-assembly.ts">配置装配</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/README.md">官方说明</a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>角色或角色组</th>
+<th>主要工作定位</th>
+<th>实现阅读重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sisyphus</td>
+<td>主任务理解、委派、推动收敛</td>
+<td>动态 Prompt、工具与能力目录</td>
+</tr>
+<tr>
+<td>Hephaestus</td>
+<td>深入实现与自主工程执行</td>
+<td>独立工厂及模型相关构造</td>
+</tr>
+<tr>
+<td>Atlas</td>
+<td>计划执行与编排</td>
+<td>额外的编排上下文与装配</td>
+</tr>
+<tr>
+<td>Sisyphus Junior</td>
+<td>分类委派的执行角色</td>
+<td><code>category</code> 解析后的常见目标</td>
+</tr>
+<tr>
+<td>Prometheus</td>
+<td>规划角色</td>
+<td>在最终 Agent 装配阶段单独构建</td>
+</tr>
+<tr>
+<td>Explore / Librarian</td>
+<td>仓库探索、资料与实现查证</td>
+<td>元数据触发条件和工具范围</td>
+</tr>
+<tr>
+<td>Oracle / Metis / Momus</td>
+<td>咨询、规划前分析、计划审查</td>
+<td>各自的角色指令与权限配置</td>
+</tr>
+<tr>
+<td>Multimodal Looker</td>
+<td>视觉与多模态理解</td>
+<td>模型能力和工具启用条件</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些角色并不是仓库训练出来的独立模型，也不是启动时自动全部常驻的进程。它们首先是 <code>AgentConfig</code> 和提示词工厂；在实际委派时才结合模型、会话和任务形成运行实例。</p>
+<h3 id="heading-13">4.2 动态 Prompt 在解决能力目录漂移</h3>
+<p>如果主 Agent 的提示词写死“可以调用 Explore、Oracle 和某个 Skill”，但用户禁用了对应工具，模型就会得到失真的能力描述。OMO 把可用 Agent、Skill、分类和元数据输入提示词构造过程，使委派表和工具选择说明尽量与当前配置同步。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/dynamic-agent-prompt-builder.ts">动态 Prompt</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/sisyphus-agent-factory.ts">Sisyphus 工厂</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/agents/builtin-agents.ts">内建角色装配</a></p>
+<p>可以把一次角色实例理解成：</p>
+<pre><code class="language-text">角色指令 + 当前能力目录 + 模型相关变体
+        + 分类提示 + 显式 Skill 内容 + 当前任务
+        + 宿主授予的工具与权限
+</code></pre>
+<p>这个分层值得借鉴：<strong>角色回答“怎样思考和工作”，分类回答“当前任务属于哪种工作”，模型配置回答“用哪个执行资源”。</strong> 它们可以组合，不需要为每个“角色 × 模型 × 任务类型”复制一整套 Prompt。</p>
+<h3 id="heading-14">4.3 规划与执行要追踪当前入口</h3>
+<p>仓库保留不少 Prometheus、Atlas、Boulder 等历史命名，也在使用 <code>/ulw-plan</code>、<code>/ulw-execute</code> 等工作流入口。阅读规划链路时，应先看当前命令、Skill 和 Agent 装配，再理解旧名兼容。不能直接复述早期版本“固定切换到某个规划 Agent，然后统一执行”的流程。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/builtin-commands/commands.ts">当前命令</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-handlers/agent-config-assembly.ts">Agent 装配</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/validate.ts">配置迁移</a></p>
+<p>模型侧的“先规划、再检查、最后执行”仍主要是行为契约。真正能阻止某类写入或强制工具范围的，是权限配置和对应工具前 Hook。两者结合才构成完整约束。</p>
+<p><a id="delegation"></a></p>
+<h2 id="heading-15">5. 一次 <code>task</code> 委派如何变成子会话？</h2>
+<p><code>createDelegateTask()</code> 是 OpenCode 路径中最值得细读的入口之一。它对外注册 <code>task</code> 的参数，并把参数解析、Skill 内容、父上下文、模型决策与执行分支连接起来。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/tools.ts">委派工具</a></p>
+<h3 id="heading-16">5.1 参数定义本身就是运行协议</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+<th>容易误解之处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prompt</code></td>
+<td>子任务完整描述</td>
+<td>子任务需要足够独立的背景和验收条件</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>按任务分类路由</td>
+<td>与直接选 <code>subagent_type</code> 是两种选择方式</td>
+</tr>
+<tr>
+<td><code>subagent_type</code></td>
+<td>指定专业角色</td>
+<td>不能和分类目标随意叠加</td>
+</tr>
+<tr>
+<td><code>load_skills</code></td>
+<td>显式注入 Skill</td>
+<td>可省略，默认为空数组</td>
+</tr>
+<tr>
+<td><code>run_in_background</code></td>
+<td>后台返回或同步等待</td>
+<td>描述推荐后台，但<strong>省略时按 false 处理</strong></td>
+</tr>
+<tr>
+<td><code>task_id</code></td>
+<td>继续已有子会话</td>
+<td>此处期望 <code>ses_...</code>，不是 <code>bg_...</code> 后台任务号</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后两点尤其值得注意：文案推荐、参数缺省值、运行 ID 类型是三个不同层次。模型只记住“后台任务 ID”，在继续任务时就可能把不正确的 ID 传回工具。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/tools.ts">参数 Schema 与分支</a></p>
+<h3 id="heading-17">5.2 实际调用链</h3>
+<pre><code class="language-text">task.execute
+  → prepareDelegateTaskArgs
+  → resolveSkillContent
+  → resolveParentContext
+  → 已有 task_id ? 继续已有会话
+  → category ? resolveCategoryExecution : resolveSubagentExecution
+  → 组合子任务 system 内容
+  → 后台 / 同步 / 特殊不稳定模型执行分支
+  → 创建或恢复宿主子会话
+</code></pre>
+<p>Skill 加载失败时，工具先返回错误，避免带着缺失的工作约定继续启动。分类委派还会读取当前模型配置，减少启动后配置改变所造成的偏差。某些不稳定模型在显式同步调用时会进入专门的后台执行处理分支。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/tools.ts">委派工具</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/category-resolver.ts">分类解析</a></p>
+<h3 id="heading-18">5.3 模型路由是候选链加可用性判断</h3>
+<p>内建分类包括 <code>visual-engineering</code>、<code>ultrabrain</code>、<code>deep</code>、<code>quick</code> 等。分类解析涉及用户显式配置、Junior 的默认覆盖、分类默认值、模型可用集合、系统默认模型，以及 fallback 设置。不同分支存在不同优先关系，不宜压缩成一个放之四海皆准的四项优先级表。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/category-resolver.ts">分类解析</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/delegate-task/model-selection.ts">模型选择</a></p>
+<p>在本次快照中，<code>ultrabrain</code> 的候选链包含 <code>gpt-6-astra</code> 的 <code>max</code> 变体和 <code>gpt-5.6-sol</code> 的后备项；<code>deep</code> 使用不同的推理变体。这里记录的是<strong>仓库中的路由字符串与策略</strong>，不等于这些模型在任意账户中都可用，也不是本文对模型优劣的评测。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/model-core/src/category-model-requirements.ts">分类候选链</a></p>
+<p>工程上应分开看两个问题：</p>
+<ol>
+<li><strong>启动时选择</strong>：根据配置与可用性决定这次调用用哪个模型。</li>
+<li><strong>执行时恢复</strong>：模型调用真的失败后，是否重试、如何切换候选项、怎样处理旧会话事件。</li>
+</ol>
+<p>候选链解决的是执行资源可替换性；它不能自动解决工具副作用幂等、不同模型输出习惯差异或上下文迁移损失。</p>
+<p><a id="background"></a></p>
+<h2 id="heading-19">6. 后台任务：可靠性集中在状态、配额与结果交接</h2>
+<p><a class="figure-link" href="assets/03-background.svg" target="_blank" rel="noopener"><img src="assets/03-background.svg" alt="后台任务、执行尝试、并发配额与父会话唤醒" loading="lazy"></a></p>
+<h3 id="heading-20">6.1 Task、Attempt 和 Session 必须分别建模</h3>
+<p>OpenCode 后台管理器负责任务集合、启动、轮询、事件处理和通知。<code>attempt-lifecycle.ts</code> 进一步把一次业务任务和一次实际执行拆开：<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/manager.ts">后台管理器</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/attempt-lifecycle.ts">执行尝试</a></p>
+<ul>
+<li><strong>Task</strong>：逻辑工作项，后台 ID 常见为 <code>bg_...</code>。</li>
+<li><strong>Attempt</strong>：某一次执行尝试，拥有自己的模型、状态、起止时间和 attempt ID。</li>
+<li><strong>Session</strong>：宿主真实执行的对话会话，常见 ID 为 <code>ses_...</code>。</li>
+</ul>
+<p>假设第一次调用超时，系统启动第二次尝试；第一条会话稍后又发来完成事件。如果只有一个 <code>task.status</code>，迟到事件可能把仍在运行的新尝试标成完成。</p>
+<p>这里的实现以 <code>currentAttemptID</code> 作为当前投影的依据。旧 attempt 可以被记录为结束，但只有当前 attempt 才能把状态、会话和模型投影回 Task。绑定会话时也检查 attempt 是否仍然当前、是否已终止。</p>
+<p>**局部实测：**实验先创建 <code>ses_old</code>，再重试到 <code>ses_new</code>，最后把旧 attempt 标成 completed。任务仍保持 <code>sessionId = ses_new</code>、<code>status = running</code>。这证明该投影函数在所测场景中挡住了旧结果覆盖；它不等于整个事件系统已经被穷尽验证。<a href="examples/source-probes.mjs">实验</a></p>
+<h3 id="heading-21">6.2 并发限制有一个很容易看漏的语义</h3>
+<p><code>ConcurrencyManager</code> 先选配额键，再维护该键的计数和等待队列：<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/concurrency.ts">并发实现</a></p>
+<pre><code class="language-text">存在 modelConcurrency[provider/model] → 键为完整模型名
+否则存在 providerConcurrency[provider] → 键为 provider
+否则                                  → 键为完整模型名
+</code></pre>
+<p>限制值按模型、Provider、默认值选择；没有配置时回退为 5；配置为 0 表示无限制。<code>release()</code> 优先把已有槽位转交给队首等待者，计数不变；无人等待时才递减。队列项的 <code>settled</code> 标志防止取消与释放重复处理同一个等待者。</p>
+<p><strong>关键结论：这不是“全局上限 → Provider 上限 → 模型上限”同时生效的层级信号量。</strong> 当某个模型有显式覆盖时，它使用独立的配额键。实验设置 Provider 上限为 1、特定模型上限为 2，成功让普通模型占用 1 个 Provider 槽位，特定模型再占用 2 个独立槽位。</p>
+<p>这不是凭字段名字推断出的细节，而是直接运行源码确认的行为。如果团队需要严格的供应商总并发预算，应增加独立的聚合预算层；不能仅凭 <code>providerConcurrency</code> 字段存在就认定所有模型共享同一总上限。</p>
+<h3 id="heading-22">6.3 进程还活着，不代表任务在推进</h3>
+<p>后台轮询不仅看 elapsed time，还检查任务状态、最近活动、会话状态、会话是否消失、通知是否仍待投递等信息。已终止任务与仍在运行的任务使用不同回收条件；Team 任务也有特殊处理。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/task-poller.ts">轮询与回收</a></p>
+<p>在失活处理里，代码先尝试终止会话；如果终止失败，还会检查会话是否确实已不存在，再决定能否结束任务并释放资源。这能减少“调度层认为取消了，实际子任务还在继续”的状态分裂。</p>
+<p><code>background_task</code> 配置同时包含并发、深度、后代数量、失活超时、任务 TTL 和工具调用限制等字段。但 Schema 注释只是阅读入口，真实回收条件仍应以运行代码为准。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/schema/background-task.ts">配置 Schema</a></p>
+<h3 id="heading-23">6.4 通知是执行的一部分</h3>
+<p>子任务完成后还要解决：父会话是否忙碌？是否已有待处理的内部提示？同一结果是否已经通知？是否需要延后唤醒？这些问题对应 <code>parent-wake-*</code> 系列文件和通知协调器。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/parent-wake-notifier.ts">父会话通知</a></p>
+<p>工具前 Hook 还会识别“后台任务仍在运行时用纯 <code>sleep</code> 反复等待”的情况，阻止这类空转，提示由完成通知推进。这说明后台机制设计的目标是<strong>事件驱动的交接</strong>，而不只是让模型不断轮询。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-execute-before.ts">工具前处理</a></p>
+<p><a id="teams"></a></p>
+<h2 id="heading-24">7. Team Mode：从主从委派扩展为有状态的协作</h2>
+<p><a class="figure-link" href="assets/04-team.svg" target="_blank" rel="noopener"><img src="assets/04-team.svg" alt="Team Mode 的成员、共享任务、邮箱与工作树" loading="lazy"></a></p>
+<p>普通委派主要是“父任务给子任务一个 Prompt，等待结果”；Team Mode 进一步引入成员身份、共享任务、认领、消息和生命周期。OpenCode 工具注册受 <code>team_mode.enabled</code> 控制；Codex 与 Senpi 的协作表面则走各自的适配链。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-registry.ts">工具注册</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/config.ts">团队配置</a></p>
+<h3 id="heading-25">7.1 任务认领必须在锁内复查</h3>
+<p><code>claimTask()</code> 的关键过程是：读取任务、检查 pending 与依赖、处理陈旧锁、进入认领锁、<strong>重新读取任务和依赖</strong>、写入 claimed 状态和 owner，最后原子写入任务文件。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-tasklist/claim.ts">认领实现</a></p>
+<p>为什么要检查两次？因为第一次读取与获取锁之间，其他成员可能已经认领了任务。没有锁内二次检查，两个成员会同时认为自己是负责人。</p>
+<p>这一机制把“不要重复做别人的任务”从协作礼仪变成了确定性的存储约束。但它只约束经过这个认领入口的行为；成员直接编辑相同文件时，仍需要工作划分和文件隔离。</p>
+<h3 id="heading-26">7.2 邮箱不只是 JSON 消息列表</h3>
+<p><code>sendMessage()</code> 包含成员有效性验证、团队删除状态检查、广播权限、载荷大小限制、收件箱字节预算、重复 ID 检查和收件箱锁。预留投递中的消息文件也纳入未读预算；已消费消息另外留下可检查记录。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-mailbox/send.ts">发送实现</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-mailbox/consumed-ledger.ts">消费记录</a></p>
+<p>这些设计分别回应几个常见失败：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>失败情形</th>
+<th>对应机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成员向所有人无节制广播</td>
+<td>广播要求 lead 身份</td>
+</tr>
+<tr>
+<td>发送方持续产生消息，接收方处理不过来</td>
+<td>收件箱背压</td>
+</tr>
+<tr>
+<td>重复发送同一个消息 ID</td>
+<td>现有普通或预留文件检测</td>
+</tr>
+<tr>
+<td>消费者退出后不清楚消息是否已处理</td>
+<td>消费记录与恢复相关机制</td>
+</tr>
+<tr>
+<td>删除中的团队继续接受新消息</td>
+<td>生命周期状态检查</td>
+</tr>
+</tbody>
+</table></div>
+<p>要注意，源码里的广播是按接收者逐个处理。不能据此声称具有跨所有收件人的原子广播事务；也不能把“有去重记录”直接等同于端到端 exactly-once 语义。真实副作用仍需消费方幂等。</p>
+<h3 id="heading-27">7.3 工作树是文件视图隔离，tmux 是展示与控制</h3>
+<p><code>team-worktree/manager.ts</code> 能为成员创建 detached Git worktree，使不同成员拥有独立的工作目录。它是可选路径，不应默认每个后台子任务都自动拥有独立工作树。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/team-worktree/manager.ts">工作树实现</a></p>
+<p>Git worktree 解决源码修改相互踩踏的一部分问题，但多个目录仍可能共用端口、数据库、凭据和其他机器资源。tmux 则用于展示和管理多个终端会话。二者都不构成操作系统级沙盒。</p>
+<p>如果借鉴这一实现建设生产团队 Agent，至少应分别设计<strong>任务所有权、消息投递、文件修改归属和最终集成验收</strong>。这些职责不会因“启动了四个 Agent”自然出现。</p>
+<p><a id="dag"></a></p>
+<h2 id="heading-28">8. Senpi 的图执行：从提示词里的计划走向调度器里的依赖</h2>
+<p><a class="figure-link" href="assets/05-dag.svg" target="_blank" rel="noopener"><img src="assets/05-dag.svg" alt="DAG 依赖前沿调度：一个慢节点不会阻止无关后继开始" loading="lazy"></a></p>
+<h3 id="heading-29">8.1 对外叫 <code>workflow</code>，内部仍叫 DAG</h3>
+<p>Senpi 扩展的任务组件调用 <code>createDagTool()</code>，但工具文件定义的 <code>WORKFLOW_TOOL_NAME</code> 是 <code>workflow</code>。描述鼓励通过 eval 单元中的 <code>tool.workflow</code> 和 JavaScript SDK 组织图定义。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts">工具实现</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/index.ts">扩展接线</a></p>
+<p>这是<strong>宿主 CodeMode 与 OMO 图工具协同</strong>的表面：OMO 在这里贡献图契约、管理器、调度、结果与恢复；仅阅读这个仓库里的工具接线，不能反推完整 eval 执行隔离实现，因为底层宿主引擎是另一个依赖。</p>
+<p>节点目标采用 <code>category</code> 与 <code>subagent_type</code> 二选一。显式 <code>model</code> 只允许与直接 Agent 目标一起使用。工具边界先验证目标，再交给图管理器和编译器；TypeScript 联合类型表达的限制仍需要运行时验证，不能只依赖类型标注。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/types.ts">图类型</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts">工具验证入口</a></p>
+<h3 id="heading-30">8.2 <code>dependsOn</code> 只控制顺序</h3>
+<p>这是图编译器和工具描述都明确表达的契约：<strong>依赖边不会自动把上游结果插入下游 Prompt。</strong> <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/graph.ts">图编译</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts">工具契约</a></p>
+<p>例如以下定义是本文原创的图数据示意，可用于理解 <code>compileDag()</code> 的输入；它没有启动真实 Agent：</p>
+<pre><code class="language-typescript">const definition = {
+  key: &quot;api-change-v1&quot;,
+  name: &quot;实现接口并验证&quot;,
+  nodes: [
+    { id: &quot;spec&quot;, category: &quot;deep&quot;, prompt: &quot;澄清接口，写入 artifacts/spec.md&quot; },
+    { id: &quot;tests&quot;, category: &quot;quick&quot;, prompt: &quot;调查现有测试，写入 artifacts/tests.md&quot; },
+    {
+      id: &quot;implement&quot;, category: &quot;deep&quot;, dependsOn: [&quot;spec&quot;],
+      prompt: &quot;读取 artifacts/spec.md，按其中约束实现接口并记录改动。&quot;
+    },
+    {
+      id: &quot;verify&quot;, category: &quot;deep&quot;, dependsOn: [&quot;implement&quot;, &quot;tests&quot;],
+      prompt: &quot;读取两个产物，检查实际代码，执行适当测试并记录结果。&quot;
+    }
+  ]
+};
+</code></pre>
+<p>真实使用还必须保证文件对下游可见。若节点使用独立 worktree，<code>artifacts/spec.md</code> 不会因为同名就自动共享；需要显式的产物目录、复制或集成机制。<strong>控制依赖与数据传递应分别设计。</strong></p>
+<h3 id="heading-31">8.3 编译阶段先拒绝坏图</h3>
+<p><code>compileDag()</code> 是确定性的图编译函数，时间可以由调用者传入。它会检查空图、重复节点 ID、不存在的依赖、自依赖、环、节点数量和 Prompt 字节预算等，并计算 edges、waves、criticalPath、bottlenecks。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/graph.ts">编译实现</a></p>
+<p>默认最大节点数为 64、每节点 Prompt 字节上限为 262144；这些是当前图设置中的默认值。不能据此认定系统会同时启动 64 个子 Agent，实际运行还受任务引擎的常驻子任务上限约束。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/types.ts">图设置</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/scheduler.ts">调度</a></p>
+<p>实验确认三类非法图被拒绝，且失败时不产生可执行节点数组。这里测的是图编译，不是 LLM 的拆解能力。一个语法合法的 DAG 仍然可能把有业务依赖的任务错误地安排为并行。</p>
+<h3 id="heading-32">8.4 Wave 是描述信息，不是批次屏障</h3>
+<p>设 A、B 无依赖，C 只依赖 A，D 依赖 B 和 C。编译后的 wave 为 <code>[A,B] → [C] → [D]</code>。如果误把 wave 当作屏障，就必须等 A 和 B 都结束才启动 C。</p>
+<p>当前 <code>runFrontier()</code> 的逻辑是：检查就绪前沿，尝试接纳节点，等待一个执行结果，折叠状态，然后重新计算。只要 A 已 completed 且有空槽，C 就可以开始，B 可以继续运行。未获准进入的节点会排队，释放槽位后优先考虑较早被拒绝的请求。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/scheduler.ts">前沿调度</a></p>
+<p>图中的假设时长为 A=2、B=8、C=3、D=1，忽略调度开销且至少有两个槽位：批次屏障耗时 12，前沿调度耗时 9。这是解释语义的算例，<strong>不是项目性能基准</strong>。源码里的 <code>criticalPath</code> 也是基于图结构计算；不应当成使用历史耗时预测的时间关键路径。</p>
+<p>失败传播还有一个细节：跳过依赖节点的级联在当前没有附着执行任务时进行，给运行中的兄弟任务以及某些可恢复节点留下继续推进的机会。它不是一发现失败就立即将所有下游永久跳过。</p>
+<h3 id="heading-33">8.5 可恢复执行依赖日志、检查点和所有权</h3>
+<p><code>dag/journal.ts</code> 在运行锁内恢复当前持久状态、分配序号、追加 WAL 事件、应用 reducer、写检查点，再通知订阅者。completed 节点的结果产物有提前落地的处理，以便进程在检查点替换前退出时仍有恢复依据。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/journal.ts">日志实现</a></p>
+<p>图管理器还处理定义键与指纹、运行重用、修订；调度器提供 retry、send、取消与 suspend 等控制。相同 key 和同一图定义可复用已有运行；不能把“相同 key”理解成可以无条件替换任意新图。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/manager.ts">图管理器</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/task/dag-tool.ts">工具实现</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/recovery.ts">恢复入口</a></p>
+<p>这里更准确的工程定位是<strong>本地持久化、带恢复协议的任务图执行器</strong>。本文没有验证网络分区、多机器一致性、任意副作用的事务回滚，因此不把它描述成分布式工作流平台的等价替代品。</p>
+<p><a id="tools"></a></p>
+<h2 id="heading-34">9. 工具工程：让模型更容易产生可执行、可校验的动作</h2>
+<h3 id="heading-35">9.1 Hashline：把读取观察与编辑锚点连接起来</h3>
+<p><a class="figure-link" href="assets/06-hashline.svg" target="_blank" rel="noopener"><img src="assets/06-hashline.svg" alt="Hashline 从读取锚点到编辑校验，以及短哈希的能力边界" loading="lazy"></a></p>
+<p>普通文本替换依赖模型重新生成原字符串，容易受到缩进、重复文本和旧上下文影响。Hashline 为读取结果中的每行附加行号和短哈希，模型编辑时引用该锚点。实验直接调用本次源码，得到：</p>
+<pre><code class="language-text">1#QH|const count = 1;
+2#TK|return count;
+</code></pre>
+<p>下面是本文使用的编辑参数示意：</p>
+<pre><code class="language-json">{
+  &quot;filePath&quot;: &quot;/workspace/example.ts&quot;,
+  &quot;edits&quot;: [
+    { &quot;op&quot;: &quot;replace&quot;, &quot;pos&quot;: &quot;1#QH&quot;, &quot;lines&quot;: [&quot;const count = 2;&quot;] }
+  ]
+}
+</code></pre>
+<p>这里 <code>/workspace/example.ts</code> 只是示例路径。OpenCode 工具还支持 append、prepend，以及删除、重命名等字段；是否暴露这一工具受 <code>hashline_edit</code> 配置影响。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/hashline-edit/tools.ts">工具 Schema</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/tool-registry.ts">工具注册</a></p>
+<p>底层算法大致分四步：<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/hash-computation.ts">哈希计算</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/validation.ts">锚点校验</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/edit-operations.ts">编辑应用</a></p>
+<ol>
+<li>读取行内容，规范化后生成短哈希。</li>
+<li>收集本次批量编辑引用，在原始内容上统一校验。</li>
+<li>检查范围重叠，去重，并按位置从后往前应用。</li>
+<li>返回新内容以及 no-op、重复编辑等报告信息。</li>
+</ol>
+<p>从后往前处理能减少前面的插入让后续行号移动的问题。锚点过期时，校验器返回附近行和新锚点，给模型一个可恢复的下一步，而不只是“编辑失败”。</p>
+<h3 id="heading-36">9.2 短哈希不是文件事务，也不是安全校验</h3>
+<p>当前实现使用 xxHash32 后取模 256，映射到短标识字典。主要哈希规范化移除 CR 并裁剪行尾空白；验证还兼容旧版忽略空白的哈希。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/hash-computation.ts">哈希计算</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/hashline-core/src/validation.ts">兼容验证</a></p>
+<p><strong>局部实测：</strong><code>const value = 12;</code> 与 <code>const value = 14;</code> 在相同行号下都得到 <code>HX</code>。只需 257 个不同输入就必然超过 256 个桶，出现碰撞是设计空间的自然结果。</p>
+<p>因此，Hashline 适合降低误定位和陈旧读取导致的编辑失败，但不能证明目标文件未被其他进程修改。需要严格并发写控制时，还应使用完整文件摘要、锁或版本比较。本文测试的是核心字符串编辑逻辑，没有把它当作整个文件写入链的并发原子性测试。</p>
+<h3 id="heading-37">9.3 MCP、Skill 和内建工具是不同的能力入口</h3>
+<p>OpenCode 的内建 MCP 配置工厂分别准备 websearch、context7、grep_app 和 lsp；某些来源还取决于配置可用性。<code>skill_mcp</code> 则在已加载的 Skill 中查找声明的 MCP Server，要求一次明确选择 tool、resource、prompt 中的一个操作，并携带 session、Skill、scope 等上下文。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/mcp/index.ts">内建 MCP</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/tools/skill-mcp/tools.ts">Skill MCP</a></p>
+<p>这两条通路不能混用。<code>skill_mcp</code> 对内建 MCP 名称有专门提示，要求使用宿主暴露的原生工具名。否则模型可能反复尝试从错误的注册表寻找已经存在的能力。</p>
+<p>LSP 能提供诊断、跳转、引用和重命名等基于语言服务的操作；结构化 AST 搜索由对应工具与 Skill 资产提供。它们将一部分代码理解和重构步骤交给确定性程序，减少模型猜测。但“有 LSP 诊断”依然不意味着业务测试通过。</p>
+<h3 id="heading-38">9.4 Skill 发现是配置系统的一部分</h3>
+<p><code>createSkillContext()</code> 并行发现 OMO 配置、宿主配置、Claude 用户与项目目录、OpenCode 目录、<code>.agents</code> 目录和共享 Skill 等来源，然后做禁用别名过滤、浏览器 Provider 选择与同名合并。相同名称同时出现在宿主配置和插件配置时，这一分支明确让宿主配置优先。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/skill-context.ts">Skill 发现</a></p>
+<p>这种能力目录最好同时服务于：主 Agent 可见描述、委派时 Skill 注入、命令注册与 MCP 来源。只维护其中一份，容易出现“Prompt 说有，运行时找不到”的故障。</p>
+<p><a id="context"></a></p>
+<h2 id="heading-39">10. 上下文管理与持续执行：既要保住目标，也要知道何时停止</h2>
+<h3 id="heading-40">10.1 上下文是一种需要校验的数据结构</h3>
+<p>多轮工具执行的模型输入包含用户消息、助手消息、工具调用、工具结果、后台通知与压缩摘要。它们并非任意文本拼接：某些模型对工具消息配对、最终消息角色、预填内容等有格式要求。</p>
+<p>OMO 的消息变换管线处理上下文注入、团队状态和邮箱、工具配对等，还对部分 Provider/模型的 assistant prefill 限制做专门恢复。这里修复的是<strong>下一次请求的结构与兼容性</strong>，并没有改变基础模型参数。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin/messages-transform.ts">消息变换</a></p>
+<h3 id="heading-41">10.2 压缩摘要不应该成为任务状态的唯一副本</h3>
+<p><code>compaction-todo-preserver</code> 在压缩前保存详细 Todo 快照。恢复时并非无条件覆盖现状：如果当前已有有效的详细任务列表，应避免把旧状态强行写回；如果任务被简化为空或某类通用占位列表，则尝试恢复。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/hooks/compaction-todo-preserver/hook.ts">Todo 保护</a></p>
+<p>这一实现还尝试解析宿主的 <code>Todo.update</code> 能力，失败时记录日志。它说明插件在宿主升级时存在 API 接缝：代码里有恢复功能，与特定宿主版本上恢复成功，是不同的验收项。</p>
+<p>源码中这个保护器的快照位于内存 Map。它有利于一次进程生命周期内的压缩保护，不能单凭这段实现推导出跨进程持久恢复。持久计划、Boulder 状态、图日志和长期记忆是另外的存储职责。</p>
+<h3 id="heading-42">10.3 持续执行不是无限追加“继续”</h3>
+<p><code>todo-continuation-enforcer</code> 在 session idle 后检查是否存在未完成任务，但会在多种情形下退出：<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/hooks/todo-continuation-enforcer/idle-event.ts">继续执行条件</a></p>
+<ul>
+<li>全部 Todo 已完成，或没有任务；</li>
+<li>用户取消、检测到中断，或同步子任务已交回父任务；</li>
+<li>后台任务还在执行，或仍有待投递唤醒；</li>
+<li>存在未回答的用户问题或尚未完成的内部响应；</li>
+<li>发生 token 上限或不可重试请求错误；</li>
+<li>恢复中、注入中、达到连续失败限制或处于冷却期。</li>
+</ul>
+<p>实现还包含冷却随失败次数增长、停滞检测和压缩保护。它解决的是“当系统确认可以继续且还有工作时，再推动一轮”，而不是无视用户输入和运行状态地循环。</p>
+<p>从控制系统角度看，结束一轮生成是一个观测事件，不能直接等同于任务完成。是否继续，需要任务状态、外部等待与用户控制共同决定。</p>
+<p><a id="memory"></a></p>
+<h2 id="heading-43">11. 记忆系统：Git 存储、上下文编译、词法召回与后台反思</h2>
+<p><a class="figure-link" href="assets/07-memory.svg" target="_blank" rel="noopener"><img src="assets/07-memory.svg" alt="Senpi 记忆系统：持久仓库、模型上下文、召回与反思" loading="lazy"></a></p>
+<p>本节主要讨论 <strong>Senpi 适配层已接线的 <code>memory-core</code></strong>。共享包存在不代表所有宿主默认启用相同记忆能力。Senpi 记忆组件先检查启用配置和宿主 ExtensionAPI 能力，再建立身份与会话绑定；身份冲突时关闭这条绑定路径并报告问题。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/memory/index.ts">记忆入口</a></p>
+<h3 id="heading-44">11.1 先把“记忆”分成不同的数据</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>数据</th>
+<th>生命周期与用途</th>
+<th>不应混淆为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当前会话消息</td>
+<td>本次推理与工具调用轨迹</td>
+<td>永久准确的知识库</td>
+</tr>
+<tr>
+<td>Todo / 计划 / 任务日志</td>
+<td>长任务进度、所有权与恢复</td>
+<td>用户长期偏好</td>
+</tr>
+<tr>
+<td>system 记忆与身份文件</td>
+<td>跨会话稳定信息，编译到 Prompt</td>
+<td>模型权重更新</td>
+</tr>
+<tr>
+<td>其他记忆文件与人物记录</td>
+<td>按主题保存、按需读取或召回</td>
+<td>每轮都全文注入的上下文</td>
+</tr>
+<tr>
+<td>journal / reflection 状态</td>
+<td>哪些对话增量已处理、哪些仍待反思</td>
+<td>只用于展示的聊天日志</td>
+</tr>
+</tbody>
+</table></div>
+<p>一个系统可以同时需要这些数据，但它们的可靠性要求不同：任务状态需要精确推进，经验记忆需要纠错、去重、来源和过期机制。</p>
+<h3 id="heading-45">11.2 Git revision 到模型输入：记忆需要“编译”</h3>
+<p><code>compileMemoryBlockAtRevision()</code> 从一个固定 Git revision 读取文件，单独处理 <code>system/persona.md</code> 与 <code>system/identity.md</code>，再组织其他 system Markdown 和外部路径投影。结果包含 <code>&lt;self&gt;</code>、<code>&lt;memory&gt;</code> 和 metadata 等结构。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/compile/compile.ts">记忆编译</a></p>
+<p>固定 revision 的意义是本次上下文来自一个一致的记忆版本，而不是读取过程中恰好有一半文件发生变化。外部目录主要通过路径投影提示模型，避免所有记忆正文每轮全部进入上下文。</p>
+<p>这可以看作三层结构：<strong>可审计的源文件 → 可缓存的编译结果 → 一次推理的输入视图</strong>。运行接线中使用 MemoryBlockCache、RecallCorpusCache 等缓存，维护“保存什么”与“现在给模型看什么”的区别。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/memory/wiring.ts">运行接线</a></p>
+<h3 id="heading-46">11.3 召回不应被笼统称为向量 RAG</h3>
+<p>本次分析到的 <code>planRecallQueries()</code> 是确定性的词法查询规划器。它从新近文本挑选少量词和相邻短语，过滤停用词；使用 Unicode 字符处理非 ASCII 内容；给定工具文本时还能提取路径相关查询。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/recall/planner.ts">查询规划</a></p>
+<p>默认查询预算最多 4 个；有工具文本时这个实现可以扩展到最多 6 个。实验中的中文文本得到 <code>排队失败</code>、<code>重试机制</code> 和对应短语；这证明非 ASCII 不会被简单丢弃，<strong>不证明具备中文分词或完整的跨语言语义理解</strong>。</p>
+<p><code>searchTranscripts()</code> 则对 TranscriptProvider 提供的会话消息做全扫描。查询中的每个词和每个短语都必须匹配；分数倾向更靠前的匹配和更长的词，分数越小排名越高，同分时按日期排序；隐藏会话缺省不参与。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/search/engine.ts">检索引擎</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/search/query.ts">查询与打分</a></p>
+<p>因此，这条路径是 FTS-lite 风格的词法检索，不依赖 embedding 索引。它的优势是规则明确、便于本地验证；局限是召回对措辞和子串更敏感，且全扫描成本随候选集合增长。此处的复杂度判断是基于循环结构的工程推论，不是性能实测。</p>
+<h3 id="heading-47">11.4 反思是一个后台写入工作流</h3>
+<p>反思状态机接受 step-count、compaction、manual、dream 等请求；处理触发优先级、active 与 pending 预留、多个会话请求合并，以及待处理数量和字节预算。<code>compaction_accepted</code> 先记录待处理标记；后续成功结算再决定是否满足反思触发条件。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/reflection/machine.ts">反思状态机</a></p>
+<p>运行接线把 journal、事实提取、召回、Kibitzer 辅助流程、反思与关闭清理组合起来。不能把整个系统描述为“每轮直接覆盖一个 memory.md”。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/components/memory/wiring.ts">记忆运行时</a></p>
+<p>反思的 Git worktree 集成也有明确边界：在 writer lock 内检查是否已经集成、父仓库是否干净、是否存在其他未结束合并，再合并已验证的分支 tip。返回值区分 merged、parent_dirty、merge_conflict、failed，并利用收据或 ancestry 避免重复集成。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/memory-core/src/reflection/worktree-integration.ts">反思集成</a></p>
+<p>这类设计使后台 Agent 的记忆修改拥有可检查的版本和恢复路径。但 Git 只能记录“改了什么”，不能证明新事实为真。模型从对话中提炼出的偏好、经验和人物信息，仍需要来源、纠错和隐私边界。</p>
+<h3 id="heading-48">11.5 这里的“学习”发生在外部状态</h3>
+<p>本节研究的记忆路径更新文件、索引视图、journal 和提示词输入；没有证据表明它在这条流程里微调基础模型权重。因此，准确的表述是<strong>跨会话外部记忆与经验整理</strong>。这种机制能否改善某类任务的长期表现，要通过保留任务集、错误记忆注入和纠错实验来评估，不能仅靠功能名称判定。</p>
+<p><a id="adapters"></a></p>
+<h2 id="heading-49">12. 三宿主适配：共享核心不等于能力完全相同</h2>
+<p><a class="figure-link" href="assets/08-adapters.svg" target="_blank" rel="noopener"><img src="assets/08-adapters.svg" alt="OpenCode、Codex 与 Senpi 的职责边界和实际入口" loading="lazy"></a></p>
+<h3 id="heading-50">12.1 OpenCode：在宿主生命周期中运行插件逻辑</h3>
+<p>它的主要接口是 TypeScript 插件对象，能注册工具、处理消息和工具事件，利用 SDK 创建子会话，并通过配置 Hook 注入 Agent、MCP 和命令。任务执行循环与基础宿主状态仍由 OpenCode 提供。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-interface.ts">接口</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/spawner.ts">子会话启动</a></p>
+<h3 id="heading-51">12.2 Codex：清单、事件组件、Skills 与 MCP</h3>
+<p>Codex 插件清单把多个事件接到组件脚本，包括 SessionStart、UserPromptSubmit、PreToolUse、PostToolUse、PostCompact、Stop 和 SubagentStop 相关入口。清单中的含义应由宿主支持的事件协议解释，不能直接映射成 OpenCode 同名函数的行为。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.codex-plugin/plugin.json">Codex 清单</a></p>
+<p>一个很有价值的适配案例是 <code>ultrawork</code> 的短指针。组件优先注入紧凑的引导文本，让宿主 Agent 读取完整 Skill；如果文件不存在，则回退到完整内联 directive。它把大段规则资产从有限的 Hook 文本通道中移出，降低被截断的风险。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/components/ultrawork/src/skill-pointer.ts">指针构造</a></p>
+<p>这里“先创建目标、再读完整规则”等内容是组件交给模型执行的指令；不代表构造这段字符串就已经创建了宿主目标。</p>
+<p>Codex 的 <code>.mcp.json</code> 声明 grep_app、context7、git_bash、lsp 四个 Server。协作主要使用 Codex 自身能力与插件组件配合；不能照搬 OpenCode 的 <code>team_*</code> 工具接口来调用。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.mcp.json">Codex MCP</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/README.md">官方版本说明</a></p>
+<h3 id="heading-52">12.3 Native / Senpi：发行包固定引擎，扩展组合能力</h3>
+<p><code>omo-ai</code> 固定依赖 <code>@code-yeongyu/senpi</code> 的 <code>2026.9.16-3</code> 版本。启动器设置品牌与状态路径，把扩展路径交给引擎，并采用 <code>~/.omo/agent</code> 作为规范化的引擎状态目录。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/package.json">独立包</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/bin/lib/launcher.js">启动器</a></p>
+<p>Senpi 扩展用 <code>createOmoSenpiComponents()</code> 组织配置、模式、Skill、LSP、任务、thread、记忆等组件。顺序带有依赖关系，例如配置诊断先于某些启动提示，task 与 memory 分别接自己的运行生命周期。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/extension/component-list.ts">组件清单</a></p>
+<p>这种固定引擎版本的方式缩小了适配器需要面对的运行组合，但引擎升级仍是兼容性工程。本次研究未安装三套宿主做完整交互回归，不把代码存在视为跨宿主功能对齐已经验证。</p>
+<h3 id="heading-53">12.4 使用时先选择发行入口</h3>
+<p>以下是固定提交官方文档提供的产品安装入口，供理解三条分发路径；本次调研没有执行这些安装命令：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>已有环境与目标</th>
+<th>官方入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在 OpenCode 中使用 Ultimate</td>
+<td><code>bunx oh-my-openagent install</code></td>
+</tr>
+<tr>
+<td>在 Codex CLI 中使用 Light</td>
+<td><code>npx lazycodex-ai install</code></td>
+</tr>
+<tr>
+<td>同时配置两种插件</td>
+<td><code>bunx oh-my-openagent install --platform=both</code></td>
+</tr>
+<tr>
+<td>使用独立的 Senpi Beta 发行版</td>
+<td><code>npm i -g omo-ai@beta</code>，随后执行 <code>omo</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Native 路径要求 <code>@beta</code> 标签，npm 上的裸包名 <code>omo</code> 不是这里的 <code>omo-ai</code>。这些入口解决分发与配置，不替代各宿主和模型 Provider 的可用性检查。阅读特定提交应使用前文的源码固定方式；上述未固定版本的安装命令可能随发布时间获取不同代码。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/README.md">官方安装说明</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-native/package.json">独立包</a></p>
+<p><a id="configuration"></a></p>
+<h2 id="heading-54">13. 配置、权限和可观测性：控制应落在能执行它的层</h2>
+<h3 id="heading-55">13.1 配置合并有意保留不同语义</h3>
+<p>统一配置通过 core 加载，OpenCode 再投影出适合自己的配置视图。项目和用户层、profile、宿主块、模型引用共同决定结果，不应只用一句“项目覆盖用户”概括整个系统。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-config/omo-config-chain.ts">配置视图</a></p>
+<p><code>mergeConfigs()</code> 对 agents、categories、team_mode 等做深合并，对 disabled 系列列表做去重并集。<code>validatePluginConfig()</code> 收集字段诊断，并按可解析的顶层部分构建配置；它不是任一未知键出现就无条件终止整个插件。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/plugin-config/config-merger.ts">合并</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/validate.ts">验证</a></p>
+<p>其中 <code>mcp_env_allowlist</code> 和 Playwright MCP 参数还有用户来源保护，防止项目层任意扩大这些设置。保护特定字段是具体的信任边界，不能外推为所有项目配置都已经不可信隔离。</p>
+<p>下面是便于讨论的 OpenCode 项目配置示例，字段来自本次源码；不是本机已安装或已运行的配置：</p>
+<pre><code class="language-jsonc">// .omo/omo.jsonc
+{
+  &quot;team_mode&quot;: {
+    &quot;enabled&quot;: true,
+    &quot;max_parallel_members&quot;: 3,
+    &quot;tmux_visualization&quot;: false
+  },
+  &quot;background_task&quot;: {
+    &quot;defaultConcurrency&quot;: 2,
+    &quot;maxDepth&quot;: 2,
+    &quot;maxLiveDescendantsPerRoot&quot;: 6
+  },
+  &quot;hashline_edit&quot;: true
+}
+</code></pre>
+<p><code>defaultConcurrency: 2</code> 在前述实现中是各选定配额键的回退限制，并不是整个进程总共最多两个任务。Team 的成员并行控制、后台任务控制以及 Senpi 任务引擎的常驻限制，也不应视为同一个配置域。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/features/background-agent/concurrency.ts">并发</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/config/schema/background-task.ts">后台配置</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/team-core/src/config.ts">团队配置</a></p>
+<h3 id="heading-56">13.2 三层约束分别验收</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>例子</th>
+<th>能证明什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型行为约定</td>
+<td>先计划、使用 Skill、验证后再交付</td>
+<td>模型被告知了工作流程，遵循率需评测</td>
+</tr>
+<tr>
+<td>OMO 确定性程序</td>
+<td>DAG 拒绝环、认领锁、编辑锚点校验</td>
+<td>经过相应入口时执行了具体检查</td>
+</tr>
+<tr>
+<td>宿主与操作系统</td>
+<td>工具权限、文件系统隔离、网络和进程限制</td>
+<td>决定实际能产生哪些副作用</td>
+</tr>
+</tbody>
+</table></div>
+<p>这张表是基于源码的工程分析。一个工具前检查即使非常严格，也不能自动覆盖未经该工具入口发生的所有系统调用；一个独立 worktree 也不会天然隔离凭据。</p>
+<h3 id="heading-57">13.3 应观察任务轨迹，而不只观察最终回复</h3>
+<p>Managers 中有日志、任务展示与状态镜像；图执行有边界事件、序号、检查点和订阅；Codex 清单、Senpi 组件中也能看到 telemetry 入口。这些是不同的观测通路，<strong>本次未做运行时网络抓取，不对实际上传字段、默认发送行为和保留时间作结论</strong>。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-opencode/src/create-managers.ts">Managers</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/senpi-task/src/dag/journal.ts">DAG 日志</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.codex-plugin/plugin.json">Codex 清单</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-senpi/src/extension/component-list.ts">Senpi 组件</a></p>
+<p>若在团队内扩展，建议统一记录 <code>root session → task → attempt → child session → model → artifact</code> 的关联，另记录工具调用成本、等待时间、恢复次数和验收结果。这样才有可能解释一次长任务为什么慢、为什么贵、为什么宣称完成却没有通过测试。</p>
+<h3 id="heading-58">13.4 许可证也要以具体文件为准</h3>
+<p>根包声明 <code>SUL-1.0</code>，根 <code>LICENSE.md</code> 为 Sustainable Use License；Codex 插件元数据标注了 MIT，仓库另有第三方说明。这里只记录源码事实，不把整个仓库笼统标成统一 MIT，也不将公开源码等同于无限制使用授权。复用具体组件时应核对相应许可证文件与归属。<a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/LICENSE.md">根许可证</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/package.json">根包</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/packages/omo-codex/plugin/.codex-plugin/plugin.json">Codex 元数据</a> · <a href="https://github.com/code-yeongyu/oh-my-openagent/blob/bee849b228d1cb076a8f2ac839335f43399febe1/THIRD-PARTY-NOTICES.md">第三方说明</a></p>
+<p><a id="walkthrough"></a></p>
+<h2 id="heading-59">14. 把机制串起来：一个接口改造任务如何推进？</h2>
+<p>下面是根据已读实现构造的工程案例，<strong>不是一次已经运行的真实模型轨迹</strong>。假设用户要求“为项目增加批量导入接口，补充测试，并验证兼容性”。</p>
+<ol>
+<li><strong>建立入口与能力视图。</strong> 宿主加载 OMO，解析项目配置，准备当前可用 Agent、分类、Skill 和工具。主 Agent 收到用户任务以及相应工作约定。</li>
+<li><strong>获取最少的必要信息。</strong> 先读取路由、数据模型和测试约定。独立的仓库探索可委派；需要连续修改同一接口文件的工作应保持清晰所有权。</li>
+<li><strong>定义子任务契约。</strong> 每个子任务包含范围、可修改文件、输入产物、输出位置和验收方法。分类路由选择执行模型，Skill 提供具体工作方法。</li>
+<li><strong>进入受控执行。</strong> OpenCode 可使用后台 task 与通知；Senpi 可用 workflow 表达依赖。两条路径的工具名、ID 与恢复协议分别遵循各自实现，不能混用。</li>
+<li><strong>边执行边处理失败。</strong> 模型失败可能产生新 attempt；失活会话进入检测与回收；错误图在运行前被拒绝；Hashline 锚点失效时重新读取；团队认领冲突时重新取得任务状态。</li>
+<li><strong>让结果可见。</strong> 子任务写入明确产物，父任务收到完成通知后读取结果，并检查实际 diff。图依赖只保证顺序，产物传递仍需要明确安排。</li>
+<li><strong>用工程证据判定完成。</strong> 主任务验证正常、非法输入和兼容路径，执行项目适当的分析与测试。Agent 的“完成”消息不能代替退出码、测试输出和实际代码检查。</li>
+<li><strong>保存正确类别的状态。</strong> Todo 和计划记录任务完成；有持久价值的约定才进入记忆流程。临时失败日志与未经确认的猜测不应直接成为长期事实。</li>
+</ol>
+<p>在这条链上，多 Agent 的收益来自可以并行的独立工作；可靠性来自准确的状态和证据。任务划分不当、上下文重复和频繁协调，都可能让多个 Agent 比单个 Agent 更慢。</p>
+<p><a id="experiments"></a></p>
+<h2 id="heading-60">15. 可复现验证：直接运行源码，而不是验证一个相似的玩具实现</h2>
+<p>配套 <a href="examples/source-probes.mjs">source-probes.mjs</a> 直接导入固定提交中的 TypeScript 模块，使用 Node 24 的 TypeScript 转换和一个仅用于实验的相对路径解析器。脚本不安装 OMO、不创建宿主会话、不调用模型、不修改上游源码；只验证选定核心机制。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>实验组</th>
+<th>已观察结果</th>
+<th>不能据此推断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider 队列交接</td>
+<td>同 Provider 的两个模型共享配置槽位</td>
+<td>任意 Provider 的全链路限流表现</td>
+</tr>
+<tr>
+<td>模型覆盖配额</td>
+<td>模型覆盖使用独立键；默认 5、0 表示无限制</td>
+<td>存在统一的全局并发预算</td>
+</tr>
+<tr>
+<td>等待队列取消</td>
+<td>取消者不吞掉后续等待者的槽位</td>
+<td>所有进程退出竞态都正确</td>
+</tr>
+<tr>
+<td>Attempt 隔离</td>
+<td>旧 attempt 完成不覆盖当前 Task 投影</td>
+<td>所有重试副作用幂等</td>
+</tr>
+<tr>
+<td>DAG 合法图</td>
+<td>正确计算 fork/join 的 waves 与结构关键路径</td>
+<td>实际运行耗时最优</td>
+</tr>
+<tr>
+<td>DAG 非法图</td>
+<td>拒绝环、未知依赖和重复节点 ID</td>
+<td>模型拆解的业务依赖一定正确</td>
+</tr>
+<tr>
+<td>Hashline 编辑</td>
+<td>新锚点可编辑，所测旧锚点被拒绝</td>
+<td>文件写入具备事务原子性</td>
+</tr>
+<tr>
+<td>Hashline 碰撞</td>
+<td>找到 <code>HX</code> 碰撞样本</td>
+<td>哈希能作为完整性证明</td>
+</tr>
+<tr>
+<td>词法检索</td>
+<td>AND、短语和 hidden 过滤符合实现</td>
+<td>语义召回质量达到某个指标</td>
+</tr>
+<tr>
+<td>查询规划</td>
+<td>确定性、非 ASCII 与工具词查询成立</td>
+<td>有中文语义分词或向量检索</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>本次结果：10 组全部通过，Node <code>v24.18.0</code>。</strong> 完整输出保存在 <a href="research/probe-results.json">probe-results.json</a>，执行范围和限制在 <a href="research/verification.md">verification.md</a>。</p>
+<p>复现步骤见 <a href="examples/README.md">实验说明</a>。上游广泛使用 Bun 测试，本环境没有 Bun，本次没有安装完整依赖或运行上游全量测试；Node 实验只覆盖可独立导入的模块，不应称为全仓回归通过。</p>
+<h3 id="heading-61">15.1 下一步如果要验证生产可用性</h3>
+<p>下面是建议的补充评测设计，并非本次已执行结果：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>应观测的证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>子任务运行中杀死父进程，再恢复</td>
+<td>任务所有权、重复执行次数、结果是否丢失</td>
+</tr>
+<tr>
+<td>模型 429、超时、断流后切换</td>
+<td>attempt 轨迹、费用、重复副作用、最终质量</td>
+</tr>
+<tr>
+<td>压缩发生在未完成工具调用附近</td>
+<td>工具消息配对、Todo、未决问题是否保留</td>
+</tr>
+<tr>
+<td>团队成员争抢任务、收件箱满</td>
+<td>唯一 owner、背压、消息重投和消费记录</td>
+</tr>
+<tr>
+<td>两成员修改同一模块</td>
+<td>worktree 集成冲突和最终测试结果</td>
+</tr>
+<tr>
+<td>长期记忆包含错误或过时事实</td>
+<td>错误传播、纠正速度、删除与遗忘效果</td>
+</tr>
+<tr>
+<td>单 Agent 与多 Agent 对照</td>
+<td>相同任务集下的成功率、延迟分位数、总 token 与费用</td>
+</tr>
+</tbody>
+</table></div>
+<p><a id="assessment"></a></p>
+<h2 id="heading-62">16. 专业 Agent 工程视角：哪些设计值得借鉴，哪些还需自己证明？</h2>
+<h3 id="heading-63">16.1 最值得借鉴的五个设计</h3>
+<p><strong>第一，显式区分任务与执行尝试。</strong> 这是处理重试、迟到结果、模型切换和恢复的基础。只有一个 status 字段的设计很快会遇到歧义。</p>
+<p><strong>第二，让运行时约束补足提示词。</strong> 认领锁、DAG 校验、工具前守卫和锚点验证，都把一部分易失败行为变成程序检查。Prompt 仍然重要，但能确定判断的事情应尽量由代码判断。</p>
+<p><strong>第三，把宿主适配与共享语义拆开。</strong> 模型策略、图编译、编辑算法和记忆处理可以共享；事件名称、会话启动和工具注册应留在适配层。这样迁移不会退化成在所有文件里堆宿主判断。</p>
+<p><strong>第四，将异步结果投递视为核心协议。</strong> 子任务启动成功只完成了前半程。通知去重、忙碌时延后、父会话唤醒和取消后的事件处理，决定任务最终能否收敛。</p>
+<p><strong>第五，外部记忆也需要版本与写入协议。</strong> 固定 revision 编译、后台反思预留、工作树集成和冲突分类，让记忆从随意文本追加发展成可管理的数据流程。</p>
+<h3 id="heading-64">16.2 复杂度的代价是真实存在的</h3>
+<p>多宿主、多模型、旧配置迁移和多套恢复机制提高了覆盖面，也带来接线与组合测试成本。本次就看到：根包与产品不同名、运行入口位于 <code>testing</code> 目录、DAG 的目录名与工具名不同、Agent 总数需要跨两处装配才能解释。</p>
+<p>这些不自动意味着实现错误，但提醒维护者：<strong>可发现性和架构说明本身也是可靠性工作。</strong> 对外契约、注册代码和实际行为应持续校验，不能长期依赖早期 AGENTS/README 的摘要数字。</p>
+<p>成本同样不能只看单个模型价格。一个更适合的工程核算口径是：</p>
+<pre><code class="language-text">一次成功交付的成本
+  = 主 Agent 调用 + 子 Agent 调用 + 工具与检索
+  + 重试与恢复 + 后台记忆处理 + 人工验收与返工
+</code></pre>
+<p>并行化主要缩短可并行部分的墙钟时间，可能增加总 token；更多专业角色可能提升某些任务质量，也可能引入重复调研和协调。本文没有足够基准数据给出统一提升比例。</p>
+<h3 id="heading-65">16.3 自建同类系统时的实施顺序</h3>
+<p>建议先完成一个可追踪的单任务闭环，再逐层增加复杂度：</p>
+<ol>
+<li>定义稳定的 Tool 契约、任务状态和验收证据。</li>
+<li>引入独立的 attempt、取消、超时和错误分类。</li>
+<li>加入有明确配额语义的后台执行与结果投递。</li>
+<li>对确有独立分工的场景增加团队认领和文件隔离。</li>
+<li>当依赖关系足够明确时，使用可校验、可恢复的 DAG。</li>
+<li>最后把高价值、可纠正的信息纳入长期记忆，并度量收益。</li>
+</ol>
+<p>oh-my-openagent 展示的不是一个通用 Prompt 能解决所有工程问题，而是一组逐步下沉到代码的执行协议。研究它最有价值的方式，是拿一个具体失效场景追问：<strong>状态在哪里、谁有所有权、哪个入口做检查、如何恢复、什么证据证明完成？</strong></p>
+<hr />
+<p>本文图示为概念与实现关系重绘，不是官方 UI 截图。所有源码链接固定到同一提交；图示、实验和文案的完整生成与验证说明见 <a href="research/verification.md">研究记录</a>。</p>
+<!-- GENERATED SOURCE REFERENCES -->
+</main></div>
+<footer class="footer">本页离线可读，无外部字体、脚本或 CDN。点击图示可单独放大查看 SVG。源码链接需要联网。</footer>
+</body></html>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="830" viewBox="0 0 1280 830" role="img" aria-labelledby="title desc">
+<title id="title">团队协作要有所有权、邮箱和集成边界</title><desc id="desc">Team Mode 超出一次性子任务：成员会持续共享任务和交换消息。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#70849a" stroke-width="1.6"/></marker></defs>
+<rect width="1280" height="830" rx="20" fill="#f5f8fc"/>
+<rect x="0" width="1280" height="8" rx="4" fill="#087f83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="58" fill="#087f83" font-size="15" font-weight="700">OMO / ENGINEERING NOTES   •   04</text>
+<text x="44" y="108" fill="#152c46" font-size="33" font-weight="700">团队协作要有所有权、邮箱和集成边界</text>
+<text x="44" y="140" fill="#52677e" font-size="18" font-weight="400">Team Mode 超出一次性子任务：成员会持续共享任务和交换消息。</text>
+<rect x="44" y="182" width="330" height="146" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="196" width="5" height="118" rx="2" fill="#2866bb"/>
+<text x="64" y="219" fill="#2866bb" font-size="23" font-weight="700">Lead</text>
+<text x="64" y="254" fill="#152c46" font-size="20" font-weight="400">拆分任务、确定成员职责</text>
+<text x="64" y="282" fill="#152c46" font-size="20" font-weight="400">协调、读取证据、最终集成</text>
+<rect x="44" y="381" width="330" height="174" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="44" y="395" width="5" height="146" rx="2" fill="#7354b4"/>
+<text x="64" y="418" fill="#7354b4" font-size="23" font-weight="700">Members</text>
+<text x="64" y="453" fill="#152c46" font-size="20" font-weight="400">成员 A：接口实现</text>
+<text x="64" y="481" fill="#152c46" font-size="20" font-weight="400">成员 B：测试与兼容性</text>
+<text x="64" y="509" fill="#152c46" font-size="20" font-weight="400">成员 C：审查</text>
+<rect x="445" y="182" width="390" height="174" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="445" y="196" width="5" height="146" rx="2" fill="#087f83"/>
+<text x="465" y="219" fill="#087f83" font-size="23" font-weight="700">共享任务存储</text>
+<text x="465" y="254" fill="#152c46" font-size="20" font-weight="400">pending → claimed + owner</text>
+<text x="465" y="282" fill="#152c46" font-size="20" font-weight="400">锁外检查 → 获取锁 → 锁内复查</text>
+<text x="465" y="310" fill="#152c46" font-size="20" font-weight="400">依赖检查 + 原子写入</text>
+<rect x="445" y="416" width="390" height="174" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="445" y="430" width="5" height="146" rx="2" fill="#2866bb"/>
+<text x="465" y="453" fill="#2866bb" font-size="23" font-weight="700">成员邮箱</text>
+<text x="465" y="488" fill="#152c46" font-size="20" font-weight="400">普通 / 预留消息 + 消费记录</text>
+<text x="465" y="516" fill="#152c46" font-size="20" font-weight="400">收件箱锁、载荷与未读字节限制</text>
+<text x="465" y="544" fill="#152c46" font-size="20" font-weight="400">背压、重复 ID 检查、广播权限</text>
+<rect x="906" y="182" width="330" height="174" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="906" y="196" width="5" height="146" rx="2" fill="#a35f13"/>
+<text x="926" y="219" fill="#a35f13" font-size="23" font-weight="700">可选 Worktree</text>
+<text x="926" y="254" fill="#152c46" font-size="20" font-weight="400">独立代码目录</text>
+<text x="926" y="282" fill="#152c46" font-size="20" font-weight="400">合并冲突与验收仍要处理</text>
+<text x="926" y="310" fill="#152c46" font-size="20" font-weight="400">文件视图隔离 ≠ 系统沙盒</text>
+<rect x="906" y="416" width="330" height="174" rx="14" fill="white" stroke="#d7e1ed"/>
+<rect x="906" y="430" width="5" height="146" rx="2" fill="#7354b4"/>
+<text x="926" y="453" fill="#7354b4" font-size="23" font-weight="700">可选 tmux 展示</text>
+<text x="926" y="488" fill="#152c46" font-size="20" font-weight="400">查看并行会话</text>
+<text x="926" y="516" fill="#152c46" font-size="20" font-weight="400">面板生命周期与清理</text>
+<text x="926" y="544" fill="#152c46" font-size="20" font-weight="400">展示不替代任务状态</text>
+<path d="M374,253 L441,253" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M374,469 L441,469" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M835,269 L902,269" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<path d="M835,505 L902,505" stroke="#70849a" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+<rect x="44" y="665" width="1192" height="86" rx="14" fill="#eaf4f5" stroke="#c6e2e4"/>
+<text x="66" y="697" fill="#087f83" font-size="21" font-weight="700">不要扩大保证范围</text>
+<text x="66" y="727" fill="#152c46" font-size="18" font-weight="400">任务认领原子性 ≠ 所有副作用幂等；逐收件人广播 ≠ 跨全部收件人的事务。</text>
+<text x="44" y="805" fill="#52677e" font-size="14" font-weight="400">原创源码示意 · bee849b228d1 · 2026-09-16  |  team-tasklist/claim.ts · team-mailbox/send.ts · team-worktree/manager.ts</text>
+</g></svg>
