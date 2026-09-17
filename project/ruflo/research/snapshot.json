@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-17",
+  "timezone": "Asia/Shanghai",
+  "repository": "https://github.com/ruvnet/ruflo.git",
+  "commit": "6f0ed7112873eedc7cfe17281a2585188190b790",
+  "commit_time": "2026-09-16T16:36:46Z",
+  "branch": "main",
+  "packages": {
+    "package.json": "3.42.0",
+    "ruflo/package.json": "3.42.0",
+    "v3/@claude-flow/aidefence/package.json": "3.0.2",
+    "v3/@claude-flow/browser/package.json": "3.0.0-alpha.4",
+    "v3/@claude-flow/claims/package.json": "3.0.0-alpha.8",
+    "v3/@claude-flow/cli/package.json": "3.42.0",
+    "v3/@claude-flow/cli-core/package.json": "3.7.0-alpha.5",
+    "v3/@claude-flow/codex/package.json": "3.0.3",
+    "v3/@claude-flow/deployment/package.json": "3.0.0-alpha.7",
+    "v3/@claude-flow/embeddings/package.json": "3.0.0-alpha.18",
+    "v3/@claude-flow/guidance/package.json": "3.0.0-alpha.4",
+    "v3/@claude-flow/hooks/package.json": "3.0.0-alpha.7",
+    "v3/@claude-flow/integration/package.json": "3.0.0",
+    "v3/@claude-flow/mcp/package.json": "3.0.0-alpha.10",
+    "v3/@claude-flow/memory/package.json": "3.0.0-alpha.23",
+    "v3/@claude-flow/neural/package.json": "3.0.0-alpha.9",
+    "v3/@claude-flow/performance/package.json": "3.0.0-alpha.6",
+    "v3/@claude-flow/plugin-agent-federation/package.json": "1.0.0-alpha.18",
+    "v3/@claude-flow/plugin-iot-cognitum/package.json": "1.0.0-alpha.5",
+    "v3/@claude-flow/plugins/package.json": "3.0.0-alpha.7",
+    "v3/@claude-flow/providers/package.json": "3.0.0-alpha.6",
+    "v3/@claude-flow/security/package.json": "3.0.0-alpha.14",
+    "v3/@claude-flow/shared/package.json": "3.0.0-alpha.8",
+    "v3/@claude-flow/swarm/package.json": "3.0.0-alpha.7",
+    "v3/@claude-flow/testing/package.json": "3.0.0-alpha.6",
+    "v3/@claude-flow/watermark/package.json": "0.2.0"
+  },
+  "counts": {
+    "cli_source_ts": {
+      "glob": "v3/@claude-flow/cli/src/**/*.ts",
+      "count": 378
+    },
+    "v3_packages": {
+      "glob": "v3/@claude-flow/*/package.json",
+      "count": 24
+    },
+    "root_agent_markdown": {
+      "glob": ".claude/agents/**/*.md",
+      "count": 108
+    },
+    "bundled_agent_markdown": {
+      "glob": "v3/@claude-flow/cli/.claude/agents/**/*.md",
+      "count": 89
+    },
+    "root_skills": {
+      "glob": ".claude/skills/**/SKILL.md",
+      "count": 38
+    },
+    "plugin_manifests": {
+      "glob": "plugins/*/.claude-plugin/plugin.json",
+      "count": 42
+    }
+  },
+  "node": "v24.18.0",
+  "scope": "Local source snapshot. npm release tarballs and live LLMs not installed or exercised."
+}

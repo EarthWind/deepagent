@@ -1,0 +1,7 @@
+✓ executeAgentTask delegates to callAnthropicMessages (no inline Anthropic fetch)
+✓ OPENROUTER_API_KEY env var routes the OpenRouter branch
+✓ callOpenAICompat helper exists for OpenRouter + OpenAI-compat backends
+✓ No-provider error message lists Anthropic + OpenRouter + Ollama options
+✓ OpenRouter dispatch precedes the Anthropic-key early-return (correct order)
+
+#2042 regression smoke PASS

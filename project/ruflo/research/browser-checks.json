@@ -1,0 +1,30 @@
+{
+  "engine": "Headless Google Chrome",
+  "screenshots_directory": "/tmp/ruflo-browser-dfa5jik1",
+  "checks": [
+    {
+      "name": "desktop",
+      "viewport": 1425,
+      "documentWidth": 1425,
+      "imageCount": 8,
+      "brokenImages": [],
+      "passed": true
+    },
+    {
+      "name": "mobile",
+      "viewport": 485,
+      "documentWidth": 485,
+      "imageCount": 8,
+      "brokenImages": [],
+      "passed": true
+    },
+    {
+      "name": "figures",
+      "svgCount": 8,
+      "cardsChecked": 36,
+      "textOverflows": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "command": [
+      "node",
+      "--test",
+      "tests/hook-handler-runwithtimeout.test.cjs"
+    ],
+    "exit_code": 0,
+    "log": "logs/hook-handler-runwithtimeout.test.cjs.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/smoke-pre-bash-hook.mjs"
+    ],
+    "exit_code": 0,
+    "log": "logs/smoke-pre-bash-hook.mjs.txt"
+  },
+  {
+    "command": [
+      "node",
+      "--import",
+      "/home/earthwind/project/deepagent/project/ruflo/examples/source-loader.mjs",
+      "scripts/smoke-router-regex.mjs"
+    ],
+    "exit_code": 0,
+    "log": "logs/smoke-router-regex.mjs.txt"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/smoke-agent-execute-providers.mjs"
+    ],
+    "exit_code": 0,
+    "log": "logs/smoke-agent-execute-providers.mjs.txt"
+  }
+]

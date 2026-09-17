@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="880" viewBox="0 0 1280 880" role="img" aria-labelledby="title desc">
+<title id="title">Ruflo 的系统边界：从宿主扩展到执行基础设施</title><desc id="desc">读取默认入口与可选模块，避免把整个仓库画成一个必经的运行引擎。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8" fill="none" stroke="#788e99" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="880" rx="18" fill="#f4f8f8"/>
+<path d="M18 0 H1262 Q1280 0 1280 18 V8 H0 V18 Q0 0 18 0" fill="#087e83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="48" font-size="15" fill="#087e83" font-weight="700">RUFLO  /  SOURCE NOTES     01</text>
+<text x="44" y="97" font-size="31" fill="#183443" font-weight="700">Ruflo 的系统边界：从宿主扩展到执行基础设施</text>
+<text x="44" y="133" font-size="18" fill="#566a76" font-weight="400">读取默认入口与可选模块，避免把整个仓库画成一个必经的运行引擎。</text>
+<g data-card="行为资产" data-x="44" data-y="172" data-w="372" data-h="135">
+<rect x="44" y="172" width="372" height="135" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="188" width="4" height="103" rx="2" fill="#087e83"/>
+<text x="64" y="208" font-size="23" fill="#087e83" font-weight="700">行为资产</text>
+<text x="64" y="243" font-size="20" fill="#183443" font-weight="400">Agents / Skills / Commands</text>
+<text x="64" y="272" font-size="20" fill="#183443" font-weight="400">CLAUDE.md 与项目约定</text>
+</g>
+<g data-card="宿主运行时" data-x="454" data-y="172" data-w="372" data-h="135">
+<rect x="454" y="172" width="372" height="135" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="454" y="188" width="4" height="103" rx="2" fill="#4269ae"/>
+<text x="474" y="208" font-size="23" fill="#4269ae" font-weight="700">宿主运行时</text>
+<text x="474" y="243" font-size="20" fill="#183443" font-weight="400">Claude Code / Codex</text>
+<text x="474" y="272" font-size="20" fill="#183443" font-weight="400">会话、原生工具、子 Agent</text>
+</g>
+<g data-card="集成入口" data-x="864" data-y="172" data-w="372" data-h="135">
+<rect x="864" y="172" width="372" height="135" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="864" y="188" width="4" height="103" rx="2" fill="#087e83"/>
+<text x="884" y="208" font-size="23" fill="#087e83" font-weight="700">集成入口</text>
+<text x="884" y="243" font-size="20" fill="#183443" font-weight="400">CLI / MCP / Hooks</text>
+<text x="884" y="272" font-size="20" fill="#183443" font-weight="400">初始化、事件与工具调用</text>
+</g>
+<path d="M416,235 L454,235" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M826,235 L864,235" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1050,307 L1050,353" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M640,307 L640,353" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="Ruflo 控制与状态" data-x="44" data-y="356" data-w="1192" data-h="138">
+<rect x="44" y="356" width="1192" height="138" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="372" width="4" height="106" rx="2" fill="#087e83"/>
+<text x="64" y="392" font-size="23" fill="#087e83" font-weight="700">Ruflo 控制与状态</text>
+<text x="64" y="427" font-size="20" fill="#183443" font-weight="400">Agent / Swarm / Workflow 记录  ·  策略授权  ·  模型路由  ·  记忆检索  ·  反馈</text>
+<text x="64" y="456" font-size="20" fill="#183443" font-weight="400">MCP handler 将调用连接到具体实现；部分 CLI 命令也直接调用服务。</text>
+</g>
+<path d="M230,494 L230,534" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M640,494 L640,534" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1050,494 L1050,534" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="宿主进程执行" data-x="44" data-y="538" data-w="372" data-h="165">
+<rect x="44" y="538" width="372" height="165" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="554" width="4" height="133" rx="2" fill="#4269ae"/>
+<text x="64" y="574" font-size="23" fill="#4269ae" font-weight="700">宿主进程执行</text>
+<text x="64" y="609" font-size="20" fill="#183443" font-weight="400">原生子 Agent</text>
+<text x="64" y="638" font-size="20" fill="#183443" font-weight="400">claude -p / codex exec</text>
+<text x="64" y="667" font-size="20" fill="#183443" font-weight="400">有工具的编码执行</text>
+</g>
+<g data-card="直接 Provider 请求" data-x="454" data-y="538" data-w="372" data-h="165">
+<rect x="454" y="538" width="372" height="165" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="454" y="554" width="4" height="133" rx="2" fill="#a36321"/>
+<text x="474" y="574" font-size="23" fill="#a36321" font-weight="700">直接 Provider 请求</text>
+<text x="474" y="609" font-size="20" fill="#183443" font-weight="400">agent_execute</text>
+<text x="474" y="638" font-size="20" fill="#183443" font-weight="400">文本输入 → 文本结果</text>
+<text x="474" y="667" font-size="20" fill="#183443" font-weight="400">本路径无工具调用循环</text>
+</g>
+<g data-card="独立 / 可选模块" data-x="864" data-y="538" data-w="372" data-h="165">
+<rect x="864" y="538" width="372" height="165" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="864" y="554" width="4" height="133" rx="2" fill="#4269ae"/>
+<text x="884" y="574" font-size="23" fill="#4269ae" font-weight="700">独立 / 可选模块</text>
+<text x="884" y="609" font-size="20" fill="#183443" font-weight="400">Swarm 库与 Federation</text>
+<text x="884" y="638" font-size="20" fill="#183443" font-weight="400">AgentDB / RuVector</text>
+<text x="884" y="667" font-size="20" fill="#183443" font-weight="400">WASM / 云运行时</text>
+</g>
+<rect x="44" y="732" width="1192" height="88" rx="12" fill="#e8f2f2" stroke="#c6dcdf"/>
+<text x="65" y="764" font-size="22" fill="#087e83" font-weight="700">状态与依赖并非单一后端</text>
+<text x="65" y="794" font-size="19" fill="#183443" font-weight="400">JSON 协调记录  +  SQLite / AgentDB  +  路由经验  +  宿主工作目录</text>
+<text x="44" y="854" font-size="14" fill="#566a76" font-weight="400">原创源码示意 · 6f0ed7112873 · 2026-09-17  |  wrapper · mcp-client · agent-execute-core · codex/dual-mode</text>
+</g></svg>

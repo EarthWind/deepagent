@@ -1,0 +1,17 @@
+Usage: router.js <task description>
+
+Available agents: coder, tester, reviewer, researcher, architect, backend-dev, frontend-dev, devops
+  PASS  "review latest issues" → reviewer (0.6)
+  PASS  "make a decision about auth" → coder (0.3)
+  PASS  "set up ci pipeline" → devops (0.6)
+  PASS  "structure the schema" → architect (0.6)
+  PASS  "address the bug" → coder (0.3)
+  PASS  "add JWT support" → coder (0.6)
+  PASS  "fix infrastructure rollout" → devops (0.6)
+  PASS  "write specifications" → coder (0.3)
+  PASS  "write a unit test" → tester (0.6)
+  PASS  "build a guidance overview" → coder (0.6)
+  PASS  "fix critical and high issues" → coder (0.3)
+
+11/11 router cases passed
+OK    v3/@claude-flow/cli/src/init/helpers-generator.ts retains \b boundary anchors
