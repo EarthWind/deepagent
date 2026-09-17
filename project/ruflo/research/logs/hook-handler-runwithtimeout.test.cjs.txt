@@ -1,0 +1,14 @@
+✔ returns the value for a fast async fn (0.863817ms)
+✔ returns the value for a fast sync fn (0.090458ms)
+✔ resolves null (never rejects) when fn throws synchronously (0.079249ms)
+✔ resolves null (never rejects) when an async fn rejects (0.086596ms)
+[WARN] slow-async timed out after 3000ms, skipping
+✔ times out a slow async fn and resolves null near the timeout (3002.217827ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3034.638651

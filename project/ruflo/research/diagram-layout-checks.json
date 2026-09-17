@@ -1,0 +1,182 @@
+[
+  {
+    "figure": "01-architecture",
+    "card": "行为资产",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "宿主运行时",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "集成入口",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "Ruflo 控制与状态",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "宿主进程执行",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "直接 Provider 请求",
+    "vertical_fit": true
+  },
+  {
+    "figure": "01-architecture",
+    "card": "独立 / 可选模块",
+    "vertical_fit": true
+  },
+  {
+    "figure": "03-execution",
+    "card": "agent_spawn",
+    "vertical_fit": true
+  },
+  {
+    "figure": "03-execution",
+    "card": "agent_execute",
+    "vertical_fit": true
+  },
+  {
+    "figure": "03-execution",
+    "card": "文本 Provider",
+    "vertical_fit": true
+  },
+  {
+    "figure": "03-execution",
+    "card": "持久化执行结果",
+    "vertical_fit": true
+  },
+  {
+    "figure": "03-execution",
+    "card": "宿主子 Agent",
+    "vertical_fit": true
+  },
+  {
+    "figure": "04-swarm",
+    "card": "① CLI Swarm 状态工具",
+    "vertical_fit": true
+  },
+  {
+    "figure": "04-swarm",
+    "card": "② 独立 UnifiedSwarmCoordinator",
+    "vertical_fit": true
+  },
+  {
+    "figure": "04-swarm",
+    "card": "③ 默认 LocalTransport",
+    "vertical_fit": true
+  },
+  {
+    "figure": "04-swarm",
+    "card": "③ 可选 FederationTransport",
+    "vertical_fit": true
+  },
+  {
+    "figure": "05-memory",
+    "card": "入口：memory search / searchEntries",
+    "vertical_fit": true
+  },
+  {
+    "figure": "05-memory",
+    "card": "A · Bridge 可用就直接返回",
+    "vertical_fit": true
+  },
+  {
+    "figure": "05-memory",
+    "card": "B · Bridge 不可用时回退",
+    "vertical_fit": true
+  },
+  {
+    "figure": "05-memory",
+    "card": "可选 SmartRetrieval 包装层",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "角色建议",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "模型路由",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "局部经验",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "实际闭环：选择模型 → Provider 请求 → 记录 outcome → 更新路由经验",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "已观察到的更新对象",
+    "vertical_fit": true
+  },
+  {
+    "figure": "06-learning",
+    "card": "仍需独立评价的目标",
+    "vertical_fit": true
+  },
+  {
+    "figure": "07-federation",
+    "card": "出站控制",
+    "vertical_fit": true
+  },
+  {
+    "figure": "07-federation",
+    "card": "消息处理",
+    "vertical_fit": true
+  },
+  {
+    "figure": "07-federation",
+    "card": "传输适配",
+    "vertical_fit": true
+  },
+  {
+    "figure": "07-federation",
+    "card": "入站 Dispatcher",
+    "vertical_fit": true
+  },
+  {
+    "figure": "07-federation",
+    "card": "业务集成方 / Worker",
+    "vertical_fit": true
+  },
+  {
+    "figure": "08-workflow",
+    "card": "已执行的类型",
+    "vertical_fit": true
+  },
+  {
+    "figure": "08-workflow",
+    "card": "尚未执行的类型",
+    "vertical_fit": true
+  },
+  {
+    "figure": "08-workflow",
+    "card": "状态与变量",
+    "vertical_fit": true
+  },
+  {
+    "figure": "08-workflow",
+    "card": "复现 ① 自动步骤 ID 的插值不匹配",
+    "vertical_fit": true
+  },
+  {
+    "figure": "08-workflow",
+    "card": "复现 ② 无活动 runner 时，resume 只改变状态",
+    "vertical_fit": true
+  }
+]

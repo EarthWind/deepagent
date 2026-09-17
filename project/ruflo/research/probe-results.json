@@ -1,0 +1,68 @@
+{
+  "commit": "6f0ed7112873eedc7cfe17281a2585188190b790",
+  "node": "v24.18.0",
+  "sourceLevelOnly": true,
+  "realProviderCalls": 0,
+  "fixtureProviderCalls": 3,
+  "experiments": [
+    {
+      "experiment": "spawn-is-registration",
+      "status": "passed",
+      "returned": "registered",
+      "stored": "idle",
+      "providerCalls": 0
+    },
+    {
+      "experiment": "execute-single-provider-request",
+      "status": "passed",
+      "providerCalls": 1,
+      "requestHasTools": false,
+      "taskCount": 1,
+      "usage": {
+        "inputTokens": 12,
+        "outputTokens": 8,
+        "totalTokens": 20
+      }
+    },
+    {
+      "experiment": "workflow-supported-step-types-and-binding",
+      "status": "passed",
+      "completed": 3,
+      "skipped": 2,
+      "observedPrompt": "Seen=fixture-output-2; direct={{step-1.output}}",
+      "caveat": "Generated step IDs contain hyphens, which the interpolation regex does not match. lastStepOutput works."
+    },
+    {
+      "experiment": "resume-state-without-runner",
+      "status": "passed",
+      "stateAfterResume": "running",
+      "subsequentExecuteError": "Workflow already running",
+      "caveat": "Seeded paused state; isolated handlers, not a live concurrently running worker."
+    },
+    {
+      "experiment": "bm25-and-tokenizer",
+      "status": "passed",
+      "scores": [
+        0.8623919802674049,
+        0,
+        0.984300794231907
+      ],
+      "chineseTokens": [],
+      "caveat": "This pure helper uses ASCII tokenization; other search paths use different tokenizers."
+    },
+    {
+      "experiment": "consensus-message-signature",
+      "status": "passed",
+      "validMessage": true,
+      "tamperedMessage": false,
+      "caveat": "Cryptographic helper only; no distributed cluster was started."
+    },
+    {
+      "experiment": "generated-hook-router",
+      "status": "passed",
+      "agent": "tester",
+      "confidence": 0.6,
+      "caveat": "A fixed heuristic prior, not a calibrated probability."
+    }
+  ]
+}

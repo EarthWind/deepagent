@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="850" viewBox="0 0 1280 850" role="img" aria-labelledby="title desc">
+<title id="title">“自学习”需要回答：谁被更新，依据是什么？</title><desc id="desc">默认路由与局部经验更新可工作；远端基础模型权重并未因此被训练。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8" fill="none" stroke="#788e99" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="850" rx="18" fill="#f4f8f8"/>
+<path d="M18 0 H1262 Q1280 0 1280 18 V8 H0 V18 Q0 0 18 0" fill="#087e83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="48" font-size="15" fill="#087e83" font-weight="700">RUFLO  /  SOURCE NOTES     06</text>
+<text x="44" y="97" font-size="31" fill="#183443" font-weight="700">“自学习”需要回答：谁被更新，依据是什么？</text>
+<text x="44" y="133" font-size="18" fill="#566a76" font-weight="400">默认路由与局部经验更新可工作；远端基础模型权重并未因此被训练。</text>
+<g data-card="角色建议" data-x="44" data-y="180" data-w="372" data-h="166">
+<rect x="44" y="180" width="372" height="166" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="196" width="4" height="134" rx="2" fill="#4269ae"/>
+<text x="64" y="216" font-size="23" fill="#4269ae" font-weight="700">角色建议</text>
+<text x="64" y="251" font-size="20" fill="#183443" font-weight="400">Hook 静态关键词规则</text>
+<text x="64" y="280" font-size="20" fill="#183443" font-weight="400">命中 confidence = 0.6</text>
+<text x="64" y="309" font-size="20" fill="#183443" font-weight="400">未命中默认 coder / 0.3</text>
+</g>
+<g data-card="模型路由" data-x="454" data-y="180" data-w="372" data-h="166">
+<rect x="454" y="180" width="372" height="166" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="454" y="196" width="4" height="134" rx="2" fill="#4269ae"/>
+<text x="474" y="216" font-size="23" fill="#4269ae" font-weight="700">模型路由</text>
+<text x="474" y="251" font-size="20" fill="#183443" font-weight="400">启发式复杂度 + bandit</text>
+<text x="474" y="280" font-size="20" fill="#183443" font-weight="400">Beta(α, β) 先验</text>
+<text x="474" y="309" font-size="20" fill="#183443" font-weight="400">神经路由另有开关与依赖</text>
+</g>
+<g data-card="局部经验" data-x="864" data-y="180" data-w="372" data-h="166">
+<rect x="864" y="180" width="372" height="166" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="864" y="196" width="4" height="134" rx="2" fill="#087e83"/>
+<text x="884" y="216" font-size="23" fill="#087e83" font-weight="700">局部经验</text>
+<text x="884" y="251" font-size="20" fill="#183443" font-weight="400">轨迹与 ReasoningBank</text>
+<text x="884" y="280" font-size="20" fill="#183443" font-weight="400">模式 confidence 更新</text>
+<text x="884" y="309" font-size="20" fill="#183443" font-weight="400">可选局部向量适配</text>
+</g>
+<path d="M640,346 L640,401" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="实际闭环：选择模型 → Provider 请求 → 记录 outcome → 更新路由经验" data-x="44" data-y="405" data-w="1192" data-h="138">
+<rect x="44" y="405" width="1192" height="138" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="421" width="4" height="106" rx="2" fill="#087e83"/>
+<text x="64" y="441" font-size="23" fill="#087e83" font-weight="700">实际闭环：选择模型 → Provider 请求 → 记录 outcome → 更新路由经验</text>
+<text x="64" y="476" font-size="20" fill="#183443" font-weight="400">agent_execute 当前将 API 成功作为正反馈；轨迹质量信号较粗。</text>
+<text x="64" y="505" font-size="20" fill="#183443" font-weight="400">代码是否正确、测试是否通过、用户是否接受，需要额外证据。</text>
+</g>
+<path d="M640,543 L640,584" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="已观察到的更新对象" data-x="44" data-y="588" data-w="575" data-h="136">
+<rect x="44" y="588" width="575" height="136" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="604" width="4" height="104" rx="2" fill="#4269ae"/>
+<text x="64" y="624" font-size="23" fill="#4269ae" font-weight="700">已观察到的更新对象</text>
+<text x="64" y="659" font-size="20" fill="#183443" font-weight="400">JSON 经验、局部统计与模式</text>
+<text x="64" y="688" font-size="20" fill="#183443" font-weight="400">局部适配器 / 可选外部后端</text>
+</g>
+<g data-card="仍需独立评价的目标" data-x="661" data-y="588" data-w="575" data-h="136">
+<rect x="661" y="588" width="575" height="136" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="661" y="604" width="4" height="104" rx="2" fill="#a36321"/>
+<text x="681" y="624" font-size="23" fill="#a36321" font-weight="700">仍需独立评价的目标</text>
+<text x="681" y="659" font-size="20" fill="#183443" font-weight="400">任务通过率与成本收益</text>
+<text x="681" y="688" font-size="20" fill="#183443" font-weight="400">记忆污染、过拟合和错误奖励</text>
+</g>
+<text x="44" y="824" font-size="14" fill="#566a76" font-weight="400">原创源码示意 · 6f0ed7112873 · 2026-09-17  |  helpers-generator · model-router · intelligence · lora-adapter</text>
+</g></svg>

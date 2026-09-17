@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="985" viewBox="0 0 1280 985" role="img" aria-labelledby="title desc">
+<title id="title">一次记忆检索：先确认走了哪条路径</title><desc id="desc">存储可用、向量存在、语义正确、索引启用，是四种不同的状态。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1,1 L8,4.5 L1,8" fill="none" stroke="#788e99" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="985" rx="18" fill="#f4f8f8"/>
+<path d="M18 0 H1262 Q1280 0 1280 18 V8 H0 V18 Q0 0 18 0" fill="#087e83"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, PingFang SC, sans-serif">
+<text x="44" y="48" font-size="15" fill="#087e83" font-weight="700">RUFLO  /  SOURCE NOTES     05</text>
+<text x="44" y="97" font-size="31" fill="#183443" font-weight="700">一次记忆检索：先确认走了哪条路径</text>
+<text x="44" y="133" font-size="18" fill="#566a76" font-weight="400">存储可用、向量存在、语义正确、索引启用，是四种不同的状态。</text>
+<g data-card="入口：memory search / searchEntries" data-x="44" data-y="175" data-w="1192" data-h="110">
+<rect x="44" y="175" width="1192" height="110" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="191" width="4" height="78" rx="2" fill="#087e83"/>
+<text x="64" y="211" font-size="23" fill="#087e83" font-weight="700">入口：memory search / searchEntries</text>
+<text x="64" y="246" font-size="20" fill="#183443" font-weight="400">按 namespace / provenance 等条件检索；首先尝试 AgentDB bridge。</text>
+</g>
+<path d="M334,285 L334,329" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M949,285 L949,329" fill="none" stroke="#788e99" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="A · Bridge 可用就直接返回" data-x="44" data-y="333" data-w="575" data-h="208">
+<rect x="44" y="333" width="575" height="208" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="349" width="4" height="176" rx="2" fill="#4269ae"/>
+<text x="64" y="369" font-size="23" fill="#4269ae" font-weight="700">A · Bridge 可用就直接返回</text>
+<text x="64" y="404" font-size="20" fill="#183443" font-weight="400">最近更新的 1,000 条候选</text>
+<text x="64" y="433" font-size="20" fill="#183443" font-weight="400">逐条 cosine + BM25 + 关键词覆盖</text>
+<text x="64" y="462" font-size="20" fill="#183443" font-weight="400">加权融合、阈值过滤、排序</text>
+<text x="64" y="491" font-size="20" fill="#183443" font-weight="400">这一实现不是全库 HNSW 或 RRF</text>
+</g>
+<g data-card="B · Bridge 不可用时回退" data-x="661" data-y="333" data-w="575" data-h="208">
+<rect x="661" y="333" width="575" height="208" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="661" y="349" width="4" height="176" rx="2" fill="#4269ae"/>
+<text x="681" y="369" font-size="23" fill="#4269ae" font-weight="700">B · Bridge 不可用时回退</text>
+<text x="681" y="404" font-size="20" fill="#183443" font-weight="400">sql.js SQLite 路径</text>
+<text x="681" y="433" font-size="20" fill="#183443" font-weight="400">尝试 RaBitQ 候选与精排</text>
+<text x="681" y="462" font-size="20" fill="#183443" font-weight="400">再尝试 HNSW，继续回退搜索</text>
+<text x="681" y="491" font-size="20" fill="#183443" font-weight="400">是否命中索引由运行状态决定</text>
+</g>
+<g data-card="可选 SmartRetrieval 包装层" data-x="44" data-y="578" data-w="1192" data-h="132">
+<rect x="44" y="578" width="1192" height="132" rx="12" fill="white" stroke="#d3e0e4"/>
+<rect x="44" y="594" width="4" height="100" rx="2" fill="#087e83"/>
+<text x="64" y="614" font-size="23" fill="#087e83" font-weight="700">可选 SmartRetrieval 包装层</text>
+<text x="64" y="649" font-size="20" fill="#183443" font-weight="400">多查询扩展 → RRF → 时间加权 → MMR → session 多样性</text>
+<text x="64" y="678" font-size="20" fill="#183443" font-weight="400">SearchFn 可来自不同原始后端；CLI --smart 需要相应包接口可用。</text>
+</g>
+<rect x="44" y="746" width="1192" height="88" rx="12" fill="#e8f2f2" stroke="#c6dcdf"/>
+<text x="65" y="778" font-size="22" fill="#a36321" font-weight="700">嵌入链路必须独立检查</text>
+<text x="65" y="808" font-size="19" fill="#183443" font-weight="400">真实模型不可用 → hash-fallback / backend: mock；不能当作可靠语义检索。</text>
+<text x="44" y="886" font-size="22" fill="#a36321" font-weight="700">RUFLO_REQUIRE_REAL_EMBEDDINGS=1 可拒绝 hash 兜底。</text>
+<text x="44" y="959" font-size="14" fill="#566a76" font-weight="400">原创源码示意 · 6f0ed7112873 · 2026-09-17  |  memory-initializer · memory-bridge · memory/smart-retrieval</text>
+</g></svg>

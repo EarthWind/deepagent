@@ -1,0 +1,20 @@
+
+# /tmp/ruflo-research-20260917/v3/@claude-flow/cli/.claude/helpers/hook-handler.cjs
+  ok   dangerous rm -rf / → BLOCKED
+  ok   innocuous ls -la → OK
+  ok   empty payload → no crash, no false block
+  ok   null command field → no crash
+  ok   #2017 shape: snake_case tool_input.command dangerous → BLOCKED
+  ok   fork-bomb signature → BLOCKED
+  ok   format c: → BLOCKED
+
+# /tmp/ruflo-research-20260917/.claude/helpers/hook-handler.cjs
+  ok   dangerous rm -rf / → BLOCKED
+  ok   innocuous ls -la → OK
+  ok   empty payload → no crash, no false block
+  ok   null command field → no crash
+  ok   #2017 shape: snake_case tool_input.command dangerous → BLOCKED
+  ok   fork-bomb signature → BLOCKED
+  ok   format c: → BLOCKED
+
+ok: pre-bash hook gates dangerous commands across both handler copies

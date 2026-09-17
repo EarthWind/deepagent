@@ -1,0 +1,418 @@
+[
+  {
+    "id": "readme",
+    "path": "README.md",
+    "line": 20,
+    "symbol": "# Ruflo",
+    "sha256": "4602f42d7e6a7625d4c08bfc81c1f2fdc0eb00a874b202600ca97c7da572d3de",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/README.md#L20"
+  },
+  {
+    "id": "package",
+    "path": "package.json",
+    "line": 2,
+    "symbol": "\"name\"",
+    "sha256": "281f7c90675de69826900da2d3550044ec63b548f21b9b8d7990ed0bf8c0698f",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/package.json#L2"
+  },
+  {
+    "id": "wrapper",
+    "path": "ruflo/bin/ruflo.js",
+    "line": 30,
+    "symbol": "function findCliPath",
+    "sha256": "af863233c65b825ae38c689f759d9dcbb18528b42771aed4e929ca6d57f21ccd",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/ruflo/bin/ruflo.js#L30"
+  },
+  {
+    "id": "ruflo-package",
+    "path": "ruflo/package.json",
+    "line": 42,
+    "symbol": "\"dependencies\"",
+    "sha256": "906b8609f24b3a0848eeb2a3aec2d0a08d794144fe664e8f1c57f4661233cfe8",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/ruflo/package.json#L42"
+  },
+  {
+    "id": "cli-package",
+    "path": "v3/@claude-flow/cli/package.json",
+    "line": 2,
+    "symbol": "\"name\"",
+    "sha256": "bf433c8f097299fe3262b51369a5a3b37bd6ae756228a0a5f49c5171c7bc3fe7",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/package.json#L2"
+  },
+  {
+    "id": "cargo",
+    "path": "Cargo.toml",
+    "line": 1,
+    "symbol": "[workspace]",
+    "sha256": "9253b7500435781ac7066004d77d5e6febffccbdf6bfb147bbe4b0911f8c4d16",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/Cargo.toml#L1"
+  },
+  {
+    "id": "init",
+    "path": "v3/@claude-flow/cli/src/init/executor.ts",
+    "line": 174,
+    "symbol": "export async function executeInit",
+    "sha256": "b78d908fafb934a322edde93178e59728c6d1116abd05d75e75d4200c69daa09",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/init/executor.ts#L174"
+  },
+  {
+    "id": "settings",
+    "path": "v3/@claude-flow/cli/src/init/settings-generator.ts",
+    "line": 288,
+    "symbol": "function generateHooksConfig",
+    "sha256": "5f47a4b992de42b76c5ae54baa8df199a4b24314d72ddbb56adc4c5a2711f62d",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/init/settings-generator.ts#L288"
+  },
+  {
+    "id": "helpers",
+    "path": "v3/@claude-flow/cli/src/init/helpers-generator.ts",
+    "line": 260,
+    "symbol": "export function generateAgentRouter",
+    "sha256": "509fc138da37c3dd27627e7d8f9c1cbeb06fc8279c21da4390fdb326950bdaf6",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/init/helpers-generator.ts#L260"
+  },
+  {
+    "id": "hook",
+    "path": "v3/@claude-flow/cli/.claude/helpers/hook-handler.cjs",
+    "line": 366,
+    "symbol": "const handlers",
+    "sha256": "209d9fafe10e17d1be0866727f6f9cf9ac66f9a0793f1c793a4f58319e8e4583",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/.claude/helpers/hook-handler.cjs#L366"
+  },
+  {
+    "id": "dogfood-intelligence",
+    "path": ".claude/helpers/intelligence.cjs",
+    "line": 602,
+    "symbol": "function getContext",
+    "sha256": "30e42ed7ec4ca5a94ac54fdb1330d2d47ac5f3fdeeef207753574723a9e77b5c",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/.claude/helpers/intelligence.cjs#L602"
+  },
+  {
+    "id": "agent-definition",
+    "path": ".claude/agents/core/coder.md",
+    "line": 2,
+    "symbol": "name: coder",
+    "sha256": "9fabad496ebd2b601b800f109b84dbf7f0a36e4edc66c0af6302f4d2328488d8",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/.claude/agents/core/coder.md#L2"
+  },
+  {
+    "id": "mcp-config",
+    "path": "v3/@claude-flow/cli/src/init/mcp-generator.ts",
+    "line": 47,
+    "symbol": "export function generateMCPConfig",
+    "sha256": "90be798482d3ed431cbbd91821d684d325bf9661ea5dbb120aeb588e4edacfdd",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/init/mcp-generator.ts#L47"
+  },
+  {
+    "id": "plugin-mcp",
+    "path": "plugins/ruflo-core/.mcp.json",
+    "line": 2,
+    "symbol": "mcpServers",
+    "sha256": "a4ba948323a79c5dbff62d68445b5f7e282e00bee78fba325644618cb20db41e",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/plugins/ruflo-core/.mcp.json#L2"
+  },
+  {
+    "id": "mcp-entry",
+    "path": "v3/@claude-flow/cli/bin/cli.js",
+    "line": 160,
+    "symbol": "const isMCPMode",
+    "sha256": "4ec921923fb00ad86f89b171b0dbc293a1ec613c8ce0a20cbdc8169d4c836e51",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/bin/cli.js#L160"
+  },
+  {
+    "id": "mcp-client",
+    "path": "v3/@claude-flow/cli/src/mcp-client.ts",
+    "line": 244,
+    "symbol": "export async function callMCPTool",
+    "sha256": "fe77a0658bc9da636ed47f7db03c2355cee18ebc0b51c0cb2c82c768bc9b1d18",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-client.ts#L244"
+  },
+  {
+    "id": "tool-registry",
+    "path": "v3/@claude-flow/mcp/src/tool-registry.ts",
+    "line": 48,
+    "symbol": "export class ToolRegistry",
+    "sha256": "b2836d3afb98a8f44e81006d9e23a07f77e3b8b207a0850860b0be574e9908bf",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/mcp/src/tool-registry.ts#L48"
+  },
+  {
+    "id": "mcp-server",
+    "path": "v3/@claude-flow/cli/src/mcp-server.ts",
+    "line": 20,
+    "symbol": "import",
+    "sha256": "f5b398b79338ca34bc70650c70dee10a51f86fd98ad4a22cef82e53a5ac97733",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-server.ts#L20"
+  },
+  {
+    "id": "validation",
+    "path": "v3/@claude-flow/cli-core/src/mcp-tools/validate-input.ts",
+    "line": 27,
+    "symbol": "export function validateIdentifier",
+    "sha256": "793b14628646bdf54d9544b71fc1a83e0aba522aa2b7cbbd193f6a572e80fdfb",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli-core/src/mcp-tools/validate-input.ts#L27"
+  },
+  {
+    "id": "agent-tools",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/agent-tools.ts",
+    "line": 289,
+    "symbol": "name: 'agent_spawn'",
+    "sha256": "a6a41a42faf37bdbeb8e7464afb322a193c8bc99cc9b6fda35978fbe6363bb41",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/agent-tools.ts#L289"
+  },
+  {
+    "id": "agent-execute",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/agent-execute-core.ts",
+    "line": 555,
+    "symbol": "export async function executeAgentTask",
+    "sha256": "37ac161d104c1345b2615f513fbec2411e599dd8449ed2c43b6b6ffeeb45283a",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/agent-execute-core.ts#L555"
+  },
+  {
+    "id": "provider-call",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/agent-execute-core.ts",
+    "line": 169,
+    "symbol": "export async function callAnthropicMessages",
+    "sha256": "37ac161d104c1345b2615f513fbec2411e599dd8449ed2c43b6b6ffeeb45283a",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/agent-execute-core.ts#L169"
+  },
+  {
+    "id": "swarm-tools",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/swarm-tools.ts",
+    "line": 249,
+    "symbol": "name: 'swarm_init'",
+    "sha256": "6f3a7a353a2ddb43c697464bb1ea2668d86d3a9b8f9d778d56fc6b95b4120ca8",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/swarm-tools.ts#L249"
+  },
+  {
+    "id": "coordinator",
+    "path": "v3/@claude-flow/swarm/src/unified-coordinator.ts",
+    "line": 136,
+    "symbol": "export class UnifiedSwarmCoordinator",
+    "sha256": "97dadbfa24ecdd04df0c3524abc584d3f93bd4ccda0f630b919911c165c21cb1",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/swarm/src/unified-coordinator.ts#L136"
+  },
+  {
+    "id": "assignment",
+    "path": "v3/@claude-flow/swarm/src/unified-coordinator.ts",
+    "line": 745,
+    "symbol": "private async assignTask",
+    "sha256": "97dadbfa24ecdd04df0c3524abc584d3f93bd4ccda0f630b919911c165c21cb1",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/swarm/src/unified-coordinator.ts#L745"
+  },
+  {
+    "id": "queen",
+    "path": "v3/@claude-flow/swarm/src/queen-coordinator.ts",
+    "line": 664,
+    "symbol": "private decomposeTask",
+    "sha256": "f4b578e480144ef92709312fa167cd28128c1415429bab47f3629e2ee5e2b41c",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/swarm/src/queen-coordinator.ts#L664"
+  },
+  {
+    "id": "transport",
+    "path": "v3/@claude-flow/swarm/src/consensus/transport.ts",
+    "line": 63,
+    "symbol": "export interface ConsensusTransport",
+    "sha256": "f8cb6ad780aee422f43cdcf74625a027520b023588e4cb8d2578e78e49cad271",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/swarm/src/consensus/transport.ts#L63"
+  },
+  {
+    "id": "federation-transport",
+    "path": "v3/@claude-flow/swarm/src/consensus/federation-transport.ts",
+    "line": 25,
+    "symbol": "import",
+    "sha256": "629631eeda17e58532b9e5c47fd79b042ba5195e326727f8e3e1943051f48c26",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/swarm/src/consensus/federation-transport.ts#L25"
+  },
+  {
+    "id": "workflow",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/workflow-tools.ts",
+    "line": 264,
+    "symbol": "name: 'workflow_execute'",
+    "sha256": "c0c2913c533f68c00cfc36370edea129b94e1bb323bdfa49994524e8e1b7a5eb",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/workflow-tools.ts#L264"
+  },
+  {
+    "id": "workflow-resume",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/workflow-tools.ts",
+    "line": 597,
+    "symbol": "name: 'workflow_resume'",
+    "sha256": "c0c2913c533f68c00cfc36370edea129b94e1bb323bdfa49994524e8e1b7a5eb",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/workflow-tools.ts#L597"
+  },
+  {
+    "id": "memory-init",
+    "path": "v3/@claude-flow/cli/src/memory/memory-initializer.ts",
+    "line": 1840,
+    "symbol": "export async function initializeMemoryDatabase",
+    "sha256": "802251b40fc35215c8bbc2ca8a82bc178a92efef58066572078b28c64b21be0d",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/memory-initializer.ts#L1840"
+  },
+  {
+    "id": "memory-search",
+    "path": "v3/@claude-flow/cli/src/memory/memory-initializer.ts",
+    "line": 3054,
+    "symbol": "export async function searchEntries",
+    "sha256": "802251b40fc35215c8bbc2ca8a82bc178a92efef58066572078b28c64b21be0d",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/memory-initializer.ts#L3054"
+  },
+  {
+    "id": "memory-bridge",
+    "path": "v3/@claude-flow/cli/src/memory/memory-bridge.ts",
+    "line": 1126,
+    "symbol": "export async function bridgeSearchEntries",
+    "sha256": "56c0946e8084501de61282784fe2864c33d8d410f7e12c1b7679f5916a7c1804",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/memory-bridge.ts#L1126"
+  },
+  {
+    "id": "embedding",
+    "path": "v3/@claude-flow/cli/src/memory/memory-initializer.ts",
+    "line": 2477,
+    "symbol": "export async function generateLocalEmbedding",
+    "sha256": "802251b40fc35215c8bbc2ca8a82bc178a92efef58066572078b28c64b21be0d",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/memory-initializer.ts#L2477"
+  },
+  {
+    "id": "embedding-policy",
+    "path": "v3/@claude-flow/cli/src/memory/embedding-policy.ts",
+    "line": 18,
+    "symbol": "export function requireRealEmbeddings",
+    "sha256": "f020e94a04c7da2c082f4135bbbafb148e80d2a3957f17f1c4f8fd744ace0e2f",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/embedding-policy.ts#L18"
+  },
+  {
+    "id": "hybrid",
+    "path": "v3/@claude-flow/cli/src/memory/hybrid-retrieval.ts",
+    "line": 21,
+    "symbol": "export function tokenize",
+    "sha256": "01c1eb6569786fd5bfb0b98f7598156810aa46f48e53bf9bee4f38f3f6cbef5e",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/hybrid-retrieval.ts#L21"
+  },
+  {
+    "id": "smart",
+    "path": "v3/@claude-flow/memory/src/smart-retrieval.ts",
+    "line": 21,
+    "symbol": "export interface SearchCandidate",
+    "sha256": "c4217eeea042b2653af80012a44157d8635c6c13455f8a7d853e041b102a6c2c",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/memory/src/smart-retrieval.ts#L21"
+  },
+  {
+    "id": "memory-command",
+    "path": "v3/@claude-flow/cli/src/commands/memory.ts",
+    "line": 611,
+    "symbol": "smartSearch",
+    "sha256": "318bacd879b199ac555a2748a80e73bcafc430858eda50edbf844a9c0975d80a",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/commands/memory.ts#L611"
+  },
+  {
+    "id": "router",
+    "path": "v3/@claude-flow/cli/src/ruvector/model-router.ts",
+    "line": 2,
+    "symbol": "Intelligent Model Router",
+    "sha256": "89e0cd3264d7ed67c0beb53b9fb0b2d3afb831e61ec92a08389b3de6d703b6f6",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/ruvector/model-router.ts#L2"
+  },
+  {
+    "id": "intelligence",
+    "path": "v3/@claude-flow/cli/src/memory/intelligence.ts",
+    "line": 157,
+    "symbol": "class LocalSonaCoordinator",
+    "sha256": "c7e98651b8d511c2bd32458c3b436fffbbca7c09e077c7775dfa91b15fc92a97",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/memory/intelligence.ts#L157"
+  },
+  {
+    "id": "lora",
+    "path": "v3/@claude-flow/cli/src/ruvector/lora-adapter.ts",
+    "line": 37,
+    "symbol": "export const INPUT_DIM",
+    "sha256": "338c5c587221e9100c507dfa0556a19497814648beec741c58212a4333b81a2e",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/ruvector/lora-adapter.ts#L37"
+  },
+  {
+    "id": "federation",
+    "path": "v3/@claude-flow/plugin-agent-federation/src/application/federation-coordinator.ts",
+    "line": 241,
+    "symbol": "async sendMessage",
+    "sha256": "2bccee000c4768e447e01b8a7091f126452c270cc7184c98cefd75b44a799b8a",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/plugin-agent-federation/src/application/federation-coordinator.ts#L241"
+  },
+  {
+    "id": "federation-route",
+    "path": "v3/@claude-flow/plugin-agent-federation/src/domain/services/routing-service.ts",
+    "line": 61,
+    "symbol": "async send",
+    "sha256": "aa0522e9eddc043a06436106460965ea0da4c207ecdc5af68d96c94a010554d3",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/plugin-agent-federation/src/domain/services/routing-service.ts#L61"
+  },
+  {
+    "id": "inbound",
+    "path": "v3/@claude-flow/plugin-agent-federation/src/application/inbound-dispatcher.ts",
+    "line": 32,
+    "symbol": "export type InboundRejectionReason",
+    "sha256": "9f4adac7b6c1d6626aa9697e02f23cf5895587ba1f7059d644451bda87cb51f5",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/plugin-agent-federation/src/application/inbound-dispatcher.ts#L32"
+  },
+  {
+    "id": "trust",
+    "path": "v3/@claude-flow/plugin-agent-federation/src/application/trust-evaluator.ts",
+    "line": 67,
+    "symbol": "computeScore",
+    "sha256": "f75a92cdcb2c48eeae42a512298123c931e8f112757480cdd90041ec5eb2cb0f",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/plugin-agent-federation/src/application/trust-evaluator.ts#L67"
+  },
+  {
+    "id": "policy",
+    "path": "v3/@claude-flow/cli/src/services/policy-runtime.ts",
+    "line": 376,
+    "symbol": "export async function authorizeMcpTool",
+    "sha256": "2006bfccf2f583a61b84f5319ad08ba9123351d456e225e0494f3bdb53df46d6",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/services/policy-runtime.ts#L376"
+  },
+  {
+    "id": "policy-engine",
+    "path": "v3/@claude-flow/security/src/policy/engine.ts",
+    "line": 287,
+    "symbol": "createLegacyCompatibleState",
+    "sha256": "82ce8ff0467c3ca199a4531f55c140c33d8eaacf48c5974fd04a152e52fd7024",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/security/src/policy/engine.ts#L287"
+  },
+  {
+    "id": "codex-init",
+    "path": "v3/@claude-flow/codex/src/initializer.ts",
+    "line": 38,
+    "symbol": "export class CodexInitializer",
+    "sha256": "444733fb99438a29f8ac7bdef63fc83813d54021bf07453f6e784d7528a5ec7f",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/codex/src/initializer.ts#L38"
+  },
+  {
+    "id": "dual",
+    "path": "v3/@claude-flow/codex/src/dual-mode/orchestrator.ts",
+    "line": 156,
+    "symbol": "async spawnWorker",
+    "sha256": "f16c6d6eaba0e49e7c682545e66b5d2428b5d55684cd51753d8202d03df78fa1",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/codex/src/dual-mode/orchestrator.ts#L156"
+  },
+  {
+    "id": "codex-loop",
+    "path": "v3/@claude-flow/codex/src/loop/index.ts",
+    "line": 218,
+    "symbol": "async function runCodexExec",
+    "sha256": "176bb09d216089157f0fe2f37e7c5fbd3464601fd3a18794f9c0bc7b475c9bb5",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/codex/src/loop/index.ts#L218"
+  },
+  {
+    "id": "wasm",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/wasm-agent-tools.ts",
+    "line": 41,
+    "symbol": "const SAFE_MCP_TOOLS",
+    "sha256": "6b4577ee6c88396fa2de8d8c47dd39f1257c7208384f34c56005d53dd520a940",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/wasm-agent-tools.ts#L41"
+  },
+  {
+    "id": "managed",
+    "path": "v3/@claude-flow/cli/src/mcp-tools/managed-agent-tools.ts",
+    "line": 21,
+    "symbol": "import",
+    "sha256": "261e5a46ea94bf9dc79b9907f68f7768df15ae156fc0033cd18a2c8155fa287f",
+    "url": "https://github.com/ruvnet/ruflo/blob/6f0ed7112873eedc7cfe17281a2585188190b790/v3/@claude-flow/cli/src/mcp-tools/managed-agent-tools.ts#L21"
+  }
+]
