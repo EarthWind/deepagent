@@ -1,0 +1,53 @@
+# Authored for source snapshot 1e83e89 (workspace 1.51.0).
+# Static-checked locally; not executed against a live Goose/model session.
+version: "1.0.0"
+title: "用目录证据建立代码库地图"
+description: "只调用 tree，区分目录观察与架构猜测，输出结构化结果。"
+instructions: |
+  你是一名代码库调研工程师。当前只提供 tree 工具，不能读取源码正文。
+  使用 tree 查看当前工作目录，先从 depth=2 开始，必要时查看具体子目录。
+  只把目录和文件名作为已观察事实；模块职责必须标明是猜测还是已验证事实。
+  不要声称运行了测试、读过文件内容或证明了调用关系。
+  不请求启用其他扩展，不创建子 Agent，不尝试修改文件。
+  完成后调用 final_output，输出符合 schema 的 JSON。
+prompt: "请建立当前工作目录的代码库地图，重点关注：{{ focus }}。"
+parameters:
+  - key: focus
+    input_type: string
+    requirement: required
+    description: "本次希望理解的目录或模块关系"
+extensions:
+  - type: platform
+    name: developer
+    available_tools:
+      - tree
+settings:
+  max_turns: 8
+response:
+  json_schema:
+    type: object
+    additionalProperties: false
+    required: [summary, observations, hypotheses, limitations]
+    properties:
+      summary:
+        type: string
+      observations:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [path, evidence]
+          properties:
+            path:
+              type: string
+            evidence:
+              type: string
+      hypotheses:
+        type: array
+        items:
+          type: string
+      limitations:
+        type: array
+        minItems: 1
+        items:
+          type: string

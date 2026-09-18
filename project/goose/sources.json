@@ -1,0 +1,650 @@
+[
+  {
+    "id": "repo",
+    "path": "README.md",
+    "line": null,
+    "anchor_text": null,
+    "description": "项目定位与治理信息",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/README.md"
+  },
+  {
+    "id": "commit",
+    "path": "",
+    "line": null,
+    "anchor_text": null,
+    "description": "固定提交快照",
+    "url": "https://github.com/aaif-goose/goose/tree/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1"
+  },
+  {
+    "id": "workspace",
+    "path": "Cargo.toml",
+    "line": 9,
+    "anchor_text": "[workspace.package]",
+    "description": "workspace 版本、MSRV 与依赖",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/Cargo.toml#L9"
+  },
+  {
+    "id": "license",
+    "path": "LICENSE",
+    "line": null,
+    "anchor_text": null,
+    "description": "Apache-2.0 许可",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/LICENSE"
+  },
+  {
+    "id": "sm-mod",
+    "path": "crates/goose/src/agents/state_machine/mod.rs",
+    "line": 72,
+    "anchor_text": "pub fn enabled()",
+    "description": "环境开关的真值与默认值",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/state_machine/mod.rs#L72"
+  },
+  {
+    "id": "acp-server",
+    "path": "crates/goose/src/acp/server.rs",
+    "line": 421,
+    "anchor_text": "fn use_state_machine_from_meta",
+    "description": "ACP metadata 覆盖环境默认值",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/acp/server.rs#L421"
+  },
+  {
+    "id": "upstream-agents",
+    "path": "AGENTS.md",
+    "line": 39,
+    "anchor_text": "## Agent Loop Migration",
+    "description": "双路径迁移与公共 API 边界",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/AGENTS.md#L39"
+  },
+  {
+    "id": "sdk",
+    "path": "crates/goose-sdk/README.md",
+    "line": null,
+    "anchor_text": null,
+    "description": "GDK 绑定范围与可观测接口",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-sdk/README.md"
+  },
+  {
+    "id": "machine",
+    "path": "crates/goose-agent/src/machine.rs",
+    "line": 48,
+    "anchor_text": "pub struct StateMachine",
+    "description": "通用状态机、step/apply/run",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-agent/src/machine.rs#L48"
+  },
+  {
+    "id": "agent-assembly",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 1643,
+    "anchor_text": "pub(super) fn create_state_machine",
+    "description": "Goose 操作顺序与条件性安装",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L1643"
+  },
+  {
+    "id": "desktop-serve",
+    "path": "ui/desktop/src/gooseServe.ts",
+    "line": 364,
+    "anchor_text": "const args = [",
+    "description": "Desktop 启动 goose serve",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/ui/desktop/src/gooseServe.ts#L364"
+  },
+  {
+    "id": "desktop-acp",
+    "path": "ui/desktop/src/acp/acpConnection.ts",
+    "line": 131,
+    "anchor_text": "async function openConnection",
+    "description": "WebSocket ACP 初始化和连接管理",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/ui/desktop/src/acp/acpConnection.ts#L131"
+  },
+  {
+    "id": "desktop-chat",
+    "path": "ui/desktop/src/hooks/useChatSession.ts",
+    "line": 57,
+    "anchor_text": "export function useChatSession",
+    "description": "会话 UI 与 controller/store",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/ui/desktop/src/hooks/useChatSession.ts#L57"
+  },
+  {
+    "id": "desktop-settings",
+    "path": "ui/desktop/src/utils/settings.ts",
+    "line": 100,
+    "anchor_text": "useLegacyAgentLoop: false",
+    "description": "Desktop 默认使用新循环",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/ui/desktop/src/utils/settings.ts#L100"
+  },
+  {
+    "id": "desktop-prompt",
+    "path": "ui/desktop/src/acp/prompt.ts",
+    "line": 6,
+    "anchor_text": "export async function acpPromptSession",
+    "description": "每次请求发送 unrolledAgentLoop",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/ui/desktop/src/acp/prompt.ts#L6"
+  },
+  {
+    "id": "acp-provider",
+    "path": "crates/goose/src/acp/provider.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "外部 Agent 的 ACP Provider 适配",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/acp/provider.rs"
+  },
+  {
+    "id": "agent",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 212,
+    "anchor_text": "pub struct AgentConfig",
+    "description": "Agent 依赖和配置",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L212"
+  },
+  {
+    "id": "agent-reply",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 2044,
+    "anchor_text": "pub async fn reply(",
+    "description": "公共回复入口与消息 ID",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L2044"
+  },
+  {
+    "id": "agent-loop",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 2416,
+    "anchor_text": "async fn reply_internal(",
+    "description": "传统 loop 实现入口",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L2416"
+  },
+  {
+    "id": "tool-execution",
+    "path": "crates/goose/src/agents/tool_execution.rs",
+    "line": 37,
+    "anchor_text": "pub struct ToolCallContext",
+    "description": "session/cwd/request ID 与工具流",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/tool_execution.rs#L37"
+  },
+  {
+    "id": "agent-tools",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 2838,
+    "anchor_text": "let mut request_to_response_map = HashMap::new();",
+    "description": "传统工具检查、执行与结果配对",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L2838"
+  },
+  {
+    "id": "sm-tools",
+    "path": "crates/goose/src/agents/state_machine/ops_toolcalling.rs",
+    "line": 315,
+    "anchor_text": "pub struct ToolExecutionOperation",
+    "description": "状态机工具执行与并发流",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/state_machine/ops_toolcalling.rs#L315"
+  },
+  {
+    "id": "agent-persist",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 3500,
+    "anchor_text": "session_manager.add_message(&session_config.id, msg).await?;",
+    "description": "传统循环积累消息后的持久化点",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L3500"
+  },
+  {
+    "id": "operation",
+    "path": "crates/goose-agent/src/operation.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "Operation/Inference/Effect 协议",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-agent/src/operation.rs"
+  },
+  {
+    "id": "sm-session",
+    "path": "crates/goose/src/agents/state_machine/session.rs",
+    "line": 39,
+    "anchor_text": "impl EffectHandler",
+    "description": "效果写入 SessionManager",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/state_machine/session.rs#L39"
+  },
+  {
+    "id": "sm-approval",
+    "path": "crates/goose/src/agents/state_machine/ops_tool_approval.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "工具审批操作",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/state_machine/ops_tool_approval.rs"
+  },
+  {
+    "id": "sm-tests",
+    "path": "crates/goose/src/agents/state_machine/tests",
+    "line": null,
+    "anchor_text": null,
+    "description": "状态机生命周期测试目录",
+    "url": "https://github.com/aaif-goose/goose/tree/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/state_machine/tests"
+  },
+  {
+    "id": "provider",
+    "path": "crates/goose-provider-types/src/base.rs",
+    "line": 464,
+    "anchor_text": "pub trait Provider:",
+    "description": "统一推理与能力契约",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-provider-types/src/base.rs#L464"
+  },
+  {
+    "id": "provider-capabilities",
+    "path": "crates/goose-provider-types/src/base.rs",
+    "line": 631,
+    "anchor_text": "fn manages_own_context",
+    "description": "自管上下文和权限路由",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-provider-types/src/base.rs#L631"
+  },
+  {
+    "id": "reply-parts",
+    "path": "crates/goose/src/agents/reply_parts.rs",
+    "line": 244,
+    "anchor_text": "pub(crate) fn prepare_inference_tools",
+    "description": "工具披露与推理请求准备",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/reply_parts.rs#L244"
+  },
+  {
+    "id": "providers-tree",
+    "path": "crates/goose-providers/src",
+    "line": null,
+    "anchor_text": null,
+    "description": "模型适配与格式转换目录",
+    "url": "https://github.com/aaif-goose/goose/tree/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-providers/src"
+  },
+  {
+    "id": "extension",
+    "path": "crates/goose/src/agents/extension.rs",
+    "line": 156,
+    "anchor_text": "pub enum ExtensionConfig",
+    "description": "扩展类型、配置和 available_tools",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/extension.rs#L156"
+  },
+  {
+    "id": "builtin-connect",
+    "path": "crates/goose/src/agents/extension_manager/builtin.rs",
+    "line": 10,
+    "anchor_text": "pub(super) async fn connect",
+    "description": "内存 duplex 与容器分支",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/extension_manager/builtin.rs#L10"
+  },
+  {
+    "id": "platform-registry",
+    "path": "crates/goose/src/agents/platform_extensions/mod.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "platform 注册和 unprefixed_tools",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/mod.rs"
+  },
+  {
+    "id": "extension-manager",
+    "path": "crates/goose/src/agents/extension_manager/mod.rs",
+    "line": 750,
+    "anchor_text": "async fn get_all_tools_cached",
+    "description": "工具缓存与版本更新",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/extension_manager/mod.rs#L750"
+  },
+  {
+    "id": "extension-dispatch",
+    "path": "crates/goose/src/agents/extension_manager/mod.rs",
+    "line": 1270,
+    "anchor_text": "async fn dispatch_tool_call_inner",
+    "description": "最终扩展路由与工具可用性约束",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/extension_manager/mod.rs#L1270"
+  },
+  {
+    "id": "developer",
+    "path": "crates/goose/src/agents/platform_extensions/developer/mod.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "当前五个 Developer 工具",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/developer/mod.rs"
+  },
+  {
+    "id": "code-mode",
+    "path": "crates/goose/src/agents/platform_extensions/code_execution.rs",
+    "line": 33,
+    "anchor_text": "pub struct CodeExecutionClient",
+    "description": "pctx registry 与 Deno 运行时",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/code_execution.rs#L33"
+  },
+  {
+    "id": "code-disclosure",
+    "path": "crates/goose/src/agents/platform_extensions/code_execution.rs",
+    "line": 454,
+    "anchor_text": "let tools = match self.disclosure",
+    "description": "Catalog/Filesystem/Sidecar 三种模式",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/code_execution.rs#L454"
+  },
+  {
+    "id": "code-callback",
+    "path": "crates/goose/src/agents/platform_extensions/code_execution.rs",
+    "line": 359,
+    "anchor_text": "fn create_tool_callback",
+    "description": "内部 callback 直接进入 manager",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/code_execution.rs#L359"
+  },
+  {
+    "id": "prompt-manager",
+    "path": "crates/goose/src/agents/prompt_manager.rs",
+    "line": 108,
+    "anchor_text": "pub fn build(self)",
+    "description": "排序、模板、额外指令与固定时间",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/prompt_manager.rs#L108"
+  },
+  {
+    "id": "hints",
+    "path": "crates/goose/src/hints/load_hints.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "项目与子目录提示词加载",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/hints/load_hints.rs"
+  },
+  {
+    "id": "skills",
+    "path": "crates/goose/src/skills/mod.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "SKILL.md 发现、路径和 supporting files",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/skills/mod.rs"
+  },
+  {
+    "id": "skills-client",
+    "path": "crates/goose/src/skills/client.rs",
+    "line": 71,
+    "anchor_text": "impl McpClientTrait for SkillsClient",
+    "description": "load_skill 按需加载接口",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/skills/client.rs#L71"
+  },
+  {
+    "id": "context",
+    "path": "crates/goose/src/context_mgmt/mod.rs",
+    "line": 70,
+    "anchor_text": "pub async fn compact_messages",
+    "description": "摘要与可见性投影",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/context_mgmt/mod.rs#L70"
+  },
+  {
+    "id": "context-default",
+    "path": "crates/goose-context-management/src/lib.rs",
+    "line": 32,
+    "anchor_text": "pub const DEFAULT_COMPACTION_THRESHOLD",
+    "description": "默认阈值 0.8",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-context-management/src/lib.rs#L32"
+  },
+  {
+    "id": "context-check",
+    "path": "crates/goose/src/context_mgmt/mod.rs",
+    "line": 225,
+    "anchor_text": "pub async fn check_if_compaction_needed",
+    "description": "使用率触发与关闭条件",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/context_mgmt/mod.rs#L225"
+  },
+  {
+    "id": "agent-recovery",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 3124,
+    "anchor_text": "Err(ref provider_err @ ProviderError::ContextLengthExceeded",
+    "description": "传统上下文超限恢复",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L3124"
+  },
+  {
+    "id": "context-tool-pairs",
+    "path": "crates/goose/src/context_mgmt/mod.rs",
+    "line": 27,
+    "anchor_text": "pub(crate) fn tool_pair_summarization_enabled",
+    "description": "默认关闭、cutoff 和批处理",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/context_mgmt/mod.rs#L27"
+  },
+  {
+    "id": "large-response",
+    "path": "crates/goose/src/agents/large_response_handler.rs",
+    "line": 5,
+    "anchor_text": "const DEFAULT_LARGE_TEXT_THRESHOLD",
+    "description": "200000 字符外置与失败回退",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/large_response_handler.rs#L5"
+  },
+  {
+    "id": "memory",
+    "path": "crates/goose-mcp/src/memory/mod.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "全局和局部分类 Memory MCP",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-mcp/src/memory/mod.rs"
+  },
+  {
+    "id": "chatrecall",
+    "path": "crates/goose/src/agents/platform_extensions/chatrecall.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "历史检索与片段",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/chatrecall.rs"
+  },
+  {
+    "id": "todo",
+    "path": "crates/goose/src/agents/platform_extensions/todo.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "session extension data 中的工作计划",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/todo.rs"
+  },
+  {
+    "id": "sessions",
+    "path": "crates/goose/src/session/session_manager.rs",
+    "line": 938,
+    "anchor_text": "fn create_pool",
+    "description": "WAL、busy timeout、schema 与迁移",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/session/session_manager.rs#L938"
+  },
+  {
+    "id": "session-append",
+    "path": "crates/goose/src/session/session_manager.rs",
+    "line": 1919,
+    "anchor_text": "async fn add_message(&self, session_id",
+    "description": "事务追加与时间顺序修正",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/session/session_manager.rs#L1919"
+  },
+  {
+    "id": "session-replace",
+    "path": "crates/goose/src/session/session_manager.rs",
+    "line": 1964,
+    "anchor_text": "async fn replace_conversation_inner",
+    "description": "事务替换会话消息",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/session/session_manager.rs#L1964"
+  },
+  {
+    "id": "mode",
+    "path": "crates/goose-provider-types/src/goose_mode.rs",
+    "line": 22,
+    "anchor_text": "pub enum GooseMode",
+    "description": "四种模式及 Auto 默认值",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-provider-types/src/goose_mode.rs#L22"
+  },
+  {
+    "id": "permission",
+    "path": "crates/goose/src/permission/permission_inspector.rs",
+    "line": 159,
+    "anchor_text": "let action = match goose_mode",
+    "description": "Auto/Approve/SmartApprove 的真实分支",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/permission/permission_inspector.rs#L159"
+  },
+  {
+    "id": "agent-inspectors",
+    "path": "crates/goose/src/agents/agent.rs",
+    "line": 768,
+    "anchor_text": "fn create_tool_inspection_manager",
+    "description": "检查器注册顺序",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/agent.rs#L768"
+  },
+  {
+    "id": "inspection",
+    "path": "crates/goose/src/tool_inspection.rs",
+    "line": 75,
+    "anchor_text": "pub async fn inspect_tools",
+    "description": "检查器启用、失败处理与结果合并",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/tool_inspection.rs#L75"
+  },
+  {
+    "id": "security-config",
+    "path": "crates/goose/src/security/mod.rs",
+    "line": 58,
+    "anchor_text": "pub fn is_prompt_injection_detection_enabled",
+    "description": "SECURITY_PROMPT_ENABLED 默认关闭",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/security/mod.rs#L58"
+  },
+  {
+    "id": "egress",
+    "path": "crates/goose/src/security/egress_inspector.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "出站目的地提取和日志",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/security/egress_inspector.rs"
+  },
+  {
+    "id": "adversary",
+    "path": "crates/goose/src/security/adversary_inspector.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "配置驱动的模型审查",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/security/adversary_inspector.rs"
+  },
+  {
+    "id": "hooks",
+    "path": "crates/goose/src/hooks/mod.rs",
+    "line": 55,
+    "anchor_text": "pub enum HookEvent",
+    "description": "生命周期事件和失败策略",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/hooks/mod.rs#L55"
+  },
+  {
+    "id": "cli",
+    "path": "crates/goose-cli/src/cli.rs",
+    "line": 134,
+    "anchor_text": "long = \"container\"",
+    "description": "container 范围、各入口命令",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose-cli/src/cli.rs#L134"
+  },
+  {
+    "id": "summon",
+    "path": "crates/goose/src/agents/platform_extensions/summon.rs",
+    "line": 724,
+    "anchor_text": "fn create_delegate_tool",
+    "description": "load/delegate 接口",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/summon.rs#L724"
+  },
+  {
+    "id": "summon-defaults",
+    "path": "crates/goose/src/agents/platform_extensions/summon.rs",
+    "line": 559,
+    "anchor_text": "fn max_background_tasks",
+    "description": "5 个后台任务、600 秒 TTL",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/summon.rs#L559"
+  },
+  {
+    "id": "subagent",
+    "path": "crates/goose/src/agents/subagent_handler.rs",
+    "line": 120,
+    "anchor_text": "fn get_agent_messages",
+    "description": "新 Agent 和独立对话的启动",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/subagent_handler.rs#L120"
+  },
+  {
+    "id": "summon-task-config",
+    "path": "crates/goose/src/agents/platform_extensions/summon.rs",
+    "line": 1652,
+    "anchor_text": "async fn build_task_config",
+    "description": "扩展、Provider、轮数和目录配置",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/summon.rs#L1652"
+  },
+  {
+    "id": "summon-working-dir",
+    "path": "crates/goose/src/agents/platform_extensions/summon.rs",
+    "line": 2309,
+    "anchor_text": "fn resolve_working_dir",
+    "description": "canonicalize 和父路径检查",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/summon.rs#L2309"
+  },
+  {
+    "id": "summon-auto",
+    "path": "crates/goose/src/agents/platform_extensions/summon.rs",
+    "line": 1393,
+    "anchor_text": "// Subagents must use Auto",
+    "description": "子 Agent 固定 Auto 的原因与代码",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/platform_extensions/summon.rs#L1393"
+  },
+  {
+    "id": "subagent-config",
+    "path": "crates/goose/src/agents/subagent_task_config.rs",
+    "line": 9,
+    "anchor_text": "pub const DEFAULT_SUBAGENT_MAX_TURNS",
+    "description": "子任务默认 25 轮",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/subagent_task_config.rs#L9"
+  },
+  {
+    "id": "recipe",
+    "path": "crates/goose/src/recipe/mod.rs",
+    "line": 43,
+    "anchor_text": "pub struct Recipe",
+    "description": "Recipe 字段与设置",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/recipe/mod.rs#L43"
+  },
+  {
+    "id": "recipe-template",
+    "path": "crates/goose/src/recipe/template_recipe.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "参数模板加载与渲染",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/recipe/template_recipe.rs"
+  },
+  {
+    "id": "final-output",
+    "path": "crates/goose/src/agents/final_output_tool.rs",
+    "line": 24,
+    "anchor_text": "pub struct FinalOutputTool",
+    "description": "JSON schema 验证与修正闭环",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/final_output_tool.rs#L24"
+  },
+  {
+    "id": "scheduler",
+    "path": "crates/goose/src/scheduler_trait.rs",
+    "line": 9,
+    "anchor_text": "pub trait SchedulerTrait",
+    "description": "定时 Recipe 生命周期接口",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/scheduler_trait.rs#L9"
+  },
+  {
+    "id": "telemetry",
+    "path": "crates/goose/src/agents/gen_ai_telemetry.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "Agent 遥测与内容采集",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/gen_ai_telemetry.rs"
+  },
+  {
+    "id": "tests-tree",
+    "path": "crates/goose/tests",
+    "line": null,
+    "anchor_text": null,
+    "description": "上游集成和权限等测试目录",
+    "url": "https://github.com/aaif-goose/goose/tree/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/tests"
+  },
+  {
+    "id": "moim",
+    "path": "crates/goose/src/agents/moim.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "动态 turn context 与 system 说明",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/agents/moim.rs"
+  },
+  {
+    "id": "recipe-validation",
+    "path": "crates/goose/src/recipe/validate_recipe.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "上游 Recipe 校验",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/recipe/validate_recipe.rs"
+  },
+  {
+    "id": "recipe-adapter",
+    "path": "crates/goose/src/recipe/recipe_extension_adapter.rs",
+    "line": null,
+    "anchor_text": null,
+    "description": "Recipe extension 字段反序列化",
+    "url": "https://github.com/aaif-goose/goose/blob/1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1/crates/goose/src/recipe/recipe_extension_adapter.rs"
+  }
+]

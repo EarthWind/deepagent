@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="920" viewBox="0 0 1440 920" role="img" aria-labelledby="title desc">
+<title id="title">历史、上下文和记忆是不同的数据视图</title><desc id="desc">压缩改变模型输入的投影，保留用户可见历史；长期知识由独立机制提供。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#192b45} .small{font-size:18px;fill:#526278} .body{font-size:20px} .label{font-size:19px;font-weight:600} .heading{font-size:25px;font-weight:700}</style>
+<rect width="1440" height="920" fill="#f8fafc"/>
+<rect width="1440" height="10" fill="#087f75"/>
+<text x="54" y="64" font-size="17" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">GOOSE / ENGINEERING NOTES</text>
+<text x="54" y="111" font-size="34" fill="#192b45" style="fill:#192b45" font-weight="700" text-anchor="start">历史、上下文和记忆是不同的数据视图</text>
+<text x="54" y="148" font-size="19" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">压缩改变模型输入的投影，保留用户可见历史；长期知识由独立机制提供。</text>
+<rect x="54" y="194" width="406" height="260" rx="15" fill="#edf1f6" stroke="#56657a" stroke-width="1.4"/>
+<text x="76" y="230" font-size="23" fill="#56657a" style="fill:#56657a" font-weight="700" text-anchor="start">SQLite：完整会话集合</text>
+<text x="76" y="267" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">用户消息与 Assistant 消息</text>
+<text x="76" y="296" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">工具请求 / 工具结果</text>
+<text x="76" y="325" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">压缩摘要 / 控制消息</text>
+<text x="76" y="354" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">每条消息带可见性元数据</text>
+<text x="76" y="383" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">原历史可保留在存储中</text>
+<rect x="532" y="194" width="386" height="260" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="554" y="230" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">用户看到的历史</text>
+<text x="554" y="267" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">原消息保持原有可见性</text>
+<text x="554" y="296" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">工具执行与交互展示</text>
+<text x="554" y="325" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">不重复展示用户文本副本</text>
+<text x="554" y="354" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">摘要不必成为聊天正文</text>
+<rect x="990" y="194" width="396" height="260" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="1012" y="230" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">模型看到的上下文</text>
+<text x="1012" y="267" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">System prompt + 工具 schema</text>
+<text x="1012" y="296" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Agent-visible 消息投影</text>
+<text x="1012" y="325" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">摘要 + 继续提示</text>
+<text x="1012" y="354" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">必要的当前请求文本</text>
+<text x="1012" y="383" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">后续新消息</text>
+<path d="M460,310 L532,310" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M256,454 L256,490 L1188,490 L1188,454" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="597" y="482" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">另一种可见性投影</text>
+<rect x="54" y="538" width="406" height="162" rx="15" fill="#fff4da" stroke="#a56808" stroke-width="1.4"/>
+<text x="76" y="574" font-size="23" fill="#a56808" style="fill:#a56808" font-weight="700" text-anchor="start">降低当前窗口压力</text>
+<text x="76" y="611" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">自动压缩：默认阈值 0.8</text>
+<text x="76" y="640" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">工具对摘要：本快照默认关闭</text>
+<text x="76" y="669" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">大文本外置：默认 200,000 字符</text>
+<rect x="532" y="538" width="386" height="162" rx="15" fill="#f2edff" stroke="#7552be" stroke-width="1.4"/>
+<text x="554" y="574" font-size="23" fill="#7552be" style="fill:#7552be" font-weight="700" text-anchor="start">可复用上下文</text>
+<text x="554" y="611" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Hints：工作区规则</text>
+<text x="554" y="640" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Skills：索引 → 按需正文</text>
+<text x="554" y="669" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Memory：显式持久知识</text>
+<rect x="990" y="538" width="396" height="162" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="1012" y="574" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">任务工作状态</text>
+<text x="1012" y="611" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Todo：session extension data</text>
+<text x="1012" y="640" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Chat Recall：检索旧会话</text>
+<text x="1012" y="669" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">MOIM：当前 turn 的动态信息</text>
+<text x="54" y="790" font-size="22" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">成本计量：摘要调用的 billable usage 与压缩后 retained context token 必须分开计算。</text>
+<path d="M54,872 H1386" stroke="#d9e2ec"/>
+<text x="54" y="898" font-size="15" fill="#64748b" style="fill:#64748b" font-weight="400" text-anchor="start">原创工程示意图 · 源码基线 1e83e89 · 2026-09-18 · 非性能测量</text>
+</svg>

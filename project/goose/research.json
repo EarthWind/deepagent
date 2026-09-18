@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/aaif-goose/goose",
+  "branch": "main",
+  "commit": "1e83e89f556fc60fd396df1fd0f2992f8b2f2dc1",
+  "commit_time": "2026-09-18T00:19:10Z",
+  "researched_on": "2026-09-18",
+  "workspace_version": "1.51.0",
+  "gdk_version": "0.1.0-alpha.9",
+  "method": "Pinned-source static analysis; official documentation cross-check; local educational-example and document validation. No upstream build or live LLM execution."
+}

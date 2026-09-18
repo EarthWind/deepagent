@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" role="img" aria-labelledby="title desc">
+<title id="title">Goose 的系统边界</title><desc id="desc">客户端连接 Agent，Agent 连接模型与能力；会话存储保留运行状态。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#192b45} .small{font-size:18px;fill:#526278} .body{font-size:20px} .label{font-size:19px;font-weight:600} .heading{font-size:25px;font-weight:700}</style>
+<rect width="1440" height="940" fill="#f8fafc"/>
+<rect width="1440" height="10" fill="#087f75"/>
+<text x="54" y="64" font-size="17" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">GOOSE / ENGINEERING NOTES</text>
+<text x="54" y="111" font-size="34" fill="#192b45" style="fill:#192b45" font-weight="700" text-anchor="start">Goose 的系统边界</text>
+<text x="54" y="148" font-size="19" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">客户端连接 Agent，Agent 连接模型与能力；会话存储保留运行状态。</text>
+<rect x="54" y="192" width="330" height="163" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="76" y="228" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">客户端 / 入口</text>
+<text x="76" y="265" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">CLI：session / run</text>
+<text x="76" y="294" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Desktop：Electron + React</text>
+<text x="76" y="323" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">IDE / SDK / 自动化</text>
+<rect x="456" y="192" width="528" height="163" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="478" y="228" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">接入协议与产品运行时</text>
+<text x="478" y="265" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Desktop → WebSocket ACP → goose serve</text>
+<text x="478" y="294" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">CLI 可直接进入 Agent；ACP 可接 IDE</text>
+<text x="478" y="323" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">会话、消息流、取消、审批与交互</text>
+<rect x="1056" y="192" width="330" height="163" rx="15" fill="#f2edff" stroke="#7552be" stroke-width="1.4"/>
+<text x="1078" y="228" font-size="23" fill="#7552be" style="fill:#7552be" font-weight="700" text-anchor="start">Provider</text>
+<text x="1078" y="265" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">常规模型 API / 本地推理</text>
+<text x="1078" y="294" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">ACP / CLI 外部 Agent</text>
+<text x="1078" y="323" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">消息、用量与能力归一化</text>
+<path d="M384,267 L456,267" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M984,267 L1056,267" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="456" y="416" width="528" height="182" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="478" y="452" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">Agent 内核</text>
+<text x="478" y="489" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">传统 loop：CLI 无开关时默认</text>
+<text x="478" y="518" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">状态机：Desktop 默认选择</text>
+<text x="478" y="547" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Prompt / Context / Inspectors / Hooks</text>
+<text x="478" y="576" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Tool dispatch / Steer / Cancellation</text>
+<path d="M720,355 L720,416" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="416" width="330" height="182" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="76" y="452" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">任务组织</text>
+<text x="76" y="489" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Recipe：参数与配置</text>
+<text x="76" y="518" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Skills：按需加载方法</text>
+<text x="76" y="547" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Summon：独立子会话</text>
+<text x="76" y="576" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Scheduler：按时启动</text>
+<path d="M384,500 L456,500" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1056" y="416" width="330" height="182" rx="15" fill="#f2edff" stroke="#7552be" stroke-width="1.4"/>
+<text x="1078" y="452" font-size="23" fill="#7552be" style="fill:#7552be" font-weight="700" text-anchor="start">ExtensionManager</text>
+<text x="1078" y="489" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">stdio / streamable_http</text>
+<text x="1078" y="518" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">builtin MCP / platform</text>
+<text x="1078" y="547" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">工具 / 资源 / prompts</text>
+<text x="1078" y="576" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Code Mode → 工具回调</text>
+<path d="M984,500 L1056,500" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="456" y="650" width="528" height="130" rx="15" fill="#edf1f6" stroke="#56657a" stroke-width="1.4"/>
+<text x="478" y="686" font-size="23" fill="#56657a" style="fill:#56657a" font-weight="700" text-anchor="start">状态与观测</text>
+<text x="478" y="723" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">SQLite：sessions / messages / usage_ledger</text>
+<text x="478" y="752" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">历史可见性、扩展状态、Trace / Usage</text>
+<path d="M720,598 L720,650" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="54" y="838" font-size="22" fill="#755b25" style="fill:#755b25" font-weight="400" text-anchor="start">边界提醒：本地 Agent 仍可能调用远端模型；MCP 连接与会话隔离不等于 OS 沙箱。</text>
+<path d="M54,892 H1386" stroke="#d9e2ec"/>
+<text x="54" y="918" font-size="15" fill="#64748b" style="fill:#64748b" font-weight="400" text-anchor="start">原创工程示意图 · 源码基线 1e83e89 · 2026-09-18 · 非性能测量</text>
+</svg>
