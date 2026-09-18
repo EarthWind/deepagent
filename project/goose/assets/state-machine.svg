@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="920" viewBox="0 0 1440 920" role="img" aria-labelledby="title desc">
+<title id="title">可重入状态机怎样决定下一步</title><desc id="desc">每次只采用第一个适用步骤；应用 Effect 后重新加载会话，再从列表开头检查。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#192b45} .small{font-size:18px;fill:#526278} .body{font-size:20px} .label{font-size:19px;font-weight:600} .heading{font-size:25px;font-weight:700}</style>
+<rect width="1440" height="920" fill="#f8fafc"/>
+<rect width="1440" height="10" fill="#087f75"/>
+<text x="54" y="64" font-size="17" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">GOOSE / ENGINEERING NOTES</text>
+<text x="54" y="111" font-size="34" fill="#192b45" style="fill:#192b45" font-weight="700" text-anchor="start">可重入状态机怎样决定下一步</text>
+<text x="54" y="148" font-size="19" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">每次只采用第一个适用步骤；应用 Effect 后重新加载会话，再从列表开头检查。</text>
+<rect x="54" y="197" width="326" height="138" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="76" y="233" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">① Load session</text>
+<text x="76" y="270" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">SQLite → Conversation</text>
+<text x="76" y="299" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">从历史与元数据推导状态</text>
+<rect x="438" y="197" width="552" height="138" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="460" y="233" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">② 按优先级检查 Operation</text>
+<text x="460" y="270" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">NotApplicable → 看下一个</text>
+<text x="460" y="299" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Applied → 停止本轮遍历</text>
+<rect x="1048" y="197" width="338" height="138" rx="15" fill="#f2edff" stroke="#7552be" stroke-width="1.4"/>
+<text x="1070" y="233" font-size="23" fill="#7552be" style="fill:#7552be" font-weight="700" text-anchor="start">③ Apply effects</text>
+<text x="1070" y="270" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">追加 / 替换 / 修改元数据</text>
+<text x="1070" y="299" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">持久化后决定是否 yield</text>
+<path d="M380,261 L438,261" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M990,261 L1048,261" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1217,335 L1217,380 L217,380 L217,335" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="510" y="373" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">④ 未 yield：重载并从头开始</text>
+<rect x="54" y="436" width="402" height="253" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="76" y="472" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">高优先级控制</text>
+<text x="76" y="509" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Entry hook / Slash command</text>
+<text x="76" y="538" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Steer / MaxTurns / BangShell</text>
+<text x="76" y="567" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Compaction（按 Provider 能力）</text>
+<text x="76" y="596" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">ToolPairCompaction / Approval</text>
+<rect x="518" y="436" width="402" height="253" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="540" y="472" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">业务与工具操作</text>
+<text x="540" y="509" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Doctor / Project / Skill / Recipe</text>
+<text x="540" y="538" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">ToolExecution / UnknownTool</text>
+<text x="540" y="567" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Retry / StopHook / ExitOnError</text>
+<text x="540" y="596" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">操作可贡献 tools / prompt parts</text>
+<rect x="982" y="436" width="404" height="253" rx="15" fill="#f2edff" stroke="#7552be" stroke-width="1.4"/>
+<text x="1004" y="472" font-size="23" fill="#7552be" style="fill:#7552be" font-weight="700" text-anchor="start">最后的推理步骤</text>
+<text x="1004" y="509" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">收集工具与 prompt parts</text>
+<text x="1004" y="538" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">检查重复工具名称</text>
+<text x="1004" y="567" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">Provider stream → 消息 Effect</text>
+<text x="1004" y="596" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">后续遍历处理待执行工具请求</text>
+<path d="M456,560 L518,560" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,560 L982,560" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="737" width="1332" height="103" rx="15" fill="#fff4da" stroke="#a56808" stroke-width="1.4"/>
+<text x="76" y="773" font-size="23" fill="#a56808" style="fill:#a56808" font-weight="700" text-anchor="start">入口默认值不同</text>
+<text x="76" y="810" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">CLI 依赖环境开关；Desktop 默认通过 ACP 选择状态机；可恢复控制流不保证外部动作只执行一次。</text>
+<path d="M54,872 H1386" stroke="#d9e2ec"/>
+<text x="54" y="898" font-size="15" fill="#64748b" style="fill:#64748b" font-weight="400" text-anchor="start">原创工程示意图 · 源码基线 1e83e89 · 2026-09-18 · 非性能测量</text>
+</svg>

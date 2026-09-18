@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="930" viewBox="0 0 1440 930" role="img" aria-labelledby="title desc">
+<title id="title">传统循环的一次工具往返</title><desc id="desc">普通模型 Provider 路径的简化时序；省略特殊命令、重试和子 Agent。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,1 L8,5 L0,9" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#192b45} .small{font-size:18px;fill:#526278} .body{font-size:20px} .label{font-size:19px;font-weight:600} .heading{font-size:25px;font-weight:700}</style>
+<rect width="1440" height="930" fill="#f8fafc"/>
+<rect width="1440" height="10" fill="#087f75"/>
+<text x="54" y="64" font-size="17" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">GOOSE / ENGINEERING NOTES</text>
+<text x="54" y="111" font-size="34" fill="#192b45" style="fill:#192b45" font-weight="700" text-anchor="start">传统循环的一次工具往返</text>
+<text x="54" y="148" font-size="19" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">普通模型 Provider 路径的简化时序；省略特殊命令、重试和子 Agent。</text>
+<rect x="68" y="190" width="234" height="67" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="90" y="226" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">客户端</text>
+<path d="M185,267 V732" stroke="#bdc9d7" stroke-dasharray="6 7"/>
+<rect x="423" y="190" width="234" height="67" rx="15" fill="#e5f7f3" stroke="#087f75" stroke-width="1.4"/>
+<text x="445" y="226" font-size="23" fill="#087f75" style="fill:#087f75" font-weight="700" text-anchor="start">Agent / Session</text>
+<path d="M540,267 V732" stroke="#bdc9d7" stroke-dasharray="6 7"/>
+<rect x="813" y="190" width="234" height="67" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="835" y="226" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">Provider</text>
+<path d="M930,267 V732" stroke="#bdc9d7" stroke-dasharray="6 7"/>
+<rect x="1143" y="190" width="234" height="67" rx="15" fill="#eaf2ff" stroke="#2563eb" stroke-width="1.4"/>
+<text x="1165" y="226" font-size="23" fill="#2563eb" style="fill:#2563eb" font-weight="700" text-anchor="start">Tool / MCP</text>
+<path d="M1260,267 V732" stroke="#bdc9d7" stroke-dasharray="6 7"/>
+<path d="M185,294 L540,294" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="215" y="283" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">① 用户消息 / prompt</text>
+<text x="566" y="335" font-size="18" fill="#087f75" style="fill:#087f75" font-weight="400" text-anchor="start">保存用户输入，准备 prompt / tools</text>
+<path d="M540,373 L930,373" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="570" y="361" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">② 模型可见历史 + 工具 schema</text>
+<path d="M930,419 L540,419" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="590" y="407" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">③ 流式文本 / 工具请求</text>
+<path d="M540,467 L185,467" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="223" y="456" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">④ 必要时请求确认</text>
+<path d="M185,510 L540,510" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<text x="275" y="499" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">批准 / 拒绝</text>
+<path d="M540,556 L1260,556" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="605" y="544" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">⑤ 检查、pre-tool hook、dispatch；工具可能并发</text>
+<path d="M1260,600 L540,600" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="733" y="589" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">⑥ 结果 / 错误 / 进度通知</text>
+<text x="566" y="640" font-size="18" fill="#087f75" style="fill:#087f75" font-weight="400" text-anchor="start">⑦ 组装调用与结果，常规历史随后写入 SQLite</text>
+<path d="M540,684 L930,684" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="571" y="672" font-size="18" fill="#526278" style="fill:#526278" font-weight="400" text-anchor="start">⑧ 下一轮模型调用，直至终止条件</text>
+<rect x="54" y="766" width="1332" height="103" rx="15" fill="#fff4da" stroke="#a56808" stroke-width="1.4"/>
+<text x="76" y="802" font-size="23" fill="#a56808" style="fill:#a56808" font-weight="700" text-anchor="start">持久化边界</text>
+<text x="76" y="839" font-size="19" fill="#192b45" style="fill:#192b45" font-weight="400" text-anchor="start">传统常规工具分支不是统一的 write-ahead 日志；工具副作用与后续记录之间仍有故障窗口。</text>
+<path d="M54,882 H1386" stroke="#d9e2ec"/>
+<text x="54" y="908" font-size="15" fill="#64748b" style="fill:#64748b" font-weight="400" text-anchor="start">原创工程示意图 · 源码基线 1e83e89 · 2026-09-18 · 非性能测量</text>
+</svg>
