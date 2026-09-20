@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" role="img" aria-labelledby="title desc">
+<title id="title">Agent 的能力来自组装，而不是一个巨型 Prompt</title><desc id="desc">简化的中间件分组；顺序以 HarnessAgent._build_middleware 与 deepagents 构图为准。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="940" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 03</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">Agent 的能力来自组装，而不是一个巨型 Prompt</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">简化的中间件分组；顺序以 HarnessAgent._build_middleware 与 deepagents 构图为准。</text>
+<rect x="54" y="197" width="402" height="180" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="232" font-size="23" fill="#275dcc" font-weight="700">① Octop 产品配置</text>
+<text x="74" y="268" font-size="19" fill="#20324a" font-weight="400">AgentRow + Provider / 模型</text>
+<text x="74" y="297" font-size="19" fill="#20324a" font-weight="400">全局安全策略 + Agent override</text>
+<text x="74" y="326" font-size="19" fill="#20324a" font-weight="400">Connector / Plugin / Skills</text>
+<text x="74" y="355" font-size="19" fill="#20324a" font-weight="400">Cron / Knowledge / 配额</text>
+<rect x="518" y="197" width="402" height="180" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="232" font-size="23" fill="#137b6d" font-weight="700">② HarnessAgentConfig</text>
+<text x="538" y="268" font-size="19" fill="#20324a" font-weight="400">backend + workspace</text>
+<text x="538" y="297" font-size="19" fill="#20324a" font-weight="400">tools + middleware</text>
+<text x="538" y="326" font-size="19" fill="#20324a" font-weight="400">memory + checkpointer</text>
+<text x="538" y="355" font-size="19" fill="#20324a" font-weight="400">bootstrap / ACP / 运行限制</text>
+<rect x="982" y="197" width="404" height="180" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1002" y="232" font-size="23" fill="#7052aa" font-weight="700">③ deepagents 图</text>
+<text x="1002" y="268" font-size="19" fill="#20324a" font-weight="400">create_deep_agent</text>
+<text x="1002" y="297" font-size="19" fill="#20324a" font-weight="400">模型 → 工具 → 模型</text>
+<text x="1002" y="326" font-size="19" fill="#20324a" font-weight="400">文件 / 计划 / task 子 Agent</text>
+<text x="1002" y="355" font-size="19" fill="#20324a" font-weight="400">摘要压缩 / HITL / LangGraph</text>
+<path d="M456,278 L518,278" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,278 L982,278" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="54" y="439" font-size="23" fill="#137b6d" font-weight="700">每次模型调用前后的策略链</text>
+<rect x="54" y="468" width="402" height="225" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="503" font-size="23" fill="#275dcc" font-weight="700">请求与访问控制</text>
+<text x="74" y="539" font-size="19" fill="#20324a" font-weight="400">Bootstrap → ModelRouter</text>
+<text x="74" y="568" font-size="19" fill="#20324a" font-weight="400">ModelSettings / SessionHeader</text>
+<text x="74" y="597" font-size="19" fill="#20324a" font-weight="400">SkillFilter / ToolGuard</text>
+<text x="74" y="626" font-size="19" fill="#20324a" font-weight="400">FilesystemGuard / MCP 选择</text>
+<text x="74" y="655" font-size="19" fill="#20324a" font-weight="400">Retry / PII / 大媒体卸载</text>
+<rect x="518" y="468" width="402" height="225" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="503" font-size="23" fill="#137b6d" font-weight="700">状态与产品中间件</text>
+<text x="538" y="539" font-size="19" fill="#20324a" font-weight="400">CheckpointTs / Memory</text>
+<text x="538" y="568" font-size="19" fill="#20324a" font-weight="400">TokenQuota / Reasoning</text>
+<text x="538" y="597" font-size="19" fill="#20324a" font-weight="400">KnowledgeSearchHint</text>
+<text x="538" y="626" font-size="19" fill="#20324a" font-weight="400">BrowserProfile / 附件读取</text>
+<text x="538" y="655" font-size="19" fill="#20324a" font-weight="400">WorkspaceImage / 产物记录</text>
+<rect x="982" y="468" width="404" height="225" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1002" y="503" font-size="23" fill="#7052aa" font-weight="700">最终工具与上下文</text>
+<text x="1002" y="539" font-size="19" fill="#20324a" font-weight="400">PeerAgentMiddleware</text>
+<text x="1002" y="568" font-size="19" fill="#20324a" font-weight="400">ToolsFilter</text>
+<text x="1002" y="597" font-size="19" fill="#20324a" font-weight="400">ToolSearch（条件挂载）</text>
+<text x="1002" y="626" font-size="19" fill="#20324a" font-weight="400">task 排序 / ContextUsage</text>
+<text x="1002" y="655" font-size="19" fill="#20324a" font-weight="400">向模型发送最终请求</text>
+<path d="M456,574 L518,574" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,574 L982,574" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="755" width="1332" height="106" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="790" font-size="23" fill="#95631a" font-weight="700">工程意义</text>
+<text x="74" y="826" font-size="19" fill="#20324a" font-weight="400">工具过滤应先于工具搜索；显示给模型的能力列表与真正执行时的身份、权限检查都需要成立。</text>
+<path d="M54,891 H1386" stroke="#d6dfe9"/>
+<text x="54" y="917" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>

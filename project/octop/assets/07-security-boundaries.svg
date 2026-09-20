@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1030" viewBox="0 0 1440 1030" role="img" aria-labelledby="title desc">
+<title id="title">安全要逐层检查：登录、资源、工具与执行环境</title><desc id="desc">提供安全组件不代表所有组件默认阻断；以下默认值来自固定源码及其锁定依赖。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="1030" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 07</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">安全要逐层检查：登录、资源、工具与执行环境</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">提供安全组件不代表所有组件默认阻断；以下默认值来自固定源码及其锁定依赖。</text>
+<rect x="54" y="195" width="633" height="215" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="230" font-size="23" fill="#275dcc" font-weight="700">① 身份与资源权限</text>
+<text x="74" y="266" font-size="19" fill="#20324a" font-weight="400">HTTP / WS：JWT → User</text>
+<text x="74" y="295" font-size="19" fill="#20324a" font-weight="400">Agent：所有者 / 共享 / 管理员规则</text>
+<text x="74" y="324" font-size="19" fill="#20324a" font-weight="400">Thread：订阅、取消与访问校验</text>
+<text x="74" y="353" font-size="19" fill="#20324a" font-weight="400">CLI：信任本机数据目录访问权</text>
+<text x="74" y="382" font-size="19" fill="#20324a" font-weight="400">共享 Agent 的 thread 与 workspace 边界需分别审视</text>
+<rect x="753" y="195" width="633" height="215" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="773" y="230" font-size="23" fill="#137b6d" font-weight="700">② 模型可见能力</text>
+<text x="773" y="266" font-size="19" fill="#20324a" font-weight="400">MCP 本轮选择 / ToolsFilter / ToolSearch</text>
+<text x="773" y="295" font-size="19" fill="#20324a" font-weight="400">知识库目录只包含可见且选中的条目</text>
+<text x="773" y="324" font-size="19" fill="#20324a" font-weight="400">凭据解密与工具调用由宿主负责</text>
+<text x="773" y="353" font-size="19" fill="#20324a" font-weight="400">PII 默认启用 mask；并非全面的数据外泄防护</text>
+<text x="773" y="382" font-size="19" fill="#20324a" font-weight="400">Plugin 加载的是 Python 能力，属于宿主信任边界</text>
+<rect x="54" y="470" width="633" height="215" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="505" font-size="23" fill="#95631a" font-weight="700">③ 工具执行策略</text>
+<text x="74" y="541" font-size="19" fill="#20324a" font-weight="400">HITL：默认关闭</text>
+<text x="74" y="570" font-size="19" fill="#20324a" font-weight="400">ToolGuard：默认 enabled + warn</text>
+<text x="74" y="599" font-size="19" fill="#20324a" font-weight="400">敏感路径规则：默认启用</text>
+<text x="74" y="628" font-size="19" fill="#20324a" font-weight="400">warn 记录告警，匹配命令仍可执行</text>
+<text x="74" y="657" font-size="19" fill="#20324a" font-weight="400">ACP permission_request 有自己的挂起 / 响应流程</text>
+<rect x="753" y="470" width="633" height="215" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="773" y="505" font-size="23" fill="#7052aa" font-weight="700">④ OS / 容器边界</text>
+<text x="773" y="541" font-size="19" fill="#20324a" font-weight="400">POSIX 默认 backend：local_shell，root_dir=/</text>
+<text x="773" y="570" font-size="19" fill="#20324a" font-weight="400">workspace 提示词不能形成 OS 隔离</text>
+<text x="773" y="599" font-size="19" fill="#20324a" font-weight="400">Docker / OpenSandbox 是可选执行 backend</text>
+<text x="773" y="628" font-size="19" fill="#20324a" font-weight="400">bwrap 仅在满足平台与配置条件时使用</text>
+<text x="773" y="657" font-size="19" fill="#20324a" font-weight="400">远程内容存储不自动隔离 Shell、浏览器或网络</text>
+<rect x="54" y="748" width="1332" height="106" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="783" font-size="23" fill="#95631a" font-weight="700">部署判断</text>
+<text x="74" y="819" font-size="19" fill="#20324a" font-weight="400">多用户逻辑权限不等于不可信租户的强隔离；默认本机模式应按宿主账号可访问的资源评估权限。</text>
+<text x="54" y="921" font-size="20" fill="#506279" font-weight="400">工程建议：显式选择 backend、审批策略与凭据边界，再验证文件、Shell、MCP、ACP 等具体执行路径。</text>
+<path d="M54,981 H1386" stroke="#d6dfe9"/>
+<text x="54" y="1007" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>

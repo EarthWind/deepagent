@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="950" viewBox="0 0 1440 950" role="img" aria-labelledby="title desc">
+<title id="title">知识库：轻量存储与按需工具检索</title><desc id="desc">这是源码中的实际检索路径；图中不包含尚未实现的 ANN 索引或独立 reranker。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="950" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 06</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">知识库：轻量存储与按需工具检索</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">这是源码中的实际检索路径；图中不包含尚未实现的 ANN 索引或独立 reranker。</text>
+<text x="54" y="206" font-size="23" fill="#137b6d" font-weight="700">写入路径</text>
+<rect x="54" y="232" width="402" height="167" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="267" font-size="23" fill="#275dcc" font-weight="700">上传 / 文档状态</text>
+<text x="74" y="303" font-size="19" fill="#20324a" font-weight="400">pending → processing</text>
+<text x="74" y="332" font-size="19" fill="#20324a" font-weight="400">解析文本、可选 OCR</text>
+<text x="74" y="361" font-size="19" fill="#20324a" font-weight="400">索引任务并发上限 2</text>
+<rect x="518" y="232" width="402" height="167" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="267" font-size="23" fill="#137b6d" font-weight="700">分块与 embedding</text>
+<text x="538" y="303" font-size="19" fill="#20324a" font-weight="400">默认 800 字符 / 重叠 120</text>
+<text x="538" y="332" font-size="19" fill="#20324a" font-weight="400">size / overlap 可配置</text>
+<text x="538" y="361" font-size="19" fill="#20324a" font-weight="400">本地或远端 embedding</text>
+<rect x="982" y="232" width="404" height="167" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1002" y="267" font-size="23" fill="#7052aa" font-weight="700">index.sqlite</text>
+<text x="1002" y="303" font-size="19" fill="#20324a" font-weight="400">每个 KB 独立 sidecar</text>
+<text x="1002" y="332" font-size="19" fill="#20324a" font-weight="400">文本、doc_id、float32 向量</text>
+<text x="1002" y="361" font-size="19" fill="#20324a" font-weight="400">事务替换文档 chunks → ready</text>
+<path d="M456,315 L518,315" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,315 L982,315" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="54" y="468" font-size="23" fill="#137b6d" font-weight="700">读取路径</text>
+<rect x="54" y="494" width="402" height="192" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="529" font-size="23" fill="#275dcc" font-weight="700">模型调用 search_knowledge</text>
+<text x="74" y="565" font-size="19" fill="#20324a" font-weight="400">本轮已选择且可见的 KB</text>
+<text x="74" y="594" font-size="19" fill="#20324a" font-weight="400">query + k（默认 8）</text>
+<text x="74" y="623" font-size="19" fill="#20324a" font-weight="400">无 KB 时隐藏检索工具</text>
+<text x="74" y="652" font-size="19" fill="#20324a" font-weight="400">执行时再次过滤可见性</text>
+<rect x="518" y="494" width="402" height="192" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="529" font-size="23" fill="#137b6d" font-weight="700">查询向量与排序</text>
+<text x="538" y="565" font-size="19" fill="#20324a" font-weight="400">query embedding</text>
+<text x="538" y="594" font-size="19" fill="#20324a" font-weight="400">取出每个 KB 的全部 chunks</text>
+<text x="538" y="623" font-size="19" fill="#20324a" font-weight="400">Python 余弦相似度 + 排序</text>
+<text x="538" y="652" font-size="19" fill="#20324a" font-weight="400">只接受 ready 文档，合并 Top-k</text>
+<rect x="982" y="494" width="404" height="192" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1002" y="529" font-size="23" fill="#7052aa" font-weight="700">片段 → 模型回答</text>
+<text x="1002" y="565" font-size="19" fill="#20324a" font-weight="400">默认正文预算 6000 字符</text>
+<text x="1002" y="594" font-size="19" fill="#20324a" font-weight="400">文档名、段号与引用元数据</text>
+<text x="1002" y="623" font-size="19" fill="#20324a" font-weight="400">作为 tool result 进入上下文</text>
+<text x="1002" y="652" font-size="19" fill="#20324a" font-weight="400">模型基于证据组织回答</text>
+<path d="M456,590 L518,590" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,590 L982,590" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1184,399 L1184,435 L719,435 L719,494" fill="none" stroke="#73849b" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+<rect x="54" y="753" width="1332" height="106" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="788" font-size="23" fill="#95631a" font-weight="700">扩展性边界</text>
+<text x="74" y="824" font-size="19" fill="#20324a" font-weight="400">搜索要遍历并排序向量，成本随 chunks 数增长；切换 PostgreSQL 控制面不会自动替换这个索引。</text>
+<path d="M54,901 H1386" stroke="#d6dfe9"/>
+<text x="54" y="927" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>

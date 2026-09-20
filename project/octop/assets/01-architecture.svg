@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1010" viewBox="0 0 1440 1010" role="img" aria-labelledby="title desc">
+<title id="title">Octop：单进程中的产品控制层与 Agent 运行时</title><desc id="desc">当前源码使用全局 AgentManager；用户权限由资源归属与每次请求的身份共同确定。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="1010" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 01</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">Octop：单进程中的产品控制层与 Agent 运行时</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">当前源码使用全局 AgentManager；用户权限由资源归属与每次请求的身份共同确定。</text>
+<rect x="54" y="192" width="382" height="163" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="227" font-size="23" fill="#275dcc" font-weight="700">用户入口</text>
+<text x="74" y="263" font-size="19" fill="#20324a" font-weight="400">Dashboard / CLI / IM</text>
+<text x="74" y="292" font-size="19" fill="#20324a" font-weight="400">HTTP + WebSocket</text>
+<text x="74" y="321" font-size="19" fill="#20324a" font-weight="400">入站 ACP</text>
+<rect x="522" y="192" width="420" height="163" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="542" y="227" font-size="23" fill="#137b6d" font-weight="700">Octop 控制与消息层</text>
+<text x="542" y="263" font-size="19" fill="#20324a" font-weight="400">FastAPI / 身份与资源权限</text>
+<text x="542" y="292" font-size="19" fill="#20324a" font-weight="400">Gateway / ChannelManager</text>
+<text x="542" y="321" font-size="19" fill="#20324a" font-weight="400">GlobalProcessor / ThreadRegistry</text>
+<rect x="1028" y="192" width="358" height="163" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1048" y="227" font-size="23" fill="#7052aa" font-weight="700">主动任务</text>
+<text x="1048" y="263" font-size="19" fill="#20324a" font-weight="400">CronManager / APScheduler</text>
+<text x="1048" y="292" font-size="19" fill="#20324a" font-weight="400">CronDeliveryService</text>
+<text x="1048" y="321" font-size="19" fill="#20324a" font-weight="400">会话锁 → runtime.stream</text>
+<path d="M436,270 L522,270" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1028,310 L974,310 L974,451 L942,451" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="522" y="414" width="420" height="216" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="542" y="449" font-size="23" fill="#137b6d" font-weight="700">AgentManager（全局）</text>
+<text x="542" y="485" font-size="19" fill="#20324a" font-weight="400">DB 行 → HarnessAgentConfig</text>
+<text x="542" y="514" font-size="19" fill="#20324a" font-weight="400">HarnessAgentManager</text>
+<text x="542" y="543" font-size="19" fill="#20324a" font-weight="400">每 Agent：workspace / tools</text>
+<text x="542" y="572" font-size="19" fill="#20324a" font-weight="400">graph / memory / checkpoint</text>
+<text x="542" y="601" font-size="19" fill="#20324a" font-weight="400">模型、连接器、生命周期</text>
+<path d="M732,355 L732,414" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="414" width="382" height="216" rx="15" fill="#edf1f6" stroke="#506279" stroke-width="1.3"/>
+<text x="74" y="449" font-size="23" fill="#506279" font-weight="700">持久化与目录</text>
+<text x="74" y="485" font-size="19" fill="#20324a" font-weight="400">SQLite / PostgreSQL 控制面</text>
+<text x="74" y="514" font-size="19" fill="#20324a" font-weight="400">用户、Agent、会话、用量</text>
+<text x="74" y="543" font-size="19" fill="#20324a" font-weight="400">workspace 内容 backend</text>
+<text x="74" y="572" font-size="19" fill="#20324a" font-weight="400">Memory / checkpoint</text>
+<text x="74" y="601" font-size="19" fill="#20324a" font-weight="400">知识库本地 SQLite 索引</text>
+<path d="M522,520 L436,520" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1028" y="414" width="358" height="216" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1048" y="449" font-size="23" fill="#7052aa" font-weight="700">Harness 依赖层</text>
+<text x="1048" y="485" font-size="19" fill="#20324a" font-weight="400">harness-agent</text>
+<text x="1048" y="514" font-size="19" fill="#20324a" font-weight="400">deepagents / LangGraph</text>
+<text x="1048" y="543" font-size="19" fill="#20324a" font-weight="400">harness-memory</text>
+<text x="1048" y="572" font-size="19" fill="#20324a" font-weight="400">harness-gateway</text>
+<text x="1048" y="601" font-size="19" fill="#20324a" font-weight="400">harness-browser</text>
+<path d="M942,545 L1028,545" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="690" width="382" height="135" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="725" font-size="23" fill="#275dcc" font-weight="700">模型服务</text>
+<text x="74" y="761" font-size="19" fill="#20324a" font-weight="400">远端 API / 本地推理</text>
+<text x="74" y="790" font-size="19" fill="#20324a" font-weight="400">模型路由、重试与用量</text>
+<rect x="522" y="690" width="420" height="135" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="542" y="725" font-size="23" fill="#137b6d" font-weight="700">工具与执行环境</text>
+<text x="542" y="761" font-size="19" fill="#20324a" font-weight="400">文件 / Shell / 浏览器 / MCP</text>
+<text x="542" y="790" font-size="19" fill="#20324a" font-weight="400">本机、Docker 或远程 backend</text>
+<rect x="1028" y="690" width="358" height="135" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1048" y="725" font-size="23" fill="#7052aa" font-weight="700">协作与外部 Agent</text>
+<text x="1048" y="761" font-size="19" fill="#20324a" font-weight="400">ask_agent / 内存 inbox</text>
+<text x="1048" y="790" font-size="19" fill="#20324a" font-weight="400">task 子 Agent / 出站 ACP</text>
+<path d="M620,630 L620,658 L245,658 L245,690" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M732,630 L732,690" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M850,630 L850,658 L1207,658 L1207,690" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="54" y="897" font-size="22" fill="#506279" font-weight="400">单进程指核心服务的部署形态；Shell、浏览器、ACP runner 仍可启动子进程或连接远端。</text>
+<path d="M54,961 H1386" stroke="#d6dfe9"/>
+<text x="54" y="987" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>
