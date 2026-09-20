@@ -1,0 +1,109 @@
+{
+  "commit": "757fd12e5dcae7f9303dbfbbf6321a6986694a8b",
+  "source_hashes_verified": 63,
+  "scope": "Isolated upstream functions; no LLM, external tools, server, or full test suite",
+  "python": "3.14.4",
+  "checks": [
+    {
+      "name": "default_character_windows",
+      "passed": true,
+      "observed": [
+        800,
+        800,
+        240
+      ]
+    },
+    {
+      "name": "overlap_is_120_characters",
+      "passed": true,
+      "observed": 120
+    },
+    {
+      "name": "invalid_overlap_rejected",
+      "passed": true,
+      "observed": "ValueError"
+    },
+    {
+      "name": "cosine_ranking",
+      "passed": true,
+      "observed": [
+        {
+          "text": "aligned",
+          "score": 1.0
+        },
+        {
+          "text": "orthogonal",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "name": "bad_replacement_preserves_data",
+      "passed": true,
+      "observed": "2 old chunks retained"
+    },
+    {
+      "name": "replace_does_not_append",
+      "passed": true,
+      "observed": "1 replacement chunk"
+    },
+    {
+      "name": "mismatched_dimensions_skipped",
+      "passed": true,
+      "observed": "3D vector skipped for 2D query"
+    },
+    {
+      "name": "zero_query_rejected",
+      "passed": true,
+      "observed": "ValueError"
+    },
+    {
+      "name": "profile_summarization_defaults",
+      "passed": true,
+      "observed": {
+        "trigger": [
+          "fraction",
+          0.85
+        ],
+        "keep": [
+          "fraction",
+          0.1
+        ],
+        "truncate_args_settings": {
+          "trigger": [
+            "fraction",
+            0.85
+          ],
+          "keep": [
+            "fraction",
+            0.1
+          ]
+        }
+      }
+    },
+    {
+      "name": "no_profile_summarization_defaults",
+      "passed": true,
+      "observed": {
+        "trigger": [
+          "tokens",
+          170000
+        ],
+        "keep": [
+          "messages",
+          6
+        ],
+        "truncate_args_settings": {
+          "trigger": [
+            "messages",
+            20
+          ],
+          "keep": [
+            "messages",
+            20
+          ]
+        }
+      }
+    }
+  ]
+}

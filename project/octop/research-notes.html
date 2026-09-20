@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Octop 固定版本源码调研：架构、执行图、Memory、RAG、多 Agent、MCP/ACP 与工程边界。"><title>调研记录、版本差异与复现</title><style>
+:root{color-scheme:light;--ink:#183449;--muted:#607281;--green:#087b69;--line:#dce5e7}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}
+body{margin:0;background:#f3f6f5;color:var(--ink);font-family:system-ui,-apple-system,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;font-size:17px;line-height:1.95}
+header{background:#123b3c;color:#eefaf6;padding:42px max(28px,calc((100vw - 1330px)/2));border-bottom:5px solid #57bd9b}
+header .eyebrow{font-size:13px;letter-spacing:.16em;color:#a7dcca}header .name{font-size:32px;line-height:1.4;margin:8px 0 12px;font-weight:750}
+header p{margin:0;color:#c8e0d9;font-size:14px}header a{color:#c8e0d9}
+.layout{max-width:1390px;margin:32px auto 70px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:34px;padding:0 24px}
+aside{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:13px;line-height:1.65;padding:14px 0}
+aside summary{font-size:14px;font-weight:700;margin-bottom:14px;cursor:pointer;color:var(--green)}aside a{display:block;padding:6px 12px;border-left:2px solid var(--line);color:#516775;text-decoration:none}
+aside a:hover{color:var(--green);border-color:var(--green);background:#e7f0eb}
+main{min-width:0;background:#fff;padding:40px 48px 54px;border:1px solid var(--line);border-radius:12px;box-shadow:0 7px 28px #18344906}
+h1{font-size:31px;line-height:1.5;letter-spacing:-.02em;margin:0 0 30px}h2{font-size:25px;margin:60px 0 22px;line-height:1.55;padding-top:24px;border-top:1px solid var(--line);color:#0f655a}h3{font-size:20px;line-height:1.6;margin:32px 0 15px}
+p{margin:18px 0}a{color:var(--green);text-underline-offset:3px;overflow-wrap:anywhere}strong{font-weight:720;color:#153c48}
+img{display:block;max-width:100%;height:auto;margin:30px auto;border:1px solid #e4eaed;border-radius:9px;background:#f8fafc;cursor:zoom-in}
+figure{margin:0}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.85em;background:#edf3f4;color:#205266;padding:.13em .36em;border-radius:4px;overflow-wrap:anywhere}
+pre{background:#132e3b;color:#def2ee;border-radius:9px;padding:22px;overflow:auto;line-height:1.8;font-size:14px}pre code{color:inherit;background:none;padding:0;white-space:pre;overflow-wrap:normal;font-size:inherit}
+.table-wrap{overflow:auto;margin:24px 0}table{border-collapse:collapse;min-width:100%;font-size:14px;line-height:1.8}th{background:#edf5f2;color:#15574e;text-align:left}td,th{padding:13px 15px;border:1px solid var(--line);vertical-align:top}td{min-width:110px}tr:nth-child(even) td{background:#fafcfc}
+ul,ol{padding-left:1.6em}li{margin:9px 0}blockquote{margin:25px 0;padding:7px 20px;border-left:4px solid #40a78b;background:#edf7f2;color:#3b605c}
+hr{border:0;border-top:1px solid var(--line);margin:36px 0}.footer{font-size:13px;color:var(--muted);margin-top:45px;border-top:1px solid var(--line);padding-top:20px}
+@media(max-width:1050px){.layout{grid-template-columns:210px minmax(0,1fr);gap:20px}main{padding:30px}}
+@media(max-width:760px){body{font-size:16px}header{padding:28px 20px}header .name{font-size:25px}.layout{display:block;margin:16px auto;padding:0 12px}aside{position:static;max-height:none;padding:8px 12px 20px}aside details{max-height:220px;overflow:auto}main{padding:25px 20px;border-radius:8px}h1{font-size:25px}h2{font-size:22px;margin-top:42px}h3{font-size:19px}pre{font-size:12px;padding:16px}img{margin:25px 0}.table-wrap{margin:20px 0}td,th{padding:10px;min-width:130px}}
+@media print{header,aside,.footer{display:none}.layout{display:block;margin:0;padding:0}main{padding:0;border:0;box-shadow:none}body{background:white;font-size:11pt}h2,h3{break-after:avoid}img,table{break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head>
+<body><header><div class="eyebrow">DEEP AGENT · ENGINEERING FIELD NOTES</div><div class="name">OCTOP / 从源码理解 Agent 产品</div><p>2026.09.20 · commit 757fd12 · 8 张原创工程图 · <a href="index.html">正文</a> / <a href="source-map.html">源码索引</a> / <a href="research-notes.html">验证记录</a></p></header>
+<div class="layout"><aside><details open><summary>阅读目录</summary><a href="#section-方法与证据等级">方法与证据等级</a><a href="#section-文档与代码之间的重要差异">文档与代码之间的重要差异</a><a href="#section-已执行的验证">已执行的验证</a><a href="#section-复现源码与小范围验证">复现源码与小范围验证</a><a href="#section-重建插图与离线网页">重建插图与离线网页</a><a href="#section-内容与资产说明">内容与资产说明</a></details></aside><main><h1 id="section-调研记录-版本差异与复现">调研记录、版本差异与复现</h1>
+<p>调研日期：2026-09-20。Octop 提交：<code>757fd12e5dcae7f9303dbfbbf6321a6986694a8b</code>。</p>
+<h2 id="section-方法与证据等级">方法与证据等级</h2>
+<p>本次先查阅官方 GitHub 页面，再克隆 <code>main</code> 的源码并固定提交。正文中涉及运行内核的结论，还追踪了 <code>uv.lock</code> 指定的四个发行源码包：<code>orcakit-harness-agent 1.0.11</code>、<code>harness-memory 0.9.10</code>、<code>harness-gateway 0.9.8</code>、<code>deepagents 0.7.9</code>。下载包已逐一与锁文件的 SHA-256 对照，没有安装或执行这些包的安装脚本。</p>
+<p><code>harness-browser 0.7.9</code> 和 <code>langgraph 1.2.11</code> 的版本来自锁文件；本次没有单独下载和审查它们的完整内部实现。有关浏览器的说明限于 Octop/Harness 的集成边界。</p>
+<p>正文区分三种内容：源码中的实现事实；单进程扩展性、预算超额窗口等基于代码结构的工程推论；持久任务队列、幂等与检索改造等作者建议。没有用建议填补现有实现，也没有将旧设计文档视为可执行行为。</p>
+<p>源码证据共 63 份，文件路径、SHA-256、符号行号及出处保存在 <a href="research/snapshot.json">snapshot.json</a>；人工阅读入口为 <a href="source-map.html">SOURCE_MAP.md</a>。索引不是源码副本，固定链接和发行包散列可用于重新取得相同内容。</p>
+<h2 id="section-文档与代码之间的重要差异">文档与代码之间的重要差异</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>主题</th>
+<th>容易读到的旧描述</th>
+<th>本次采用的实现证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AgentManager 归属</td>
+<td>README 图为每用户 manager</td>
+<td><code>server._boot_runtime</code> 创建全局 <code>AgentManager</code>；<code>manager.py</code> 明确为 process-wide</td>
+</tr>
+<tr>
+<td>普通聊天传输</td>
+<td>遗留 SSE stream / 旧 <code>chat.py</code></td>
+<td><code>api/routers/chat/ws.py</code> 为普通聊天；HITL resume 仍为 SSE</td>
+</tr>
+<tr>
+<td>“所有入口同一 Processor”</td>
+<td>产品概述中的统一流水线</td>
+<td>Cron 的 <code>delivery.py</code> 直接 stream；ACP 取得 HarnessAgent；peer 通过 TeamManager</td>
+</tr>
+<tr>
+<td><code>@专家</code> 调度</td>
+<td>旧 <code>apply_mentions</code> 并行预调用并注入结果</td>
+<td>锁定 Harness 的 <code>PeerAgentMiddleware</code> 追加名单与指引，由模型调用 <code>ask_agent</code></td>
+</tr>
+<tr>
+<td>peer 工具注册</td>
+<td>文档示例直接扩展 <code>config.tools</code></td>
+<td>当前 manager 注释与 Harness 构图显示由 PeerAgentMiddleware 挂载</td>
+</tr>
+<tr>
+<td>peer 子线程</td>
+<td>旧 inbox 图写每次新 thread</td>
+<td>当前可由父 thread 与 target ID 派生，宿主还注册 peer session/history</td>
+</tr>
+<tr>
+<td>默认存储/执行 backend</td>
+<td>架构文档写 workspace-scoped filesystem</td>
+<td>POSIX 实际取 local_shell + root <code>/</code>；Windows 有 workspace 分支</td>
+</tr>
+<tr>
+<td>“重启可恢复”</td>
+<td>配置重建被容易扩大解释为任务恢复</td>
+<td>Gateway queue、Teams inbox、WS 订阅在内存；KB 索引任务则有单独恢复逻辑</td>
+</tr>
+<tr>
+<td>PostgreSQL 的作用</td>
+<td>容易推断所有状态都迁移到远端</td>
+<td>KB <code>KnowledgeIndex</code> 仍是本地 SQLite；可选 history_v2 归档当前限制 SQLite 控制面</td>
+</tr>
+<tr>
+<td>默认安全性</td>
+<td>功能表列出工具审批与 guard</td>
+<td>Octop 默认 HITL false、ToolGuard warn；敏感路径与 PII 另外启用</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些差异反映文档、设计稿和代码更新节奏不同。它们不是逐项漏洞结论。尤其 shared Agent、ACP、沙盒和恢复语义，需要真实部署环境中的集成测试进一步验证。</p>
+<h2 id="section-已执行的验证">已执行的验证</h2>
+<ol>
+<li>固定 Octop 提交与项目版本；验证四个源码发行包哈希。</li>
+<li>校验索引中 63 份源文件的 SHA-256，避免读取路径或依赖版本漂移。</li>
+<li>执行 10 项小范围上游代码验证，结果见 <a href="research/probe-results.json">probe-results.json</a>。</li>
+<li>执行 4 项随文教学示例测试：提交与串行顺序、父 thread 回写、失败处理、新实例不恢复旧内存队列。</li>
+<li>对最终 Markdown 链接、SVG XML、HTML 本地资源和文件结构做交付物检查，结果见 <a href="research/artifact-checks.json">artifact-checks.json</a>。</li>
+<li>用无头 Chrome 检查离线网页的桌面/移动布局与 8 张 SVG，记录见 <a href="research/visual-checks.json">visual-checks.json</a>。</li>
+</ol>
+<p>第 3 项只加载上游的标准库模块；父包壳仅用于避免触发应用全量初始化，不替换分块或索引函数。Deep Agents 的默认值函数经 AST 提取原函数体。验证过程不请求模型、不访问外部工具，索引写到自动清理的临时目录。环境为 Python 3.14.4。</p>
+<p>第 4 项测试的是原创教学代码，不能作为上游 inbox 已通过实跑测试的证据。inbox 的实现判断来自固定发行源码阅读。</p>
+<p><strong>未执行：</strong> Octop 全量依赖安装、上游完整 pytest / <code>make all</code>、控制台构建、真实模型任务、IM 平台接入、ACP runner 启动、Docker/bwrap/OpenSandbox 隔离验证、PostgreSQL 服务、负载测试、成本或准确率评测。未提交或发布上游代码，也未改动用户现有 Octop 数据。</p>
+<h2 id="section-复现源码与小范围验证">复现源码与小范围验证</h2>
+<p>以下命令从本博客所在仓库根目录执行。路径可以自选，不要求使用本次临时目录。</p>
+<pre><code class="language-bash">git clone https://github.com/TencentCloud/Octop.git /tmp/octop-source
+git -C /tmp/octop-source checkout 757fd12e5dcae7f9303dbfbbf6321a6986694a8b
+
+# 需要网络；只下载、校验和解压锁定包，不安装依赖。
+python3 project/octop/scripts/fetch_dependencies.py /tmp/octop-source /tmp/octop-deps
+
+# 重建索引，并对固定代码执行隔离验证。
+python3 project/octop/scripts/gather_sources.py /tmp/octop-source /tmp/octop-deps
+python3 project/octop/scripts/probe_upstream.py /tmp/octop-source /tmp/octop-deps
+
+# 教学示例只需 Python 标准库。
+python3 -m unittest discover -s project/octop/examples -p 'test_*.py' -v
+python3 project/octop/examples/inbox_demo.py
+</code></pre>
+<p><code>gather_sources.py</code> 会拒绝不匹配的 Octop 提交；<code>probe_upstream.py</code> 会拒绝不匹配的源文件哈希。依赖源码包链接和校验值都记录在机器可读快照里。</p>
+<h2 id="section-重建插图与离线网页">重建插图与离线网页</h2>
+<p>所有插图源代码在 <a href="scripts/render_diagrams.py">render_diagrams.py</a>，使用 Python 标准库输出 SVG。直接阅读 README 或 SVG 无需安装前端依赖。</p>
+<pre><code class="language-bash">python3 project/octop/scripts/render_diagrams.py
+
+# 仅重建 HTML 时需要 markdown-it-py；建议在自己的虚拟环境安装。
+python3 -m pip install -r project/octop/scripts/requirements.txt
+python3 project/octop/scripts/build_blog.py
+python3 project/octop/scripts/check_artifacts.py
+</code></pre>
+<p>打开 <code>project/octop/index.html</code> 即可离线阅读。网页无 CDN、无在线字体、无第三方脚本，图像都通过相对路径引用。源码与外部参考链接需要联网访问。</p>
+<h2 id="section-内容与资产说明">内容与资产说明</h2>
+<ul>
+<li><code>README.md</code>：正文，也是离线网页的内容源。</li>
+<li><code>index.html</code>：静态博客，包含目录与移动端布局。</li>
+<li><code>SOURCE_MAP.md</code> / <code>source-map.html</code>：固定源码索引。</li>
+<li><code>RESEARCH_NOTES.md</code> / <code>research-notes.html</code>：本调研记录。</li>
+<li><code>assets/*.svg</code>：8 张原创工程图；不是产品截图、官方设计图或实测图。</li>
+<li><code>examples/</code>：不接模型和网络的教学示例与测试。</li>
+<li><code>research/</code>：版本、来源与验证记录。</li>
+<li><code>scripts/</code>：可复现的生成与检查脚本。</li>
+</ul>
+<p>保留上游 MIT 及依赖各自许可证语义。正文只用必要的符号、配置名称和少量说明性伪代码，不把上游源码完整复制进本仓库。</p>
+<div class="footer">离线阅读版 · 由 <a href="RESEARCH_NOTES.md">RESEARCH_NOTES.md</a> 生成 · 图示可点击查看原始 SVG · 无在线字体与第三方脚本</div></main></div></body></html>

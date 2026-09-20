@@ -1,0 +1,58 @@
+{
+  "date": "2026-09-20",
+  "browser": "Google Chrome headless",
+  "method": "Local file rendering; getBBox on all SVG text; desktop document width; 390px iframe for a true phone layout (Chrome top-level window clamps below 500px).",
+  "diagrams": {
+    "count": 8,
+    "canvas_overflows": 0,
+    "card_text_overflows": 0,
+    "manually_reviewed_contact_sheet": true
+  },
+  "desktop": {
+    "viewport_width": 1440,
+    "document_scroll_width": 1440,
+    "loaded_images": 8,
+    "content_h2_count": 17
+  },
+  "phone": {
+    "width": 390,
+    "scrollWidth": 390,
+    "images": [
+      {
+        "src": "assets/01-architecture.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/03-agent-assembly.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/02-turn-lifecycle.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/04-context-memory.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/06-knowledge-rag.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/05-team-inbox.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/07-security-boundaries.svg",
+        "loaded": true
+      },
+      {
+        "src": "assets/08-recovery.svg",
+        "loaded": true
+      }
+    ],
+    "headings": 17
+  },
+  "manually_reviewed_desktop": true,
+  "scope": "Research blog and original diagrams only; no Octop product UI or model task was run."
+}

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="945" viewBox="0 0 1440 945" role="img" aria-labelledby="title desc">
+<title id="title">后台协作的真实语义：一个内存 inbox，串行完成两次调用</title><desc id="desc">ask_agent(background) 返回 job_id；最终答复由 source Agent 结合父 thread 再生成。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="945" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 05</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">后台协作的真实语义：一个内存 inbox，串行完成两次调用</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">ask_agent(background) 返回 job_id；最终答复由 source Agent 结合父 thread 再生成。</text>
+<rect x="54" y="196" width="402" height="168" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="231" font-size="23" fill="#275dcc" font-weight="700">主对话 / source Agent</text>
+<text x="74" y="267" font-size="19" fill="#20324a" font-weight="400">识别需要的专家</text>
+<text x="74" y="296" font-size="19" fill="#20324a" font-weight="400">ask_agent(mode=background)</text>
+<text x="74" y="325" font-size="19" fill="#20324a" font-weight="400">收到 queued 后继续当前对话</text>
+<rect x="518" y="196" width="402" height="168" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="231" font-size="23" fill="#137b6d" font-weight="700">TeamManager / Inbox</text>
+<text x="538" y="267" font-size="19" fill="#20324a" font-weight="400">目标归属与可调用性检查</text>
+<text x="538" y="296" font-size="19" fill="#20324a" font-weight="400">dict + asyncio.Queue</text>
+<text x="538" y="325" font-size="19" fill="#20324a" font-weight="400">单 worker，非持久任务队列</text>
+<rect x="982" y="196" width="404" height="168" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="1002" y="231" font-size="23" fill="#7052aa" font-weight="700">target Agent</text>
+<text x="1002" y="267" font-size="19" fill="#20324a" font-weight="400">自己的配置、工具与记忆</text>
+<text x="1002" y="296" font-size="19" fill="#20324a" font-weight="400">关联的 peer thread</text>
+<text x="1002" y="325" font-size="19" fill="#20324a" font-weight="400">生成结果或失败原因</text>
+<path d="M456,275 L518,275" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,275 L982,275" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="440" width="402" height="169" rx="15" fill="#f0ebfb" stroke="#7052aa" stroke-width="1.3"/>
+<text x="74" y="475" font-size="23" fill="#7052aa" font-weight="700">① running</text>
+<text x="74" y="511" font-size="19" fill="#20324a" font-weight="400">target.call(message)</text>
+<text x="74" y="540" font-size="19" fill="#20324a" font-weight="400">等待子任务结果</text>
+<text x="74" y="569" font-size="19" fill="#20324a" font-weight="400">同 inbox 后续任务继续排队</text>
+<rect x="518" y="440" width="402" height="169" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="538" y="475" font-size="23" fill="#137b6d" font-weight="700">② replying</text>
+<text x="538" y="511" font-size="19" fill="#20324a" font-weight="400">compose_followup(result / error)</text>
+<text x="538" y="540" font-size="19" fill="#20324a" font-weight="400">source.call(source_thread_id)</text>
+<text x="538" y="569" font-size="19" fill="#20324a" font-weight="400">合成回复写入父对话 checkpoint</text>
+<rect x="982" y="440" width="404" height="169" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="1002" y="475" font-size="23" fill="#275dcc" font-weight="700">③ on_reply</text>
+<text x="1002" y="511" font-size="19" fill="#20324a" font-weight="400">IM：Gateway.push_text</text>
+<text x="1002" y="540" font-size="19" fill="#20324a" font-weight="400">Dashboard：未读 / 活跃时间</text>
+<text x="1002" y="569" font-size="19" fill="#20324a" font-weight="400">完成条目会从内存字典移除</text>
+<path d="M456,520 L518,520" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M920,520 L982,520" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="54" y="672" width="1332" height="106" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="707" font-size="23" fill="#95631a" font-weight="700">不要混为一谈</text>
+<text x="74" y="743" font-size="19" fill="#20324a" font-weight="400">同级 ask_agent、deepagents 的 task 子 Agent、外部 ACP runner 是三条不同的协作路径。</text>
+<text x="54" y="832" font-size="20" fill="#506279" font-weight="400">@专家在此版本由 PeerAgentMiddleware 注入名单与指引，交由模型选择调用；不是确定性 fan-out。</text>
+<path d="M54,896 H1386" stroke="#d6dfe9"/>
+<text x="54" y="922" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>

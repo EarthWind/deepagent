@@ -1,0 +1,5672 @@
+{
+  "research_date": "2026-09-20",
+  "repository": "https://github.com/TencentCloud/Octop",
+  "commit": "757fd12e5dcae7f9303dbfbbf6321a6986694a8b",
+  "commit_time": "2026-09-19T09:34:38+08:00",
+  "project_version": "1.0.1",
+  "dependencies": [
+    {
+      "name": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "4f1c86302fb7bfb25044f7f9c7ed0742a5e80587b436c6a93f3aca9e8acfa175"
+    },
+    {
+      "name": "harness-memory",
+      "version": "0.9.10",
+      "url": "https://files.pythonhosted.org/packages/ab/07/9adef1b44381cc83f91bcb83780d504e2986baefee5a16c967d08b929c92/harness_memory-0.9.10.tar.gz",
+      "sha256": "d732ebd81e0fce44b3263f42e967895dec53d1bf7ac0efb10e7477b5920fde84"
+    },
+    {
+      "name": "harness-gateway",
+      "version": "0.9.8",
+      "url": "https://files.pythonhosted.org/packages/0a/ae/693a178aaf7a4e923a4785e906a34d7606c15192627f0f00184b63f190e8/harness_gateway-0.9.8.tar.gz",
+      "sha256": "4ea005ff8e5fd08dc73325dfc3cd63e3086fb41d2c6bf690400b37b84c646b02"
+    },
+    {
+      "name": "deepagents",
+      "version": "0.7.9",
+      "url": "https://files.pythonhosted.org/packages/c4/4b/359aa09b9fb378b9cd10b69cb7bdd75847da03c110939ad01f1db715d0e4/deepagents-0.7.9.tar.gz",
+      "sha256": "e62311fe73a752d36b830b2f48352aa63afbd56f47176d924065230d983b248e"
+    }
+  ],
+  "files": [
+    {
+      "id": "project",
+      "package": "octop",
+      "path": "pyproject.toml",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/pyproject.toml",
+      "sha256": "99ce3e0c1fcd35ac9ed160606c465a8a4976f79a991301ef2ae9e65c99ecc875",
+      "lines": 217,
+      "symbols": []
+    },
+    {
+      "id": "lock",
+      "package": "octop",
+      "path": "uv.lock",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/uv.lock",
+      "sha256": "46a2bba6cd04683ecce06814fa39c0207e331026028a1abc891471967d5abf3d",
+      "lines": 5342,
+      "symbols": []
+    },
+    {
+      "id": "readme",
+      "package": "octop",
+      "path": "README.md",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/README.md",
+      "sha256": "e223834edb2bc9f8a64f6c87937eb9a48ed959b3a082f875d19f51e06115c953",
+      "lines": 548,
+      "symbols": []
+    },
+    {
+      "id": "architecture",
+      "package": "octop",
+      "path": "docs/architecture.md",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/docs/architecture.md",
+      "sha256": "9c40459475f82041754881b61bff822c877ece09f8494678eda56eadfea415df",
+      "lines": 168,
+      "symbols": []
+    },
+    {
+      "id": "adr",
+      "package": "octop",
+      "path": "docs/adr/001-single-process-model.md",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/docs/adr/001-single-process-model.md",
+      "sha256": "35ec5a918bce9ada678b7e1e2bb1ae7e44b9035818ec0b88bdffa3dbf46af22f",
+      "lines": 35,
+      "symbols": []
+    },
+    {
+      "id": "server",
+      "package": "octop",
+      "path": "src/octop/infra/server.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/server.py",
+      "sha256": "2d29a92a1b78c6c0510eaf16847a4c2ada07b28e4c3a3210d2616bd807db6e38",
+      "lines": 585,
+      "symbols": [
+        {
+          "name": "SizeTimedRotatingFileHandler",
+          "line": 46,
+          "end": 86
+        },
+        {
+          "name": "gzip_rotated_log",
+          "line": 89,
+          "end": 103
+        },
+        {
+          "name": "_parse_log_compress",
+          "line": 106,
+          "end": 108
+        },
+        {
+          "name": "delaycompress_rotated_logs",
+          "line": 111,
+          "end": 137
+        },
+        {
+          "name": "_parse_log_retention_days",
+          "line": 140,
+          "end": 147
+        },
+        {
+          "name": "_parse_log_max_bytes",
+          "line": 150,
+          "end": 157
+        },
+        {
+          "name": "_build_log_handler",
+          "line": 160,
+          "end": 180
+        },
+        {
+          "name": "_purge_stale_logs",
+          "line": 183,
+          "end": 196
+        },
+        {
+          "name": "_attach_log_handler",
+          "line": 199,
+          "end": 205
+        },
+        {
+          "name": "AppRuntime",
+          "line": 209,
+          "end": 239
+        },
+        {
+          "name": "OctopServer",
+          "line": 242,
+          "end": 585
+        },
+        {
+          "name": "__init__",
+          "line": 49,
+          "end": 59
+        },
+        {
+          "name": "shouldRollover",
+          "line": 61,
+          "end": 69
+        },
+        {
+          "name": "rotate",
+          "line": 71,
+          "end": 75
+        },
+        {
+          "name": "rotation_filename",
+          "line": 77,
+          "end": 86
+        },
+        {
+          "name": "replace_services",
+          "line": 220,
+          "end": 239
+        },
+        {
+          "name": "__init__",
+          "line": 243,
+          "end": 255
+        },
+        {
+          "name": "user_manager",
+          "line": 259,
+          "end": 260
+        },
+        {
+          "name": "sso_service",
+          "line": 263,
+          "end": 275
+        },
+        {
+          "name": "database_bound",
+          "line": 278,
+          "end": 279
+        },
+        {
+          "name": "start",
+          "line": 281,
+          "end": 332
+        },
+        {
+          "name": "bind_control_plane",
+          "line": 334,
+          "end": 360
+        },
+        {
+          "name": "_boot_runtime",
+          "line": 362,
+          "end": 490
+        },
+        {
+          "name": "_emit_wizard_password",
+          "line": 492,
+          "end": 520
+        },
+        {
+          "name": "stop",
+          "line": 522,
+          "end": 541
+        },
+        {
+          "name": "_setup_logging",
+          "line": 545,
+          "end": 581
+        },
+        {
+          "name": "_ensure_jwt_secret",
+          "line": 583,
+          "end": 585
+        }
+      ]
+    },
+    {
+      "id": "launch",
+      "package": "octop",
+      "path": "src/octop/launch.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/launch.py",
+      "sha256": "cbab65d38a2fe2a8da5e946df781d0731d3cd60aeea1b7a0976186a301d67ebd",
+      "lines": 156,
+      "symbols": [
+        {
+          "name": "_ensure_linux_bubblewrap",
+          "line": 16,
+          "end": 30
+        },
+        {
+          "name": "_schedule_linux_bubblewrap_ensure",
+          "line": 33,
+          "end": 40
+        },
+        {
+          "name": "_cancel_background_task",
+          "line": 43,
+          "end": 49
+        },
+        {
+          "name": "_serve",
+          "line": 52,
+          "end": 53
+        },
+        {
+          "name": "run_foreground",
+          "line": 56,
+          "end": 151
+        },
+        {
+          "name": "run_foreground_blocking",
+          "line": 154,
+          "end": 156
+        }
+      ]
+    },
+    {
+      "id": "manager",
+      "package": "octop",
+      "path": "src/octop/infra/agents/manager.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/manager.py",
+      "sha256": "a2b2707ee471508ffddc472a699a61463e6628ee8357711201c45cdaea091c4b",
+      "lines": 2962,
+      "symbols": [
+        {
+          "name": "_memory_namespace",
+          "line": 100,
+          "end": 101
+        },
+        {
+          "name": "skills_disabled_set",
+          "line": 104,
+          "end": 109
+        },
+        {
+          "name": "tools_disabled_set",
+          "line": 112,
+          "end": 116
+        },
+        {
+          "name": "skill_package_ids_list",
+          "line": 119,
+          "end": 124
+        },
+        {
+          "name": "_memory_aux_model_settings",
+          "line": 127,
+          "end": 154
+        },
+        {
+          "name": "_memory_extract_settings",
+          "line": 157,
+          "end": 211
+        },
+        {
+          "name": "_resolve_memory_backend_kwargs",
+          "line": 214,
+          "end": 220
+        },
+        {
+          "name": "_fill_missing_subagent_colors",
+          "line": 223,
+          "end": 245
+        },
+        {
+          "name": "validate_custom_agent_id",
+          "line": 258,
+          "end": 269
+        },
+        {
+          "name": "AgentCreateSpec",
+          "line": 278,
+          "end": 300
+        },
+        {
+          "name": "AgentManager",
+          "line": 308,
+          "end": 2962
+        },
+        {
+          "name": "__init__",
+          "line": 331,
+          "end": 388
+        },
+        {
+          "name": "replace_persistence",
+          "line": 390,
+          "end": 413
+        },
+        {
+          "name": "set_cron_manager",
+          "line": 415,
+          "end": 417
+        },
+        {
+          "name": "set_proactive_scheduler",
+          "line": 419,
+          "end": 421
+        },
+        {
+          "name": "set_team_processor",
+          "line": 423,
+          "end": 425
+        },
+        {
+          "name": "boot",
+          "line": 427,
+          "end": 450
+        },
+        {
+          "name": "shutdown",
+          "line": 452,
+          "end": 459
+        },
+        {
+          "name": "providers",
+          "line": 466,
+          "end": 467
+        },
+        {
+          "name": "security",
+          "line": 470,
+          "end": 471
+        },
+        {
+          "name": "acp_settings",
+          "line": 474,
+          "end": 475
+        },
+        {
+          "name": "tool_guard_rules",
+          "line": 478,
+          "end": 479
+        },
+        {
+          "name": "langfuse",
+          "line": 482,
+          "end": 483
+        },
+        {
+          "name": "media_generation",
+          "line": 486,
+          "end": 487
+        },
+        {
+          "name": "paths",
+          "line": 490,
+          "end": 491
+        },
+        {
+          "name": "harness_manager",
+          "line": 494,
+          "end": 495
+        },
+        {
+          "name": "octop_config",
+          "line": 498,
+          "end": 499
+        },
+        {
+          "name": "create",
+          "line": 505,
+          "end": 631
+        },
+        {
+          "name": "_preserve_system_files_path",
+          "line": 633,
+          "end": 646
+        },
+        {
+          "name": "update",
+          "line": 648,
+          "end": 703
+        },
+        {
+          "name": "set_shared",
+          "line": 705,
+          "end": 711
+        },
+        {
+          "name": "set_icon_url",
+          "line": 713,
+          "end": 722
+        },
+        {
+          "name": "delete",
+          "line": 724,
+          "end": 742
+        },
+        {
+          "name": "start",
+          "line": 744,
+          "end": 750
+        },
+        {
+          "name": "stop",
+          "line": 752,
+          "end": 760
+        },
+        {
+          "name": "_quiesce_harness_memory",
+          "line": 762,
+          "end": 785
+        },
+        {
+          "name": "_wait_memory_maintenance_idle",
+          "line": 788,
+          "end": 803
+        },
+        {
+          "name": "get_row",
+          "line": 809,
+          "end": 811
+        },
+        {
+          "name": "workspace_for_agent",
+          "line": 813,
+          "end": 828
+        },
+        {
+          "name": "list_agents",
+          "line": 830,
+          "end": 831
+        },
+        {
+          "name": "list_rows",
+          "line": 833,
+          "end": 835
+        },
+        {
+          "name": "resolve_user_agent",
+          "line": 837,
+          "end": 851
+        },
+        {
+          "name": "get_config",
+          "line": 853,
+          "end": 858
+        },
+        {
+          "name": "persist_harness_config",
+          "line": 860,
+          "end": 877
+        },
+        {
+          "name": "resolve_workspace_dir",
+          "line": 879,
+          "end": 901
+        },
+        {
+          "name": "is_bootstrapped",
+          "line": 903,
+          "end": 915
+        },
+        {
+          "name": "find_agents_using_provider",
+          "line": 917,
+          "end": 923
+        },
+        {
+          "name": "find_agents_using_storage_backend",
+          "line": 925,
+          "end": 933
+        },
+        {
+          "name": "get_agent",
+          "line": 939,
+          "end": 952
+        },
+        {
+          "name": "_unavailable_error",
+          "line": 954,
+          "end": 962
+        },
+        {
+          "name": "delete_thread_checkpoint",
+          "line": 964,
+          "end": 993
+        },
+        {
+          "name": "is_agent_active",
+          "line": 999,
+          "end": 1001
+        },
+        {
+          "name": "try_begin_history_backfill",
+          "line": 1003,
+          "end": 1012
+        },
+        {
+          "name": "end_history_backfill",
+          "line": 1014,
+          "end": 1018
+        },
+        {
+          "name": "_begin_invocation",
+          "line": 1020,
+          "end": 1031
+        },
+        {
+          "name": "_end_invocation",
+          "line": 1033,
+          "end": 1038
+        },
+        {
+          "name": "_track_invocation",
+          "line": 1041,
+          "end": 1046
+        },
+        {
+          "name": "stream",
+          "line": 1048,
+          "end": 1058
+        },
+        {
+          "name": "call",
+          "line": 1060,
+          "end": 1071
+        },
+        {
+          "name": "resume_hitl",
+          "line": 1073,
+          "end": 1086
+        },
+        {
+          "name": "cancel_stream",
+          "line": 1088,
+          "end": 1091
+        },
+        {
+          "name": "get_thread_model",
+          "line": 1093,
+          "end": 1096
+        },
+        {
+          "name": "set_thread_model",
+          "line": 1098,
+          "end": 1100
+        },
+        {
+          "name": "clear_thread_model",
+          "line": 1102,
+          "end": 1104
+        },
+        {
+          "name": "resolve_fallback_model_ref",
+          "line": 1106,
+          "end": 1113
+        },
+        {
+          "name": "reload",
+          "line": 1119,
+          "end": 1121
+        },
+        {
+          "name": "reload_all",
+          "line": 1123,
+          "end": 1128
+        },
+        {
+          "name": "reload_harness_agents",
+          "line": 1130,
+          "end": 1136
+        },
+        {
+          "name": "_agent_uses_auto_default",
+          "line": 1138,
+          "end": 1140
+        },
+        {
+          "name": "_provider_reload_impact_ids",
+          "line": 1142,
+          "end": 1172
+        },
+        {
+          "name": "_reload_agents",
+          "line": 1174,
+          "end": 1187
+        },
+        {
+          "name": "on_provider_changed",
+          "line": 1189,
+          "end": 1216
+        },
+        {
+          "name": "reload_connectors",
+          "line": 1222,
+          "end": 1248
+        },
+        {
+          "name": "reload_connectors_for_user",
+          "line": 1250,
+          "end": 1260
+        },
+        {
+          "name": "invalidate_mcp_tool_cache",
+          "line": 1262,
+          "end": 1271
+        },
+        {
+          "name": "mcp_server_labels_for_user",
+          "line": 1273,
+          "end": 1279
+        },
+        {
+          "name": "resolve_tool_display_name_for_chat",
+          "line": 1281,
+          "end": 1301
+        },
+        {
+          "name": "_server_lock",
+          "line": 1303,
+          "end": 1310
+        },
+        {
+          "name": "_get_or_load_mcp_tools",
+          "line": 1312,
+          "end": 1371
+        },
+        {
+          "name": "merge_turn_mcp_servers",
+          "line": 1373,
+          "end": 1387
+        },
+        {
+          "name": "default_mcp_servers",
+          "line": 1389,
+          "end": 1394
+        },
+        {
+          "name": "default_knowledge_base_ids",
+          "line": 1396,
+          "end": 1401
+        },
+        {
+          "name": "prepare_chat_mcp",
+          "line": 1403,
+          "end": 1574
+        },
+        {
+          "name": "_attach_gateway_tools",
+          "line": 1576,
+          "end": 1611
+        },
+        {
+          "name": "save_langfuse",
+          "line": 1617,
+          "end": 1634
+        },
+        {
+          "name": "save_media_generation",
+          "line": 1636,
+          "end": 1656
+        },
+        {
+          "name": "save_security",
+          "line": 1658,
+          "end": 1666
+        },
+        {
+          "name": "apply_persona_mbti",
+          "line": 1672,
+          "end": 1701
+        },
+        {
+          "name": "update_config_json",
+          "line": 1703,
+          "end": 1716
+        },
+        {
+          "name": "persist_skills_disabled",
+          "line": 1718,
+          "end": 1727
+        },
+        {
+          "name": "persist_tools_disabled",
+          "line": 1729,
+          "end": 1737
+        },
+        {
+          "name": "persist_plugin_tools_config",
+          "line": 1739,
+          "end": 1748
+        },
+        {
+          "name": "_resolve_skill_package_dirs",
+          "line": 1750,
+          "end": 1761
+        },
+        {
+          "name": "_normalize_skills_dir_config",
+          "line": 1764,
+          "end": 1775
+        },
+        {
+          "name": "_backend_supports_host_skill_packages",
+          "line": 1778,
+          "end": 1804
+        },
+        {
+          "name": "persist_skill_package_ids",
+          "line": 1806,
+          "end": 1832
+        },
+        {
+          "name": "sync_skill_package_dirs",
+          "line": 1834,
+          "end": 1864
+        },
+        {
+          "name": "validate_skill_package_ids",
+          "line": 1866,
+          "end": 1875
+        },
+        {
+          "name": "persist_knowledge_base_ids",
+          "line": 1877,
+          "end": 1890
+        },
+        {
+          "name": "persist_mcp_servers",
+          "line": 1892,
+          "end": 1905
+        },
+        {
+          "name": "validate_knowledge_base_ids",
+          "line": 1907,
+          "end": 1919
+        },
+        {
+          "name": "validate_mcp_servers",
+          "line": 1921,
+          "end": 1929
+        },
+        {
+          "name": "assert_backend_supports_skill_packages",
+          "line": 1931,
+          "end": 1955
+        },
+        {
+          "name": "refresh_agents_for_package",
+          "line": 1957,
+          "end": 1962
+        },
+        {
+          "name": "strip_skill_package_id",
+          "line": 1964,
+          "end": 1977
+        },
+        {
+          "name": "resolve_context_max_tokens",
+          "line": 1979,
+          "end": 1981
+        },
+        {
+          "name": "list_skill_summaries",
+          "line": 1983,
+          "end": 2136
+        },
+        {
+          "name": "list_subagent_summaries",
+          "line": 2138,
+          "end": 2143
+        },
+        {
+          "name": "sync_skills_disabled",
+          "line": 2145,
+          "end": 2147
+        },
+        {
+          "name": "sync_tools_disabled",
+          "line": 2149,
+          "end": 2161
+        },
+        {
+          "name": "sync_effective_tools_disabled",
+          "line": 2163,
+          "end": 2181
+        },
+        {
+          "name": "_assert_agent_name_available",
+          "line": 2187,
+          "end": 2201
+        },
+        {
+          "name": "_complete_create_bootstrap",
+          "line": 2207,
+          "end": 2219
+        },
+        {
+          "name": "_start_agent",
+          "line": 2221,
+          "end": 2248
+        },
+        {
+          "name": "_post_start_agent",
+          "line": 2250,
+          "end": 2310
+        },
+        {
+          "name": "_mark_bootstrap_graph_refresh_pending",
+          "line": 2312,
+          "end": 2324
+        },
+        {
+          "name": "_apply_pending_bootstrap_graph_refresh",
+          "line": 2326,
+          "end": 2342
+        },
+        {
+          "name": "_agent_config_dict",
+          "line": 2344,
+          "end": 2346
+        },
+        {
+          "name": "_backend_spec_for_row",
+          "line": 2348,
+          "end": 2368
+        },
+        {
+          "name": "resolved_backend_spec",
+          "line": 2370,
+          "end": 2375
+        },
+        {
+          "name": "_owner_username",
+          "line": 2377,
+          "end": 2383
+        },
+        {
+          "name": "_spec_is_opensandbox",
+          "line": 2386,
+          "end": 2387
+        },
+        {
+          "name": "_prepare_docker_backend",
+          "line": 2389,
+          "end": 2400
+        },
+        {
+          "name": "_backend_workspace_for_row",
+          "line": 2402,
+          "end": 2438
+        },
+        {
+          "name": "_seed_expert_template",
+          "line": 2440,
+          "end": 2504
+        },
+        {
+          "name": "_reload_agent",
+          "line": 2510,
+          "end": 2536
+        },
+        {
+          "name": "_schedule_reload",
+          "line": 2538,
+          "end": 2544
+        },
+        {
+          "name": "_reload_worker",
+          "line": 2546,
+          "end": 2559
+        },
+        {
+          "name": "_agent_runtime_bundle",
+          "line": 2565,
+          "end": 2596
+        },
+        {
+          "name": "_refresh_peer_entry",
+          "line": 2598,
+          "end": 2602
+        },
+        {
+          "name": "_apply_peer_profile_metadata",
+          "line": 2604,
+          "end": 2621
+        },
+        {
+          "name": "_peer_manifest_metadata",
+          "line": 2623,
+          "end": 2651
+        },
+        {
+          "name": "_connector_uid_for",
+          "line": 2653,
+          "end": 2664
+        },
+        {
+          "name": "_prepare_stream_request",
+          "line": 2666,
+          "end": 2681
+        },
+        {
+          "name": "_build_harness_config",
+          "line": 2683,
+          "end": 2962
+        },
+        {
+          "name": "_one",
+          "line": 1180,
+          "end": 1185
+        },
+        {
+          "name": "_on_bootstrap_complete",
+          "line": 2307,
+          "end": 2308
+        }
+      ]
+    },
+    {
+      "id": "processor",
+      "package": "octop",
+      "path": "src/octop/infra/gateway/process/processor.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/gateway/process/processor.py",
+      "sha256": "6f68731df79e89c6b941ae34eacb480100883ddc75842d232149a11bcd48f920",
+      "lines": 1537,
+      "symbols": [
+        {
+          "name": "_stream_error",
+          "line": 84,
+          "end": 87
+        },
+        {
+          "name": "_MessageEventSink",
+          "line": 90,
+          "end": 100
+        },
+        {
+          "name": "GlobalProcessor",
+          "line": 103,
+          "end": 1494
+        },
+        {
+          "name": "_octop_user_id",
+          "line": 1497,
+          "end": 1503
+        },
+        {
+          "name": "_peer_turn_messages",
+          "line": 1506,
+          "end": 1527
+        },
+        {
+          "name": "_mcp_server_names",
+          "line": 1530,
+          "end": 1537
+        },
+        {
+          "name": "__init__",
+          "line": 91,
+          "end": 92
+        },
+        {
+          "name": "text",
+          "line": 94,
+          "end": 97
+        },
+        {
+          "name": "complete",
+          "line": 99,
+          "end": 100
+        },
+        {
+          "name": "__init__",
+          "line": 106,
+          "end": 147
+        },
+        {
+          "name": "_begin_history",
+          "line": 149,
+          "end": 193
+        },
+        {
+          "name": "_finish_history",
+          "line": 195,
+          "end": 201
+        },
+        {
+          "name": "_complete_resumed_history",
+          "line": 203,
+          "end": 210
+        },
+        {
+          "name": "hitl_coordinator",
+          "line": 213,
+          "end": 214
+        },
+        {
+          "name": "replace_thread_message_repo",
+          "line": 216,
+          "end": 218
+        },
+        {
+          "name": "_agent_trajectory_enabled",
+          "line": 220,
+          "end": 226
+        },
+        {
+          "name": "_observe_trajectory",
+          "line": 228,
+          "end": 250
+        },
+        {
+          "name": "_finish_trajectory",
+          "line": 252,
+          "end": 270
+        },
+        {
+          "name": "_observe_turn_start_context",
+          "line": 272,
+          "end": 337
+        },
+        {
+          "name": "_trajectory_system_prompt",
+          "line": 339,
+          "end": 355
+        },
+        {
+          "name": "_trajectory_enabled_skill_names",
+          "line": 357,
+          "end": 383
+        },
+        {
+          "name": "_trajectory_workspace_files",
+          "line": 385,
+          "end": 407
+        },
+        {
+          "name": "prepare_peer_session",
+          "line": 411,
+          "end": 434
+        },
+        {
+          "name": "record_peer_turn",
+          "line": 436,
+          "end": 464
+        },
+        {
+          "name": "compose_followup",
+          "line": 466,
+          "end": 481
+        },
+        {
+          "name": "on_reply",
+          "line": 483,
+          "end": 499
+        },
+        {
+          "name": "_deliver_team_text",
+          "line": 501,
+          "end": 511
+        },
+        {
+          "name": "_peer_display_name",
+          "line": 513,
+          "end": 515
+        },
+        {
+          "name": "_slash_ctx",
+          "line": 517,
+          "end": 541
+        },
+        {
+          "name": "_model_ref_from_meta",
+          "line": 544,
+          "end": 556
+        },
+        {
+          "name": "_resolve_harness_model",
+          "line": 558,
+          "end": 607
+        },
+        {
+          "name": "_resolve_reasoning_overrides",
+          "line": 609,
+          "end": 648
+        },
+        {
+          "name": "__call__",
+          "line": 652,
+          "end": 918
+        },
+        {
+          "name": "iter_turn_chunks",
+          "line": 923,
+          "end": 1125
+        },
+        {
+          "name": "iter_hitl_resume_chunks",
+          "line": 1127,
+          "end": 1188
+        },
+        {
+          "name": "_build_dashboard_request",
+          "line": 1190,
+          "end": 1303
+        },
+        {
+          "name": "_attach_turn_knowledge_config",
+          "line": 1305,
+          "end": 1332
+        },
+        {
+          "name": "_resolve_turn_mcp_servers",
+          "line": 1334,
+          "end": 1375
+        },
+        {
+          "name": "_record_stream_error",
+          "line": 1377,
+          "end": 1389
+        },
+        {
+          "name": "_touch_thread_after_turn",
+          "line": 1391,
+          "end": 1394
+        },
+        {
+          "name": "_record_turn_usage",
+          "line": 1396,
+          "end": 1412
+        },
+        {
+          "name": "_persist_incomplete_turn",
+          "line": 1414,
+          "end": 1423
+        },
+        {
+          "name": "_record_turn_history",
+          "line": 1425,
+          "end": 1454
+        },
+        {
+          "name": "_append_slash_checkpoint",
+          "line": 1456,
+          "end": 1494
+        }
+      ]
+    },
+    {
+      "id": "request",
+      "package": "octop",
+      "path": "src/octop/infra/gateway/process/harness_request.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/gateway/process/harness_request.py",
+      "sha256": "647d8cbe41793b60d5bf750613cd5b8a8806319e97338027f2a764ebcc85b4a3",
+      "lines": 332,
+      "symbols": [
+        {
+          "name": "_workspace_from_media_backend",
+          "line": 23,
+          "end": 26
+        },
+        {
+          "name": "_group_turn_text",
+          "line": 29,
+          "end": 93
+        },
+        {
+          "name": "build_content_from_message",
+          "line": 96,
+          "end": 164
+        },
+        {
+          "name": "content_from_parts",
+          "line": 167,
+          "end": 194
+        },
+        {
+          "name": "build_content",
+          "line": 197,
+          "end": 210
+        },
+        {
+          "name": "_build_content_sync",
+          "line": 213,
+          "end": 252
+        },
+        {
+          "name": "build_harness_request",
+          "line": 255,
+          "end": 322
+        },
+        {
+          "name": "sender_label",
+          "line": 44,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "id": "gateway",
+      "package": "octop",
+      "path": "src/octop/infra/gateway/gateway.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/gateway/gateway.py",
+      "sha256": "f72f832ebf62c08b79049337c3c86a3db13f4d619a272ef6619753ca97add187",
+      "lines": 680,
+      "symbols": [
+        {
+          "name": "SlashRuntimeMeta",
+          "line": 57,
+          "end": 59
+        },
+        {
+          "name": "ChannelRuntimeStatus",
+          "line": 63,
+          "end": 74
+        },
+        {
+          "name": "ChannelCreateSpec",
+          "line": 78,
+          "end": 84
+        },
+        {
+          "name": "_probe_processor",
+          "line": 87,
+          "end": 90
+        },
+        {
+          "name": "Gateway",
+          "line": 93,
+          "end": 680
+        },
+        {
+          "name": "__init__",
+          "line": 100,
+          "end": 125
+        },
+        {
+          "name": "replace_repos",
+          "line": 127,
+          "end": 135
+        },
+        {
+          "name": "ws_hub",
+          "line": 138,
+          "end": 139
+        },
+        {
+          "name": "cli_hub",
+          "line": 142,
+          "end": 143
+        },
+        {
+          "name": "cli_channel_id",
+          "line": 146,
+          "end": 147
+        },
+        {
+          "name": "channel_manager",
+          "line": 150,
+          "end": 151
+        },
+        {
+          "name": "dashboard_channel_id",
+          "line": 154,
+          "end": 155
+        },
+        {
+          "name": "slash_dispatcher",
+          "line": 158,
+          "end": 159
+        },
+        {
+          "name": "processor",
+          "line": 162,
+          "end": 165
+        },
+        {
+          "name": "history_backfill",
+          "line": 168,
+          "end": 169
+        },
+        {
+          "name": "slash_meta",
+          "line": 172,
+          "end": 173
+        },
+        {
+          "name": "set_slash_meta",
+          "line": 175,
+          "end": 176
+        },
+        {
+          "name": "thread_registry",
+          "line": 179,
+          "end": 180
+        },
+        {
+          "name": "get_runtime_status",
+          "line": 182,
+          "end": 183
+        },
+        {
+          "name": "runtime_status_to_dict",
+          "line": 185,
+          "end": 200
+        },
+        {
+          "name": "boot",
+          "line": 202,
+          "end": 243
+        },
+        {
+          "name": "refresh_media_backends",
+          "line": 245,
+          "end": 260
+        },
+        {
+          "name": "reload_channels_from_db",
+          "line": 262,
+          "end": 286
+        },
+        {
+          "name": "shutdown",
+          "line": 288,
+          "end": 296
+        },
+        {
+          "name": "list_channels",
+          "line": 298,
+          "end": 299
+        },
+        {
+          "name": "get_channel",
+          "line": 301,
+          "end": 302
+        },
+        {
+          "name": "create_channel",
+          "line": 304,
+          "end": 337
+        },
+        {
+          "name": "update_channel",
+          "line": 339,
+          "end": 361
+        },
+        {
+          "name": "delete_channel",
+          "line": 363,
+          "end": 366
+        },
+        {
+          "name": "require_session",
+          "line": 368,
+          "end": 375
+        },
+        {
+          "name": "_bump_virtual_session",
+          "line": 377,
+          "end": 381
+        },
+        {
+          "name": "run_in_session",
+          "line": 383,
+          "end": 393
+        },
+        {
+          "name": "push_text_from_session",
+          "line": 395,
+          "end": 409
+        },
+        {
+          "name": "push_session_text",
+          "line": 411,
+          "end": 430
+        },
+        {
+          "name": "_channel_id_for_session",
+          "line": 433,
+          "end": 442
+        },
+        {
+          "name": "_resolve_push_subject",
+          "line": 444,
+          "end": 461
+        },
+        {
+          "name": "notify_dashboard_push",
+          "line": 463,
+          "end": 484
+        },
+        {
+          "name": "_require_channel_manager",
+          "line": 486,
+          "end": 489
+        },
+        {
+          "name": "_preempt_cancel_on_stop",
+          "line": 491,
+          "end": 520
+        },
+        {
+          "name": "push_text",
+          "line": 522,
+          "end": 530
+        },
+        {
+          "name": "probe_channel",
+          "line": 532,
+          "end": 539
+        },
+        {
+          "name": "probe_config",
+          "line": 541,
+          "end": 563
+        },
+        {
+          "name": "_probe_row",
+          "line": 565,
+          "end": 594
+        },
+        {
+          "name": "_format_probe_error",
+          "line": 597,
+          "end": 606
+        },
+        {
+          "name": "_set_runtime_status",
+          "line": 608,
+          "end": 621
+        },
+        {
+          "name": "_safe_register_channel",
+          "line": 623,
+          "end": 630
+        },
+        {
+          "name": "_register_channel",
+          "line": 632,
+          "end": 655
+        },
+        {
+          "name": "_config_from_row",
+          "line": 657,
+          "end": 671
+        },
+        {
+          "name": "_unregister",
+          "line": 673,
+          "end": 680
+        },
+        {
+          "name": "_locked",
+          "line": 403,
+          "end": 407
+        }
+      ]
+    },
+    {
+      "id": "threads",
+      "package": "octop",
+      "path": "src/octop/infra/gateway/threads.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/gateway/threads.py",
+      "sha256": "d2618c5fedb0084ff8fd2d6a0a5e1dc0ab5a4dfc5dcf126fbd81cefdb2d533d5",
+      "lines": 438,
+      "symbols": [
+        {
+          "name": "ThreadRegistry",
+          "line": 13,
+          "end": 423
+        },
+        {
+          "name": "_new_thread_id",
+          "line": 426,
+          "end": 427
+        },
+        {
+          "name": "thread_row_has_messages",
+          "line": 430,
+          "end": 438
+        },
+        {
+          "name": "make_key",
+          "line": 22,
+          "end": 30
+        },
+        {
+          "name": "peer_session_key",
+          "line": 33,
+          "end": 46
+        },
+        {
+          "name": "dashboard_key",
+          "line": 49,
+          "end": 55
+        },
+        {
+          "name": "cli_key",
+          "line": 58,
+          "end": 64
+        },
+        {
+          "name": "__init__",
+          "line": 66,
+          "end": 69
+        },
+        {
+          "name": "replace_repos",
+          "line": 71,
+          "end": 74
+        },
+        {
+          "name": "_refresh_session_if_needed",
+          "line": 76,
+          "end": 105
+        },
+        {
+          "name": "get_or_create",
+          "line": 107,
+          "end": 163
+        },
+        {
+          "name": "get_or_create_by_key",
+          "line": 165,
+          "end": 195
+        },
+        {
+          "name": "get_bound_thread_id",
+          "line": 197,
+          "end": 199
+        },
+        {
+          "name": "get_session",
+          "line": 201,
+          "end": 202
+        },
+        {
+          "name": "rebind",
+          "line": 204,
+          "end": 245
+        },
+        {
+          "name": "reset",
+          "line": 247,
+          "end": 291
+        },
+        {
+          "name": "reset_by_session_key",
+          "line": 293,
+          "end": 320
+        },
+        {
+          "name": "set_title_if_null",
+          "line": 322,
+          "end": 323
+        },
+        {
+          "name": "update_title",
+          "line": 325,
+          "end": 326
+        },
+        {
+          "name": "set_pinned",
+          "line": 328,
+          "end": 329
+        },
+        {
+          "name": "update_composer",
+          "line": 331,
+          "end": 344
+        },
+        {
+          "name": "touch_last_active",
+          "line": 346,
+          "end": 347
+        },
+        {
+          "name": "append_artifacts",
+          "line": 349,
+          "end": 350
+        },
+        {
+          "name": "get_thread",
+          "line": 352,
+          "end": 353
+        },
+        {
+          "name": "list_threads",
+          "line": 355,
+          "end": 356
+        },
+        {
+          "name": "list_threads_for_session",
+          "line": 358,
+          "end": 359
+        },
+        {
+          "name": "create_thread",
+          "line": 361,
+          "end": 383
+        },
+        {
+          "name": "ensure_thread",
+          "line": 385,
+          "end": 405
+        },
+        {
+          "name": "delete_thread",
+          "line": 407,
+          "end": 408
+        },
+        {
+          "name": "increment_unread",
+          "line": 410,
+          "end": 411
+        },
+        {
+          "name": "mark_thread_read",
+          "line": 413,
+          "end": 414
+        },
+        {
+          "name": "mark_agent_read",
+          "line": 416,
+          "end": 417
+        },
+        {
+          "name": "unread_totals_by_agent",
+          "line": 419,
+          "end": 420
+        },
+        {
+          "name": "unread_counts_for_threads",
+          "line": 422,
+          "end": 423
+        }
+      ]
+    },
+    {
+      "id": "chat-ws",
+      "package": "octop",
+      "path": "src/octop/api/routers/chat/ws.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/api/routers/chat/ws.py",
+      "sha256": "669487db76f713f824038dff45b7e4a099b8f5d4a12c12930c872749b92c7740",
+      "lines": 183,
+      "symbols": [
+        {
+          "name": "dashboard_chat_ws",
+          "line": 33,
+          "end": 183
+        },
+        {
+          "name": "send_frame",
+          "line": 70,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "id": "chat-turn",
+      "package": "octop",
+      "path": "src/octop/api/routers/chat/turn.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/api/routers/chat/turn.py",
+      "sha256": "ea7c6e03f82bda382e2137cbaec011e8e05125c3cf7517cfe8b70728a65289d7",
+      "lines": 354,
+      "symbols": [
+        {
+          "name": "PreparedDashboardTurn",
+          "line": 49,
+          "end": 57
+        },
+        {
+          "name": "resolve_thread_id",
+          "line": 60,
+          "end": 86
+        },
+        {
+          "name": "_turn_plain_text",
+          "line": 89,
+          "end": 107
+        },
+        {
+          "name": "_message_content_nonempty",
+          "line": 110,
+          "end": 123
+        },
+        {
+          "name": "turn_has_content",
+          "line": 126,
+          "end": 134
+        },
+        {
+          "name": "_mime_from_block",
+          "line": 137,
+          "end": 144
+        },
+        {
+          "name": "_workspace_path_from_block",
+          "line": 147,
+          "end": 152
+        },
+        {
+          "name": "content_parts_from_dashboard_turn",
+          "line": 155,
+          "end": 223
+        },
+        {
+          "name": "prepare_dashboard_turn",
+          "line": 226,
+          "end": 303
+        },
+        {
+          "name": "build_dashboard_inbound",
+          "line": 306,
+          "end": 349
+        },
+        {
+          "name": "merge_turn_target_agents",
+          "line": 352,
+          "end": 354
+        }
+      ]
+    },
+    {
+      "id": "chat-routes",
+      "package": "octop",
+      "path": "src/octop/api/routers/chat/routes.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/api/routers/chat/routes.py",
+      "sha256": "f6a45040be86f7d735bc2d02fda723ead546c3bf632983a119a4b6694308f81c",
+      "lines": 255,
+      "symbols": [
+        {
+          "name": "get_chat_welcome",
+          "line": 55,
+          "end": 90
+        },
+        {
+          "name": "iter_dashboard_hitl_resume_sse",
+          "line": 93,
+          "end": 147
+        },
+        {
+          "name": "_dashboard_hitl_stream_context",
+          "line": 150,
+          "end": 163
+        },
+        {
+          "name": "resume_hitl",
+          "line": 167,
+          "end": 211
+        },
+        {
+          "name": "polish_prompt",
+          "line": 215,
+          "end": 255
+        },
+        {
+          "name": "gen",
+          "line": 195,
+          "end": 209
+        }
+      ]
+    },
+    {
+      "id": "access",
+      "package": "octop",
+      "path": "src/octop/api/common/agent.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/api/common/agent.py",
+      "sha256": "883d1b243429af00d6b45bf7cc0052e7b973e6455f71a418ce7324d79cd040ab",
+      "lines": 79,
+      "symbols": [
+        {
+          "name": "agent_is_shared",
+          "line": 10,
+          "end": 11
+        },
+        {
+          "name": "user_owns_agent",
+          "line": 14,
+          "end": 15
+        },
+        {
+          "name": "assert_agent_owner",
+          "line": 18,
+          "end": 23
+        },
+        {
+          "name": "_user_may_access",
+          "line": 26,
+          "end": 31
+        },
+        {
+          "name": "assert_agent_access_row",
+          "line": 34,
+          "end": 36
+        },
+        {
+          "name": "require_agent_row",
+          "line": 39,
+          "end": 61
+        },
+        {
+          "name": "require_agent_owner_row",
+          "line": 64,
+          "end": 74
+        },
+        {
+          "name": "assert_agent_access",
+          "line": 77,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "package": "octop",
+      "path": "src/octop/infra/agents/runtime_limits.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/runtime_limits.py",
+      "sha256": "3d81fd644e1d36261468d9ff2329f481e5a46876af513ff856f906bce5f21d7b",
+      "lines": 182,
+      "symbols": [
+        {
+          "name": "_positive_int",
+          "line": 33,
+          "end": 44
+        },
+        {
+          "name": "agent_recursion_limit",
+          "line": 47,
+          "end": 49
+        },
+        {
+          "name": "agent_max_input_tokens",
+          "line": 52,
+          "end": 54
+        },
+        {
+          "name": "_unit_float",
+          "line": 57,
+          "end": 72
+        },
+        {
+          "name": "_agent_temperature",
+          "line": 75,
+          "end": 77
+        },
+        {
+          "name": "_agent_top_p",
+          "line": 80,
+          "end": 82
+        },
+        {
+          "name": "_agent_max_output_tokens",
+          "line": 85,
+          "end": 87
+        },
+        {
+          "name": "agent_model_settings",
+          "line": 90,
+          "end": 102
+        },
+        {
+          "name": "resolve_context_max_tokens",
+          "line": 105,
+          "end": 110
+        },
+        {
+          "name": "agent_runtime_values",
+          "line": 113,
+          "end": 115
+        },
+        {
+          "name": "merge_agent_runtime_values",
+          "line": 118,
+          "end": 132
+        },
+        {
+          "name": "apply_agent_runtime_to_stream_request",
+          "line": 135,
+          "end": 168
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "package": "octop",
+      "path": "src/octop/infra/agents/security/policy_store.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/security/policy_store.py",
+      "sha256": "fa871f3966ae004567a912238aa4166e134574214e78378134d4e7ec46226e85",
+      "lines": 53,
+      "symbols": [
+        {
+          "name": "_default_policy",
+          "line": 18,
+          "end": 23
+        },
+        {
+          "name": "SecuritySettingsStore",
+          "line": 26,
+          "end": 53
+        },
+        {
+          "name": "__init__",
+          "line": 29,
+          "end": 30
+        },
+        {
+          "name": "load",
+          "line": 32,
+          "end": 43
+        },
+        {
+          "name": "save",
+          "line": 45,
+          "end": 50
+        },
+        {
+          "name": "harness_policy",
+          "line": 52,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "package": "octop",
+      "path": "src/octop/infra/backend/resolver.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/backend/resolver.py",
+      "sha256": "86556da1cfa786154119528f8029ae24c337b6f08512633cf9937071108878f9",
+      "lines": 188,
+      "symbols": [
+        {
+          "name": "default_agent_backend_spec",
+          "line": 12,
+          "end": 31
+        },
+        {
+          "name": "windows_neutralize_host_root",
+          "line": 34,
+          "end": 65
+        },
+        {
+          "name": "_is_host_root",
+          "line": 68,
+          "end": 76
+        },
+        {
+          "name": "resolve_agent_backend_spec",
+          "line": 79,
+          "end": 122
+        },
+        {
+          "name": "collect_named_storage_backend_refs",
+          "line": 125,
+          "end": 147
+        },
+        {
+          "name": "find_agents_using_storage_backend",
+          "line": 150,
+          "end": 164
+        },
+        {
+          "name": "backend_spec_supports_execution",
+          "line": 167,
+          "end": 188
+        }
+      ]
+    },
+    {
+      "id": "memory-backend",
+      "package": "octop",
+      "path": "src/octop/infra/agents/memory_backend.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/memory_backend.py",
+      "sha256": "454353ea8c81bfff6bcdbe750f33c572d794d7efd9e16a9e4a08d655ae4c7e4d",
+      "lines": 87,
+      "symbols": [
+        {
+          "name": "memory_backend_from_agent_config",
+          "line": 13,
+          "end": 65
+        },
+        {
+          "name": "open_memory_kwargs",
+          "line": 68,
+          "end": 87
+        }
+      ]
+    },
+    {
+      "id": "paths",
+      "package": "octop",
+      "path": "src/octop/infra/utils/paths.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/utils/paths.py",
+      "sha256": "dbf8e6c4f1fe102e471edba9dedf6be37ab1cb8c7704233c2d7c404c1949a31e",
+      "lines": 150,
+      "symbols": [
+        {
+          "name": "PathLayout",
+          "line": 11,
+          "end": 150
+        },
+        {
+          "name": "from_env",
+          "line": 15,
+          "end": 20
+        },
+        {
+          "name": "db",
+          "line": 23,
+          "end": 24
+        },
+        {
+          "name": "logs_dir",
+          "line": 27,
+          "end": 29
+        },
+        {
+          "name": "log",
+          "line": 32,
+          "end": 33
+        },
+        {
+          "name": "ensure_logs_dir",
+          "line": 35,
+          "end": 39
+        },
+        {
+          "name": "ensure_log",
+          "line": 41,
+          "end": 44
+        },
+        {
+          "name": "config",
+          "line": 47,
+          "end": 48
+        },
+        {
+          "name": "users_dir",
+          "line": 51,
+          "end": 52
+        },
+        {
+          "name": "user_dir",
+          "line": 54,
+          "end": 55
+        },
+        {
+          "name": "agents_dir",
+          "line": 58,
+          "end": 60
+        },
+        {
+          "name": "expert_market_dir",
+          "line": 63,
+          "end": 65
+        },
+        {
+          "name": "published_experts_dir",
+          "line": 68,
+          "end": 70
+        },
+        {
+          "name": "skill_packages_dir",
+          "line": 73,
+          "end": 75
+        },
+        {
+          "name": "knowledge_dir",
+          "line": 78,
+          "end": 80
+        },
+        {
+          "name": "agent_workspace",
+          "line": 82,
+          "end": 84
+        },
+        {
+          "name": "ensure_agent_workspace",
+          "line": 86,
+          "end": 90
+        },
+        {
+          "name": "ensure_root",
+          "line": 92,
+          "end": 94
+        },
+        {
+          "name": "plugins_dir",
+          "line": 97,
+          "end": 98
+        },
+        {
+          "name": "tool_guard_rules_dir",
+          "line": 101,
+          "end": 103
+        },
+        {
+          "name": "tool_guard_rules_file",
+          "line": 106,
+          "end": 107
+        },
+        {
+          "name": "backups_dir",
+          "line": 110,
+          "end": 112
+        },
+        {
+          "name": "ensure_backups_dir",
+          "line": 114,
+          "end": 117
+        },
+        {
+          "name": "backup_file",
+          "line": 119,
+          "end": 121
+        },
+        {
+          "name": "ssl_dir",
+          "line": 124,
+          "end": 126
+        },
+        {
+          "name": "ensure_ssl_dir",
+          "line": 128,
+          "end": 131
+        },
+        {
+          "name": "connector_cli_dir",
+          "line": 134,
+          "end": 136
+        },
+        {
+          "name": "connector_cli_instance_dir",
+          "line": 138,
+          "end": 145
+        },
+        {
+          "name": "ensure_connector_cli_instance_dir",
+          "line": 147,
+          "end": 150
+        }
+      ]
+    },
+    {
+      "id": "kb-tools",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/tools.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/tools.py",
+      "sha256": "5c2ad7896bc2e22f121536541168add5982e22f0b02de43a52e2d118ad3614ec",
+      "lines": 120,
+      "symbols": [
+        {
+          "name": "_clip_catalog_text",
+          "line": 29,
+          "end": 33
+        },
+        {
+          "name": "format_search_knowledge_description",
+          "line": 36,
+          "end": 53
+        },
+        {
+          "name": "_tool_ctx",
+          "line": 56,
+          "end": 68
+        },
+        {
+          "name": "build_knowledge_tools",
+          "line": 71,
+          "end": 120
+        },
+        {
+          "name": "search_knowledge",
+          "line": 74,
+          "end": 111
+        }
+      ]
+    },
+    {
+      "id": "kb-hint",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/hint.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/hint.py",
+      "sha256": "719c3b263f117bf2c6ee6a0d51bf5c279fe94ad18479b756b6c0d152db3b648a",
+      "lines": 119,
+      "symbols": [
+        {
+          "name": "catalog_for_selected_bases",
+          "line": 15,
+          "end": 40
+        },
+        {
+          "name": "_catalog_from_config",
+          "line": 43,
+          "end": 58
+        },
+        {
+          "name": "_with_enriched_tool_description",
+          "line": 61,
+          "end": 91
+        },
+        {
+          "name": "KnowledgeSearchHintMiddleware",
+          "line": 94,
+          "end": 113
+        },
+        {
+          "name": "wrap_model_call",
+          "line": 101,
+          "end": 106
+        },
+        {
+          "name": "awrap_model_call",
+          "line": 108,
+          "end": 113
+        }
+      ]
+    },
+    {
+      "id": "kb-jobs",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/jobs.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/jobs.py",
+      "sha256": "38d7e34af86536ea64fdeea6113f474f2803abb0229a267e8dc7362ef34353ed",
+      "lines": 86,
+      "symbols": [
+        {
+          "name": "reset_index_semaphore_for_tests",
+          "line": 21,
+          "end": 24
+        },
+        {
+          "name": "_get_index_semaphore",
+          "line": 27,
+          "end": 31
+        },
+        {
+          "name": "process_document",
+          "line": 34,
+          "end": 60
+        },
+        {
+          "name": "enqueue_index_document",
+          "line": 63,
+          "end": 72
+        },
+        {
+          "name": "reindex_all_documents",
+          "line": 75,
+          "end": 79
+        },
+        {
+          "name": "resume_pending_index_jobs",
+          "line": 82,
+          "end": 86
+        },
+        {
+          "name": "_run",
+          "line": 68,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "id": "kb-chunk",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/chunk.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/chunk.py",
+      "sha256": "a58ac90b08e18196ba2719da713d37768ec7336655ef12701ded6e2b117ea45b",
+      "lines": 21,
+      "symbols": [
+        {
+          "name": "chunk_text",
+          "line": 6,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "id": "kb-index",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/index.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/index.py",
+      "sha256": "1004d6bbda23c78c450f7e1e34b3d8f9ba5d168b3db48033fb845142282559bc",
+      "lines": 134,
+      "symbols": [
+        {
+          "name": "Hit",
+          "line": 17,
+          "end": 23
+        },
+        {
+          "name": "KnowledgeIndex",
+          "line": 26,
+          "end": 134
+        },
+        {
+          "name": "__init__",
+          "line": 29,
+          "end": 31
+        },
+        {
+          "name": "path",
+          "line": 34,
+          "end": 35
+        },
+        {
+          "name": "_connect",
+          "line": 37,
+          "end": 38
+        },
+        {
+          "name": "_initialize",
+          "line": 40,
+          "end": 55
+        },
+        {
+          "name": "replace_doc_chunks",
+          "line": 57,
+          "end": 92
+        },
+        {
+          "name": "delete_doc",
+          "line": 94,
+          "end": 96
+        },
+        {
+          "name": "search",
+          "line": 98,
+          "end": 134
+        }
+      ]
+    },
+    {
+      "id": "kb-retrieve",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/retrieve.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/retrieve.py",
+      "sha256": "62c1ebc3fbcc47f3f69e6442f7f0e288668d0f11f3d809095db7ea8854a4e688",
+      "lines": 132,
+      "symbols": [
+        {
+          "name": "retrieve_context",
+          "line": 22,
+          "end": 55
+        },
+        {
+          "name": "_retrieve_context_sync",
+          "line": 58,
+          "end": 101
+        },
+        {
+          "name": "_unique_ids",
+          "line": 104,
+          "end": 105
+        },
+        {
+          "name": "_format_context",
+          "line": 108,
+          "end": 132
+        }
+      ]
+    },
+    {
+      "id": "kb-params",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/params.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/params.py",
+      "sha256": "4d2a0cea1a815f25d4f0e84b338a6026fc448d007d7dbdcd2ccddb185586231e",
+      "lines": 115,
+      "symbols": [
+        {
+          "name": "_as_int",
+          "line": 28,
+          "end": 38
+        },
+        {
+          "name": "_validate_chunk_window",
+          "line": 41,
+          "end": 45
+        },
+        {
+          "name": "get_advanced_settings",
+          "line": 48,
+          "end": 79
+        },
+        {
+          "name": "set_advanced_settings",
+          "line": 82,
+          "end": 115
+        }
+      ]
+    },
+    {
+      "id": "kb-embed",
+      "package": "octop",
+      "path": "src/octop/infra/knowledge/embed.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/knowledge/embed.py",
+      "sha256": "70c6d1a7204caa6808d436cfb50d26403a2d49f0c156e6c440be2310bb15863b",
+      "lines": 65,
+      "symbols": [
+        {
+          "name": "embed_knowledge_texts",
+          "line": 16,
+          "end": 33
+        },
+        {
+          "name": "_embed_remote_batched",
+          "line": 36,
+          "end": 65
+        }
+      ]
+    },
+    {
+      "id": "connectors",
+      "package": "octop",
+      "path": "src/octop/infra/connectors/builder.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/connectors/builder.py",
+      "sha256": "dc5d3be6c167c9d988e813bbfe8c506dae9eb2a36da95f8c4c63884b18b1e93b",
+      "lines": 620,
+      "symbols": [
+        {
+          "name": "_mcp_http_headers",
+          "line": 26,
+          "end": 27
+        },
+        {
+          "name": "normalize_weiyun_mcp_token",
+          "line": 30,
+          "end": 41
+        },
+        {
+          "name": "normalize_weknora_base_url",
+          "line": 44,
+          "end": 53
+        },
+        {
+          "name": "mcp_server_name",
+          "line": 56,
+          "end": 57
+        },
+        {
+          "name": "internal_mcp_url",
+          "line": 60,
+          "end": 71
+        },
+        {
+          "name": "new_internal_token",
+          "line": 74,
+          "end": 75
+        },
+        {
+          "name": "build_http_mcp_spec",
+          "line": 78,
+          "end": 87
+        },
+        {
+          "name": "_build_remote_spec",
+          "line": 90,
+          "end": 190
+        },
+        {
+          "name": "_build_gateway_spec",
+          "line": 193,
+          "end": 209
+        },
+        {
+          "name": "validate_create_credentials",
+          "line": 212,
+          "end": 424
+        },
+        {
+          "name": "_redact_mcp_configs_for_log",
+          "line": 427,
+          "end": 449
+        },
+        {
+          "name": "_iter_active_connectors",
+          "line": 452,
+          "end": 466
+        },
+        {
+          "name": "build_mcp_server_configs_for_user",
+          "line": 469,
+          "end": 542
+        },
+        {
+          "name": "gateway_mcp_server_names",
+          "line": 545,
+          "end": 559
+        },
+        {
+          "name": "inject_missing_gateway_tools",
+          "line": 562,
+          "end": 620
+        }
+      ]
+    },
+    {
+      "id": "crypto",
+      "package": "octop",
+      "path": "src/octop/infra/connectors/crypto.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/connectors/crypto.py",
+      "sha256": "c79abd7686aa478a752c947d75a70e53ffcccab9b395f008805f055ba076b17c",
+      "lines": 28,
+      "symbols": [
+        {
+          "name": "_get_fernet",
+          "line": 15,
+          "end": 17
+        },
+        {
+          "name": "encrypt_credentials",
+          "line": 20,
+          "end": 22
+        },
+        {
+          "name": "decrypt_credentials",
+          "line": 25,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "id": "plugins",
+      "package": "octop",
+      "path": "src/octop/infra/agents/plugins/manager.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/plugins/manager.py",
+      "sha256": "78ae8fd01cb35237356cc6cfcd31a4890334cc0cb16bd5275b549f07022faf66",
+      "lines": 585,
+      "symbols": [
+        {
+          "name": "normalize_plugin_download_url",
+          "line": 44,
+          "end": 58
+        },
+        {
+          "name": "_read_global_plugins",
+          "line": 61,
+          "end": 77
+        },
+        {
+          "name": "_write_global_plugin_enabled",
+          "line": 80,
+          "end": 102
+        },
+        {
+          "name": "_assert_http_url",
+          "line": 105,
+          "end": 111
+        },
+        {
+          "name": "_assert_zip_magic",
+          "line": 114,
+          "end": 120
+        },
+        {
+          "name": "_read_plugin_yaml",
+          "line": 123,
+          "end": 125
+        },
+        {
+          "name": "parse_plugin_ui_meta",
+          "line": 128,
+          "end": 154
+        },
+        {
+          "name": "parse_plugin_icon",
+          "line": 157,
+          "end": 172
+        },
+        {
+          "name": "parse_plugin_requires",
+          "line": 175,
+          "end": 183
+        },
+        {
+          "name": "PluginManager",
+          "line": 186,
+          "end": 585
+        },
+        {
+          "name": "__init__",
+          "line": 187,
+          "end": 194
+        },
+        {
+          "name": "plugins_dir",
+          "line": 197,
+          "end": 198
+        },
+        {
+          "name": "global_enabled_map",
+          "line": 200,
+          "end": 201
+        },
+        {
+          "name": "seed_bundled",
+          "line": 203,
+          "end": 212
+        },
+        {
+          "name": "load_installed",
+          "line": 214,
+          "end": 238
+        },
+        {
+          "name": "load_missing",
+          "line": 240,
+          "end": 273
+        },
+        {
+          "name": "list_installed",
+          "line": 275,
+          "end": 327
+        },
+        {
+          "name": "set_enabled",
+          "line": 329,
+          "end": 375
+        },
+        {
+          "name": "plugin_dir",
+          "line": 377,
+          "end": 382
+        },
+        {
+          "name": "resolve_ui_file",
+          "line": 384,
+          "end": 417
+        },
+        {
+          "name": "install_path",
+          "line": 419,
+          "end": 451
+        },
+        {
+          "name": "install_archive",
+          "line": 453,
+          "end": 490
+        },
+        {
+          "name": "install_url",
+          "line": 492,
+          "end": 527
+        },
+        {
+          "name": "uninstall",
+          "line": 529,
+          "end": 535
+        },
+        {
+          "name": "plugin_skill_names",
+          "line": 537,
+          "end": 548
+        },
+        {
+          "name": "sync_skills_to_workspace",
+          "line": 550,
+          "end": 585
+        }
+      ]
+    },
+    {
+      "id": "quota",
+      "package": "octop",
+      "path": "src/octop/infra/agents/middleware/token_quota.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/middleware/token_quota.py",
+      "sha256": "d7511bfe5403edb494f281320494b51b224de53805d1ec553dadba9282c2226c",
+      "lines": 48,
+      "symbols": [
+        {
+          "name": "configurable_user_id",
+          "line": 13,
+          "end": 23
+        },
+        {
+          "name": "TokenQuotaMiddleware",
+          "line": 26,
+          "end": 45
+        },
+        {
+          "name": "__init__",
+          "line": 29,
+          "end": 32
+        },
+        {
+          "name": "_enforce",
+          "line": 34,
+          "end": 37
+        },
+        {
+          "name": "before_agent",
+          "line": 39,
+          "end": 41
+        },
+        {
+          "name": "abefore_agent",
+          "line": 43,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "id": "cron",
+      "package": "octop",
+      "path": "src/octop/infra/cron/manager.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/cron/manager.py",
+      "sha256": "975a68b58715b6b32013d5435eca3dd1a8075719198bb8275f5ab783440ac2cf",
+      "lines": 310,
+      "symbols": [
+        {
+          "name": "CronCreateSpec",
+          "line": 31,
+          "end": 47
+        },
+        {
+          "name": "CronManager",
+          "line": 50,
+          "end": 310
+        },
+        {
+          "name": "__init__",
+          "line": 53,
+          "end": 68
+        },
+        {
+          "name": "replace_repos",
+          "line": 70,
+          "end": 73
+        },
+        {
+          "name": "boot",
+          "line": 75,
+          "end": 80
+        },
+        {
+          "name": "reload_from_db",
+          "line": 82,
+          "end": 98
+        },
+        {
+          "name": "shutdown",
+          "line": 100,
+          "end": 103
+        },
+        {
+          "name": "create",
+          "line": 105,
+          "end": 144
+        },
+        {
+          "name": "get",
+          "line": 146,
+          "end": 147
+        },
+        {
+          "name": "list_by_agent",
+          "line": 149,
+          "end": 160
+        },
+        {
+          "name": "list_all",
+          "line": 162,
+          "end": 163
+        },
+        {
+          "name": "update",
+          "line": 165,
+          "end": 211
+        },
+        {
+          "name": "delete",
+          "line": 213,
+          "end": 218
+        },
+        {
+          "name": "run_now",
+          "line": 220,
+          "end": 226
+        },
+        {
+          "name": "_make_job",
+          "line": 228,
+          "end": 234
+        },
+        {
+          "name": "_schedule",
+          "line": 236,
+          "end": 257
+        },
+        {
+          "name": "_unschedule",
+          "line": 259,
+          "end": 261
+        },
+        {
+          "name": "_ensure_session",
+          "line": 263,
+          "end": 288
+        },
+        {
+          "name": "schedule_system_job",
+          "line": 290,
+          "end": 300
+        },
+        {
+          "name": "unschedule_system_job",
+          "line": 302,
+          "end": 306
+        },
+        {
+          "name": "has_system_job",
+          "line": 308,
+          "end": 310
+        }
+      ]
+    },
+    {
+      "id": "delivery",
+      "package": "octop",
+      "path": "src/octop/infra/cron/delivery.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/cron/delivery.py",
+      "sha256": "cf314b33d571fad95936a4cfe1c67e7c9afe0ad546c9a007d891ac2894768202",
+      "lines": 314,
+      "symbols": [
+        {
+          "name": "CronDeliveryCommand",
+          "line": 34,
+          "end": 46
+        },
+        {
+          "name": "CronDeliveryService",
+          "line": 49,
+          "end": 291
+        },
+        {
+          "name": "command_from_row",
+          "line": 294,
+          "end": 307
+        },
+        {
+          "name": "__init__",
+          "line": 52,
+          "end": 61
+        },
+        {
+          "name": "replace_repos",
+          "line": 63,
+          "end": 65
+        },
+        {
+          "name": "deliver",
+          "line": 67,
+          "end": 87
+        },
+        {
+          "name": "_deliver_text",
+          "line": 89,
+          "end": 130
+        },
+        {
+          "name": "_deliver_agent",
+          "line": 132,
+          "end": 170
+        },
+        {
+          "name": "_build_agent_request",
+          "line": 172,
+          "end": 231
+        },
+        {
+          "name": "_attach_turn_knowledge_config",
+          "line": 233,
+          "end": 258
+        },
+        {
+          "name": "_project_best_effort",
+          "line": 260,
+          "end": 274
+        },
+        {
+          "name": "_notify_best_effort",
+          "line": 276,
+          "end": 291
+        },
+        {
+          "name": "_locked",
+          "line": 70,
+          "end": 81
+        }
+      ]
+    },
+    {
+      "id": "frontend",
+      "package": "octop",
+      "path": "dashboard/src/pages/Chat/hooks/chatStore.ts",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/dashboard/src/pages/Chat/hooks/chatStore.ts",
+      "sha256": "98e58f4b5f012f499ee667b486cdda69da10caf5f306fa7fff1e47d295052363",
+      "lines": 2253,
+      "symbols": []
+    },
+    {
+      "id": "frontend-package",
+      "package": "octop",
+      "path": "dashboard/package.json",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/dashboard/package.json",
+      "sha256": "af10125782e4e51f1a0bb691164f5aac6f17c506df6bb1a3cfd2f620263e22f9",
+      "lines": 86,
+      "symbols": []
+    },
+    {
+      "id": "compose",
+      "package": "octop",
+      "path": "docker/docker-compose.yml",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/docker/docker-compose.yml",
+      "sha256": "98ed47f3d549fec50a77d1ec75891f62823a4a578de5453f5ed7965788a97d63",
+      "lines": 55,
+      "symbols": []
+    },
+    {
+      "id": "acp-cli",
+      "package": "octop",
+      "path": "src/octop/cli/commands/acp.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/cli/commands/acp.py",
+      "sha256": "d95020fdbb1c002a15ab09912c55e9d56d5b106eb93f1676b3c90dbe67a3ea98",
+      "lines": 63,
+      "symbols": [
+        {
+          "name": "_run_acp_server",
+          "line": 11,
+          "end": 45
+        },
+        {
+          "name": "acp_cmd",
+          "line": 53,
+          "end": 63
+        }
+      ]
+    },
+    {
+      "id": "acp-settings",
+      "package": "octop",
+      "path": "src/octop/infra/agents/acp_settings.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/agents/acp_settings.py",
+      "sha256": "22a9f376cb401e498a477f9fc4007dad63ee93d9e51807fc3d8009e5c5ddcb85",
+      "lines": 144,
+      "symbols": [
+        {
+          "name": "_settings_key",
+          "line": 41,
+          "end": 42
+        },
+        {
+          "name": "ACPSettingsStore",
+          "line": 45,
+          "end": 120
+        },
+        {
+          "name": "_runners_response",
+          "line": 123,
+          "end": 134
+        },
+        {
+          "name": "_parse_config_json",
+          "line": 137,
+          "end": 144
+        },
+        {
+          "name": "__init__",
+          "line": 48,
+          "end": 50
+        },
+        {
+          "name": "load_runners",
+          "line": 52,
+          "end": 72
+        },
+        {
+          "name": "save_runners",
+          "line": 74,
+          "end": 77
+        },
+        {
+          "name": "_save_raw_runners",
+          "line": 79,
+          "end": 82
+        },
+        {
+          "name": "_migrate_legacy_from_agents",
+          "line": 84,
+          "end": 105
+        },
+        {
+          "name": "_strip_legacy_runners",
+          "line": 107,
+          "end": 120
+        }
+      ]
+    },
+    {
+      "id": "team-doc",
+      "package": "octop",
+      "path": "docs/agent-interop-mailbox.md",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/docs/agent-interop-mailbox.md",
+      "sha256": "74b65ba9cf2fb24b1da7302b4b804a1bdea6f52167bbb093f24c56add17bddc5",
+      "lines": 323,
+      "symbols": []
+    },
+    {
+      "id": "delegation-doc",
+      "package": "octop",
+      "path": "docs/agent-delegation.md",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/docs/agent-delegation.md",
+      "sha256": "02d59705ee265dcad7a99138d1b9414689585a47f73652a525aa17b91e64d081",
+      "lines": 36,
+      "symbols": []
+    },
+    {
+      "id": "db",
+      "package": "octop",
+      "path": "src/octop/infra/db/factory.py",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/src/octop/infra/db/factory.py",
+      "sha256": "5b131ba9f07f280e537221374c7d83d5468b7ea28435c576b6f2e054286be924",
+      "lines": 44,
+      "symbols": [
+        {
+          "name": "resolve_sqlite_db_path",
+          "line": 12,
+          "end": 17
+        },
+        {
+          "name": "should_defer_control_plane_db",
+          "line": 20,
+          "end": 31
+        },
+        {
+          "name": "open_database",
+          "line": 34,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "id": "license",
+      "package": "octop",
+      "path": "LICENSE",
+      "url": "https://github.com/TencentCloud/Octop/blob/757fd12e5dcae7f9303dbfbbf6321a6986694a8b/LICENSE",
+      "sha256": "5f2089cdcc57d00c6b70c0fb83368cbf3a86bb57839385fc6ac9086878d606e8",
+      "lines": 21,
+      "symbols": []
+    },
+    {
+      "id": "h-agent",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/agent.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "fa8dfca65d521a52eef6f5b19d1836be9d8ce4ffe5e30d2bbc75db2299f403a5",
+      "lines": 1923,
+      "symbols": [
+        {
+          "name": "_tool_name_of",
+          "line": 77,
+          "end": 86
+        },
+        {
+          "name": "HarnessAgent",
+          "line": 89,
+          "end": 1853
+        },
+        {
+          "name": "_async_close_sqlite_connection",
+          "line": 1856,
+          "end": 1861
+        },
+        {
+          "name": "_sync_close_sqlite_connection",
+          "line": 1864,
+          "end": 1893
+        },
+        {
+          "name": "_build_async_sqlite_saver",
+          "line": 1896,
+          "end": 1916
+        },
+        {
+          "name": "_new_async_saver",
+          "line": 1919,
+          "end": 1920
+        },
+        {
+          "name": "__init__",
+          "line": 145,
+          "end": 202
+        },
+        {
+          "name": "config",
+          "line": 209,
+          "end": 210
+        },
+        {
+          "name": "agent_id",
+          "line": 213,
+          "end": 215
+        },
+        {
+          "name": "graph",
+          "line": 218,
+          "end": 220
+        },
+        {
+          "name": "backend",
+          "line": 223,
+          "end": 225
+        },
+        {
+          "name": "workspace",
+          "line": 228,
+          "end": 230
+        },
+        {
+          "name": "memory",
+          "line": 233,
+          "end": 235
+        },
+        {
+          "name": "memory_maintenance_status",
+          "line": 237,
+          "end": 242
+        },
+        {
+          "name": "checkpointer",
+          "line": 245,
+          "end": 251
+        },
+        {
+          "name": "protocol",
+          "line": 254,
+          "end": 256
+        },
+        {
+          "name": "model_factory",
+          "line": 259,
+          "end": 266
+        },
+        {
+          "name": "is_bootstrapped",
+          "line": 268,
+          "end": 275
+        },
+        {
+          "name": "append_mcp_tools",
+          "line": 277,
+          "end": 287
+        },
+        {
+          "name": "replace_mcp_tools",
+          "line": 289,
+          "end": 293
+        },
+        {
+          "name": "inject_mcp_tools",
+          "line": 295,
+          "end": 297
+        },
+        {
+          "name": "init_workspace",
+          "line": 299,
+          "end": 323
+        },
+        {
+          "name": "get_protocol",
+          "line": 325,
+          "end": 332
+        },
+        {
+          "name": "set_skills_disabled",
+          "line": 334,
+          "end": 344
+        },
+        {
+          "name": "set_tools_disabled",
+          "line": 346,
+          "end": 355
+        },
+        {
+          "name": "reload_subagents",
+          "line": 357,
+          "end": 359
+        },
+        {
+          "name": "list_skill_summaries",
+          "line": 361,
+          "end": 369
+        },
+        {
+          "name": "list_subagent_summaries",
+          "line": 371,
+          "end": 378
+        },
+        {
+          "name": "cancel",
+          "line": 382,
+          "end": 385
+        },
+        {
+          "name": "get_thread_model",
+          "line": 387,
+          "end": 388
+        },
+        {
+          "name": "set_thread_model",
+          "line": 390,
+          "end": 391
+        },
+        {
+          "name": "clear_thread_model",
+          "line": 393,
+          "end": 394
+        },
+        {
+          "name": "_iter_until_cancelled",
+          "line": 396,
+          "end": 450
+        },
+        {
+          "name": "call",
+          "line": 452,
+          "end": 473
+        },
+        {
+          "name": "stream",
+          "line": 475,
+          "end": 527
+        },
+        {
+          "name": "resume_hitl",
+          "line": 529,
+          "end": 546
+        },
+        {
+          "name": "stream_events",
+          "line": 548,
+          "end": 569
+        },
+        {
+          "name": "aget_history",
+          "line": 571,
+          "end": 647
+        },
+        {
+          "name": "aappend_messages",
+          "line": 649,
+          "end": 686
+        },
+        {
+          "name": "adelete_thread",
+          "line": 688,
+          "end": 728
+        },
+        {
+          "name": "aget_context_usage",
+          "line": 730,
+          "end": 766
+        },
+        {
+          "name": "acompact_conversation",
+          "line": 768,
+          "end": 812
+        },
+        {
+          "name": "_default_max_input_tokens",
+          "line": 814,
+          "end": 830
+        },
+        {
+          "name": "_read_history_from_graph_state",
+          "line": 832,
+          "end": 856
+        },
+        {
+          "name": "_read_history_checkpoint",
+          "line": 858,
+          "end": 907
+        },
+        {
+          "name": "_sync_list_checkpoint_messages",
+          "line": 910,
+          "end": 918
+        },
+        {
+          "name": "end_session",
+          "line": 922,
+          "end": 938
+        },
+        {
+          "name": "_invocation",
+          "line": 941,
+          "end": 963
+        },
+        {
+          "name": "_defer_close_while_busy",
+          "line": 965,
+          "end": 976
+        },
+        {
+          "name": "close",
+          "line": 978,
+          "end": 1001
+        },
+        {
+          "name": "aclose",
+          "line": 1003,
+          "end": 1018
+        },
+        {
+          "name": "__del__",
+          "line": 1020,
+          "end": 1022
+        },
+        {
+          "name": "__enter__",
+          "line": 1024,
+          "end": 1025
+        },
+        {
+          "name": "__exit__",
+          "line": 1027,
+          "end": 1033
+        },
+        {
+          "name": "__aenter__",
+          "line": 1035,
+          "end": 1036
+        },
+        {
+          "name": "__aexit__",
+          "line": 1038,
+          "end": 1044
+        },
+        {
+          "name": "_init_paths",
+          "line": 1050,
+          "end": 1058
+        },
+        {
+          "name": "_resolve_mount_root",
+          "line": 1061,
+          "end": 1067
+        },
+        {
+          "name": "_peek_backend_mount",
+          "line": 1069,
+          "end": 1097
+        },
+        {
+          "name": "_host_workspace_path",
+          "line": 1099,
+          "end": 1131
+        },
+        {
+          "name": "_agent_visible_workspace_dir",
+          "line": 1133,
+          "end": 1159
+        },
+        {
+          "name": "_host_system_dir",
+          "line": 1161,
+          "end": 1164
+        },
+        {
+          "name": "_init_logging",
+          "line": 1166,
+          "end": 1171
+        },
+        {
+          "name": "_init_mcp",
+          "line": 1173,
+          "end": 1189
+        },
+        {
+          "name": "_init_model_factory",
+          "line": 1191,
+          "end": 1221
+        },
+        {
+          "name": "_bind_plugin_model_factory",
+          "line": 1223,
+          "end": 1232
+        },
+        {
+          "name": "_init_graph",
+          "line": 1234,
+          "end": 1254
+        },
+        {
+          "name": "set_langfuse_callbacks",
+          "line": 1256,
+          "end": 1262
+        },
+        {
+          "name": "_wrap_graph",
+          "line": 1264,
+          "end": 1267
+        },
+        {
+          "name": "_sync_protocol_graph",
+          "line": 1269,
+          "end": 1278
+        },
+        {
+          "name": "_init_protocols",
+          "line": 1280,
+          "end": 1282
+        },
+        {
+          "name": "_build_backend",
+          "line": 1284,
+          "end": 1314
+        },
+        {
+          "name": "_wire_workspace_dotenv_for_execute",
+          "line": 1316,
+          "end": 1325
+        },
+        {
+          "name": "_close_backend",
+          "line": 1327,
+          "end": 1332
+        },
+        {
+          "name": "_build_tools",
+          "line": 1334,
+          "end": 1357
+        },
+        {
+          "name": "_ask_user_active",
+          "line": 1359,
+          "end": 1367
+        },
+        {
+          "name": "_resolve_interrupt_on",
+          "line": 1369,
+          "end": 1384
+        },
+        {
+          "name": "_build_acp_tools",
+          "line": 1386,
+          "end": 1407
+        },
+        {
+          "name": "_build_middleware",
+          "line": 1409,
+          "end": 1532
+        },
+        {
+          "name": "_build_tool_search_middleware",
+          "line": 1534,
+          "end": 1552
+        },
+        {
+          "name": "_build_bootstrap_middleware",
+          "line": 1554,
+          "end": 1566
+        },
+        {
+          "name": "_on_bootstrap_complete",
+          "line": 1568,
+          "end": 1585
+        },
+        {
+          "name": "_resolve_subagents",
+          "line": 1587,
+          "end": 1629
+        },
+        {
+          "name": "_build_graph",
+          "line": 1631,
+          "end": 1732
+        },
+        {
+          "name": "_build_seed_model",
+          "line": 1734,
+          "end": 1751
+        },
+        {
+          "name": "_resolve_checkpointer",
+          "line": 1753,
+          "end": 1812
+        },
+        {
+          "name": "_release_checkpointer",
+          "line": 1814,
+          "end": 1820
+        },
+        {
+          "name": "_release_checkpointer_async",
+          "line": 1822,
+          "end": 1828
+        },
+        {
+          "name": "_prepare_call",
+          "line": 1834,
+          "end": 1844
+        },
+        {
+          "name": "_get_protocol",
+          "line": 1846,
+          "end": 1853
+        },
+        {
+          "name": "_call",
+          "line": 464,
+          "end": 467
+        },
+        {
+          "name": "_stream",
+          "line": 494,
+          "end": 509
+        },
+        {
+          "name": "_capture_summarization_middleware",
+          "line": 1713,
+          "end": 1721
+        }
+      ]
+    },
+    {
+      "id": "h-config",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/config/__init__.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "5ee000a641397f50c4aa22a582696138541e8d48ede075d44f02d6a65311bda2",
+      "lines": 1112,
+      "symbols": [
+        {
+          "name": "MediaGenerationConfig",
+          "line": 55,
+          "end": 136
+        },
+        {
+          "name": "ModelConfig",
+          "line": 140,
+          "end": 252
+        },
+        {
+          "name": "_optional_session_header",
+          "line": 255,
+          "end": 259
+        },
+        {
+          "name": "ProviderConfig",
+          "line": 263,
+          "end": 348
+        },
+        {
+          "name": "HarnessAgentConfig",
+          "line": 359,
+          "end": 999
+        },
+        {
+          "name": "_path_to_str",
+          "line": 1007,
+          "end": 1009
+        },
+        {
+          "name": "_is_rootfs_path",
+          "line": 1012,
+          "end": 1019
+        },
+        {
+          "name": "_path_dirs_to_jsonable",
+          "line": 1022,
+          "end": 1028
+        },
+        {
+          "name": "_skills_dir_to_jsonable",
+          "line": 1031,
+          "end": 1037
+        },
+        {
+          "name": "_subagents_to_jsonable",
+          "line": 1040,
+          "end": 1057
+        },
+        {
+          "name": "_subagent_from_dict",
+          "line": 1060,
+          "end": 1075
+        },
+        {
+          "name": "_acp_runners_to_jsonable",
+          "line": 1078,
+          "end": 1079
+        },
+        {
+          "name": "_acp_runners_from_jsonable",
+          "line": 1082,
+          "end": 1089
+        },
+        {
+          "name": "_web_search_tools_to_jsonable",
+          "line": 1092,
+          "end": 1100
+        },
+        {
+          "name": "__post_init__",
+          "line": 77,
+          "end": 98
+        },
+        {
+          "name": "to_dict",
+          "line": 100,
+          "end": 115
+        },
+        {
+          "name": "resolve_api_key",
+          "line": 117,
+          "end": 124
+        },
+        {
+          "name": "has_api_key",
+          "line": 126,
+          "end": 130
+        },
+        {
+          "name": "from_dict",
+          "line": 133,
+          "end": 136
+        },
+        {
+          "name": "__post_init__",
+          "line": 176,
+          "end": 188
+        },
+        {
+          "name": "is_multimodal",
+          "line": 191,
+          "end": 193
+        },
+        {
+          "name": "effective_context_window",
+          "line": 196,
+          "end": 198
+        },
+        {
+          "name": "input_token_budget",
+          "line": 200,
+          "end": 207
+        },
+        {
+          "name": "to_dict",
+          "line": 213,
+          "end": 226
+        },
+        {
+          "name": "from_dict",
+          "line": 229,
+          "end": 252
+        },
+        {
+          "name": "__post_init__",
+          "line": 283,
+          "end": 301
+        },
+        {
+          "name": "get_model",
+          "line": 303,
+          "end": 308
+        },
+        {
+          "name": "enabled_models",
+          "line": 310,
+          "end": 311
+        },
+        {
+          "name": "to_dict",
+          "line": 317,
+          "end": 333
+        },
+        {
+          "name": "from_dict",
+          "line": 336,
+          "end": 348
+        },
+        {
+          "name": "__post_init__",
+          "line": 615,
+          "end": 682
+        },
+        {
+          "name": "resolve_model_ref",
+          "line": 688,
+          "end": 702
+        },
+        {
+          "name": "pick_default_model_ref",
+          "line": 704,
+          "end": 711
+        },
+        {
+          "name": "pick_multimodal_model_ref",
+          "line": 713,
+          "end": 721
+        },
+        {
+          "name": "memory_files",
+          "line": 723,
+          "end": 729
+        },
+        {
+          "name": "_split_ref",
+          "line": 736,
+          "end": 744
+        },
+        {
+          "name": "_check_model_ref",
+          "line": 746,
+          "end": 750
+        },
+        {
+          "name": "to_dict",
+          "line": 770,
+          "end": 856
+        },
+        {
+          "name": "from_dict",
+          "line": 859,
+          "end": 928
+        },
+        {
+          "name": "to_file",
+          "line": 930,
+          "end": 942
+        },
+        {
+          "name": "from_file",
+          "line": 945,
+          "end": 955
+        },
+        {
+          "name": "from_env",
+          "line": 958,
+          "end": 978
+        },
+        {
+          "name": "_resolve_config_path",
+          "line": 984,
+          "end": 989
+        },
+        {
+          "name": "_resolve_config_path_for_load",
+          "line": 992,
+          "end": 999
+        }
+      ]
+    },
+    {
+      "id": "h-memory",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/memory/runtime.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "5612ac9fa0edf6f5d5bfa3503d8736c0415dec88743e3564c2a81a2d7b67c414",
+      "lines": 270,
+      "symbols": [
+        {
+          "name": "MemoryRuntime",
+          "line": 36,
+          "end": 267
+        },
+        {
+          "name": "__init__",
+          "line": 44,
+          "end": 64
+        },
+        {
+          "name": "memory",
+          "line": 67,
+          "end": 69
+        },
+        {
+          "name": "service",
+          "line": 72,
+          "end": 74
+        },
+        {
+          "name": "middleware",
+          "line": 77,
+          "end": 79
+        },
+        {
+          "name": "build_tools",
+          "line": 81,
+          "end": 85
+        },
+        {
+          "name": "build_middleware",
+          "line": 87,
+          "end": 161
+        },
+        {
+          "name": "end_session",
+          "line": 163,
+          "end": 177
+        },
+        {
+          "name": "close",
+          "line": 179,
+          "end": 202
+        },
+        {
+          "name": "__del__",
+          "line": 204,
+          "end": 206
+        },
+        {
+          "name": "_build_memory",
+          "line": 208,
+          "end": 220
+        },
+        {
+          "name": "_construct_memory",
+          "line": 222,
+          "end": 238
+        },
+        {
+          "name": "_memory_backend_config",
+          "line": 240,
+          "end": 246
+        },
+        {
+          "name": "_build_llm_client",
+          "line": 248,
+          "end": 267
+        }
+      ]
+    },
+    {
+      "id": "h-memory-mw",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/middleware/memory.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "7faa66fdcd7e3d15923cbacb87acd1ac40bb81b4b8af8c1c054b2ad650d495c0",
+      "lines": 1126,
+      "symbols": [
+        {
+          "name": "_claim_reclaim_slot",
+          "line": 74,
+          "end": 91
+        },
+        {
+          "name": "_BackgroundExecutor",
+          "line": 94,
+          "end": 110
+        },
+        {
+          "name": "_bg_pool",
+          "line": 113,
+          "end": 118
+        },
+        {
+          "name": "MemoryMiddleware",
+          "line": 121,
+          "end": 878
+        },
+        {
+          "name": "_extract_messages",
+          "line": 886,
+          "end": 892
+        },
+        {
+          "name": "_get_configurable",
+          "line": 895,
+          "end": 934
+        },
+        {
+          "name": "_active_model_ref",
+          "line": 937,
+          "end": 939
+        },
+        {
+          "name": "_find_first",
+          "line": 942,
+          "end": 949
+        },
+        {
+          "name": "_find_last",
+          "line": 952,
+          "end": 959
+        },
+        {
+          "name": "_render_record",
+          "line": 962,
+          "end": 980
+        },
+        {
+          "name": "_stringify_content",
+          "line": 983,
+          "end": 998
+        },
+        {
+          "name": "_extract_usage",
+          "line": 1001,
+          "end": 1021
+        },
+        {
+          "name": "_find_turn_trigger_user",
+          "line": 1024,
+          "end": 1048
+        },
+        {
+          "name": "_filter_visible_messages",
+          "line": 1051,
+          "end": 1096
+        },
+        {
+          "name": "_split_user_assistant",
+          "line": 1099,
+          "end": 1118
+        },
+        {
+          "name": "_opt_id",
+          "line": 1121,
+          "end": 1123
+        },
+        {
+          "name": "submit",
+          "line": 103,
+          "end": 110
+        },
+        {
+          "name": "name",
+          "line": 157,
+          "end": 159
+        },
+        {
+          "name": "__init__",
+          "line": 161,
+          "end": 253
+        },
+        {
+          "name": "before_model",
+          "line": 259,
+          "end": 280
+        },
+        {
+          "name": "wrap_model_call",
+          "line": 282,
+          "end": 288
+        },
+        {
+          "name": "awrap_model_call",
+          "line": 290,
+          "end": 295
+        },
+        {
+          "name": "after_model",
+          "line": 297,
+          "end": 360
+        },
+        {
+          "name": "abefore_model",
+          "line": 362,
+          "end": 363
+        },
+        {
+          "name": "aafter_model",
+          "line": 365,
+          "end": 366
+        },
+        {
+          "name": "end_session",
+          "line": 372,
+          "end": 446
+        },
+        {
+          "name": "_prepare_recall",
+          "line": 452,
+          "end": 478
+        },
+        {
+          "name": "_submit_capture",
+          "line": 484,
+          "end": 512
+        },
+        {
+          "name": "_remember_chat_model",
+          "line": 514,
+          "end": 524
+        },
+        {
+          "name": "_arm_idle_extract",
+          "line": 530,
+          "end": 552
+        },
+        {
+          "name": "_on_idle_extract",
+          "line": 554,
+          "end": 564
+        },
+        {
+          "name": "_cancel_idle_timer",
+          "line": 566,
+          "end": 571
+        },
+        {
+          "name": "_arm_interval_extract",
+          "line": 577,
+          "end": 598
+        },
+        {
+          "name": "_on_interval_extract",
+          "line": 600,
+          "end": 621
+        },
+        {
+          "name": "_stop_interval_timer",
+          "line": 623,
+          "end": 630
+        },
+        {
+          "name": "shutdown",
+          "line": 632,
+          "end": 640
+        },
+        {
+          "name": "maintenance_status",
+          "line": 642,
+          "end": 645
+        },
+        {
+          "name": "_set_status",
+          "line": 647,
+          "end": 659
+        },
+        {
+          "name": "_maintenance_blocks_io",
+          "line": 661,
+          "end": 663
+        },
+        {
+          "name": "_arm_maintenance",
+          "line": 669,
+          "end": 688
+        },
+        {
+          "name": "_on_maintenance",
+          "line": 690,
+          "end": 695
+        },
+        {
+          "name": "_submit_maintenance",
+          "line": 697,
+          "end": 706
+        },
+        {
+          "name": "_run_reclaim_pass",
+          "line": 709,
+          "end": 756
+        },
+        {
+          "name": "_run_maintenance_tick",
+          "line": 758,
+          "end": 793
+        },
+        {
+          "name": "_stop_maintenance_timer",
+          "line": 795,
+          "end": 802
+        },
+        {
+          "name": "_write_jsonl",
+          "line": 808,
+          "end": 855
+        },
+        {
+          "name": "_active_file_path",
+          "line": 857,
+          "end": 861
+        },
+        {
+          "name": "_maybe_rotate",
+          "line": 863,
+          "end": 878
+        },
+        {
+          "name": "_runner",
+          "line": 104,
+          "end": 108
+        },
+        {
+          "name": "_run",
+          "line": 400,
+          "end": 441
+        },
+        {
+          "name": "_run",
+          "line": 495,
+          "end": 510
+        },
+        {
+          "name": "_run",
+          "line": 703,
+          "end": 704
+        }
+      ]
+    },
+    {
+      "id": "h-team",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/teams/team_manager.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "bd585a10613b8632b824d4fd6156f25a573b7d6ee008eb4300f402c2c1a9da84",
+      "lines": 467,
+      "symbols": [
+        {
+          "name": "TeamManager",
+          "line": 35,
+          "end": 464
+        },
+        {
+          "name": "__init__",
+          "line": 38,
+          "end": 45
+        },
+        {
+          "name": "bind_invocation_hooks",
+          "line": 47,
+          "end": 55
+        },
+        {
+          "name": "bind_peer_enrich",
+          "line": 57,
+          "end": 64
+        },
+        {
+          "name": "bind_peer_session",
+          "line": 66,
+          "end": 81
+        },
+        {
+          "name": "set_processor",
+          "line": 87,
+          "end": 98
+        },
+        {
+          "name": "enabled",
+          "line": 101,
+          "end": 103
+        },
+        {
+          "name": "inbox",
+          "line": 106,
+          "end": 107
+        },
+        {
+          "name": "close",
+          "line": 109,
+          "end": 111
+        },
+        {
+          "name": "aclose",
+          "line": 113,
+          "end": 115
+        },
+        {
+          "name": "team_tools",
+          "line": 121,
+          "end": 129
+        },
+        {
+          "name": "list_peers",
+          "line": 135,
+          "end": 154
+        },
+        {
+          "name": "caller_language",
+          "line": 156,
+          "end": 162
+        },
+        {
+          "name": "_apply_peer_enrich",
+          "line": 164,
+          "end": 176
+        },
+        {
+          "name": "_peer_allowlist",
+          "line": 178,
+          "end": 190
+        },
+        {
+          "name": "_filter_peers",
+          "line": 192,
+          "end": 202
+        },
+        {
+          "name": "resolve_peer",
+          "line": 204,
+          "end": 212
+        },
+        {
+          "name": "_match_peer",
+          "line": 215,
+          "end": 228
+        },
+        {
+          "name": "peer_display_name",
+          "line": 231,
+          "end": 232
+        },
+        {
+          "name": "_resolve_peer_entry",
+          "line": 234,
+          "end": 246
+        },
+        {
+          "name": "_call_agent",
+          "line": 252,
+          "end": 268
+        },
+        {
+          "name": "_invoke_inbox_target",
+          "line": 270,
+          "end": 282
+        },
+        {
+          "name": "_invoke_peer",
+          "line": 284,
+          "end": 324
+        },
+        {
+          "name": "_build_peer_request",
+          "line": 326,
+          "end": 370
+        },
+        {
+          "name": "ask_peer_sync",
+          "line": 372,
+          "end": 391
+        },
+        {
+          "name": "call_peer",
+          "line": 393,
+          "end": 426
+        },
+        {
+          "name": "submit_peer",
+          "line": 428,
+          "end": 464
+        }
+      ]
+    },
+    {
+      "id": "h-inbox",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/teams/inbox.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "3901967f91dbcc22e6dc962d330b70fe142057d996d1e6c8c1f135a780ed81c7",
+      "lines": 289,
+      "symbols": [
+        {
+          "name": "InboxMessage",
+          "line": 34,
+          "end": 48
+        },
+        {
+          "name": "PeerResult",
+          "line": 52,
+          "end": 62
+        },
+        {
+          "name": "HarnessAgentInboxManager",
+          "line": 65,
+          "end": 281
+        },
+        {
+          "name": "__init__",
+          "line": 68,
+          "end": 81
+        },
+        {
+          "name": "enqueue",
+          "line": 87,
+          "end": 113
+        },
+        {
+          "name": "get",
+          "line": 115,
+          "end": 116
+        },
+        {
+          "name": "list",
+          "line": 118,
+          "end": 131
+        },
+        {
+          "name": "cancel",
+          "line": 133,
+          "end": 141
+        },
+        {
+          "name": "start",
+          "line": 147,
+          "end": 149
+        },
+        {
+          "name": "shutdown",
+          "line": 151,
+          "end": 159
+        },
+        {
+          "name": "cancel_worker",
+          "line": 161,
+          "end": 164
+        },
+        {
+          "name": "_worker_loop",
+          "line": 170,
+          "end": 183
+        },
+        {
+          "name": "_is_cancelled",
+          "line": 185,
+          "end": 186
+        },
+        {
+          "name": "_process",
+          "line": 188,
+          "end": 249
+        },
+        {
+          "name": "_synthesize_reply",
+          "line": 251,
+          "end": 272
+        },
+        {
+          "name": "_set_status",
+          "line": 274,
+          "end": 276
+        },
+        {
+          "name": "_prune_terminal",
+          "line": 278,
+          "end": 281
+        }
+      ]
+    },
+    {
+      "id": "h-peer",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/middleware/peer.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "7e678e707873e38c1b254733507fa33357e4acc7c5961fec6360a4fc74864d91",
+      "lines": 214,
+      "symbols": [
+        {
+          "name": "has_agent_at_mention",
+          "line": 33,
+          "end": 35
+        },
+        {
+          "name": "_latest_user_text",
+          "line": 38,
+          "end": 43
+        },
+        {
+          "name": "_stringify_content",
+          "line": 46,
+          "end": 57
+        },
+        {
+          "name": "render_peer_prompt",
+          "line": 60,
+          "end": 113
+        },
+        {
+          "name": "_peer_card_lines",
+          "line": 116,
+          "end": 126
+        },
+        {
+          "name": "_peer_lines",
+          "line": 129,
+          "end": 143
+        },
+        {
+          "name": "PeerAgentMiddleware",
+          "line": 146,
+          "end": 201
+        },
+        {
+          "name": "__init__",
+          "line": 155,
+          "end": 159
+        },
+        {
+          "name": "wrap_model_call",
+          "line": 161,
+          "end": 166
+        },
+        {
+          "name": "awrap_model_call",
+          "line": 168,
+          "end": 173
+        },
+        {
+          "name": "_inject",
+          "line": 175,
+          "end": 185
+        },
+        {
+          "name": "_prompt_block",
+          "line": 187,
+          "end": 201
+        }
+      ]
+    },
+    {
+      "id": "h-policy",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/security/models.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "6cf9707ce5cfbaada831f6ee7e7c322bbc61c628cb0a5c9af95ec6bd63c46948",
+      "lines": 356,
+      "symbols": [
+        {
+          "name": "HitlPolicy",
+          "line": 47,
+          "end": 52
+        },
+        {
+          "name": "FilesystemRule",
+          "line": 56,
+          "end": 61
+        },
+        {
+          "name": "FilesystemPolicy",
+          "line": 65,
+          "end": 69
+        },
+        {
+          "name": "PiiPolicy",
+          "line": 73,
+          "end": 82
+        },
+        {
+          "name": "SkillScanPolicy",
+          "line": 86,
+          "end": 89
+        },
+        {
+          "name": "ToolGuardPolicy",
+          "line": 93,
+          "end": 97
+        },
+        {
+          "name": "SecurityPolicy",
+          "line": 101,
+          "end": 342
+        },
+        {
+          "name": "defaults",
+          "line": 111,
+          "end": 128
+        },
+        {
+          "name": "to_dict",
+          "line": 130,
+          "end": 159
+        },
+        {
+          "name": "from_dict",
+          "line": 162,
+          "end": 243
+        },
+        {
+          "name": "merge",
+          "line": 246,
+          "end": 256
+        },
+        {
+          "name": "resolve_interrupt_on",
+          "line": 258,
+          "end": 305
+        },
+        {
+          "name": "resolve_permissions",
+          "line": 307,
+          "end": 322
+        },
+        {
+          "name": "apply_to_config",
+          "line": 324,
+          "end": 342
+        },
+        {
+          "name": "_when",
+          "line": 292,
+          "end": 301
+        }
+      ]
+    },
+    {
+      "id": "h-guard",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/middleware/tool_guard.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "23a37a82f7e239a8eb018cf3c134f0f2e56d0087a314707b0a48a36106aa1634",
+      "lines": 122,
+      "symbols": [
+        {
+          "name": "ToolGuardMiddleware",
+          "line": 26,
+          "end": 119
+        },
+        {
+          "name": "__init__",
+          "line": 29,
+          "end": 37
+        },
+        {
+          "name": "configure",
+          "line": 39,
+          "end": 40
+        },
+        {
+          "name": "awrap_tool_call",
+          "line": 42,
+          "end": 80
+        },
+        {
+          "name": "_await_approval",
+          "line": 82,
+          "end": 119
+        }
+      ]
+    },
+    {
+      "id": "h-backend",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/backends/__init__.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "f07172fbdc8cc8d61934f4e1172d3c64caef301b115cafa0c652fc19740f6547",
+      "lines": 603,
+      "symbols": [
+        {
+          "name": "resolve_backend",
+          "line": 85,
+          "end": 187
+        },
+        {
+          "name": "_artifacts_host_target",
+          "line": 195,
+          "end": 205
+        },
+        {
+          "name": "_artifacts_root_for_workspace",
+          "line": 208,
+          "end": 251
+        },
+        {
+          "name": "_maybe_wrap_workspace_artifacts",
+          "line": 254,
+          "end": 276
+        },
+        {
+          "name": "_build_local_shell",
+          "line": 279,
+          "end": 329
+        },
+        {
+          "name": "_build_filesystem",
+          "line": 332,
+          "end": 354
+        },
+        {
+          "name": "_build_state",
+          "line": 357,
+          "end": 360
+        },
+        {
+          "name": "_build_store",
+          "line": 363,
+          "end": 373
+        },
+        {
+          "name": "_build_composite",
+          "line": 376,
+          "end": 415
+        },
+        {
+          "name": "spec_supports_execution",
+          "line": 418,
+          "end": 444
+        },
+        {
+          "name": "_looks_like_backend_instance",
+          "line": 447,
+          "end": 449
+        },
+        {
+          "name": "_build_s3",
+          "line": 452,
+          "end": 473
+        },
+        {
+          "name": "_build_postgres",
+          "line": 476,
+          "end": 496
+        },
+        {
+          "name": "_build_cos",
+          "line": 499,
+          "end": 515
+        },
+        {
+          "name": "_build_oss",
+          "line": 518,
+          "end": 533
+        },
+        {
+          "name": "_build_obs",
+          "line": 536,
+          "end": 551
+        },
+        {
+          "name": "_build_docker",
+          "line": 554,
+          "end": 570
+        },
+        {
+          "name": "_build_opensandbox",
+          "line": 573,
+          "end": 581
+        }
+      ]
+    },
+    {
+      "id": "h-acp",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/acp/client.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "6f3bbb5f4282bf7ef7801f737071733ece0b24604206701d328c94a337c82ee0",
+      "lines": 199,
+      "symbols": [
+        {
+          "name": "ACPHostedClient",
+          "line": 15,
+          "end": 199
+        },
+        {
+          "name": "__init__",
+          "line": 16,
+          "end": 30
+        },
+        {
+          "name": "pending_permission",
+          "line": 33,
+          "end": 34
+        },
+        {
+          "name": "update_cwd",
+          "line": 36,
+          "end": 37
+        },
+        {
+          "name": "start_prompt",
+          "line": 39,
+          "end": 43
+        },
+        {
+          "name": "resume_prompt",
+          "line": 45,
+          "end": 47
+        },
+        {
+          "name": "wait_for_permission_request",
+          "line": 49,
+          "end": 50
+        },
+        {
+          "name": "resolve_permission",
+          "line": 52,
+          "end": 66
+        },
+        {
+          "name": "request_permission",
+          "line": 68,
+          "end": 102
+        },
+        {
+          "name": "session_update",
+          "line": 104,
+          "end": 134
+        },
+        {
+          "name": "ext_method",
+          "line": 136,
+          "end": 138
+        },
+        {
+          "name": "ext_notification",
+          "line": 140,
+          "end": 142
+        },
+        {
+          "name": "_unsupported_method",
+          "line": 144,
+          "end": 147
+        },
+        {
+          "name": "finish_prompt",
+          "line": 149,
+          "end": 152
+        },
+        {
+          "name": "_emit_message",
+          "line": 154,
+          "end": 157
+        },
+        {
+          "name": "_accumulate_assistant_content",
+          "line": 159,
+          "end": 162
+        },
+        {
+          "name": "_merge_assistant_text",
+          "line": 164,
+          "end": 173
+        },
+        {
+          "name": "_extract_text_from_content",
+          "line": 175,
+          "end": 182
+        },
+        {
+          "name": "_tool_event_from_state",
+          "line": 184,
+          "end": 199
+        }
+      ]
+    },
+    {
+      "id": "h-acp-service",
+      "package": "orcakit-harness-agent",
+      "version": "1.0.11",
+      "path": "src/harness_agent/acp/service.py",
+      "url": "https://files.pythonhosted.org/packages/d6/6e/f7f45fc50e4cfc7f2f1e82bf48fe0d8e24cceb207085cede9887bf265087/orcakit_harness_agent-1.0.11.tar.gz",
+      "sha256": "2b35e111079102fa6ff28888c71cbb36d9dbf6b0899075b87d83ccc0716d91cd",
+      "lines": 394,
+      "symbols": [
+        {
+          "name": "_kill_process_tree",
+          "line": 22,
+          "end": 35
+        },
+        {
+          "name": "_Conversation",
+          "line": 39,
+          "end": 49
+        },
+        {
+          "name": "ACPService",
+          "line": 52,
+          "end": 330
+        },
+        {
+          "name": "get_acp_service",
+          "line": 336,
+          "end": 337
+        },
+        {
+          "name": "init_acp_service",
+          "line": 340,
+          "end": 345
+        },
+        {
+          "name": "close_acp_service",
+          "line": 348,
+          "end": 351
+        },
+        {
+          "name": "_schedule_close",
+          "line": 354,
+          "end": 370
+        },
+        {
+          "name": "_shutdown_services",
+          "line": 373,
+          "end": 391
+        },
+        {
+          "name": "__init__",
+          "line": 53,
+          "end": 56
+        },
+        {
+          "name": "run_turn",
+          "line": 58,
+          "end": 97
+        },
+        {
+          "name": "resume_permission",
+          "line": 99,
+          "end": 117
+        },
+        {
+          "name": "close_thread_session",
+          "line": 119,
+          "end": 123
+        },
+        {
+          "name": "close_all_sessions",
+          "line": 125,
+          "end": 130
+        },
+        {
+          "name": "get_session",
+          "line": 132,
+          "end": 134
+        },
+        {
+          "name": "get_pending_permission",
+          "line": 136,
+          "end": 140
+        },
+        {
+          "name": "cancel_turn",
+          "line": 142,
+          "end": 159
+        },
+        {
+          "name": "_get_runner_config",
+          "line": 161,
+          "end": 167
+        },
+        {
+          "name": "_get_or_create_session",
+          "line": 169,
+          "end": 202
+        },
+        {
+          "name": "_find_session_by_acp_id",
+          "line": 204,
+          "end": 209
+        },
+        {
+          "name": "_open_conversation",
+          "line": 211,
+          "end": 258
+        },
+        {
+          "name": "_wait_for_prompt_outcome",
+          "line": 260,
+          "end": 304
+        },
+        {
+          "name": "_close_conversation",
+          "line": 306,
+          "end": 319
+        },
+        {
+          "name": "_prompt_blocks_to_models",
+          "line": 322,
+          "end": 330
+        }
+      ]
+    },
+    {
+      "id": "m-service",
+      "package": "harness-memory",
+      "version": "0.9.10",
+      "path": "src/harness_memory/service.py",
+      "url": "https://files.pythonhosted.org/packages/ab/07/9adef1b44381cc83f91bcb83780d504e2986baefee5a16c967d08b929c92/harness_memory-0.9.10.tar.gz",
+      "sha256": "926ed3d9125775734dc3bf1d21deef425011059fabcfc57a9f2468b5425a98bd",
+      "lines": 273,
+      "symbols": [
+        {
+          "name": "MemoryService",
+          "line": 40,
+          "end": 270
+        },
+        {
+          "name": "__init__",
+          "line": 54,
+          "end": 65
+        },
+        {
+          "name": "memory",
+          "line": 68,
+          "end": 70
+        },
+        {
+          "name": "recall",
+          "line": 76,
+          "end": 97
+        },
+        {
+          "name": "search",
+          "line": 99,
+          "end": 117
+        },
+        {
+          "name": "get",
+          "line": 119,
+          "end": 128
+        },
+        {
+          "name": "save",
+          "line": 134,
+          "end": 148
+        },
+        {
+          "name": "capture_turn",
+          "line": 150,
+          "end": 179
+        },
+        {
+          "name": "extract",
+          "line": 181,
+          "end": 218
+        },
+        {
+          "name": "generate_digest",
+          "line": 224,
+          "end": 270
+        }
+      ]
+    },
+    {
+      "id": "m-recall",
+      "package": "harness-memory",
+      "version": "0.9.10",
+      "path": "src/harness_memory/pipeline/recall/__init__.py",
+      "url": "https://files.pythonhosted.org/packages/ab/07/9adef1b44381cc83f91bcb83780d504e2986baefee5a16c967d08b929c92/harness_memory-0.9.10.tar.gz",
+      "sha256": "52658d4b59e8418eb05173bd5a31677cf4b4ebb137a0b78b560427225b0f9d6e",
+      "lines": 563,
+      "symbols": [
+        {
+          "name": "RecallSnippet",
+          "line": 40,
+          "end": 51
+        },
+        {
+          "name": "RecallResult",
+          "line": 55,
+          "end": 65
+        },
+        {
+          "name": "_truncate",
+          "line": 82,
+          "end": 85
+        },
+        {
+          "name": "_role_for_raw",
+          "line": 88,
+          "end": 92
+        },
+        {
+          "name": "_role_for_atom",
+          "line": 95,
+          "end": 101
+        },
+        {
+          "name": "_atom_to_snippet",
+          "line": 104,
+          "end": 113
+        },
+        {
+          "name": "_raw_to_snippet",
+          "line": 116,
+          "end": 123
+        },
+        {
+          "name": "recall_multi_source",
+          "line": 126,
+          "end": 219
+        },
+        {
+          "name": "_render",
+          "line": 222,
+          "end": 236
+        },
+        {
+          "name": "_multi_token_atoms",
+          "line": 239,
+          "end": 257
+        },
+        {
+          "name": "_multi_token_raw",
+          "line": 260,
+          "end": 274
+        },
+        {
+          "name": "recall_for_prompt",
+          "line": 311,
+          "end": 372
+        },
+        {
+          "name": "_recall_for_prompt_impl",
+          "line": 375,
+          "end": 510
+        },
+        {
+          "name": "_role_for_layer",
+          "line": 513,
+          "end": 520
+        },
+        {
+          "name": "_filter_prompt_raw",
+          "line": 523,
+          "end": 548
+        },
+        {
+          "name": "_session_scope_keys",
+          "line": 551,
+          "end": 553
+        },
+        {
+          "name": "_raw_from_current_session",
+          "line": 556,
+          "end": 563
+        }
+      ]
+    },
+    {
+      "id": "m-router",
+      "package": "harness-memory",
+      "version": "0.9.10",
+      "path": "src/harness_memory/pipeline/recall/router.py",
+      "url": "https://files.pythonhosted.org/packages/ab/07/9adef1b44381cc83f91bcb83780d504e2986baefee5a16c967d08b929c92/harness_memory-0.9.10.tar.gz",
+      "sha256": "ea2fbe3cb1389cbc799bb74506127e6656b968e20471da2cae41985d951030fb",
+      "lines": 118,
+      "symbols": [
+        {
+          "name": "RoutingDecision",
+          "line": 34,
+          "end": 52
+        },
+        {
+          "name": "route",
+          "line": 55,
+          "end": 115
+        }
+      ]
+    },
+    {
+      "id": "m-readme",
+      "package": "harness-memory",
+      "version": "0.9.10",
+      "path": "README_CN.md",
+      "url": "https://files.pythonhosted.org/packages/ab/07/9adef1b44381cc83f91bcb83780d504e2986baefee5a16c967d08b929c92/harness_memory-0.9.10.tar.gz",
+      "sha256": "8e5361da0cded5142717513f32b8e9eb94c2d63c54e895fca8920cdf236e077d",
+      "lines": 264,
+      "symbols": []
+    },
+    {
+      "id": "g-manager",
+      "package": "harness-gateway",
+      "version": "0.9.8",
+      "path": "src/harness_gateway/manager.py",
+      "url": "https://files.pythonhosted.org/packages/0a/ae/693a178aaf7a4e923a4785e906a34d7606c15192627f0f00184b63f190e8/harness_gateway-0.9.8.tar.gz",
+      "sha256": "b61dfaf1c3ba0d39ce1fd6a659c85a090be9f5ad6b9abfa19c580245f8ce7247",
+      "lines": 1023,
+      "symbols": [
+        {
+          "name": "_config_class_for",
+          "line": 35,
+          "end": 62
+        },
+        {
+          "name": "ChannelManager",
+          "line": 65,
+          "end": 1023
+        },
+        {
+          "name": "__init__",
+          "line": 88,
+          "end": 121
+        },
+        {
+          "name": "set_pre_lock_handler",
+          "line": 123,
+          "end": 125
+        },
+        {
+          "name": "start",
+          "line": 131,
+          "end": 180
+        },
+        {
+          "name": "stop",
+          "line": 182,
+          "end": 212
+        },
+        {
+          "name": "set_constraints",
+          "line": 218,
+          "end": 231
+        },
+        {
+          "name": "_apply_constraints",
+          "line": 233,
+          "end": 238
+        },
+        {
+          "name": "enqueue",
+          "line": 244,
+          "end": 264
+        },
+        {
+          "name": "_put_to_queue",
+          "line": 266,
+          "end": 289
+        },
+        {
+          "name": "_run_interrupt",
+          "line": 291,
+          "end": 303
+        },
+        {
+          "name": "push_text",
+          "line": 309,
+          "end": 319
+        },
+        {
+          "name": "push_content",
+          "line": 321,
+          "end": 331
+        },
+        {
+          "name": "run_in_session",
+          "line": 333,
+          "end": 351
+        },
+        {
+          "name": "get_channel",
+          "line": 357,
+          "end": 359
+        },
+        {
+          "name": "add_channel",
+          "line": 361,
+          "end": 513
+        },
+        {
+          "name": "_instantiate_channel",
+          "line": 515,
+          "end": 552
+        },
+        {
+          "name": "_build_config",
+          "line": 554,
+          "end": 564
+        },
+        {
+          "name": "probe_channel",
+          "line": 566,
+          "end": 621
+        },
+        {
+          "name": "_register_channel",
+          "line": 623,
+          "end": 659
+        },
+        {
+          "name": "remove_channel",
+          "line": 661,
+          "end": 678
+        },
+        {
+          "name": "channel_ids",
+          "line": 681,
+          "end": 683
+        },
+        {
+          "name": "_worker_loop",
+          "line": 689,
+          "end": 739
+        },
+        {
+          "name": "_session_lock",
+          "line": 741,
+          "end": 744
+        },
+        {
+          "name": "_drain_same_session",
+          "line": 746,
+          "end": 783
+        },
+        {
+          "name": "list_subjects",
+          "line": 789,
+          "end": 794
+        },
+        {
+          "name": "list_all_users",
+          "line": 796,
+          "end": 798
+        },
+        {
+          "name": "push_to_all",
+          "line": 800,
+          "end": 809
+        },
+        {
+          "name": "add_feishu_channel",
+          "line": 815,
+          "end": 844
+        },
+        {
+          "name": "add_wecom_channel",
+          "line": 846,
+          "end": 873
+        },
+        {
+          "name": "add_qq_channel",
+          "line": 875,
+          "end": 902
+        },
+        {
+          "name": "add_dingtalk_channel",
+          "line": 904,
+          "end": 931
+        },
+        {
+          "name": "add_weixin_channel",
+          "line": 933,
+          "end": 960
+        },
+        {
+          "name": "add_yuanbao_channel",
+          "line": 962,
+          "end": 993
+        },
+        {
+          "name": "add_xiaoyi_channel",
+          "line": 995,
+          "end": 1003
+        },
+        {
+          "name": "add_mqtt_channel",
+          "line": 1005,
+          "end": 1013
+        },
+        {
+          "name": "add_telegram_channel",
+          "line": 1015,
+          "end": 1023
+        }
+      ]
+    },
+    {
+      "id": "d-graph",
+      "package": "deepagents",
+      "version": "0.7.9",
+      "path": "deepagents/graph.py",
+      "url": "https://files.pythonhosted.org/packages/c4/4b/359aa09b9fb378b9cd10b69cb7bdd75847da03c110939ad01f1db715d0e4/deepagents-0.7.9.tar.gz",
+      "sha256": "10f0d3e07e4f3ef1194c55eae4de0dab16d1f407c47f570ad304ca8caa756880",
+      "lines": 943,
+      "symbols": [
+        {
+          "name": "DeepAgentState",
+          "line": 70,
+          "end": 73
+        },
+        {
+          "name": "__getattr__",
+          "line": 121,
+          "end": 137
+        },
+        {
+          "name": "_build_default_model",
+          "line": 140,
+          "end": 148
+        },
+        {
+          "name": "get_default_model",
+          "line": 163,
+          "end": 179
+        },
+        {
+          "name": "_merge_fs_interrupt_on",
+          "line": 182,
+          "end": 198
+        },
+        {
+          "name": "_apply_custom_middleware",
+          "line": 201,
+          "end": 235
+        },
+        {
+          "name": "create_deep_agent",
+          "line": 268,
+          "end": 943
+        }
+      ]
+    },
+    {
+      "id": "d-summary",
+      "package": "deepagents",
+      "version": "0.7.9",
+      "path": "deepagents/middleware/summarization.py",
+      "url": "https://files.pythonhosted.org/packages/c4/4b/359aa09b9fb378b9cd10b69cb7bdd75847da03c110939ad01f1db715d0e4/deepagents-0.7.9.tar.gz",
+      "sha256": "0ad2ddf3e7c562f0034d275483d4d9d91e9f5f1d79e08c036fbc2a9897ce67fb",
+      "lines": 2160,
+      "symbols": [
+        {
+          "name": "CompactConversationSchema",
+          "line": 131,
+          "end": 132
+        },
+        {
+          "name": "SummarizationEvent",
+          "line": 135,
+          "end": 145
+        },
+        {
+          "name": "TriggerClause",
+          "line": 148,
+          "end": 158
+        },
+        {
+          "name": "TruncateArgsSettings",
+          "line": 161,
+          "end": 188
+        },
+        {
+          "name": "SummarizationState",
+          "line": 191,
+          "end": 204
+        },
+        {
+          "name": "SummarizationDefaults",
+          "line": 207,
+          "end": 217
+        },
+        {
+          "name": "_token_counter_accepts_tools",
+          "line": 220,
+          "end": 252
+        },
+        {
+          "name": "compute_summarization_defaults",
+          "line": 255,
+          "end": 292
+        },
+        {
+          "name": "_is_data_url",
+          "line": 303,
+          "end": 312
+        },
+        {
+          "name": "_extract_data_url",
+          "line": 315,
+          "end": 365
+        },
+        {
+          "name": "_decode_data_url",
+          "line": 368,
+          "end": 395
+        },
+        {
+          "name": "_media_reference_block",
+          "line": 398,
+          "end": 416
+        },
+        {
+          "name": "_rewrite_data_url_blocks",
+          "line": 419,
+          "end": 469
+        },
+        {
+          "name": "_upload_response_error",
+          "line": 472,
+          "end": 490
+        },
+        {
+          "name": "_DeepAgentsSummarizationMiddleware",
+          "line": 493,
+          "end": 1619
+        },
+        {
+          "name": "create_summarization_middleware",
+          "line": 1629,
+          "end": 1703
+        },
+        {
+          "name": "create_summarization_tool_middleware",
+          "line": 1706,
+          "end": 1793
+        },
+        {
+          "name": "SummarizationToolMiddleware",
+          "line": 1796,
+          "end": 2160
+        },
+        {
+          "name": "name",
+          "line": 504,
+          "end": 515
+        },
+        {
+          "name": "__init__",
+          "line": 517,
+          "end": 618
+        },
+        {
+          "name": "model",
+          "line": 622,
+          "end": 624
+        },
+        {
+          "name": "token_counter",
+          "line": 627,
+          "end": 629
+        },
+        {
+          "name": "_get_profile_limits",
+          "line": 631,
+          "end": 633
+        },
+        {
+          "name": "_should_summarize",
+          "line": 635,
+          "end": 637
+        },
+        {
+          "name": "_determine_cutoff_index",
+          "line": 639,
+          "end": 641
+        },
+        {
+          "name": "_partition_messages",
+          "line": 643,
+          "end": 649
+        },
+        {
+          "name": "_create_summary",
+          "line": 651,
+          "end": 653
+        },
+        {
+          "name": "_acreate_summary",
+          "line": 655,
+          "end": 657
+        },
+        {
+          "name": "_get_session_id",
+          "line": 659,
+          "end": 680
+        },
+        {
+          "name": "_get_history_path",
+          "line": 682,
+          "end": 693
+        },
+        {
+          "name": "_is_summary_message",
+          "line": 695,
+          "end": 710
+        },
+        {
+          "name": "_filter_summary_messages",
+          "line": 712,
+          "end": 725
+        },
+        {
+          "name": "_build_new_messages_with_path",
+          "line": 727,
+          "end": 758
+        },
+        {
+          "name": "_get_effective_messages",
+          "line": 760,
+          "end": 774
+        },
+        {
+          "name": "_apply_event_to_messages",
+          "line": 777,
+          "end": 813
+        },
+        {
+          "name": "_compute_state_cutoff",
+          "line": 816,
+          "end": 841
+        },
+        {
+          "name": "_should_truncate_args",
+          "line": 843,
+          "end": 871
+        },
+        {
+          "name": "_determine_truncate_cutoff_index",
+          "line": 873,
+          "end": 920
+        },
+        {
+          "name": "_truncate_tool_call",
+          "line": 922,
+          "end": 948
+        },
+        {
+          "name": "_count_tokens",
+          "line": 950,
+          "end": 988
+        },
+        {
+          "name": "_truncate_args",
+          "line": 990,
+          "end": 1045
+        },
+        {
+          "name": "_offload_inline_media",
+          "line": 1047,
+          "end": 1127
+        },
+        {
+          "name": "_aoffload_inline_media",
+          "line": 1129,
+          "end": 1180
+        },
+        {
+          "name": "_offload_to_backend",
+          "line": 1182,
+          "end": 1257
+        },
+        {
+          "name": "_aoffload_to_backend",
+          "line": 1259,
+          "end": 1336
+        },
+        {
+          "name": "wrap_model_call",
+          "line": 1338,
+          "end": 1477
+        },
+        {
+          "name": "awrap_model_call",
+          "line": 1479,
+          "end": 1619
+        },
+        {
+          "name": "__init__",
+          "line": 1836,
+          "end": 1861
+        },
+        {
+          "name": "_create_compact_tool",
+          "line": 1863,
+          "end": 1894
+        },
+        {
+          "name": "_build_compact_result",
+          "line": 1896,
+          "end": 1946
+        },
+        {
+          "name": "_nothing_to_compact",
+          "line": 1949,
+          "end": 1967
+        },
+        {
+          "name": "_compact_error",
+          "line": 1970,
+          "end": 1994
+        },
+        {
+          "name": "_compact_threshold",
+          "line": 1997,
+          "end": 1999
+        },
+        {
+          "name": "_compact_trigger_clause",
+          "line": 2002,
+          "end": 2007
+        },
+        {
+          "name": "_is_compaction_clause_met",
+          "line": 2009,
+          "end": 2026
+        },
+        {
+          "name": "_is_eligible_for_compaction",
+          "line": 2028,
+          "end": 2046
+        },
+        {
+          "name": "_run_compact",
+          "line": 2048,
+          "end": 2080
+        },
+        {
+          "name": "_arun_compact",
+          "line": 2082,
+          "end": 2114
+        },
+        {
+          "name": "wrap_model_call",
+          "line": 2116,
+          "end": 2137
+        },
+        {
+          "name": "awrap_model_call",
+          "line": 2139,
+          "end": 2160
+        },
+        {
+          "name": "sync_compact",
+          "line": 1873,
+          "end": 1874
+        },
+        {
+          "name": "async_compact",
+          "line": 1876,
+          "end": 1877
+        }
+      ]
+    }
+  ]
+}

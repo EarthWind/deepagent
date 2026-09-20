@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1040" viewBox="0 0 1440 1040" role="img" aria-labelledby="title desc">
+<title id="title">一条 Dashboard 消息如何完成工具往返</title><desc id="desc">WebSocket 负责双向消息；队列、会话锁、运行时和历史各自拥有不同职责。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9" fill="none" stroke="#73849b" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif}</style>
+<rect width="1440" height="1040" fill="#f8fafc"/><rect width="1440" height="8" fill="#137b6d"/>
+<text x="54" y="51" font-size="17" fill="#137b6d" font-weight="700">OCTOP / SOURCE NOTES / 02</text>
+<text x="54" y="106" font-size="34" fill="#20324a" font-weight="700">一条 Dashboard 消息如何完成工具往返</text>
+<text x="54" y="148" font-size="19" fill="#56677e" font-weight="400">WebSocket 负责双向消息；队列、会话锁、运行时和历史各自拥有不同职责。</text>
+<rect x="54" y="192" width="260" height="64" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="74" y="227" font-size="23" fill="#275dcc" font-weight="700">Dashboard</text>
+<path d="M184.0,265 V810" stroke="#b9c7d7" stroke-dasharray="6 7"/>
+<rect x="388" y="192" width="310" height="64" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="408" y="227" font-size="23" fill="#275dcc" font-weight="700">Gateway / Processor</text>
+<path d="M543.0,265 V810" stroke="#b9c7d7" stroke-dasharray="6 7"/>
+<rect x="772" y="192" width="292" height="64" rx="15" fill="#e6f6f1" stroke="#137b6d" stroke-width="1.3"/>
+<text x="792" y="227" font-size="23" fill="#137b6d" font-weight="700">Harness / Graph</text>
+<path d="M918.0,265 V810" stroke="#b9c7d7" stroke-dasharray="6 7"/>
+<rect x="1138" y="192" width="248" height="64" rx="15" fill="#eaf1ff" stroke="#275dcc" stroke-width="1.3"/>
+<text x="1158" y="227" font-size="23" fill="#275dcc" font-weight="700">模型 / 工具</text>
+<path d="M1262.0,265 V810" stroke="#b9c7d7" stroke-dasharray="6 7"/>
+<path d="M184,303 L543,303" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="209" y="290" font-size="18" fill="#56677e" font-weight="400">① JWT + user_turn + thread</text>
+<text x="402" y="350" font-size="18" fill="#137b6d" font-weight="400">鉴权 → 入队 → 同会话锁</text>
+<path d="M543,397 L918,397" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="565" y="382" font-size="18" fill="#56677e" font-weight="400">② ChatRequest / configurable</text>
+<text x="794" y="440" font-size="18" fill="#137b6d" font-weight="400">记忆 / Skills / 选工具 / 路由</text>
+<path d="M918,480 L1262,480" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="985" y="466" font-size="18" fill="#56677e" font-weight="400">③ model call</text>
+<path d="M1262,522 L918,522" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="985" y="508" font-size="18" fill="#56677e" font-weight="400">④ tool_calls</text>
+<text x="794" y="565" font-size="18" fill="#95631a" font-weight="400">工具检查，必要时 HITL 暂停</text>
+<path d="M918,604 L1262,604" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="977" y="590" font-size="18" fill="#56677e" font-weight="400">⑤ 执行获准工具</text>
+<path d="M1262,647 L918,647" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="985" y="633" font-size="18" fill="#56677e" font-weight="400">⑥ observation</text>
+<path d="M918,690 L1262,690" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="947" y="676" font-size="18" fill="#56677e" font-weight="400">⑦ 带结果继续模型调用</text>
+<path d="M918,750 L543,750" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="565" y="735" font-size="18" fill="#56677e" font-weight="400">⑧ token / tool_result / usage</text>
+<path d="M543,802 L184,802" fill="none" stroke="#73849b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="205" y="787" font-size="18" fill="#56677e" font-weight="400">⑨ WS 推送；历史 / 用量记录</text>
+<rect x="54" y="858" width="1332" height="106" rx="15" fill="#fff4df" stroke="#95631a" stroke-width="1.3"/>
+<text x="74" y="893" font-size="23" fill="#95631a" font-weight="700">断线与重启要分开理解</text>
+<text x="74" y="929" font-size="19" fill="#20324a" font-weight="400">断开 WS 不取消当前任务；重连订阅后续帧不等于完整事件重放，进程重启也不会恢复内存队列。</text>
+<path d="M54,991 H1386" stroke="#d6dfe9"/>
+<text x="54" y="1017" font-size="15" fill="#627389" font-weight="400">原创源码示意图 · Octop 757fd12 + 锁定依赖 · 2026-09-20 · 非官方截图 / 非性能实测</text>
+</svg>
