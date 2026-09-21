@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="770" viewBox="0 0 1280 770" role="img" aria-label="Cline：共享执行内核，客户端注入宿主能力">
+<title>Cline：共享执行内核，客户端注入宿主能力</title><desc>固定源码 4a56a43f39c2 · VS Code 的 backendMode 为 local；Hub / Remote 是其他可选后端。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#557084"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#152d42}</style>
+<rect width="1280" height="770" fill="#f3f7fa"/>
+<rect width="10" height="770" fill="#087e88"/>
+<text x="48" y="53" font-size="28" font-weight="700" text-anchor="start" style="fill:#152d42">Cline：共享执行内核，客户端注入宿主能力</text>
+<text x="48" y="89" font-size="16" font-weight="400" text-anchor="start" style="fill:#557084">固定源码 4a56a43f39c2 · VS Code 的 backendMode 为 local；Hub / Remote 是其他可选后端。</text>
+<g data-card="true"><rect x="48" y="130" width="572" height="110" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="144" width="5" height="82" rx="2" fill="#4a61ba"/>
+<text x="68" y="163" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">VS Code</text>
+<text x="68" y="195" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">React Webview → SdkController → VscodeSessionHost</text>
+<text x="68" y="222" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">注入审批、Diff、工作空间读取、终端执行器</text>
+</g>
+<g data-card="true"><rect x="660" y="130" width="572" height="110" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="660" y="144" width="5" height="82" rx="2" fill="#087e88"/>
+<text x="680" y="163" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">CLI / Desktop / 自定义应用</text>
+<text x="680" y="195" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">通过 Core 接口组织会话</text>
+<text x="680" y="222" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">可以选择 local / hub / remote / auto</text>
+</g>
+<path d="M334 240 L334 286" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M946 240 L946 286" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="48" y="286" width="1184" height="115" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="300" width="5" height="87" rx="2" fill="#4a61ba"/>
+<text x="68" y="319" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">@cline/sdk → @cline/core</text>
+<text x="68" y="351" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">ClineCore / RuntimeHost / SessionRuntime：会话、工具、上下文、持久化、扩展</text>
+<text x="68" y="378" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">VS Code 本地主机调用执行器；Hub 模式把客户端连接与执行生命周期拆开</text>
+</g>
+<path d="M350 401 L350 449" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M940 401 L940 449" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="48" y="449" width="572" height="120" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="463" width="5" height="92" rx="2" fill="#087e88"/>
+<text x="68" y="482" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">@cline/agents</text>
+<text x="68" y="514" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">Agent = AgentRuntime</text>
+<text x="68" y="541" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">模型流 → 调用准备与审批 → 工具反馈 → 再生成</text>
+</g>
+<g data-card="true"><rect x="660" y="449" width="572" height="120" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="660" y="463" width="5" height="92" rx="2" fill="#a56b16"/>
+<text x="680" y="482" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56b16">@cline/llms</text>
+<text x="680" y="514" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">Gateway / Provider handlers / Model catalog</text>
+<text x="680" y="541" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">消息格式、推理参数、工具流、usage 与错误归一化</text>
+</g>
+<path d="M620 509 L660 509" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="48" y="619" width="1184" height="80" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="633" width="5" height="52" rx="2" fill="#087e88"/>
+<text x="68" y="652" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">@cline/shared：消息、工具、策略、事件、hooks 与通用基础契约</text>
+</g>
+<text x="48" y="744" font-size="15" font-weight="400" text-anchor="start" style="fill:#557084">内核本身不提供文件系统或 shell；能力来自 Core 与宿主的显式装配。</text>
+</svg>

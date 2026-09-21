@@ -1,0 +1,20 @@
+{
+  "desktop": {
+    "viewportWidth": 1440,
+    "documentWidth": 1425,
+    "headingCount": 19,
+    "imageCount": 8,
+    "brokenImages": [],
+    "mobileTocVisible": false,
+    "passed": true
+  },
+  "mobile": {
+    "viewportWidth": 390,
+    "documentWidth": 390,
+    "headingCount": 19,
+    "imageCount": 8,
+    "brokenImages": [],
+    "mobileTocVisible": true,
+    "passed": true
+  }
+}

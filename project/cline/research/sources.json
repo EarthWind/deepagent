@@ -1,0 +1,495 @@
+{
+  "repository": "https://github.com/cline/cline.git",
+  "commit": "4a56a43f39c2c75f941220989d4c65db006ee531",
+  "research_date": "2026-09-22",
+  "commit_date": "2026-09-21T11:24:12+02:00",
+  "versions": {
+    "claude-dev": "4.1.19",
+    "@cline/cli": "3.0.62",
+    "@cline/sdk": "0.0.83",
+    "@cline/core": "0.0.83",
+    "@cline/agents": "0.0.83"
+  },
+  "files": [
+    {
+      "id": "S01",
+      "path": "package.json",
+      "role": "monorepo 与构建工具链",
+      "symbol": "workspaces",
+      "line": 4,
+      "lines": 96,
+      "sha256": "31bd24ca3f74f73339f37e45e44d22ac230c878beadd65d760509482cf527d69",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/package.json#L4"
+    },
+    {
+      "id": "S02",
+      "path": "apps/vscode/src/extension.ts",
+      "role": "VS Code 激活",
+      "symbol": "export async function activate",
+      "line": 67,
+      "lines": 726,
+      "sha256": "ba0848c92b69c4c9f036018616b2f4b6afeee8e5a36b1dad59ed806081f0ea28",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/extension.ts#L67"
+    },
+    {
+      "id": "S03",
+      "path": "apps/vscode/src/core/controller/index.ts",
+      "role": "Controller 转发入口",
+      "symbol": "export",
+      "line": 7,
+      "lines": 7,
+      "sha256": "fae125f803f48ce5cf8366273582d1927ca11fbf10e41d49ddc2432fad56d5fb",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/core/controller/index.ts#L7"
+    },
+    {
+      "id": "S04",
+      "path": "apps/vscode/src/sdk/vscode-session-host.ts",
+      "role": "VS Code 本地后端与执行器注入",
+      "symbol": "static async create",
+      "line": 115,
+      "lines": 329,
+      "sha256": "f7bafb9241b43ef636e876ed35bf9a195fb0db3d87a2d909748d235c7f47d04c",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/vscode-session-host.ts#L115"
+    },
+    {
+      "id": "S05",
+      "path": "sdk/packages/core/src/ClineCore.ts",
+      "role": "Core 会话门面",
+      "symbol": "async start(",
+      "line": 285,
+      "lines": 681,
+      "sha256": "f42e676bed8354b1191a0e7c2bc2b684badd8a08e7de00195d39937ea2e5559f",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/ClineCore.ts#L285"
+    },
+    {
+      "id": "S06",
+      "path": "sdk/packages/core/src/runtime/host/host.ts",
+      "role": "后端选择与存储降级",
+      "symbol": "export async function createRuntimeHost",
+      "line": 137,
+      "lines": 249,
+      "sha256": "ad766e37518b7ee8f619cdb1ac52e97fc9645e58341752cb908273e814184f42",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/host/host.ts#L137"
+    },
+    {
+      "id": "S07",
+      "path": "sdk/packages/agents/src/agent-runtime.ts",
+      "role": "真实 Agent 主循环",
+      "symbol": "private async execute(",
+      "line": 724,
+      "lines": 2454,
+      "sha256": "0fbabc1ca5de043ed41fd9c383184de6edd72c2c5beda5bd49332102f2890adf",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/agents/src/agent-runtime.ts#L724"
+    },
+    {
+      "id": "S08",
+      "path": "sdk/packages/core/src/runtime/config/agent-runtime-config-builder.ts",
+      "role": "配置与并发模式映射",
+      "symbol": "export function resolveToolExecution",
+      "line": 191,
+      "lines": 198,
+      "sha256": "1207a14a5bf3ecff2b3fee15b1f9b680121cf3fa8425d792760a92ba0ca0b995",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/config/agent-runtime-config-builder.ts#L191"
+    },
+    {
+      "id": "S09",
+      "path": "sdk/packages/core/src/runtime/orchestration/session-runtime-orchestrator.ts",
+      "role": "工具、模型与运行上下文装配",
+      "symbol": "class SessionRuntime",
+      "line": 305,
+      "lines": 1506,
+      "sha256": "5444580a7e53dc8d8055624c11e4b14b0d7a08c3598c8e1519ddda0b080f2003",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/orchestration/session-runtime-orchestrator.ts#L305"
+    },
+    {
+      "id": "S10",
+      "path": "sdk/packages/llms/src/providers/gateway.ts",
+      "role": "统一模型网关",
+      "symbol": "class GatewayModelAdapter",
+      "line": 115,
+      "lines": 383,
+      "sha256": "b796438b12990c808ea0e72633746677e9f05406e13ec35e6b38bc6ca4f3acfd",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/llms/src/providers/gateway.ts#L115"
+    },
+    {
+      "id": "S11",
+      "path": "sdk/packages/llms/src/providers/ai-sdk.ts",
+      "role": "AI SDK 与供应商流式适配",
+      "symbol": "streamText",
+      "line": 41,
+      "lines": 2455,
+      "sha256": "331f0f2baf3daf164721ef0c1c71025e68165205be587f619ea0ed04f7fe3317",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/llms/src/providers/ai-sdk.ts#L41"
+    },
+    {
+      "id": "S12",
+      "path": "apps/vscode/src/sdk/sdk-tool-policies.ts",
+      "role": "UI 工具策略及动态自动批准",
+      "symbol": "export function buildToolPolicies",
+      "line": 13,
+      "lines": 92,
+      "sha256": "be4aa35885926a6223615a405970d852a3c56be80a8db14a7a852b4156cf0619",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/sdk-tool-policies.ts#L13"
+    },
+    {
+      "id": "S13",
+      "path": "apps/vscode/src/sdk/sdk-interaction-coordinator.ts",
+      "role": "人工交互 Promise",
+      "symbol": "async handleRequestToolApproval",
+      "line": 94,
+      "lines": 291,
+      "sha256": "283e900006de3934880b0524fcb9242103760f21a4c676575335c5771bd6113f",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/sdk-interaction-coordinator.ts#L94"
+    },
+    {
+      "id": "S14",
+      "path": "sdk/packages/core/src/extensions/tools/presets.ts",
+      "role": "Plan / Act / YOLO 工具预设",
+      "symbol": "export const ToolPresets",
+      "line": 20,
+      "lines": 192,
+      "sha256": "fb86bc1acff114963a9214137eda66758819b7f7176d11fc7bd3a9b322903ce7",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/presets.ts#L20"
+    },
+    {
+      "id": "S15",
+      "path": "sdk/packages/core/src/extensions/tools/command-guard-extension.ts",
+      "role": "审批前的 Plan command guard",
+      "symbol": "export function createPlanMode",
+      "line": 39,
+      "lines": 89,
+      "sha256": "f3c75bed0e8505e525f73f95e45d26c1d2cd001e84eb9d50bf99035904078ba5",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/command-guard-extension.ts#L39"
+    },
+    {
+      "id": "S16",
+      "path": "apps/vscode/src/sdk/sdk-diff-edit-coordinator.ts",
+      "role": "无副作用的虚拟 Diff 预览",
+      "symbol": "export class SdkDiffEditCoordinator",
+      "line": 78,
+      "lines": 466,
+      "sha256": "557c406c7f494931604846711a1cdc1399adcbee21718a5b1639d3f1cfaca431",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/sdk-diff-edit-coordinator.ts#L78"
+    },
+    {
+      "id": "S17",
+      "path": "sdk/packages/core/src/extensions/tools/executors/editor.ts",
+      "role": "编辑器路径、唯一匹配与换行",
+      "symbol": "function resolveFilePath",
+      "line": 42,
+      "lines": 268,
+      "sha256": "8c787421b28c5abe9cfbcd66a1d8135cd02766ba32c6900bc3327ff240f95986",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/executors/editor.ts#L42"
+    },
+    {
+      "id": "S18",
+      "path": "sdk/packages/core/src/extensions/tools/executors/apply-patch.ts",
+      "role": "Patch 解析与文件执行",
+      "symbol": "function resolveFilePath",
+      "line": 59,
+      "lines": 426,
+      "sha256": "8dee7eedb1731f55bae8ba66c6baf57e6aae48bcd2a948ea5d5532ae12a96a52",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/executors/apply-patch.ts#L59"
+    },
+    {
+      "id": "S19",
+      "path": "sdk/packages/core/src/extensions/tools/definitions.ts",
+      "role": "内建工具、超时与反馈",
+      "symbol": "export function create",
+      "line": 265,
+      "lines": 978,
+      "sha256": "c08fe5aacd64317503d98f1389cca5d6e382f09bdd16e4677af8a7cabb802ff3",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/definitions.ts#L265"
+    },
+    {
+      "id": "S20",
+      "path": "sdk/packages/core/src/extensions/tools/executors/bash.ts",
+      "role": "Shell 子进程执行",
+      "symbol": "spawn",
+      "line": 4,
+      "lines": 1127,
+      "sha256": "3d1a079018d5c800807fdc7fde340168fa6c2d983aaf4c31898c613ea575c159",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/executors/bash.ts#L4"
+    },
+    {
+      "id": "S21",
+      "path": "sdk/packages/core/src/extensions/mcp/tools.ts",
+      "role": "MCP 工具到 AgentTool 的转换",
+      "symbol": "export async function createMcpTools",
+      "line": 16,
+      "lines": 47,
+      "sha256": "4aea5a0c1e73a5da0cfb05ee0e6ab376444f3c552fa3680c8014e035044ba0b5",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/mcp/tools.ts#L16"
+    },
+    {
+      "id": "S22",
+      "path": "sdk/packages/core/src/extensions/config/user-instruction-config-loader.ts",
+      "role": "规则与技能的文件发现",
+      "symbol": "SKILL_FILE_NAME",
+      "line": 36,
+      "lines": 743,
+      "sha256": "9b4c5749ad8b183cd495ed4389a7ef00e6506295b6aa9bc1d333c9649c35ac06",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/config/user-instruction-config-loader.ts#L36"
+    },
+    {
+      "id": "S23",
+      "path": "sdk/packages/core/src/extensions/agent-plugin/agent-skill.ts",
+      "role": "Agent Plugin 技能格式验证",
+      "symbol": "export function parseAgentSkillMarkdown",
+      "line": 126,
+      "lines": 194,
+      "sha256": "92e8e12949b224af4b396d4cfe791f0baae5a294fea3d905bc577e3e705392ba",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/agent-plugin/agent-skill.ts#L126"
+    },
+    {
+      "id": "S24",
+      "path": "sdk/packages/core/src/extensions/context/compaction.ts",
+      "role": "上下文压缩策略与恢复",
+      "symbol": "const userCompaction",
+      "line": 281,
+      "lines": 812,
+      "sha256": "3c66e5e668f0472649a8e07ad9c2fb221979590093211c94b27ac8c395adb29e",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/context/compaction.ts#L281"
+    },
+    {
+      "id": "S25",
+      "path": "sdk/packages/core/src/extensions/context/compaction-shared.ts",
+      "role": "压缩预算常量与模型限制",
+      "symbol": "DEFAULT_MAX_INPUT_TOKENS",
+      "line": 13,
+      "lines": 792,
+      "sha256": "1abe94cce127f7c2e2f287ca51efd711fc231d7a7f9a8f58743cda4150beccd1",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/context/compaction-shared.ts#L13"
+    },
+    {
+      "id": "S26",
+      "path": "sdk/packages/core/src/extensions/context/basic-compaction.ts",
+      "role": "确定性的基本压缩",
+      "symbol": "export function runBasicCompaction",
+      "line": 452,
+      "lines": 711,
+      "sha256": "c2e593c2d6663d9ff2aa26b3af1fd0e7037a010f3200ba9c8cf6f1e6d02f6719",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/context/basic-compaction.ts#L452"
+    },
+    {
+      "id": "S27",
+      "path": "sdk/packages/core/src/extensions/context/agentic-compaction.ts",
+      "role": "模型总结式压缩",
+      "symbol": "export async function",
+      "line": 116,
+      "lines": 318,
+      "sha256": "29266e1c515b14b40b1c8688746f26bc8a6ad82fb57b9df8260fc8bdcb73bdd9",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/context/agentic-compaction.ts#L116"
+    },
+    {
+      "id": "S28",
+      "path": "sdk/packages/core/src/hooks/checkpoint-hooks.ts",
+      "role": "新用户轮次的 Git 检查点",
+      "symbol": "export function createCheckpointHooks",
+      "line": 497,
+      "lines": 710,
+      "sha256": "909dedc080c7ae85639449e595bca9c79f0c530f7dfb1a945806b063ebd51339",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/hooks/checkpoint-hooks.ts#L497"
+    },
+    {
+      "id": "S29",
+      "path": "sdk/packages/core/src/session/checkpoint-restore.ts",
+      "role": "工作树恢复与 HEAD 防护",
+      "symbol": "currentHead",
+      "line": 409,
+      "lines": 478,
+      "sha256": "a1aa2fa03033b464380c068924056c647325ed6753134bd57a56348a5a9dfe03",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/session/checkpoint-restore.ts#L409"
+    },
+    {
+      "id": "S30",
+      "path": "sdk/packages/core/src/services/storage/sqlite-session-store.ts",
+      "role": "会话索引与工件路径",
+      "symbol": "class SqliteSessionStore",
+      "line": 25,
+      "lines": 292,
+      "sha256": "4f60e184775f109a70bd1d671adf2fdb4fa0147a6cc18d3456c34e16a5489b65",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/services/storage/sqlite-session-store.ts#L25"
+    },
+    {
+      "id": "S31",
+      "path": "sdk/packages/core/src/hub/server/hub-event-log.ts",
+      "role": "Hub 持久事件日志",
+      "symbol": "CREATE TABLE",
+      "line": 80,
+      "lines": 232,
+      "sha256": "c64881b0f9cef8ae4abb91f3fa92e3ec9e9f62d24ebef686105653669a7d608f",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/hub/server/hub-event-log.ts#L80"
+    },
+    {
+      "id": "S32",
+      "path": "sdk/packages/core/src/extensions/tools/team/multi-agent.ts",
+      "role": "团队运行与队列",
+      "symbol": "maxConcurrentRuns",
+      "line": 135,
+      "lines": 1943,
+      "sha256": "1199bb64b90aa555e434cf64d60e936d1265e9bc875400033d5e17797dbf2329",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/team/multi-agent.ts#L135"
+    },
+    {
+      "id": "S33",
+      "path": "sdk/packages/core/src/extensions/tools/team/spawn-agent-tool.ts",
+      "role": "委派工具与子 Agent 配置",
+      "symbol": "export function createSpawnAgentTool",
+      "line": 117,
+      "lines": 204,
+      "sha256": "5281bbae88358f35f87bd7a416b5ac3cb909e540b1b33fae4bea087e82f4b86e",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/team/spawn-agent-tool.ts#L117"
+    },
+    {
+      "id": "S34",
+      "path": "apps/vscode/src/sdk/cline-session-factory.ts",
+      "role": "VS Code 的真实会话默认值",
+      "symbol": "const config: CoreSessionConfig",
+      "line": 1070,
+      "lines": 1216,
+      "sha256": "ddc243de462dedb9933bb2c6b6c00a853c9232962ddac407fea172d72cca56aa",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/cline-session-factory.ts#L1070"
+    },
+    {
+      "id": "S35",
+      "path": "apps/vscode/src/sdk/webview-grpc-bridge.ts",
+      "role": "模型事件到 Webview 状态",
+      "symbol": "export class WebviewGrpcBridge",
+      "line": 33,
+      "lines": 162,
+      "sha256": "ed07fbcf4cf32ecc854c4fcb1193a7ced0eb9f29f93b873f208f1515161abe1d",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/webview-grpc-bridge.ts#L33"
+    },
+    {
+      "id": "S36",
+      "path": "sdk/packages/core/src/runtime/safety/mistake-tracker.ts",
+      "role": "连续错误跟踪",
+      "symbol": "export",
+      "line": 33,
+      "lines": 229,
+      "sha256": "7769c02d7c381e8422e5d419c597f27ad31cc0a02e0266271520640b074163a2",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/safety/mistake-tracker.ts#L33"
+    },
+    {
+      "id": "S37",
+      "path": "sdk/packages/core/src/runtime/tools/subprocess-sandbox.ts",
+      "role": "进程生命周期隔离的实际边界",
+      "symbol": "const child = spawn",
+      "line": 265,
+      "lines": 517,
+      "sha256": "49af405c35b401d5ed4dad90a540b5626b65831de12d8871b68ff28f04f4b1f8",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/tools/subprocess-sandbox.ts#L265"
+    },
+    {
+      "id": "S38",
+      "path": "sdk/packages/shared/src/tools/create.ts",
+      "role": "工具工厂与元数据",
+      "symbol": "export function createTool",
+      "line": 81,
+      "lines": 134,
+      "sha256": "54dafbee550bce588379f31aad5eaab4b5337786e40455f003842860c72b1664",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/shared/src/tools/create.ts#L81"
+    },
+    {
+      "id": "S39",
+      "path": "sdk/packages/shared/src/storage/paths.ts",
+      "role": "规则与技能目录统一解析",
+      "symbol": "export function resolveRulesConfigSearchPaths",
+      "line": 578,
+      "lines": 920,
+      "sha256": "a8bd627fb4a4a9e236c9dc8683a088ea5a09fa9a6d6853bace87d237df5019b9",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/shared/src/storage/paths.ts#L578"
+    },
+    {
+      "id": "S40",
+      "path": "sdk/packages/core/src/extensions/config/user-instruction-plugin.ts",
+      "role": "技能内容的按需加载",
+      "symbol": "export function formatSkillInvocation",
+      "line": 32,
+      "lines": 295,
+      "sha256": "909f08c848e423a3c6aefe5d1a52b924119446ff772ffb4f3e5485fcc7177ad4",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/config/user-instruction-plugin.ts#L32"
+    },
+    {
+      "id": "S41",
+      "path": "apps/vscode/src/sdk/vscode-runtime-builder.ts",
+      "role": "VS Code MCP、终端与无完成工具",
+      "symbol": "export async function createVscodeExtraTools",
+      "line": 62,
+      "lines": 111,
+      "sha256": "5136e087dcad407f86e9b66641280f8214cb46b5e3be031f357f06e2d72bf8e8",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/vscode-runtime-builder.ts#L62"
+    },
+    {
+      "id": "S42",
+      "path": "apps/vscode/src/core/controller/grpc-handler.ts",
+      "role": "Webview RPC 分发",
+      "symbol": "export async function",
+      "line": 53,
+      "lines": 203,
+      "sha256": "763adde1ab73db6d9e8f73fcd8603ac8d097f30aa970f256cf6cf3b132e06438",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/core/controller/grpc-handler.ts#L53"
+    },
+    {
+      "id": "S43",
+      "path": "apps/vscode/src/sdk/sdk-session-config-builder.ts",
+      "role": "VS Code 模式切换约束",
+      "symbol": "export class SdkSessionConfigBuilder",
+      "line": 19,
+      "lines": 32,
+      "sha256": "ab3a9367a404a27f7dce6c97a79c03175ff536186824864e2556962d81067dd3",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/apps/vscode/src/sdk/sdk-session-config-builder.ts#L19"
+    },
+    {
+      "id": "S44",
+      "path": "sdk/packages/core/src/extensions/tools/runtime.ts",
+      "role": "工具与供应商能力路由",
+      "symbol": "export",
+      "line": 12,
+      "lines": 332,
+      "sha256": "37c85ffd307bcbc7c89e7f3f1815110673e5259a844fa3018ac90f29476d5b18",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/runtime.ts#L12"
+    },
+    {
+      "id": "S45",
+      "path": "sdk/packages/core/src/extensions/tools/command-guard.ts",
+      "role": "Plan 命令过滤的已知局限",
+      "symbol": "This is a simple blacklist",
+      "line": 10,
+      "lines": 521,
+      "sha256": "f56d4deb3e5ba8ea0def770c50ebfa2387d70fe36087765153238746da527132",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/extensions/tools/command-guard.ts#L10"
+    },
+    {
+      "id": "S46",
+      "path": "sdk/packages/shared/src/llms/tokens.ts",
+      "role": "字符数 token 估算",
+      "symbol": "CHARS_PER_TOKEN",
+      "line": 8,
+      "lines": 67,
+      "sha256": "2a48aee30d3447043f9bff3223892dee9f089d22f521fb057cfbb070d0445dcf",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/shared/src/llms/tokens.ts#L8"
+    },
+    {
+      "id": "S47",
+      "path": "sdk/packages/core/src/runtime/safety/loop-detection.ts",
+      "role": "重复循环识别",
+      "symbol": "export",
+      "line": 20,
+      "lines": 162,
+      "sha256": "b1178b77238f68b7498c74a61023d8cc68a9eb61d9706b7a8e4ccdf48d6208e7",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/core/src/runtime/safety/loop-detection.ts#L20"
+    },
+    {
+      "id": "S48",
+      "path": "sdk/packages/agents/src/agent-runtime.test.ts",
+      "role": "上游脚本化模型测试参考",
+      "symbol": "class ScriptedModel",
+      "line": 28,
+      "lines": 3369,
+      "sha256": "f1d47c1368976ae48ad6cb01d53c6ab9b35bdba83e0d131467a947aef664c5af",
+      "url": "https://github.com/cline/cline/blob/4a56a43f39c2c75f941220989d4c65db006ee531/sdk/packages/agents/src/agent-runtime.test.ts#L28"
+    }
+  ]
+}

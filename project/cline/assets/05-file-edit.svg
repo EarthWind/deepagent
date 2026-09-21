@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="730" viewBox="0 0 1280 730" role="img" aria-label="编辑文件：先展示虚拟 Diff，批准后才落盘">
+<title>编辑文件：先展示虚拟 Diff，批准后才落盘</title><desc>当前 SdkDiffEditCoordinator 路径；完整参数在审批点可用，预览本身不修改真实文件。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#557084"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#152d42}</style>
+<rect width="1280" height="730" fill="#f3f7fa"/>
+<rect width="10" height="730" fill="#087e88"/>
+<text x="48" y="53" font-size="28" font-weight="700" text-anchor="start" style="fill:#152d42">编辑文件：先展示虚拟 Diff，批准后才落盘</text>
+<text x="48" y="89" font-size="16" font-weight="400" text-anchor="start" style="fill:#557084">当前 SdkDiffEditCoordinator 路径；完整参数在审批点可用，预览本身不修改真实文件。</text>
+<g data-card="true"><rect x="48" y="135" width="350" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="149" width="5" height="116" rx="2" fill="#4a61ba"/>
+<text x="68" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">模型提出编辑</text>
+<text x="68" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">editor：path / old_text / new_text</text>
+<text x="68" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">apply_patch：结构化 patch 文本</text>
+<text x="68" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">生成完成后得到完整参数</text>
+</g>
+<g data-card="true"><rect x="465" y="135" width="350" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="465" y="149" width="5" height="116" rx="2" fill="#087e88"/>
+<text x="485" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">虚拟文档预览</text>
+<text x="485" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">左右两侧均为虚拟文档</text>
+<text x="485" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">拒绝 / 取消：关闭预览</text>
+<text x="485" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">预览失败：仍可继续普通审批</text>
+</g>
+<g data-card="true"><rect x="882" y="135" width="350" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="882" y="149" width="5" height="116" rx="2" fill="#a56b16"/>
+<text x="902" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56b16">宿主审批</text>
+<text x="902" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">人工 Approve / Reject</text>
+<text x="902" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">或最新自动批准设置</text>
+<text x="902" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">后台编辑可省略预览</text>
+</g>
+<path d="M398 207 L465 207" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M815 207 L882 207" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1057 279 L1057 350" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1057.0" y="304.5" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">批准</text>
+<g data-card="true"><rect x="668" y="350" width="564" height="147" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="668" y="364" width="5" height="119" rx="2" fill="#087e88"/>
+<text x="688" y="383" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">真实 executor</text>
+<text x="688" y="415" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">唯一文本匹配；CRLF / LF 规范化</text>
+<text x="688" y="442" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">writeFile / patch 应用 → 返回结果</text>
+<text x="688" y="469" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">失败进入工具反馈；成功后展示实际文件</text>
+</g>
+<g data-card="true"><rect x="48" y="350" width="566" height="147" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="364" width="5" height="119" rx="2" fill="#af4d4b"/>
+<text x="68" y="383" font-size="21" font-weight="700" text-anchor="start" style="fill:#af4d4b">检查边界</text>
+<text x="68" y="415" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">restrictToCwd 限制相对路径逃逸</text>
+<text x="68" y="442" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">绝对路径在该实现中被明确接受</text>
+<text x="68" y="469" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">预览与写入之间不构成全局文件事务</text>
+</g>
+<g data-card="true"><rect x="48" y="558" width="1184" height="88" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="572" width="5" height="60" rx="2" fill="#4a61ba"/>
+<text x="68" y="591" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">生产扩展建议：realpath 允许目录、写入前版本校验、路径锁、受限执行环境。</text>
+</g>
+<text x="48" y="704" font-size="15" font-weight="400" text-anchor="start" style="fill:#557084">实际实验：保留 CRLF、拒绝重复匹配、拒绝相对越界、允许绝对路径（仅在临时夹具内测试）。</text>
+</svg>

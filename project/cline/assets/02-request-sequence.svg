@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="790" viewBox="0 0 1280 790" role="img" aria-label="一次用户请求：审批是执行链上的等待点">
+<title>一次用户请求：审批是执行链上的等待点</title><desc>示例展示一个需要审批的工具调用；循环可包含多次模型请求、多个工具与更多用户输入。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#557084"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#152d42}</style>
+<rect width="1280" height="790" fill="#f3f7fa"/>
+<rect width="10" height="790" fill="#087e88"/>
+<text x="48" y="53" font-size="28" font-weight="700" text-anchor="start" style="fill:#152d42">一次用户请求：审批是执行链上的等待点</text>
+<text x="48" y="89" font-size="16" font-weight="400" text-anchor="start" style="fill:#557084">示例展示一个需要审批的工具调用；循环可包含多次模型请求、多个工具与更多用户输入。</text>
+<g data-card="true"><rect x="43" y="125" width="224" height="68" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="43" y="139" width="5" height="40" rx="2" fill="#4a61ba"/>
+<text x="63" y="158" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">Webview</text>
+</g>
+<path d="M155 205 L155 701" stroke="#bdcddd" stroke-dasharray="5 6"/>
+<g data-card="true"><rect x="353" y="125" width="224" height="68" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="353" y="139" width="5" height="40" rx="2" fill="#4a61ba"/>
+<text x="373" y="158" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">SDK 适配器</text>
+</g>
+<path d="M465 205 L465 701" stroke="#bdcddd" stroke-dasharray="5 6"/>
+<g data-card="true"><rect x="673" y="125" width="224" height="68" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="673" y="139" width="5" height="40" rx="2" fill="#4a61ba"/>
+<text x="693" y="158" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">Core / Agent</text>
+</g>
+<path d="M785 205 L785 701" stroke="#bdcddd" stroke-dasharray="5 6"/>
+<g data-card="true"><rect x="988" y="125" width="224" height="68" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="988" y="139" width="5" height="40" rx="2" fill="#4a61ba"/>
+<text x="1008" y="158" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">模型 / 执行器</text>
+</g>
+<path d="M1100 205 L1100 701" stroke="#bdcddd" stroke-dasharray="5 6"/>
+<path d="M155 228 L465 228" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="310.0" y="218.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">用户请求 / RPC</text>
+<path d="M465 289 L785 289" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="625.0" y="279.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">start / send</text>
+<path d="M785 350 L1100 350" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="942.5" y="340.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">请求模型事件流</text>
+<path d="M1100 411 L785 411" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="942.5" y="401.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">完整工具参数</text>
+<path d="M785 472 L465 472" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="625.0" y="462.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">requestToolApproval</text>
+<path d="M465 533 L155 533" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="310.0" y="523.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">虚拟 Diff + ask 消息</text>
+<path d="M155 594 L465 594" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="310.0" y="584.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">用户批准 / 拒绝</text>
+<path d="M465 643 L785 643" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="625.0" y="633.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">解决审批 Promise</text>
+<path d="M785 692 L1100 692" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="942.5" y="682.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">批准后执行 / 结果回到模型</text>
+<text x="48" y="764" font-size="15" font-weight="400" text-anchor="start" style="fill:#557084">返回 UI：Agent 事件 → Core 事件 → message translator → partial-message / state 订阅。</text>
+</svg>
