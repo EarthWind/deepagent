@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MetaGPT 固定源码深读：经典 SOP、MGX、RoleZero、消息通信、工具执行、记忆与生产化。">
+<title>MetaGPT 源码深读 · Deep Agent</title>
+<style>
+:root{color-scheme:light;--ink:#183149;--muted:#5a7082;--accent:#087f8c;--line:#dbe4ec}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:#f3f6fa;color:var(--ink);font:17px/1.95 system-ui,-apple-system,"Noto Sans CJK SC","Microsoft YaHei",sans-serif}
+a{color:#087682;text-decoration:none;text-underline-offset:4px}a:hover{text-decoration:underline}
+.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);gap:36px;padding:36px}
+aside{position:sticky;top:24px;max-height:calc(100vh - 48px);overflow:auto;align-self:start;padding:12px 12px 20px 0}
+.brand{font-size:14px;font-weight:800;letter-spacing:.15em;color:var(--accent)}.edition{font-size:12px;color:var(--muted);margin:8px 0 24px}
+nav a{display:block;font-size:13px;line-height:1.65;padding:7px 8px;border-left:2px solid transparent}nav a:hover{border-left-color:var(--accent);background:#e5f0f2;text-decoration:none}
+.sidebar-links{border-top:1px solid var(--line);padding-top:18px;margin-top:22px;font-size:13px}
+main{min-width:0;background:white;border:1px solid var(--line);border-radius:16px;padding:48px 56px;box-shadow:0 12px 40px #142d4406}
+h1{font-size:clamp(28px,3vw,40px);line-height:1.5;letter-spacing:-.02em;margin:0 0 24px;font-weight:800}h2{margin:64px 0 20px;padding-bottom:13px;border-bottom:1px solid var(--line);font-size:27px;line-height:1.5}h3{margin-top:32px;font-size:20px;line-height:1.6}
+p{margin:18px 0}li{margin:8px 0}blockquote{margin:24px 0;border-left:4px solid var(--accent);padding:1px 22px;background:#f1f8f9;color:var(--muted)}strong{color:#112e45}
+code{font-family:ui-monospace,"DejaVu Sans Mono",monospace;font-size:.86em;background:#eef3f8;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{padding:22px;background:#122d43;color:#dfedf5;border-radius:10px;overflow:auto;line-height:1.7}pre code{color:inherit;background:none;padding:0;overflow-wrap:normal}
+.table-scroll{overflow-x:auto;margin:24px 0}table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.85}th,td{text-align:left;padding:13px 15px;vertical-align:top;border:1px solid var(--line)}th{background:#eaf3f5;color:#155260}tr:nth-child(even) td{background:#f9fbfd}td a{overflow-wrap:anywhere}
+img{max-width:100%;height:auto;display:block}.diagram{display:block;margin:30px -20px;border:1px solid var(--line);border-radius:10px;overflow:hidden}.diagram:hover{outline:2px solid #087f8c33}
+.topline{color:var(--muted);font-size:12px;margin-bottom:20px;letter-spacing:.08em}footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:1050px){.shell{grid-template-columns:205px minmax(0,1fr);gap:20px;padding:24px}main{padding:32px}.diagram{margin:24px 0}}
+@media(max-width:760px){.shell{display:block;padding:12px}aside{position:static;max-height:none;padding:8px 8px 20px}nav{display:none}.edition{margin:6px 0}.sidebar-links{display:flex;gap:18px;margin-top:12px;padding-top:10px}main{padding:26px 20px;border-radius:10px}body{font-size:16px}h2{font-size:24px;margin-top:42px}th,td{min-width:130px}pre{font-size:13px;padding:16px}.diagram{overflow:auto}.diagram img{min-width:700px}}
+@media print{body{background:white;font-size:11pt}.shell{display:block;padding:0}aside,.topline{display:none}main{border:0;box-shadow:none;padding:0}.diagram,table,pre{break-inside:avoid}h2,h3{break-after:avoid}a{color:inherit}pre{white-space:pre-wrap}img{min-width:0!important}}
+</style></head><body><div class="shell"><aside>
+<div class="brand">DEEP AGENT / RESEARCH</div><div class="edition">MetaGPT · 2026-09-21<br>Source: 11cdf466d042</div>
+<nav aria-label="章节导航"><a href="#sec-1">1. 思想：把协作变成接口</a>
+<a href="#sec-2">2. 版本辨析：当前 CLI 实际启动了什么</a>
+<a href="#sec-3">3. 核心对象与源码地图</a>
+<a href="#sec-4">4. Team 与 Environment：调度到底怎么运行</a>
+<a href="#sec-5">5. 消息机制：投递与触发是两道门</a>
+<a href="#sec-6">6. Role：观察、决策与行动</a>
+<a href="#sec-7">7. 经典软件 SOP：从需求到代码</a>
+<a href="#sec-8">8. ActionNode：结构化生成的实现</a>
+<a href="#sec-9">9. MGX 与 RoleZero：动态团队的执行链</a>
+<a href="#sec-10">10. 工具系统：Schema、推荐与执行</a>
+<a href="#sec-11">11. Data Interpreter：计划与代码执行反馈</a>
+<a href="#sec-12">12. 上下文、记忆与经验池</a>
+<a href="#sec-13">13. 文件依赖、持久化与恢复</a>
+<a href="#sec-14">14. 模型适配、配置与成本</a>
+<a href="#sec-15">15. 生产化评估与改进建议</a>
+<a href="#sec-16">16. 可运行示例与复现方式</a>
+<a href="#sec-17">17. 验证结论与源码阅读路线</a></nav><div class="sidebar-links"><a href="README.md">Markdown 正文</a><br><a href="research/source-map.md">源码地图</a><br><a href="research/verification.md">验证记录</a></div>
+</aside><main><div class="topline">SOURCE CODE NOTES · MULTI-AGENT SYSTEMS</div><h1>MetaGPT 源码深读：从 SOP 软件团队到动态工具型 Agent</h1>
+<blockquote>
+<p>从大模型 Agent 工程师的视角，理解角色分工如何落成代码、消息如何驱动协作，以及一个“能完成任务的团队”距离可运营系统还有哪些工程环节。</p>
+</blockquote>
+<p><a href="index.html">离线 HTML 阅读版</a> · <a href="examples/README.md">示例代码</a> · <a href="research/source-map.md">源码地图</a> · <a href="research/verification.md">验证记录</a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>调研项</th>
+<th>本文基线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>官方仓库</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT">FoundationAgents/MetaGPT</a></td>
+</tr>
+<tr>
+<td>调研日期</td>
+<td>2026-09-21</td>
+</tr>
+<tr>
+<td>固定提交</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/tree/11cdf466d042aece04fc6cfd13b28e1a70341b1f"><code>11cdf466d042aece04fc6cfd13b28e1a70341b1f</code></a>；调研时远端 <code>HEAD/main</code> 指向该提交</td>
+</tr>
+<tr>
+<td>提交时间</td>
+<td>2026-01-21 18:12:32 +08:00；提交时间与调研时间是不同概念</td>
+</tr>
+<tr>
+<td>包声明</td>
+<td><code>metagpt 1.0.0</code>，Python <code>&gt;=3.9,&lt;3.12</code>；不据此假定 PyPI 包与本提交完全相同</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>官方论文与文档、固定源码调用链、上游测试阅读、15 项方法体隔离实验、原创离线协作示例</td>
+</tr>
+<tr>
+<td>验证边界</td>
+<td>未安装运行完整 MetaGPT，未调用收费模型，未复现论文基准；详见<a href="research/verification.md">验证记录</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>MetaGPT 值得研究的核心，是把“如何协作”变成可执行结构：角色职责、交付物格式、消息路由、行动策略与执行反馈。</strong> 它把一部分流程决策写进程序，一部分交给模型，最终由运行时把结果连接起来。</p>
+<p>但阅读当前仓库有一个前提：<strong>经典 SOP 流水线与当前默认 MGX 团队并存。</strong> 当前 CLI 默认由 TeamLeader 协调，成员使用 RoleZero 动态选择工具；许多教程里固定的五角色软件公司，需要显式装配。这一变化影响入口参数、消息触发、模型调用数量和产物形式。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/software_company.py">入口实现</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">Team</a></p>
+<p>本文将可核对的实现称为“源码事实”；从这些事实推导的代价与适用性称为“工程判断”；新增的生产化设计明确标注为“建议”。七幅图均为原创 SVG，可直接离线阅读。它们表达结构和控制流，不是性能测量。</p>
+<p><a class="diagram" href="assets/01-architecture.svg" target="_blank"><img src="assets/01-architecture.svg" alt="MetaGPT 的两条执行路径与共享运行时" loading="lazy"></a></p>
+<h2>阅读导航</h2>
+<ol>
+<li><a href="#sec-1">思想：把协作变成接口</a></li>
+<li><a href="#sec-2">版本辨析：当前 CLI 实际启动了什么</a></li>
+<li><a href="#sec-3">核心对象与源码地图</a></li>
+<li><a href="#sec-4">Team 与 Environment：调度到底怎么运行</a></li>
+<li><a href="#sec-5">消息机制：投递与触发是两道门</a></li>
+<li><a href="#sec-6">Role：观察、决策与行动</a></li>
+<li><a href="#sec-7">经典软件 SOP：从需求到代码</a></li>
+<li><a href="#sec-8">ActionNode：结构化生成的实现</a></li>
+<li><a href="#sec-9">MGX 与 RoleZero：动态团队的执行链</a></li>
+<li><a href="#sec-10">工具系统：Schema、推荐与执行</a></li>
+<li><a href="#sec-11">Data Interpreter：计划与代码执行反馈</a></li>
+<li><a href="#sec-12">上下文、记忆与经验池</a></li>
+<li><a href="#sec-13">文件依赖、持久化与恢复</a></li>
+<li><a href="#sec-14">模型适配、配置与成本</a></li>
+<li><a href="#sec-15">生产化评估与改进建议</a></li>
+<li><a href="#sec-16">可运行示例与复现方式</a></li>
+<li><a href="#sec-17">验证结论与源码阅读路线</a></li>
+</ol>
+<p><a id="sec-1"></a></p>
+<h2>1. 思想：把协作变成接口</h2>
+<h3>1.1 SOP 的价值是降低交接歧义</h3>
+<p>MetaGPT 原论文提出：用标准操作流程组织多个专门角色，要求角色交付结构化中间结果，并引入代码执行反馈。软件工程场景中的典型中间结果包括需求文档、系统设计、接口和任务清单。<a href="https://arxiv.org/html/2308.00352v7">MetaGPT 论文，固定 v7</a></p>
+<p>从工程角度，可以把这套设计理解成下面的映射：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>团队协作概念</th>
+<th>程序中的对应物</th>
+<th>解决的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>职责</td>
+<td>Role 的 profile、goal、指令与能力集合</td>
+<td>谁应该处理某类工作</td>
+</tr>
+<tr>
+<td>工序</td>
+<td>Action 或动态工具命令</td>
+<td>下一步具体执行什么</td>
+</tr>
+<tr>
+<td>交接标准</td>
+<td>ActionNode、Pydantic 模型、文档结构</td>
+<td>下游如何消费上游结果</td>
+</tr>
+<tr>
+<td>工作通知</td>
+<td>Message、cause_by、send_to、watch</td>
+<td>谁看到结果，谁需要行动</td>
+</tr>
+<tr>
+<td>工作现场</td>
+<td>Environment、项目文件、执行工具</td>
+<td>协作与副作用发生在哪里</td>
+</tr>
+<tr>
+<td>验收反馈</td>
+<td>测试输出、TaskResult、审查结果</td>
+<td>生成之后如何判断与修正</td>
+</tr>
+</tbody>
+</table></div>
+<p>这是一种<strong>应用层协议设计</strong>。例如，“完成系统设计”必须落为文件列表、类接口和调用关系，工程师才可能据此实现；如果只传递“架构设计好了”，下游仍需重新推断需求。结构化交付物因此同时承担信息压缩、契约表达和责任划分的作用。</p>
+<h3>1.2 多角色不自动带来更高质量</h3>
+<p>以下是工程判断，而非论文保证：</p>
+<ul>
+<li>角色拆分有利于限定上下文和专业职责，但每次交接都可能丢失约束。</li>
+<li>结构化输出能验证字段存在、类型正确，却不能证明需求理解正确。</li>
+<li>Review 可以增加一个判断视角；真正能执行的测试提供另一类证据。</li>
+<li>角色越多，协调调用、重复上下文和失败组合也越多。</li>
+</ul>
+<p>因此评估一个多 Agent 系统时，应看“错误在何处被发现、由谁修复、如何终止”，而不只看有多少个角色名称。</p>
+<h3>1.3 论文成绩与本次调研的关系</h3>
+<p>原论文报告了特定模型、数据集和评价协议下的实验结果；本次没有复跑这些实验，也不把历史分数外推成当前提交、当前模型或任意业务需求的成功率。本文关注实现机制及其边界；若做产品选型，应以自己的任务集重新测量成功率、成本和人工修正量。<a href="https://arxiv.org/html/2308.00352v7#S4">论文实验章节</a></p>
+<p><a id="sec-2"></a></p>
+<h2>2. 版本辨析：当前 CLI 实际启动了什么</h2>
+<h3>2.1 从入口开始追踪，避免被类名误导</h3>
+<p><code>setup.py</code> 将命令行 <code>metagpt</code> 指向 <code>metagpt.software_company:app</code>。调用链为：</p>
+<pre><code class="language-text">metagpt &quot;需求&quot;
+  → Typer startup()
+  → generate_repo()
+  → Config.update_via_cli()
+  → Context(config)
+  → Team(context)                  # use_mgx 默认 True
+  → hire([TeamLeader, ProductManager, Architect, Engineer2, DataAnalyst])
+  → invest(investment)
+  → asyncio.run(company.run(...))
+</code></pre>
+<p>五个成员分别是 Mike、Alice、Bob、Alex、David。这里的工程师是 <code>Engineer2</code>，数据角色是 <code>DataAnalyst</code>；不要与经典 <code>Engineer</code>、独立 <code>DataInterpreter</code> 混为一谈。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/setup.py">包入口</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/software_company.py">默认团队装配</a></p>
+<h3>2.2 同一个仓库中的三种形态</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>形态</th>
+<th>主要入口 / 对象</th>
+<th>控制方式</th>
+<th>本提交中的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>经典软件团队</td>
+<td>普通 Environment + 固定 SOP 角色</td>
+<td>Action 类型订阅、文档交接</td>
+<td>实现仍在，需要显式装配</td>
+</tr>
+<tr>
+<td>MGX 动态团队</td>
+<td>MGXEnv + TeamLeader + RoleZero 子类</td>
+<td>Leader 分派，成员动态工具循环</td>
+<td>CLI 默认装配</td>
+</tr>
+<tr>
+<td>数据任务 Agent</td>
+<td>DataInterpreter</td>
+<td>默认 plan_and_act，Notebook 执行反馈</td>
+<td>可独立调用的角色</td>
+</tr>
+</tbody>
+</table></div>
+<p>当前 <code>ProductManager</code>、<code>Architect</code>、<code>ProjectManager</code> 已继承 RoleZero，固定 SOP 兼容分支受 <code>use_fixed_sop</code> 控制；RoleZero 的默认值是 <code>False</code>。恢复经典示例时，通常需要同时处理<strong>环境选择和角色模式选择</strong>，仅改 <code>Team(use_mgx=False)</code> 还不够。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/product_manager.py">ProductManager</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/architect.py">Architect</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/project_manager.py">ProjectManager</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero</a></p>
+<h3>2.3 CLI 参数存在兼容痕迹</h3>
+<p><code>generate_repo()</code> 保留 <code>code_review</code>、<code>run_tests</code>、<code>implement</code> 参数，但根据这些参数聘用经典 Engineer / QaEngineer 的代码已经被注释。当前活动代码没有用这三个参数控制该团队的对应行为。</p>
+<p>这意味着 <code>--run-tests</code> 的帮助文字不能当成“必然启动 QA 角色”的证据；<code>--no-implement</code> 也不能据此认定工程师不执行实现。Engineer2 仍可能通过工具和模型决策执行测试或 Review，那是另一条路径。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/software_company.py">具体装配代码</a></p>
+<p>还有一个接口差异：README 示例将 <code>generate_repo()</code> 的结果标为 <code>ProjectRepo</code>，本提交实际返回 <code>ctx.kwargs.get(&quot;project_path&quot;)</code>。调用方应按真实返回值处理，并允许它在未设置路径时为 <code>None</code>。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/software_company.py">返回语句</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/project_repo.py">ProjectRepo</a></p>
+<p>这些差异不需要猜测发布历史，直接固定提交即可复核。二次开发时，建议给自己使用的入口建立小型契约测试。</p>
+<p><a id="sec-3"></a></p>
+<h2>3. 核心对象与源码地图</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>责任</th>
+<th>关键实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Team</td>
+<td>团队装配、预算、外层轮次、归档与序列化</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">team.py</a></td>
+</tr>
+<tr>
+<td>Environment</td>
+<td>角色地址登记、消息分发、并发调用角色</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/base_env.py">base_env.py</a></td>
+</tr>
+<tr>
+<td>MGXEnv</td>
+<td>Leader 路由、公开聊天、直接对话处理</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/mgx/mgx_env.py">mgx_env.py</a></td>
+</tr>
+<tr>
+<td>Role / RoleContext</td>
+<td>收件箱、记忆、观察、行动策略与当前状态</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">role.py</a></td>
+</tr>
+<tr>
+<td>RoleZero</td>
+<td>JSON 命令决策、工具执行、计划操作与新消息吸收</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">role_zero.py</a></td>
+</tr>
+<tr>
+<td>Action</td>
+<td>一个领域操作；可调用 LLM，也可调用确定性代码</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action.py">action.py</a></td>
+</tr>
+<tr>
+<td>ActionNode</td>
+<td>声明输出字段、生成提示、解析与类型校验</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action_node.py">action_node.py</a></td>
+</tr>
+<tr>
+<td>Message</td>
+<td>内容、结构化内容、发送者、接收者和事件来源</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py">schema.py</a></td>
+</tr>
+<tr>
+<td>Plan / Task / Planner</td>
+<td>任务依赖、当前任务、执行结果、计划更新和确认</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py">schema.py</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/strategy/planner.py">planner.py</a></td>
+</tr>
+<tr>
+<td>Context / ContextMixin</td>
+<td>配置、模型和成本管理的共享与覆盖</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context.py">context.py</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context_mixin.py">context_mixin.py</a></td>
+</tr>
+<tr>
+<td>ProjectRepo / FileRepository</td>
+<td>项目文件分区、读写和依赖记录</td>
+<td><a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/project_repo.py">项目仓库</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/file_repository.py">文件仓库</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>一个重要的建模区别：<code>Context</code> 主要提供配置与共享服务；<code>RoleContext</code> 保存角色运行时状态。它们都叫上下文，却不直接等于“下一次发给模型的 prompt”。真正的模型上下文要经过角色、记忆选择、工具输出处理与 Provider 格式化后才形成。</p>
+<p>源码整体还包含 RAG、经验池、其他环境和实验扩展。本文以软件协作内核和数据执行路径为主，不把仓库中的所有研究子目录都视为当前 CLI 的一部分。完整取证文件与哈希见<a href="research/source-map.md">源码索引</a>。</p>
+<p><a id="sec-4"></a></p>
+<h2>4. Team 与 Environment：调度到底怎么运行</h2>
+<h3>4.1 Team 管理的是外层生命周期</h3>
+<p><code>Team.hire()</code> 把角色交给环境；<code>invest()</code> 设置成本管理器的 <code>max_budget</code>；<code>run_project()</code> 发布需求；<code>run()</code> 在预算与轮数约束下调用环境。</p>
+<p>用等价流程说明其主要顺序：</p>
+<pre><code class="language-python"># 说明性伪代码，省略异常装饰器与日志。
+if idea:
+    publish_user_requirement(idea)
+while remaining_rounds &gt; 0:
+    if env.is_idle:
+        break
+    check_recorded_cost()
+    await env.run()
+    remaining_rounds -= 1
+archive_if_configured()
+return env.history
+</code></pre>
+<p>空闲意味着没有需要继续处理的角色状态，并不意味着业务验收通过。轮次用尽也只是停止条件，不能直接翻译为“任务成功”。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">Team.run</a></p>
+<h3>4.2 Environment 使用协程并发</h3>
+<p>普通 <code>Environment.run()</code> 遍历当前非空闲角色，收集它们的 <code>run()</code> 协程，再 <code>await asyncio.gather(*futures)</code>。这是同一 Python 进程中的异步调度，适合重叠网络等待；它本身没有创建分布式 Actor、独立进程或持久化消息代理。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/base_env.py">Environment.run</a></p>
+<p>一个容易遗漏的时序细节：<strong>参与当前轮次的角色集合，在协程开始执行前就选定了。</strong> 如果 Bob 在选定时为空闲，Alice 本轮运行过程中才向 Bob 发消息，Bob 会在下一轮被调度。反之，Bob 如果已被纳入本轮，它的观察时机又可能受协程执行顺序影响。</p>
+<p>因此不要用“每轮恰好推进一个工序”或“每轮所有新消息都会处理完”描述这个调度器。我们的隔离实验验证了“本轮唤醒原本空闲角色，下一轮才运行”的情况。<a href="research/source_probes.py">实验脚本</a>、<a href="research/probe-results.json">结果</a></p>
+<h3>4.3 需要区分四种计数</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>计数</th>
+<th>代表什么</th>
+<th>是否等于模型请求数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Team.run(n_round)</code></td>
+<td>环境调度轮数上限</td>
+<td>否</td>
+</tr>
+<tr>
+<td><code>Role.rc.max_react_loop</code></td>
+<td>一次角色反应中的决策—行动循环数</td>
+<td>否</td>
+</tr>
+<tr>
+<td>命令列表长度</td>
+<td>一次 RoleZero 模型决策产生的工具命令数</td>
+<td>否</td>
+</tr>
+<tr>
+<td>Provider 请求与重试</td>
+<td>实际模型交互次数</td>
+<td>更接近，但要单独统计重试</td>
+</tr>
+</tbody>
+</table></div>
+<p>一次 Engineer2 的角色执行可以经历多轮模型决策，每次决策又可能执行多个命令；语言检测、快速意图判断、JSON 修复等还可能增加模型调用。性能估算必须沿真实执行链累加。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/role_zero_utils.py">命令解析</a></p>
+<p><a id="sec-5"></a></p>
+<h2>5. 消息机制：投递与触发是两道门</h2>
+<p><a class="diagram" href="assets/03-message-routing.svg" target="_blank"><img src="assets/03-message-routing.svg" alt="消息投递、订阅与行动触发" loading="lazy"></a></p>
+<h3>5.1 Message 是控制信息与业务信息的组合</h3>
+<p><code>Message</code> 的关键字段如下：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+<th>常见误解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>默认生成唯一标识</td>
+<td>有 ID 不代表有持久化确认协议</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td>文本内容</td>
+<td>不是全部业务数据的唯一载体</td>
+</tr>
+<tr>
+<td><code>instruct_content</code></td>
+<td>Pydantic 结构化对象</td>
+<td>不是每条消息都必须具备</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td>模型消息角色，默认 user</td>
+<td>不等同于 ProductManager 等业务职位</td>
+</tr>
+<tr>
+<td><code>cause_by</code></td>
+<td>产生消息的 Action 类型标签，缺省为 UserRequirement</td>
+<td>不是发送者名字</td>
+</tr>
+<tr>
+<td><code>sent_from</code></td>
+<td>发送方标签</td>
+<td>不等于接收路由</td>
+</tr>
+<tr>
+<td><code>send_to</code></td>
+<td>接收地址集合，默认包含 <code>&lt;all&gt;</code></td>
+<td>不单独决定收到之后是否行动</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td>图片、Agent 展示信息等扩展数据</td>
+<td>不保证直接进入模型输入</td>
+</tr>
+</tbody>
+</table></div>
+<p>类或对象形式的 Action 标签通过 <code>any_to_str()</code> 规范化为字符串。<code>Message.to_dict()</code> 只返回 <code>role</code> 与 <code>content</code>；业务路由字段要影响模型理解，必须通过其他上下文装配方式体现。MGX 为此将发送者和接收者写入内容前缀。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py">Message</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/common.py">标签与地址辅助函数</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/mgx/mgx_env.py">MGX 消息转换</a></p>
+<h3>5.2 第一层：环境按接收地址投递</h3>
+<p><code>Environment.publish_message()</code> 遍历 <code>member_addrs</code>，通过 <code>is_send_to()</code> 判断地址是否匹配：消息含 <code>&lt;all&gt;</code> 则广播，否则需要与角色地址集合有交集。成功投递调用 <code>role.put_message()</code>，进入角色私有 <code>MessageQueue</code>。</p>
+<p>这段环境逻辑<strong>没有按 <code>cause_by/watch</code> 过滤</strong>。教程中“订阅发布”的说法描述整体效果；在这份源码中，类型订阅发生在后面的角色观察阶段。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/base_env.py">环境发布</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/common.py">is_send_to</a></p>
+<h3>5.3 第二层：角色选择需要反应的消息</h3>
+<p>基类 <code>_observe()</code> 弹出整批缓冲消息，然后按下列条件筛选 <code>rc.news</code>：</p>
+<pre><code class="language-python"># 对应源码核心谓词，变量名为说明而简化。
+(message.cause_by in watch or role.name in message.send_to) \
+    and message not in old_messages
+</code></pre>
+<p>由此得到几条实用规则：</p>
+<ol>
+<li>广播使角色收到消息；Action 标签匹配才会触发普通订阅者。</li>
+<li>明确发送到角色<strong>名字</strong>，可以触发没有订阅该 Action 的角色。</li>
+<li>发送到角色<strong>类地址</strong>只保证第一层投递，不自动满足第二层的名字特例。</li>
+<li><code>observe_all_msg_from_buffer=True</code> 会保存未匹配消息，让角色知悉环境，但不会因此把它们全部变成 <code>news</code>。</li>
+<li>去重依赖 Message 的相等性；相同内容使用不同 ID，仍可能被处理。</li>
+</ol>
+<p><code>enable_memory=False</code> 在这里会令 <code>old_messages=[]</code>，跳过去重检查；它并没有让整个 <code>_observe()</code> 完全停止向 Memory 写入消息。名字表达的意图与具体分支行为要分开阅读。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">Role._observe</a></p>
+<h3>5.4 不要把广播理解成共享一个无差别 prompt</h3>
+<p>环境保有历史，角色也有自己的 Memory；角色可能收到很多消息，但是否反应、是否记住、是否放入当前模型上下文，是三个不同的决定。这个区分可以帮助诊断：</p>
+<ul>
+<li>“角色没收到”查地址路由和收件箱。</li>
+<li>“收到了但没工作”查 <code>watch</code>、<code>send_to</code>、去重和 <code>rc.news</code>。</li>
+<li>“工作了却不知道约束”查 Memory 选择、窗口截取和 prompt 装配。</li>
+</ul>
+<p>另一个本提交特有细节：<code>Team.run_project(idea, send_to=...)</code> 接收 <code>send_to</code> 参数，却只发布 <code>Message(content=idea)</code>。需要精确路由时，直接构造 Message 并调用环境发布；不要依赖这个未被使用的参数。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">Team</a>、<a href="research/probe-results.json">隔离实验</a></p>
+<p><a id="sec-6"></a></p>
+<h2>6. Role：观察、决策与行动</h2>
+<h3>6.1 基类的一次运行</h3>
+<p>Role 的主路径可写成：</p>
+<pre><code class="language-text">run(with_message)
+  → 可选：把传入参数转换为 Message，放入 msg_buffer
+  → _observe()：读取、筛选、记录消息
+  → 无 news：等待
+  → react()：选择角色行动策略
+  → _think() / _act()，或 _plan_and_act()
+  → 清理 todo，发布最后结果
+</code></pre>
+<p>Role 同时持有静态描述与运行状态：<code>name/profile/goal/constraints</code> 用于角色提示，<code>actions/states</code> 描述可用行动，<code>rc</code> 保存执行时的消息与动作状态。<code>set_actions()</code> 还负责为 Action 注入 Context、LLM 和角色前缀。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">Role</a></p>
+<h3>6.2 三种行动策略的设计意图</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>主要控制方式</th>
+<th>阅读时需要注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>react</code></td>
+<td>交替 <code>_think → _act</code>，动态决定后续工作</td>
+<td>基类默认循环上限为 1；RoleZero 有自己的覆盖实现</td>
+</tr>
+<tr>
+<td><code>by_order</code></td>
+<td>按已有 Action 状态推进</td>
+<td>具体角色常重写 <code>_think</code>，不能只凭枚举名推断完整工作流</td>
+</tr>
+<tr>
+<td><code>plan_and_act</code></td>
+<td>先生成计划，再执行 current_task 并处理结果</td>
+<td>子类必须实现 <code>_act_on_task</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>基类只有一个 Action 时，<code>_think()</code> 直接选它，不需要再请模型选择动作；多个 Action 才可能进入模型选择状态的分支。经典工程师和 QA 又进一步通过重写方法控制各阶段。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">Role._think / react</a></p>
+<h3>6.3 Action 不等于一次模型请求</h3>
+<p>Action 是领域工作单元。它可以调用 LLM、解析输出、读写多个文件、生成 Mermaid 图，甚至调用其他 Action。因此必须为 Action 定义好输入、输出和失败边界。</p>
+<p>基类 <code>_act()</code> 会将 Action 的结果统一包装：<code>ActionOutput/ActionNode</code> 转成包含结构化内容的消息，已经是 Message 则直接使用，其余一般作为文本。结果写入角色记忆，再由 <code>run()</code> 发布。对于多个内部步骤，默认自动发布的是最后返回的结果；需要逐步对外通知时，应显式设计消息发布。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action.py">Action</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">Role._act</a></p>
+<p><a id="sec-7"></a></p>
+<h2>7. 经典软件 SOP：从需求到代码</h2>
+<p><a class="diagram" href="assets/02-classic-sop.svg" target="_blank"><img src="assets/02-classic-sop.svg" alt="经典软件 SOP 的角色、交付物与依赖" loading="lazy"></a></p>
+<p>这部分解释仍保留的经典实现，而非承诺当前 CLI 一定按此顺序执行。</p>
+<h3>7.1 产品经理：将需求转成可交接的 PRD</h3>
+<p>固定 SOP 分支中的 ProductManager 设置 <code>PrepareDocuments</code> 与 <code>WritePRD</code>，订阅用户需求和文档准备事件。PrepareDocuments 负责工作区、项目材料等前置处理；WritePRD 再依据需求判断新功能、更新或修复等路径。</p>
+<p>WritePRD 使用声明式节点生成 PRD，将结构化内容保存到项目文档中。已有需求更新时，代码会判断相关 PRD，合并修订；这说明它并非每次都从空白项目生成。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/product_manager.py">产品经理</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/prepare_documents.py">文档准备</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_prd.py">WritePRD</a></p>
+<p>从工程角度，PRD 应成为需求边界：验收条件、明确约束和未决问题应留在产物中。否则模型在后续阶段补全空白时，容易把自己的选择当作用户要求。</p>
+<h3>7.2 架构师：将 PRD 转成模块接口</h3>
+<p>Architect 的经典配置订阅 WritePRD，执行 WriteDesign。设计节点组织实现思路、文件列表、数据结构与接口、程序调用流程等内容；实现还会把 Mermaid 类图和时序图保存为资源。</p>
+<p>设计文档保存时声明对 PRD 文件的依赖。以后哪个 PRD 改了，至少可以追踪到与之关联的系统设计产物。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/architect.py">Architect</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/design_api.py">WriteDesign</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/design_api_an.py">设计节点声明</a></p>
+<p>这里的图是模型生成的设计产物，是否准确仍需要代码或架构审查来验证。Mermaid 能渲染，不能单独证明模块关系已正确实现。</p>
+<h3>7.3 项目经理：任务清单成为实现上下文</h3>
+<p>ProjectManager 订阅 WriteDesign，通过 WriteTasks 形成任务清单和包依赖等信息，并将任务文档与系统设计文件关联。任务分解的价值在于让后续代码生成面对一个明确的局部问题。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/project_manager.py">ProjectManager</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/project_management.py">WriteTasks</a></p>
+<p>要区分两类“依赖”：文档中的软件实现依赖、Plan 对象中的 <code>dependent_task_ids</code>。它们在代码中属于不同机制，不应都笼统叫一个全局 DAG 调度器。</p>
+<h3>7.4 工程师：围绕 CodingContext 生成与修订</h3>
+<p>经典 Engineer 观察 WriteTasks、WriteCode、WriteCodeReview、SummarizeCode、FixBug 等事件。它构造 CodingContext，将设计文档、任务文档和相关代码交给 WriteCode；若 <code>use_code_review=True</code>，还会调用 WriteCodeReview，再保存代码与文件依赖。</p>
+<p><code>_act_sp_with_cr()</code> 中使用 <code>for todo in self.code_todos</code> 顺序处理文件。字段 <code>n_borg</code> 的存在，不足以证明这里把每个文件交给一个并行工程师；判断并发必须找到实际调度语句。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/engineer.py">Engineer</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_code.py">WriteCode</a></p>
+<p>SummarizeCode 路径会检查实现与设计、任务的关系，产生继续修改或后续交接的信号。这提供了一种对中间产物进行审查的机制，但审查结论依旧可能来自模型，不能替代运行测试。</p>
+<h3>7.5 QA：执行反馈构成修复闭环</h3>
+<p>QaEngineer 观察代码总结、测试生成、代码运行和调试事件。其 <code>_act()</code> 按消息来源分派到写测试、运行代码、调试错误等处理，并受测试轮数限制。</p>
+<p>这是一条<strong>事件驱动的反馈回路</strong>：新代码触发测试，测试执行产生结果，结果再触发修复或继续推进。它不是无限自动修复承诺，也不保证生成测试已经覆盖全部需求。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/qa_engineer.py">QaEngineer</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/run_code.py">RunCode</a></p>
+<p>实际使用时，应额外保存“在哪个代码版本上运行了哪组测试”。仅保留一条“测试已通过”的自然语言消息，无法支撑后续变更的可靠验收。</p>
+<p><a id="sec-8"></a></p>
+<h2>8. ActionNode：结构化生成的实现</h2>
+<h3>8.1 用字段声明组织 prompt 与输出契约</h3>
+<p>ActionNode 的主要信息包括 <code>key</code>、<code>expected_type</code>、<code>instruction</code>、<code>example</code> 和子节点。若干子节点可以组合成 PRD、系统设计、任务清单等文档的根节点。</p>
+<p>例如以下是说明性定义，不是对完整上游节点的复制：</p>
+<pre><code class="language-python">ActionNode(
+    key=&quot;Acceptance Criteria&quot;,
+    expected_type=list[str],
+    instruction=&quot;列出可以被自动测试验证的验收条件&quot;,
+    example=[&quot;空标题返回明确错误&quot;, &quot;完成状态可以持久保存&quot;],
+)
+</code></pre>
+<p>节点树在这里主要表示<strong>输出结构与生成组织方式</strong>，不是通用的分布式任务图。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action_node.py">ActionNode</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_prd_an.py">PRD 节点</a></p>
+<h3>8.2 从 fill 到 Pydantic 校验</h3>
+<p>常见 JSON 路径可以展开为：</p>
+<pre><code class="language-text">fill(req, llm, schema=&quot;json&quot;)
+  → 设置上下文与模型
+  → compile：拼接上下文、指令、格式样例
+  → llm.aask
+  → 输出后处理 / JSON 或 Markdown 解析
+  → create_model_class：按字段动态构造 Pydantic 模型
+  → output_class(**parsed_data)
+  → content + instruct_content
+</code></pre>
+<p><code>create_model_class()</code> 明确检查缺失必需字段；对于不认识的字段会记录警告。通过类型构造后，调用方可以用字段名访问结构化结果，而不用让每个下游角色重新猜测文本格式。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action_node.py">动态模型与解析实现</a></p>
+<p><code>simple</code> 策略主要一次填充当前结构；<code>complex</code> 策略遍历子节点分别填充，再合并结果。后者可能增加调用次数，但允许分解更复杂的文档生成任务。不要把函数注释中的“一次”当成底层请求绝对只有一次，因为 <code>_aask_v1()</code> 还有重试。</p>
+<h3>8.3 格式容错的成本与正确性边界</h3>
+<p><code>_aask_v1()</code> 的 Tenacity 装饰器最多尝试 6 次；失败可能来自调用、解析或模型校验。Provider 层还可能有自己的重试，因此应该记录每次真实请求，而不只统计 Action 次数。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action_node.py">ActionNode 重试</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/openai_api.py">Provider</a></p>
+<p>类型检查只能回答“输出是否符合声明的形状”。比如 <code>File list</code> 是合法的字符串列表，却可能列出错误文件；接口字段齐全，也可能与 PRD 相矛盾。</p>
+<p>建议将验收分成四层：格式校验 → 文档间约束校验 → 可执行测试 → 业务验收。ActionNode 主要帮助前一层，并为后续校验提供结构化输入。</p>
+<p><a id="sec-9"></a></p>
+<h2>9. MGX 与 RoleZero：动态团队的执行链</h2>
+<p><a class="diagram" href="assets/04-mgx-delegation.svg" target="_blank"><img src="assets/04-mgx-delegation.svg" alt="MGX 的 TeamLeader 委派时序" loading="lazy"></a></p>
+<h3>9.1 MGXEnv 在普通环境之上加入 Leader 路由</h3>
+<p>MGXEnv 继承 Environment。普通成员发布消息时，环境给收件人集合加入 TeamLeader 的名字 Mike；由 Leader 发布的消息可以按其指定收件人继续分发。Leader 的占位结束消息若发往 <code>no one</code>，会被跳过。</p>
+<p>默认 <code>is_public_chat=True</code>，<code>_publish_message()</code> 会追加 <code>&lt;all&gt;</code>；同时 <code>move_message_info_to_content()</code> 将发送者和实际行动接收者写进内容前缀，帮助模型理解团队消息。</p>
+<p>所以“消息经过 Leader”不意味着只有 Leader 能看到它，也不意味着所有成员收到广播就会执行任务。最终是否反应，仍受 <code>_observe()</code> 的谓词影响。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/mgx/mgx_env.py">MGXEnv</a></p>
+<p>直接对话另有分支：用户显式指定成员时，环境记录 <code>direct_chat_roles</code> 并处理对应回复。这是聊天路由机制；它不是私有通道加密或跨租户信息隔离机制。</p>
+<h3>9.2 TeamLeader 把协作本身变成工具</h3>
+<p>TeamLeader 继承 RoleZero，其工具集合主要是 Plan、RoleZero 与 TeamLeader 自身。它将团队成员的名字、职责和目标加入提示，模型可以通过 <code>TeamLeader.publish_team_message(content, send_to)</code> 给具体成员布置工作。</p>
+<p>该方法发布消息时还会 <code>_set_state(-1)</code>，让 Leader 暂停当前循环、等待后续回复。给成员的消息使用 <code>RunCommand</code> 作为来源，并明确设置接收者名字，因此可以触发名字定向的观察规则。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/team_leader.py">TeamLeader</a></p>
+<p>这体现了一种分层控制：Leader 决定“交给谁”，成员决定“用什么工具完成”。它的代价是调度也可能消耗模型请求，而且下游得到的任务质量依赖 Leader 是否准确保留需求、路径和约束。</p>
+<h3>9.3 RoleZero 从 Action 选择转为命令生成</h3>
+<p><a class="diagram" href="assets/05-rolezero-loop.svg" target="_blank"><img src="assets/05-rolezero-loop.svg" alt="RoleZero 的模型与工具执行循环" loading="lazy"></a></p>
+<p>动态模式中的 RoleZero 把 Action 设为 RunCommand，用自定义 <code>_think()</code> 和 <code>_act()</code> 完成工具闭环：</p>
+<ol>
+<li>检查是否还有 todo；首次设置计划目标并检测响应语言。</li>
+<li>取经验示例、计划状态、当前任务与工具说明。</li>
+<li>从 Memory 选择近期消息，处理浏览器观察、编辑器结果和图片。</li>
+<li>构造角色 system prompt 与当前决策提示，调用 <code>llm.aask()</code>。</li>
+<li>检查重复输出，解析和必要时修复命令 JSON。</li>
+<li>依次执行命令，将结果作为后续观察写回 Memory。</li>
+<li>继续循环，直到 <code>end</code> 清除 todo、没有后续工作或达到限制。</li>
+</ol>
+<p>以下是本文自拟的协议示例：</p>
+<pre><code class="language-json">[
+  {&quot;command_name&quot;: &quot;Editor.read&quot;, &quot;args&quot;: {&quot;path&quot;: &quot;/workspace/spec.md&quot;}},
+  {&quot;command_name&quot;: &quot;Plan.finish_current_task&quot;, &quot;args&quot;: {}}
+]
+</code></pre>
+<p>命令名与参数必须以实际工具 Schema 为准；这个示例用于说明命令列表结构，不是建议读完文件就将任务标为完成。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/role_zero_utils.py">命令解析与重复处理</a></p>
+<h3>9.4 这条主路径是文本 JSON 协议</h3>
+<p>RoleZero 的主决策调用是 <code>aask()</code>，再从文本中解析命令，并不是要求供应商必须返回原生 <code>tool_calls</code>。Provider 里确实另有 function/tool 调用支持，但不能据此说所有 RoleZero 工具执行都走该协议。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero 决策</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/openai_api.py">OpenAI 适配器</a></p>
+<p>这种设计使框架能够在普通文本模型接口上工作；代价是模型有时输出不完整 JSON、错误参数或不支持的命令，需要在运行时处理。JSON 修复解决语法问题，并不自动解决参数的权限与业务合法性。</p>
+<h3>9.5 一次角色反应中还会继续观察</h3>
+<p>RoleZero <code>_react()</code> 每轮会再次 <code>_observe()</code>，因此运行中的成员有机会吸收新消息。简单问题可能通过 <code>_quick_think()</code> 的快速分支处理，不必完成正式的多步计划。</p>
+<p>默认最大循环是 50，Engineer2 为 40，TeamLeader 为 3。对于较大的循环上限，耗尽后代码会询问用户是否继续；用户肯定答复可重置计数。它是交互式继续机制，不是全局绝对执行上限。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/engineer2.py">Engineer2</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/team_leader.py">TeamLeader</a></p>
+<p>自动化服务如果不具备交互输入，需要明确如何处理这类询问、截止时间与取消请求。否则看似耗尽预算的任务，可能其实停在等待人工输入。</p>
+<p><a id="sec-10"></a></p>
+<h2>10. 工具系统：Schema、推荐与执行</h2>
+<h3>10.1 工具注册解决“模型知道什么”</h3>
+<p><code>@register_tool</code> 把函数或类登记到全局 ToolRegistry。注册过程收集名称、路径、说明、参数信息及标签；类工具还可通过 <code>include_functions</code> 指定公开方法。角色可以使用 <code>Editor:read,write</code> 这样的配置限制展示的方法集合。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_registry.py">注册表</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_convert.py">工具 Schema 转换</a></p>
+<p>登记成功并不自动意味着一个方法已经接入某个角色的执行器。RoleZero 的 <code>tool_execution_map</code> 单独把命令名映射到具体 Python callable，子类用 <code>_update_tool_execution()</code> 扩展它。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero 执行映射</a></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>回答的问题</th>
+<th>不能替代的能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ToolRegistry / Schema</td>
+<td>有哪些工具，怎么描述参数</td>
+<td>不等同于授权策略</td>
+</tr>
+<tr>
+<td>工具推荐</td>
+<td>当前上下文应该展示哪些工具</td>
+<td>不等同于执行时拒绝其他工具</td>
+</tr>
+<tr>
+<td><code>tool_execution_map</code></td>
+<td>命令名实际调用哪个函数</td>
+<td>不等同于文件和网络隔离</td>
+</tr>
+<tr>
+<td>工具实现</td>
+<td>具体如何访问浏览器、终端、文件</td>
+<td>不自动限制宿主机权限</td>
+</tr>
+</tbody>
+</table></div>
+<p>这四层需要分别核对。仅删掉 prompt 中的一项工具说明，并不足以作为安全控制。</p>
+<h3>10.2 BM25ToolRecommender 并非总会运行检索</h3>
+<p>一般工具推荐路径可以先用 BM25 召回，再让模型排序。但 <code>ToolRecommender.recommend_tools()</code> 在 <code>force=True</code> 或没有可用上下文与计划时，会直接返回已配置工具集合。</p>
+<p>RoleZero 默认创建推荐器时使用 <code>force=True</code>，动态 <code>_think()</code> 中也调用无额外参数的推荐方法。因此不能因为类名包含 BM25，就描述成“RoleZero 每一步都从全部工具中进行语义检索”。DataInterpreter 的配置与调用方式又有所不同。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_recommend.py">工具推荐</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero 初始化</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_interpreter.py">DataInterpreter</a></p>
+<p>工程上，工具少时全部展示简单直接；工具多时可以引入分阶段披露。但能力筛选应与执行授权分离：前者控制模型上下文，后者决定哪些操作真的可以发生。</p>
+<h3>10.3 命令批次按顺序执行，不是事务</h3>
+<p><code>_run_commands()</code> 对命令列表顺序遍历。普通命令根据 callable 是否为协程来 <code>await</code> 或直接调用；未知命令会记录错误并停止剩余命令；普通工具抛异常后会记录 traceback，再中断本批后续执行。</p>
+<p>假设命令列表为“写文件 A → 执行失败的工具 → 写文件 B”，实际可能是 A 已经写入，B 未执行。没有自动回滚，也不能因为整批失败就无条件重跑所有命令。特殊命令有独立分派分支，其异常边界也不能完全等同于普通 callable 分支。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">命令执行</a>、<a href="research/probe-results.json">失败行为实验</a></p>
+<h3>10.4 Engineer2 扩展了软件执行能力</h3>
+<p>Engineer2 为 RoleZero 增加持久 Terminal、代码生成、CodeReview、图片获取和 Deployer 等能力。<code>write_new_code()</code> 会根据当前计划、文件描述和历史上下文请求模型生成代码，再写入文件。<code>_format_instruction()</code> 则读取终端当前目录并同步到编辑器状态。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/engineer2.py">Engineer2</a></p>
+<p>Terminal 在本提交中用 <code>asyncio.create_subprocess_exec()</code> 启动持久 bash 或 Windows cmd，保留目录等 shell 状态，并继承进程环境。它通过输出标记判断命令结束；少量禁用命令字符串主要引导工作方式，不构成完整的命令安全策略。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/libs/terminal.py">Terminal</a></p>
+<p>使用这些能力时，应把生成代码视为真实程序：它访问的是实际文件、网络和进程资源。部署工具也是真实副作用，应按业务授权设置独立入口。</p>
+<p><a id="sec-11"></a></p>
+<h2>11. Data Interpreter：计划与代码执行反馈</h2>
+<p><a class="diagram" href="assets/07-data-interpreter.svg" target="_blank"><img src="assets/07-data-interpreter.svg" alt="Data Interpreter 的规划、代码生成、执行与修复" loading="lazy"></a></p>
+<p>Data Interpreter 的研究目标是支持具有依赖关系和中间数据变化的数据科学任务。本文仅简要引入这一背景，具体机制以下述源码为准。<a href="https://arxiv.org/abs/2402.18679">Data Interpreter 论文</a></p>
+<h3>11.1 独立 DataInterpreter 的默认策略</h3>
+<p><code>DataInterpreter</code> 直接继承 Role，默认 <code>react_mode=&quot;plan_and_act&quot;</code>、<code>auto_run=True</code>、<code>use_reflection=False</code>。初始化设置 WriteAnalysisCode 和 ExecuteNbCode。</p>
+<p>Planner 的 <code>update_plan()</code> 调用 WritePlan，检查生成计划，经过确认后更新 Plan；随后基类 <code>_plan_and_act()</code> 反复取 <code>current_task</code>，交给角色 <code>_act_on_task()</code> 执行，再处理 TaskResult。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_interpreter.py">DataInterpreter</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/strategy/planner.py">Planner</a></p>
+<h3>11.2 Plan 描述依赖，但当前任务处理是顺序推进</h3>
+<p>Task 包含 <code>task_id</code>、<code>dependent_task_ids</code>、<code>instruction</code>、<code>assignee</code>、代码、结果以及完成和成功标记。Plan 会对任务按依赖进行排序，并维护当前未完成任务。</p>
+<p>这里可以用依赖图描述工作关系，但基类 plan-and-act 循环每次处理的是一个 current_task；它不是把全部就绪节点自动并行调度的通用 DAG 执行平台。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py">Task / Plan</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">Role._plan_and_act</a></p>
+<h3>11.3 Notebook 保存执行状态</h3>
+<p><code>ExecuteNbCode</code> 基于 NotebookClient，按工作区创建或连接内核，将代码作为 cell 执行。变量可以跨 cell 保留；执行结果经过处理后得到文本、图片或错误。代码生成失败时，错误会进入 working_memory，后续尝试可以利用这些反馈。</p>
+<p>单次 <code>_write_and_exec_code()</code> 默认最多尝试 3 次；这是这层方法的局部重试上限，不代表整个任务最多只执行 3 次。Planner 的确认、重做或重新规划可能引入更多执行。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_interpreter.py">代码生成执行循环</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/di/execute_nb_code.py">Notebook 执行器</a></p>
+<p><code>ExecuteNbCode</code> 的默认超时是 600 秒。DataInterpreter 的 plan-and-act 包装在正常和异常退出时都尝试终止内核。注意：把 Notebook 工作目录设为 workspace 只影响相对路径，不限制 Python 读取其他路径或访问网络。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/di/execute_nb_code.py">Notebook 生命周期</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_interpreter.py">DI 清理</a></p>
+<h3>11.4 auto_run 的确认语义</h3>
+<p>Planner 在自动模式下，以 <code>TaskResult.is_success</code> 决定执行结果是否确认；人工模式可以允许用户判断是否接受，包括运行成功但业务目标错误的情况。执行成功与业务正确之间的距离，需要领域验收补齐。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/strategy/planner.py">Planner.ask_review</a></p>
+<p>对于机器学习任务，至少应检查训练/验证划分、数据泄漏、评价指标、随机性、基线和产物可重跑性。它们属于应用层评价要求，不能从“Notebook 没报错”推导出来。</p>
+<h3>11.5 当前 MGX 使用的是 DataAnalyst</h3>
+<p><code>DataAnalyst</code> 继承 RoleZero，通过 <code>DataAnalyst.write_and_exec_code</code> 工具完成类似的代码执行工作，默认 <code>use_reflection=True</code>。外层是动态命令循环，内层写码与执行最多尝试 3 次，成功后把结果更新到当前任务。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_analyst.py">DataAnalyst</a></p>
+<p>因此应区分：DataInterpreter 是以计划执行为中心的独立角色；DataAnalyst 是 MGX 动态角色里的数据执行能力。两者共用了一些基础设施，但入口、默认策略和结束方式不同。</p>
+<p><a id="sec-12"></a></p>
+<h2>12. 上下文、记忆与经验池</h2>
+<p><a class="diagram" href="assets/06-memory-recovery.svg" target="_blank"><img src="assets/06-memory-recovery.svg" alt="MetaGPT 的记忆层与恢复边界" loading="lazy"></a></p>
+<h3>12.1 基础 Memory 是列表加索引</h3>
+<p><code>Memory.storage</code> 保存消息列表，<code>index</code> 以 <code>cause_by</code> 为键聚合消息；<code>get(k)</code> 返回最近 k 条，<code>get_by_actions()</code> 根据 Action 标签检索。默认实现不是向量数据库，也不是跨进程长期日志。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/memory/memory.py">Memory</a></p>
+<p>RoleContext 同时有 <code>memory</code> 和 <code>working_memory</code>。后者适合当前任务的尝试代码、错误与审查反馈；Planner 确认任务后会清空工作记忆，并通过计划保存阶段结果。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">RoleContext</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/strategy/planner.py">Planner</a></p>
+<h3>12.2 上下文窗口与内存容量不是一回事</h3>
+<p>RoleZero 的 <code>memory_k=200</code> 用于选择最近消息进入决策上下文，单位是<strong>消息条数</strong>。200 条长文件输出可能远远大于 200 条短消息，不能当成固定 token 预算。</p>
+<p><code>parse_editor_result()</code> 对较早的编辑器结果保留命令摘要，以减少重复大段内容；浏览器处理则可能补入较新的页面观察。Provider 的 <code>compress_messages()</code> 另有基于消息或 token 预算的截断策略，但 <code>LLMConfig.compress_type</code> 默认 <code>NO_COMPRESS</code>。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/role_zero_utils.py">上下文处理</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/base_llm.py">BaseLLM</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/llm_config.py">模型配置</a></p>
+<p>从工程角度，这些策略需要保护几类信息：用户约束、当前文件版本、待完成目标、工具调用结果与对应关系。任意截断容易留下“结论还在，产生结论的前提消失”的上下文。</p>
+<h3>12.3 长期检索记忆是可选能力</h3>
+<p><code>role_zero.enable_longterm_memory</code> 默认关闭。启用后，角色使用 RoleZeroLongTermMemory，按配置加载 Chroma/RAG 检索，允许可选 LLM reranker。</p>
+<p>写入超过 <code>memory_k</code> 后，旧窗口边界处的消息被写入长期存储。读取时还要满足条件：请求 k 不为零、消息数超过阈值、最后一条消息符合用户需求或 Leader 请求等要求，才会把检索结果与近期消息组合。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/memory/role_zero_memory.py">长期记忆实现</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/role_zero_config.py">RoleZero 记忆配置</a></p>
+<p>值得注意的是，写入长期存储的方法没有同时删除基础 <code>storage</code> 中的旧消息。因此这里的“长期转存”不能直接解读为 RAM 已被控制在 <code>memory_k</code> 条以内。这是阅读实际方法体后得到的容量判断。</p>
+<h3>12.4 经验示例、经验池和记忆是三种用途</h3>
+<p>RoleZero 可以获取经验示例，部分子类提供固定任务示例；<code>llm_cached_aask()</code> 也挂有经验缓存装饰器。但 ExperiencePool 的总开关、读开关、写开关默认均关闭。</p>
+<p>因此“代码带有 exp_cache”不意味着每次调用都会检索、复用或持续学习经验，更不意味着模型权重在更新。记忆主要描述发生过什么，经验内容用于帮助决策，缓存又涉及响应复用；这些目的不应混为一个“长期学习”功能。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/exp_pool_config.py">经验配置</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py">RoleZero 缓存入口</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/exp_pool/decorator.py">经验装饰器</a></p>
+<p><a id="sec-13"></a></p>
+<h2>13. 文件依赖、持久化与恢复</h2>
+<h3>13.1 项目文件构成第二条信息通道</h3>
+<p>ProjectRepo 组织 PRD、系统设计、任务、代码总结、源码、测试和图表等文件区域。经典 Action 不只通过消息传递自然语言，也会保存文档，再把结构化内容或路径交给下游读取。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/project_repo.py">ProjectRepo</a></p>
+<p><code>FileRepository.save()</code> 写文件后，可以登记该文件的依赖。WriteDesign 记录设计依赖 PRD，WriteTasks 记录任务依赖设计，Engineer 记录代码依赖设计和任务。在增量开发时，Git 变更与这些依赖关系一起帮助决定要更新哪些产物。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/file_repository.py">FileRepository</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/dependency_file.py">DependencyFile</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/engineer.py">Engineer</a></p>
+<p>这是一种声明式文件关联，不能自动保证依赖完备：如果某个隐含约束没有登记，系统就没有凭空推导完整影响范围的保证。建议给交付物附加版本和内容哈希，明确下游究竟消费了哪个版本。</p>
+<h3>13.2 Team 快照保存什么</h3>
+<p><code>Team.serialize()</code> 写出 <code>team.json</code>，包含团队模型数据和 Context 序列化结果。Context 的定制序列化主要保存运行参数与成本数据；配置和运行时对象需要结合新构造的 Context 等对象恢复。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">Team 序列化</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context.py">Context</a></p>
+<p>RoleContext 明确排除了 <code>env</code>、<code>msg_buffer</code>、<code>todo</code>、<code>news</code> 等字段；Role 的 <code>latest_observed_msg</code> 则用于支持中断后的重新观察。虽然 MessageQueue 自己有 dump/load 方法，不能据此假定 Team 默认就持久化了全部待处理队列。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py">RoleContext</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py">MessageQueue</a></p>
+<p>这类快照能支持部分对象状态恢复，却不等于恢复当时的整个运行世界。Shell 进程、Notebook 内核中的变量、浏览器连接和已执行的外部动作，需要各自的恢复策略。</p>
+<h3>13.3 异常保存不是每步事务提交</h3>
+<p><code>Team.run()</code> 外面的 <code>serialize_decorator</code> 捕获中断或异常后调用 serialize；角色异常装饰器会尝试从记忆中删除最近观察消息，让恢复时有机会再次处理它。Team 的异常包装器保存后不再次抛出原异常，调用方可能得到 <code>None</code>。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/common.py">异常装饰器</a></p>
+<p>因此服务端封装不能把“协程没有抛到最外层”当成任务完成。应检查返回结果、最终状态、日志和业务产物。</p>
+<p>恢复还会遇到副作用重放问题：如果文件已经写入，但完成消息还没保存，恢复后可能再次写文件或调用外部服务。源码中的快照机制没有给所有工具提供通用 exactly-once 保证。</p>
+<h3>13.4 建议如何补强恢复</h3>
+<p>以下均是生产化建议：</p>
+<ol>
+<li>为 run、task、message 和 tool invocation 建立独立 ID 与关联关系。</li>
+<li>执行工具前记录意图，执行后记录结果、退出码与产物哈希。</li>
+<li>恢复时识别“未执行、已完成、结果未知”，对未知副作用先查询。</li>
+<li>对发消息、创建工单、发布和支付等操作提供业务幂等键。</li>
+<li>对进程与 Notebook 的恢复明确选择：重建后重放、保存专门 checkpoint，或让任务重新运行。</li>
+</ol>
+<p>这能把“重新调用角色”提升为可审计的任务恢复，但需要应用层和执行基础设施共同实现。</p>
+<p><a id="sec-14"></a></p>
+<h2>14. 模型适配、配置与成本</h2>
+<h3>14.1 配置可以按上下文、角色、Action 覆盖</h3>
+<p>Config 从仓库配置与用户 <code>~/.metagpt/config2.yaml</code> 等来源合并参数；在 <code>default()</code> 的代码中，后面的配置覆盖前面的同名数据。ContextMixin 又提供 private config、private context 和 private LLM，用于局部覆盖。</p>
+<p>Action 支持 <code>llm_name_or_type</code>，可从 ModelsConfig 选择单独模型配置。这允许把不同工作分配给不同成本或能力级别的模型，但模型能力是否足够仍要用实际任务验证。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/config2.py">Config</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context_mixin.py">ContextMixin</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action.py">Action 模型覆盖</a></p>
+<p>配置覆盖与模型实例创建有缓存和初始化时机，不能随意假设改了一个全局字典，已初始化角色的模型就全部替换。建议在团队装配时固定配置，并把有效模型配置的非敏感部分记录到运行元数据。</p>
+<h3>14.2 BaseLLM 负责统一调用形态</h3>
+<p>BaseLLM 处理用户、系统、历史消息以及图片输入的格式化，<code>aask()</code> 装配消息后进入具体 Provider 的 <code>acompletion_text()</code>。Provider 注册表把 <code>LLMType</code> 映射到各家实现。</p>
+<p>仓库包含 OpenAI、Azure、Anthropic、Ollama 等适配代码。这证明存在实现入口，不等于每个厂商当前全部模型、参数、图片和工具能力都已测试兼容。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/base_llm.py">BaseLLM</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/llm_provider_registry.py">Provider 注册表</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/llm_config.py">LLMType</a></p>
+<p>OpenAI 适配器的文本请求在该提交中对 APIConnectionError 配置最多 6 次指数退避重试，并更新 usage 成本。不要把它概括成“所有错误都会自动重试六次”；具体异常条件和接口路径需要逐项看。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/openai_api.py">OpenAI Provider</a></p>
+<h3>14.3 预算是已记账成本上的轮次检查</h3>
+<p>CostManager 根据 prompt/completion token 与内置模型价格表累计费用；模型没有出现在价格表时，会警告并跳过金额增加。因此成本表是否覆盖实际模型，是预算是否有意义的前提。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/cost_manager.py">CostManager</a></p>
+<p>Team 在每轮环境运行前 <code>_check_balance()</code>，并没有给这一轮里每个角色的未来请求预留配额。若一轮内部执行很多模型请求，实际金额可能在轮次结束前已经越过预算。</p>
+<pre><code class="language-text">环境轮开始：账面成本低于预算 → 允许进入
+    角色 A：多次模型决策 + 修复请求
+    角色 B：若干模型请求
+环境轮结束：累计成本可能已超预算
+下一轮开始：才再次检查 Team 的预算条件
+</code></pre>
+<p>所以 <code>investment=3.0</code> 适合理解成外层记账约束，不能承诺美元意义上的硬上限。要做硬预算，建议在 Provider 请求前统一预留配额，完成后结算，并为并发、重试、工具支出分别计费。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py">Team 预算位置</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/cost_manager.py">成本更新</a></p>
+<h3>14.4 性能应按实际任务测量</h3>
+<p>一次任务的延迟可以近似拆为：关键路径上的模型延迟 + 工具运行时间 + 调度等待 + 重试与交接成本。并发能重叠某些独立等待，但有依赖的 PRD、设计与代码生成仍存在串行路径。</p>
+<p>对于已知流程，固定 SOP 通常更便于给每个阶段设置输入输出检查；对于探索性任务，RoleZero 更灵活，但决策调用和执行不确定性也更高。这是基于控制方式的判断，不是本文测量出的性能排名。</p>
+<p><a id="sec-15"></a></p>
+<h2>15. 生产化评估与改进建议</h2>
+<h3>15.1 可以直接借鉴什么</h3>
+<p>MetaGPT 的几项设计适合提炼到自己的 Agent 系统：</p>
+<ul>
+<li>用结构化交付物约束跨角色接口，降低重复理解成本。</li>
+<li>把消息路由、角色决策和工具执行分开，便于定位责任。</li>
+<li>将真实执行结果反馈给生成器，而非只靠第二次语言判断。</li>
+<li>同时维护任务层结果与当前尝试轨迹，避免所有历史都堆进 prompt。</li>
+<li>允许固定流程与动态执行器共存，让不同问题使用不同控制方式。</li>
+</ul>
+<h3>15.2 哪些机制需要部署层补齐</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>关注点</th>
+<th>本文追踪到的机制</th>
+<th>建议增加的生产控制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行隔离</td>
+<td>本地 Terminal、Notebook、文件和浏览器工具</td>
+<td>每任务容器或 VM、资源与网络限制、最小密钥暴露</td>
+</tr>
+<tr>
+<td>工具授权</td>
+<td>工具 Schema、角色能力配置、执行映射</td>
+<td>执行时校验身份、目标路径、数据范围和副作用级别</td>
+</tr>
+<tr>
+<td>可靠消息</td>
+<td>进程内队列、角色 Memory、环境 history</td>
+<td>需要跨进程可靠性时引入持久日志、ACK 和重投协议</td>
+</tr>
+<tr>
+<td>状态恢复</td>
+<td>对象序列化与最近消息重观察</td>
+<td>工具执行账本、幂等、外部资源重连与一致性检查</td>
+</tr>
+<tr>
+<td>成本控制</td>
+<td>usage 记账、环境轮次前检查</td>
+<td>请求前配额预留、并发上限、超时与取消</td>
+</tr>
+<tr>
+<td>任务完成</td>
+<td>空闲、循环上限、计划完成字段</td>
+<td>与产物绑定的机器验收，区分成功、失败、待人工</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>日志、Reporter、环境与角色历史</td>
+<td>持久 trace、关联 ID、输入输出脱敏、版本追踪</td>
+</tr>
+<tr>
+<td>并行写文件</td>
+<td>共享项目文件与协程运行</td>
+<td>文件所有权、分支或 worktree、冲突检测与合并门禁</td>
+</tr>
+</tbody>
+</table></div>
+<p>这些建议基于所分析的路径，不是对上游所有模块的“全项目安全审计”结论。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/libs/terminal.py">Terminal</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/di/execute_nb_code.py">Notebook</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/base_env.py">环境</a>、<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/report.py">报告接口</a></p>
+<h3>15.3 角色协作不能充当信任边界</h3>
+<p>浏览器网页、仓库文件、用户附件和工具输出，都可能把不可信内容带入模型上下文。角色分工不会自动防止某个成员将外部文本误当成操作指令。</p>
+<p>建议在执行器而非只在 prompt 中实施边界：哪些目录可写、哪些服务可访问、哪些凭据可用、哪些操作需要人工批准，都应由确定性策略检查。公开团队消息还需要明确数据可见范围，不能通过 <code>send_to</code> 的业务语义推导安全隔离。</p>
+<h3>15.4 一套可执行的评估设计</h3>
+<p>不要只问“模型能不能生成一个小游戏”。更有用的是为真实业务构建分层任务集：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>任务组</th>
+<th>要测的问题</th>
+<th>建议指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>清晰、短需求</td>
+<td>增加角色是否有收益</td>
+<td>验收成功率、总成本、P50/P95 延迟</td>
+</tr>
+<tr>
+<td>长约束、多文件需求</td>
+<td>交接是否丢失约束</td>
+<td>接口一致率、需求覆盖率、人工修正量</td>
+</tr>
+<tr>
+<td>现有项目增量修改</td>
+<td>是否理解依赖与回归</td>
+<td>回归通过率、无关改动量、冲突数</td>
+</tr>
+<tr>
+<td>工具失败、断网、超时</td>
+<td>能否正确恢复与报告失败</td>
+<td>重试次数、重复副作用、恢复成功率</td>
+</tr>
+<tr>
+<td>数据分析任务</td>
+<td>代码运行是否等于分析正确</td>
+<td>泄漏检查、方法正确性、结果复现率</td>
+</tr>
+<tr>
+<td>有敌意的工具文本</td>
+<td>执行器是否遵守权限</td>
+<td>越权操作拦截率、错误放行率</td>
+</tr>
+</tbody>
+</table></div>
+<p>固定基础模型、提示版本和任务输入，分别运行单角色、固定 SOP 与动态团队，才能判断收益来自角色结构、工具能力还是单纯多消耗了推理预算。本文不提供未经实测的胜率或成本数字。</p>
+<p><a id="sec-16"></a></p>
+<h2>16. 可运行示例与复现方式</h2>
+<p>本目录提供两种示例，以及一组独立的源码方法实验。它们的用途与验证级别不同。</p>
+<h3>16.1 零依赖教学示例：看清反馈回路</h3>
+<p><a href="examples/mini_sop.py"><code>examples/mini_sop.py</code></a> 使用 Python 标准库实现一个小型消息协作模型：产品角色给出规范，工程角色第一版故意写错加法，QA 用真实 Python 断言发现失败，工程角色根据失败事件输出正确版本，再由 QA 验收。</p>
+<p>它是原创教学实现，<strong>没有导入 MetaGPT，也没有调用 LLM</strong>。故意使用确定性生成器，让读者把注意力放在订阅、交付和反馈上。生成代码仅来自示例内部固定模板，不接收外部任意程序。</p>
+<p>从本仓库根目录运行：</p>
+<pre><code class="language-bash">python3 project/MetaGPT/examples/mini_sop.py --output /tmp/metagpt-blog-demo
+</code></pre>
+<p>成功轨迹应是：</p>
+<pre><code class="language-text">01 User     → UserRequirement
+02 PM       → WriteSpec
+03 Engineer → WriteCode
+04 QA       → TestFailed
+05 Engineer → WriteCode
+06 QA       → Accepted
+stop=idle; accepted=True
+</code></pre>
+<p>输出目录包含 <code>spec.json</code>、<code>candidate.py</code> 与 <code>trace.json</code>。这里专门区分 <code>stop_reason</code> 与 <code>accepted</code>：系统安静下来并不能自行证明需求满足，必须有明确的验收事件。</p>
+<p>与上游的区别也明确写在代码里：教学 Role 逐条处理感兴趣的消息；上游基类把整批 <code>news</code> 交给一次反应。示例只表达核心思想，不应复制为完整兼容实现。</p>
+<h3>16.2 真正使用 MetaGPT API 的最小团队</h3>
+<p><a href="examples/metagpt_custom_team.py"><code>examples/metagpt_custom_team.py</code></a> 定义 Draft 和 Review 两个 Action，使用普通 Role 构造“计划编写→计划评审”的小团队。关键装配是：</p>
+<pre><code class="language-python">team = Team(context=context, use_mgx=False)
+team.hire([
+    Role(name=&quot;Writer&quot;, actions=[Draft], watch=[UserRequirement], context=context),
+    Role(name=&quot;Reviewer&quot;, actions=[Review], watch=[Draft], context=context),
+])
+</code></pre>
+<p>这个例子使用真实 MetaGPT API，示范自定义 Action 与订阅链。它没有采用 RoleZero，所以不需要额外设置 <code>use_fixed_sop</code>；与直接实例化当前 ProductManager 等角色的情况不同。</p>
+<p><strong>本次对该文件做了语法解析和源码接口核对，未运行真实模型调用。</strong> 运行前需要安装下述固定源码与兼容 Python，配置可用模型；执行会产生模型费用。示例中的评审是模型评审，不是应用测试。</p>
+<h3>16.3 安装与配置固定源码</h3>
+<p>下面是供读者复现的安装步骤，本次调研没有执行安装。版本要求来自本提交 <code>setup.py</code>，使用独立 Python 3.11 环境可落在声明支持范围内。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/setup.py">安装元数据</a></p>
+<pre><code class="language-bash">git clone https://github.com/FoundationAgents/MetaGPT.git
+cd MetaGPT
+git checkout 11cdf466d042aece04fc6cfd13b28e1a70341b1f
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+metagpt --init-config
+</code></pre>
+<p>按照自己选择的 Provider 设置 <code>~/.metagpt/config2.yaml</code>。以下只是形状示例；占位值需要替换，不能原样调用：</p>
+<pre><code class="language-yaml">llm:
+  api_type: &quot;openai&quot;
+  model: &quot;YOUR_COMPATIBLE_MODEL&quot;
+  base_url: &quot;YOUR_PROVIDER_BASE_URL&quot;
+  api_key: &quot;YOUR_API_KEY&quot;
+
+role_zero:
+  enable_longterm_memory: false
+</code></pre>
+<p>这里的 <code>openai</code> 表示适配器协议示例，不限定必须使用某一模型。模型与平台兼容性应按实际供应商验证；密钥不要提交到仓库。浏览器、Mermaid、Node/pnpm、检索模块等依赖按实际使用路径另行配置。<a href="https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/config2.py">配置实现</a>、<a href="https://docs.deepwisdom.ai/main/en/guide/get_started/configuration.html">官方配置说明</a></p>
+<p>安装完成后，可以运行本目录的自定义团队文件，或在受限的独立工作区运行默认软件团队：</p>
+<pre><code class="language-bash">metagpt &quot;创建一个本地待办事项应用，提供自动测试与运行说明&quot; --n-round 5 --investment 3
+</code></pre>
+<p>这条命令选择的是本提交的默认 MGX 路径；测试是否真正被执行，应检查工具轨迹和产物，而不是仅凭需求文本或某个旧 CLI 开关判断。</p>
+<h3>16.4 如何显式装配经典角色</h3>
+<p>以下代码仅用于说明配置组合，未做完整框架运行验证：</p>
+<pre><code class="language-python">team = Team(context=context, use_mgx=False)
+team.hire([
+    ProductManager(context=context, use_fixed_sop=True),
+    Architect(context=context, use_fixed_sop=True),
+    ProjectManager(context=context, use_fixed_sop=True),
+    Engineer(context=context, use_code_review=True),
+    QaEngineer(context=context),
+])
+</code></pre>
+<p>随后按应用需要设置预算、发送需求并驱动团队。经典与动态类并存的提交值得额外做启动及端到端验证；此处不承诺用这几行装配代码就能在任意依赖环境、任意模型上复现早期版本行为。</p>
+<p><a id="sec-17"></a></p>
+<h2>17. 验证结论与源码阅读路线</h2>
+<h3>17.1 本次验证到了什么</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>方式</th>
+<th>可以得出的结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认入口、团队与参数</td>
+<td>固定提交静态追踪</td>
+<td>明确本提交实际装配与活动分支</td>
+</tr>
+<tr>
+<td>消息、调度与命令行为</td>
+<td>15 项真实方法体隔离实验</td>
+<td>所测方法在给定输入和外围替身下符合记录行为</td>
+</tr>
+<tr>
+<td>反馈协作教学实现</td>
+<td>独立标准库示例</td>
+<td>可复现“错误代码→失败反馈→修复→验收”轨迹</td>
+</tr>
+<tr>
+<td>自定义 MetaGPT 团队示例</td>
+<td>Python 语法检查、源码接口核对</td>
+<td>示例与所读接口一致；不代表模型端到端成功</td>
+</tr>
+<tr>
+<td>全框架与论文实验</td>
+<td>未执行</td>
+<td>不报告上游测试通过率、模型成功率或基准提升</td>
+</tr>
+</tbody>
+</table></div>
+<p>隔离实验直接从指定 checkout 的 AST 提取 <code>_observe</code>、<code>Environment.run</code>、<code>is_send_to</code> 等方法体，移除装饰器并用外围替身提供对象。它没有验证完整 Pydantic 初始化、Provider、浏览器或 Notebook 集成。这样可以对关键控制流做可复现检查，又不混淆测试范围。<a href="research/source_probes.py">实验实现</a>、<a href="research/probe-results.json">机器可读结果</a></p>
+<h3>17.2 推荐源码阅读顺序</h3>
+<ol>
+<li><code>software_company.py → team.py</code>：确认入口、模式、成员与结束条件。</li>
+<li><code>environment/base_env.py → schema.py → roles/role.py</code>：理解地址、消息与观察。</li>
+<li><code>roles/product_manager.py → actions/write_prd.py → actions/action_node.py</code>：理解经典结构化交接。</li>
+<li><code>environment/mgx/mgx_env.py → roles/di/team_leader.py</code>：理解当前团队协调。</li>
+<li><code>roles/di/role_zero.py → tools/tool_registry.py → utils/role_zero_utils.py</code>：理解模型命令与执行器。</li>
+<li><code>roles/di/data_interpreter.py → strategy/planner.py → actions/di/execute_nb_code.py</code>：理解计划和执行反馈。</li>
+<li><code>memory/ → context.py → utils/common.py → provider/</code>：核对上下文、恢复和费用的边界。</li>
+</ol>
+<p>可点击的固定提交文件锚点与 SHA-256 清单见<a href="research/source-map.md">源码地图</a>；调研方法、版本差异及未覆盖项见<a href="research/verification.md">研究记录</a>。</p>
+<p>MetaGPT 提供了一份很有价值的多 Agent 工程样本：经典 SOP 把任务交接显式化，RoleZero 把成员的局部执行变得灵活，执行反馈则给生成过程接上外部证据。构建自己的系统时，最值得保留的是这些清晰的责任边界，再为实际任务补上可靠性、权限和验收。</p>
+<!-- SOURCE REFERENCES -->
+
+<footer>依据固定提交整理。图表为原创源码示意；实验范围见正文。可离线阅读，点击图表查看完整 SVG。</footer>
+</main></div></body></html>

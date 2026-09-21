@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700" role="img" aria-label="RoleZero：一轮角色执行包含一个工具决策闭环">
+<title>RoleZero：一轮角色执行包含一个工具决策闭环</title><desc>默认 max_react_loop=50；Engineer2=40；TeamLeader=3。环境轮次与模型请求次数不是同一个计数。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="700" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="700" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">RoleZero：一轮角色执行包含一个工具决策闭环</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">默认 max_react_loop=50；Engineer2=40；TeamLeader=3。环境轮次与模型请求次数不是同一个计数。</text>
+<rect x="48" y="144" width="340" height="127" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="158" width="5" height="99" rx="2" fill="#087f8c"/>
+<text x="68" y="178" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">观察与上下文</text>
+<text x="68" y="208" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">吸收新消息 / 当前计划</text>
+<text x="68" y="235" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">最近 memory_k=200 条消息</text>
+<rect x="469" y="144" width="342" height="127" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="469" y="158" width="5" height="99" rx="2" fill="#4666cc"/>
+<text x="489" y="178" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">模型决策</text>
+<text x="489" y="208" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">角色指令 + 工具 Schema</text>
+<text x="489" y="235" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">aask → 文本形式的 JSON 命令</text>
+<rect x="892" y="144" width="340" height="127" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="892" y="158" width="5" height="99" rx="2" fill="#a56812"/>
+<text x="912" y="178" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">解析与修复</text>
+<text x="912" y="208" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">parse_commands / JSON repair</text>
+<text x="912" y="235" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">过滤部分互斥编辑命令</text>
+<path d="M 388 207 L 469 207" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 811 207 L 892 207" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 1060 271 L 1060 365" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="892" y="365" width="340" height="153" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="892" y="379" width="5" height="125" rx="2" fill="#b74846"/>
+<text x="912" y="399" font-size="21" font-weight="700" text-anchor="start" style="fill:#b74846">顺序执行命令</text>
+<text x="912" y="429" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">tool_execution_map → callable</text>
+<text x="912" y="456" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">异常 / 未知命令停止本批后续</text>
+<text x="912" y="483" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">已执行副作用不会自动回滚</text>
+<rect x="469" y="365" width="342" height="153" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="469" y="379" width="5" height="125" rx="2" fill="#087f8c"/>
+<text x="489" y="399" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">工具反馈写回记忆</text>
+<text x="489" y="429" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">记录模型命令与工具输出</text>
+<text x="489" y="456" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">进入下一次观察与决策</text>
+<text x="489" y="483" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">end → 清除 todo，结束循环</text>
+<path d="M 892 441 L 811 441" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 640 365 L 640 271" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640.0" y="308.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">继续</text>
+<rect x="48" y="365" width="340" height="153" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="379" width="5" height="125" rx="2" fill="#4666cc"/>
+<text x="68" y="399" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">前置 / 终止分支</text>
+<text x="68" y="429" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">简单问题可走 quick_think</text>
+<text x="68" y="456" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">大循环到上限可询问用户</text>
+<text x="68" y="483" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">最终响应再次通过环境发布</text>
+<rect x="48" y="565" width="1184" height="74" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="579" width="5" height="46" rx="2" fill="#a56812"/>
+<text x="68" y="599" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">工具 Schema 是能力说明；实际执行映射与系统权限才决定可执行范围。</text>
+<text x="48" y="672" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">RoleZero 的这条主路径不依赖供应商原生 tool_calls；Provider 层另有 function/tool 调用支持。</text>
+</svg>

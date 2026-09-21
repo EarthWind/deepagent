@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="750" viewBox="0 0 1280 750" role="img" aria-label="MGX 一次委派：TeamLeader 组织工作，成员执行任务">
+<title>MGX 一次委派：TeamLeader 组织工作，成员执行任务</title><desc>示例为可能的一条路径；具体成员选择与任务内容由模型决定，箭头不代表固定业务顺序。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="750" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="750" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">MGX 一次委派：TeamLeader 组织工作，成员执行任务</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">示例为可能的一条路径；具体成员选择与任务内容由模型决定，箭头不代表固定业务顺序。</text>
+<rect x="41" y="128" width="208" height="65" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="41" y="142" width="5" height="37" rx="2" fill="#4666cc"/>
+<text x="61" y="162" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">用户</text>
+<path d="M 145 206 L 145 658" stroke="#bdcddb" stroke-width="1.5" stroke-dasharray="5 6"/>
+<rect x="356" y="128" width="208" height="65" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="356" y="142" width="5" height="37" rx="2" fill="#4666cc"/>
+<text x="376" y="162" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">MGXEnv</text>
+<path d="M 460 206 L 460 658" stroke="#bdcddb" stroke-width="1.5" stroke-dasharray="5 6"/>
+<rect x="671" y="128" width="208" height="65" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="671" y="142" width="5" height="37" rx="2" fill="#4666cc"/>
+<text x="691" y="162" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">Mike / Leader</text>
+<path d="M 775 206 L 775 658" stroke="#bdcddb" stroke-width="1.5" stroke-dasharray="5 6"/>
+<rect x="986" y="128" width="208" height="65" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="986" y="142" width="5" height="37" rx="2" fill="#4666cc"/>
+<text x="1006" y="162" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">Alex / Engineer2</text>
+<path d="M 1090 206 L 1090 658" stroke="#bdcddb" stroke-width="1.5" stroke-dasharray="5 6"/>
+<path d="M 145 235 L 460 235" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="302.5" y="225.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">需求消息</text>
+<path d="M 460 290 L 775 290" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="617.5" y="280.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">追加 Mike；公开消息可被其他成员知悉</text>
+<rect x="615" y="330" width="320" height="103" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="615" y="344" width="5" height="75" rx="2" fill="#4666cc"/>
+<text x="635" y="364" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">规划 / 选择负责人</text>
+<text x="635" y="394" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">JSON 命令 → publish_team_message</text>
+<path d="M 775 465 L 460 465" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="617.5" y="455.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">send_to=Alex；Leader 暂停等待</text>
+<path d="M 460 515 L 1090 515" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="775.0" y="505.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">地址与 _observe 检查后触发</text>
+<rect x="956" y="550" width="276" height="83" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="956" y="564" width="5" height="55" rx="2" fill="#087f8c"/>
+<text x="976" y="584" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">编辑 / 终端 / 检查</text>
+<text x="976" y="614" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">内部可能执行多次模型循环</text>
+<path d="M 1090 665 L 775 665" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="932.5" y="655.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">结果经环境送回 Leader；继续下一次决策</text>
+<text x="48" y="722" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">公开聊天默认打开。可见性 ≠ 行动权；Leader 也不保证实现多租户授权或全局任务事务。</text>
+</svg>
