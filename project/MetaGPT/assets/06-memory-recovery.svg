@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="730" viewBox="0 0 1280 730" role="img" aria-label="记忆与恢复：区分状态的保存位置和恢复能力">
+<title>记忆与恢复：区分状态的保存位置和恢复能力</title><desc>默认基础记忆是 Python 对象；可选检索记忆、团队快照与 Notebook 内核状态属于不同层。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="730" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="730" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">记忆与恢复：区分状态的保存位置和恢复能力</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">默认基础记忆是 Python 对象；可选检索记忆、团队快照与 Notebook 内核状态属于不同层。</text>
+<rect x="48" y="140" width="563" height="174" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="154" width="5" height="146" rx="2" fill="#087f8c"/>
+<text x="68" y="174" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">进程内角色状态</text>
+<text x="68" y="204" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">msg_buffer：尚未消费的消息队列</text>
+<text x="68" y="231" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">memory：已见消息；working_memory：当前任务轨迹</text>
+<text x="68" y="258" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">state / todo / news：当前执行状态</text>
+<text x="68" y="285" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">RoleContext 的队列、todo、news 不进入默认快照</text>
+<rect x="649" y="140" width="583" height="174" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="649" y="154" width="5" height="146" rx="2" fill="#4666cc"/>
+<text x="669" y="174" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">可选长期检索</text>
+<text x="669" y="204" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">role_zero.enable_longterm_memory 默认 False</text>
+<text x="669" y="231" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">超出窗口后写入 Chroma / RAG；检索有触发条件</text>
+<text x="669" y="258" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">memory_k 限制近期上下文，不等于删除旧 storage</text>
+<text x="669" y="285" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">exp_pool 另有开关，默认也未启用</text>
+<rect x="48" y="365" width="563" height="174" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="379" width="5" height="146" rx="2" fill="#a56812"/>
+<text x="68" y="399" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">Team.serialize / deserialize</text>
+<text x="68" y="429" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">team.json + Context kwargs / 成本序列化数据</text>
+<text x="68" y="456" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">异常包装器可触发保存；不是每步事务提交</text>
+<text x="68" y="483" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">恢复需要重新构造对象与工具</text>
+<text x="68" y="510" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">latest_observed_msg 支持重新观察最后消息</text>
+<rect x="649" y="365" width="583" height="174" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="649" y="379" width="5" height="146" rx="2" fill="#b74846"/>
+<text x="669" y="399" font-size="21" font-weight="700" text-anchor="start" style="fill:#b74846">外部执行状态</text>
+<text x="669" y="429" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">文件修改、Shell 进程、浏览器、Notebook kernel</text>
+<text x="669" y="456" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">这些状态不由团队 JSON 完整恢复</text>
+<text x="669" y="483" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">重放可能重复执行已经完成的外部操作</text>
+<text x="669" y="510" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">生产系统需独立的副作用日志与幂等键</text>
+<path d="M 330 314 L 330 365" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 920 314 L 920 365" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="920.0" y="329.5" font-size="15" font-weight="400" text-anchor="middle" style="fill:#547084">不等同</text>
+<rect x="48" y="589" width="1184" height="70" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="603" width="5" height="42" rx="2" fill="#b74846"/>
+<text x="68" y="623" font-size="21" font-weight="700" text-anchor="start" style="fill:#b74846">恢复角色对象 ≠ 恢复运行中的进程 ≠ 保证外部副作用恰好执行一次</text>
+<text x="48" y="702" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">这里的生产化措施是作者建议；它们不是上游默认承诺。</text>
+</svg>

@@ -1,0 +1,117 @@
+{
+  "kind": "original_teaching_model",
+  "stop_reason": "idle",
+  "accepted": true,
+  "trace": [
+    {
+      "id": 1,
+      "content": {
+        "text": "实现两个数相加，必须通过正数和相消测试"
+      },
+      "cause_by": "UserRequirement",
+      "sent_from": "User",
+      "send_to": [
+        "<all>"
+      ]
+    },
+    {
+      "id": 2,
+      "content": {
+        "function": "add(a, b)",
+        "examples": [
+          [
+            2,
+            3,
+            5
+          ],
+          [
+            -1,
+            1,
+            0
+          ]
+        ],
+        "requirement": {
+          "text": "实现两个数相加，必须通过正数和相消测试"
+        }
+      },
+      "cause_by": "WriteSpec",
+      "sent_from": "PM",
+      "send_to": [
+        "<all>"
+      ]
+    },
+    {
+      "id": 3,
+      "content": {
+        "revision": 1,
+        "file": "candidate.py",
+        "feedback": {
+          "function": "add(a, b)",
+          "examples": [
+            [
+              2,
+              3,
+              5
+            ],
+            [
+              -1,
+              1,
+              0
+            ]
+          ],
+          "requirement": {
+            "text": "实现两个数相加，必须通过正数和相消测试"
+          }
+        }
+      },
+      "cause_by": "WriteCode",
+      "sent_from": "Engineer",
+      "send_to": [
+        "<all>"
+      ]
+    },
+    {
+      "id": 4,
+      "content": {
+        "revision": 1,
+        "passed": false,
+        "output": "Traceback (most recent call last):\n  File \"<string>\", line 4, in <module>\n    assert add(2, 3) == 5\n           ^^^^^^^^^^^^^^\nAssertionError"
+      },
+      "cause_by": "TestFailed",
+      "sent_from": "QA",
+      "send_to": [
+        "<all>"
+      ]
+    },
+    {
+      "id": 5,
+      "content": {
+        "revision": 2,
+        "file": "candidate.py",
+        "feedback": {
+          "revision": 1,
+          "passed": false,
+          "output": "Traceback (most recent call last):\n  File \"<string>\", line 4, in <module>\n    assert add(2, 3) == 5\n           ^^^^^^^^^^^^^^\nAssertionError"
+        }
+      },
+      "cause_by": "WriteCode",
+      "sent_from": "Engineer",
+      "send_to": [
+        "<all>"
+      ]
+    },
+    {
+      "id": 6,
+      "content": {
+        "revision": 2,
+        "passed": true,
+        "output": "2 assertions passed"
+      },
+      "cause_by": "Accepted",
+      "sent_from": "QA",
+      "send_to": [
+        "<all>"
+      ]
+    }
+  ]
+}

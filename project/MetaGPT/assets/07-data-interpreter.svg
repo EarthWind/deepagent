@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="670" viewBox="0 0 1280 670" role="img" aria-label="Data Interpreter：用真实执行结果修正生成代码">
+<title>Data Interpreter：用真实执行结果修正生成代码</title><desc>DataInterpreter 的 plan_and_act 路径；当前 MGX 的 DataAnalyst 则把类似能力封装成可调用工具。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="670" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="670" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">Data Interpreter：用真实执行结果修正生成代码</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">DataInterpreter 的 plan_and_act 路径；当前 MGX 的 DataAnalyst 则把类似能力封装成可调用工具。</text>
+<rect x="48" y="143" width="280" height="146" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="157" width="5" height="118" rx="2" fill="#4666cc"/>
+<text x="68" y="177" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">Planner</text>
+<text x="68" y="207" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">WritePlan → 校验 / 确认</text>
+<text x="68" y="234" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Task 依赖排序</text>
+<text x="68" y="261" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">选择 current_task</text>
+<rect x="373" y="143" width="300" height="146" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="373" y="157" width="5" height="118" rx="2" fill="#087f8c"/>
+<text x="393" y="177" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">WriteAnalysisCode</text>
+<text x="393" y="207" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">任务 + 已完成工作</text>
+<text x="393" y="234" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">工具说明 + 数据状态</text>
+<text x="393" y="261" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">失败后可加入反思</text>
+<rect x="719" y="143" width="273" height="146" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="719" y="157" width="5" height="118" rx="2" fill="#a56812"/>
+<text x="739" y="177" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">ExecuteNbCode</text>
+<text x="739" y="207" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">NotebookClient</text>
+<text x="739" y="234" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">持久内核 / cell 执行</text>
+<text x="739" y="261" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">捕获输出与异常</text>
+<rect x="1037" y="143" width="195" height="146" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="1037" y="157" width="5" height="118" rx="2" fill="#4666cc"/>
+<text x="1057" y="177" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">结果</text>
+<text x="1057" y="207" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">result</text>
+<text x="1057" y="234" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">is_success</text>
+<text x="1057" y="261" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">code</text>
+<path d="M 328 216 L 373 216" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 673 216 L 719 216" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 992 216 L 1037 216" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="373" y="364" width="859" height="108" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="373" y="378" width="5" height="80" rx="2" fill="#b74846"/>
+<text x="393" y="398" font-size="21" font-weight="700" text-anchor="start" style="fill:#b74846">失败 → 反馈 → 再生成</text>
+<text x="393" y="428" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">working_memory 保留本任务代码与错误；单次写码执行默认最多尝试 3 次</text>
+<path d="M 1130 289 L 1130 364" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 520 364 L 520 289" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="516" width="1184" height="83" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="530" width="5" height="55" rx="2" fill="#087f8c"/>
+<text x="68" y="550" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">成功后确认任务，再处理后续任务；Notebook 变量可以跨 cell 使用。</text>
+<text x="68" y="580" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">执行成功只说明运行未报错；数据泄漏、统计方法、指标定义仍需另设验收条件。</text>
+<text x="48" y="642" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">Notebook 内核是真实代码执行环境，设置 workspace 路径并不形成安全沙盒。</text>
+</svg>

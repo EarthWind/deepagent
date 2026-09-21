@@ -1,0 +1,67 @@
+{
+  "commit": "11cdf466d042aece04fc6cfd13b28e1a70341b1f",
+  "scope": "isolated upstream method bodies with test doubles; not upstream integration tests",
+  "passed": 15,
+  "results": [
+    {
+      "name": "broadcast reaches any address",
+      "status": "passed"
+    },
+    {
+      "name": "unicast excludes unrelated address",
+      "status": "passed"
+    },
+    {
+      "name": "watched cause triggers reaction",
+      "status": "passed"
+    },
+    {
+      "name": "explicit name bypasses watch",
+      "status": "passed"
+    },
+    {
+      "name": "class address delivers but does not itself trigger observe",
+      "status": "passed"
+    },
+    {
+      "name": "observe_all stores unwatched message without triggering",
+      "status": "passed"
+    },
+    {
+      "name": "equal existing message is ignored",
+      "status": "passed"
+    },
+    {
+      "name": "new id with same content is not deduplicated",
+      "status": "passed"
+    },
+    {
+      "name": "idle role awakened during a sweep waits for next sweep",
+      "status": "passed"
+    },
+    {
+      "name": "next sweep runs awakened role",
+      "status": "passed"
+    },
+    {
+      "name": "run_project ignores its send_to argument in this snapshot",
+      "status": "passed"
+    },
+    {
+      "name": "failed tool stops remaining commands without rolling back first",
+      "status": "passed"
+    },
+    {
+      "name": "unknown command stops the command batch",
+      "status": "passed"
+    },
+    {
+      "name": "ordinary MGX message also targets team leader",
+      "status": "passed"
+    },
+    {
+      "name": "team leader dummy output is suppressed",
+      "status": "passed"
+    }
+  ]
+}

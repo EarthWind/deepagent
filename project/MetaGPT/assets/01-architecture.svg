@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="740" viewBox="0 0 1280 740" role="img" aria-label="MetaGPT：两条执行路径，共享一组运行时抽象">
+<title>MetaGPT：两条执行路径，共享一组运行时抽象</title><desc>固定源码 11cdf466d042 · 蓝色：当前 CLI 默认 · 青色：经典 SOP · 原创源码示意</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="740" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="740" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">MetaGPT：两条执行路径，共享一组运行时抽象</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">固定源码 11cdf466d042 · 蓝色：当前 CLI 默认 · 青色：经典 SOP · 原创源码示意</text>
+<rect x="48" y="128" width="1184" height="100" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="142" width="5" height="72" rx="2" fill="#4666cc"/>
+<text x="68" y="162" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">入口与团队生命周期</text>
+<text x="68" y="192" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">software_company.generate_repo → Team.hire / invest / run → Environment；Context 提供配置与成本管理</text>
+<path d="M 340 228 L 340 274" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 940 228 L 940 274" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="274" width="572" height="172" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="288" width="5" height="144" rx="2" fill="#4666cc"/>
+<text x="68" y="308" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">MGX 动态团队（默认）</text>
+<text x="68" y="338" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Team(use_mgx=True) → MGXEnv → TeamLeader</text>
+<text x="68" y="365" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Alice / Bob / Alex(Engineer2) / David(DataAnalyst)</text>
+<text x="68" y="392" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">RoleZero：计划 + 消息上下文 + JSON 命令执行</text>
+<rect x="656" y="274" width="576" height="172" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="656" y="288" width="5" height="144" rx="2" fill="#087f8c"/>
+<text x="676" y="308" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">经典文档驱动 SOP（显式装配）</text>
+<text x="676" y="338" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Team(use_mgx=False) → Environment</text>
+<text x="676" y="365" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">ProductManager → Architect → ProjectManager</text>
+<text x="676" y="392" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Engineer ↔ QaEngineer；前三者启用 use_fixed_sop</text>
+<path d="M 340 446 L 340 490" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 940 446 L 940 490" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="490" width="365" height="160" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="504" width="5" height="132" rx="2" fill="#087f8c"/>
+<text x="68" y="524" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">通信与状态</text>
+<text x="68" y="554" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Message / MessageQueue</text>
+<text x="68" y="581" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">RoleContext / Memory</text>
+<text x="68" y="608" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Plan / Task / 快照</text>
+<rect x="441" y="490" width="365" height="160" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="441" y="504" width="5" height="132" rx="2" fill="#4666cc"/>
+<text x="461" y="524" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">生成与工具</text>
+<text x="461" y="554" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Action / ActionNode</text>
+<text x="461" y="581" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">工具 Schema / 执行映射</text>
+<text x="461" y="608" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Provider / LLM</text>
+<rect x="834" y="490" width="398" height="160" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="834" y="504" width="5" height="132" rx="2" fill="#a56812"/>
+<text x="854" y="524" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">项目与执行环境</text>
+<text x="854" y="554" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">ProjectRepo / 文档依赖</text>
+<text x="854" y="581" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Editor / Browser / Terminal</text>
+<text x="854" y="608" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">Notebook：代码执行与反馈</text>
+<text x="48" y="712" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">Environment 是协作环境；它的名称不意味着进程、文件系统或网络已被安全隔离。</text>
+</svg>

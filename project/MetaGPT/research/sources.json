@@ -1,0 +1,3981 @@
+{
+  "repository": "https://github.com/FoundationAgents/MetaGPT.git",
+  "research_date": "2026-09-21",
+  "commit": "11cdf466d042aece04fc6cfd13b28e1a70341b1f",
+  "commit_time": "2026-01-21T18:12:32+08:00",
+  "package_version": "1.0.0",
+  "python_requires": ">=3.9, <3.12",
+  "files": [
+    {
+      "id": "setup",
+      "path": "setup.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/setup.py",
+      "sha256": "2b9fba51533458d5b5f0151638fbb9c37984926f4970e215c9d5c07e65f5e5ab",
+      "lines": 122,
+      "symbols": [
+        {
+          "name": "InstallMermaidCLI",
+          "line": 8
+        },
+        {
+          "name": "InstallMermaidCLI.run",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "id": "entry",
+      "path": "metagpt/software_company.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/software_company.py",
+      "sha256": "a52a081c2b1aadad3fb1510d1f4ff624db2c05e85e99a7e58059db9884ec9dc8",
+      "lines": 157,
+      "symbols": [
+        {
+          "name": "generate_repo",
+          "line": 14
+        },
+        {
+          "name": "startup",
+          "line": 78
+        },
+        {
+          "name": "copy_config_to",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "id": "team",
+      "path": "metagpt/team.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/team.py",
+      "sha256": "af0398fce4109cadf8a0ac8e479d261ef0cb6347c60d0c3343ff7d6e22180bcc",
+      "lines": 138,
+      "symbols": [
+        {
+          "name": "Team",
+          "line": 32
+        },
+        {
+          "name": "Team.__init__",
+          "line": 45
+        },
+        {
+          "name": "Team.serialize",
+          "line": 59
+        },
+        {
+          "name": "Team.deserialize",
+          "line": 68
+        },
+        {
+          "name": "Team.hire",
+          "line": 83
+        },
+        {
+          "name": "Team.cost_manager",
+          "line": 88
+        },
+        {
+          "name": "Team.invest",
+          "line": 92
+        },
+        {
+          "name": "Team._check_balance",
+          "line": 98
+        },
+        {
+          "name": "Team.run_project",
+          "line": 102
+        },
+        {
+          "name": "Team.start_project",
+          "line": 109
+        },
+        {
+          "name": "Team.run",
+          "line": 123
+        }
+      ]
+    },
+    {
+      "id": "env",
+      "path": "metagpt/environment/base_env.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/base_env.py",
+      "sha256": "c3f0d6b7e9f0a4d1a1cbc4183a3230ba66d4f081a91e46c2e555f313cb035334",
+      "lines": 247,
+      "symbols": [
+        {
+          "name": "EnvType",
+          "line": 29
+        },
+        {
+          "name": "mark_as_readable",
+          "line": 41
+        },
+        {
+          "name": "mark_as_writeable",
+          "line": 47
+        },
+        {
+          "name": "ExtEnv",
+          "line": 53
+        },
+        {
+          "name": "ExtEnv._check_api_exist",
+          "line": 61
+        },
+        {
+          "name": "ExtEnv.get_all_available_apis",
+          "line": 65
+        },
+        {
+          "name": "ExtEnv.read_from_api",
+          "line": 73
+        },
+        {
+          "name": "ExtEnv.write_thru_api",
+          "line": 91
+        },
+        {
+          "name": "ExtEnv.reset",
+          "line": 107
+        },
+        {
+          "name": "ExtEnv.observe",
+          "line": 116
+        },
+        {
+          "name": "ExtEnv.step",
+          "line": 120
+        },
+        {
+          "name": "Environment",
+          "line": 124
+        },
+        {
+          "name": "Environment.reset",
+          "line": 137
+        },
+        {
+          "name": "Environment.observe",
+          "line": 145
+        },
+        {
+          "name": "Environment.step",
+          "line": 148
+        },
+        {
+          "name": "Environment.init_roles",
+          "line": 152
+        },
+        {
+          "name": "Environment.add_role",
+          "line": 156
+        },
+        {
+          "name": "Environment.add_roles",
+          "line": 164
+        },
+        {
+          "name": "Environment.publish_message",
+          "line": 175
+        },
+        {
+          "name": "Environment.run",
+          "line": 197
+        },
+        {
+          "name": "Environment.get_roles",
+          "line": 213
+        },
+        {
+          "name": "Environment.get_role",
+          "line": 219
+        },
+        {
+          "name": "Environment.role_names",
+          "line": 225
+        },
+        {
+          "name": "Environment.is_idle",
+          "line": 229
+        },
+        {
+          "name": "Environment.get_addresses",
+          "line": 236
+        },
+        {
+          "name": "Environment.set_addresses",
+          "line": 240
+        },
+        {
+          "name": "Environment.archive",
+          "line": 244
+        }
+      ]
+    },
+    {
+      "id": "mgx",
+      "path": "metagpt/environment/mgx/mgx_env.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/environment/mgx/mgx_env.py",
+      "sha256": "aa1dda173a21c775a6c49b5dad2af99bc3db4a608fd23a9189ecc6522b08ec9b",
+      "lines": 99,
+      "symbols": [
+        {
+          "name": "MGXEnv",
+          "line": 11
+        },
+        {
+          "name": "MGXEnv._publish_message",
+          "line": 18
+        },
+        {
+          "name": "MGXEnv.publish_message",
+          "line": 24
+        },
+        {
+          "name": "MGXEnv.ask_human",
+          "line": 64
+        },
+        {
+          "name": "MGXEnv.reply_to_human",
+          "line": 69
+        },
+        {
+          "name": "MGXEnv.move_message_info_to_content",
+          "line": 73
+        },
+        {
+          "name": "MGXEnv.attach_images",
+          "line": 91
+        },
+        {
+          "name": "MGXEnv.__repr__",
+          "line": 98
+        }
+      ]
+    },
+    {
+      "id": "role",
+      "path": "metagpt/roles/role.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/role.py",
+      "sha256": "2dac0259a6f3733fa2ec0df8a43eb8dda1cac199410c31ef350aaaf70f6c939b",
+      "lines": 592,
+      "symbols": [
+        {
+          "name": "RoleReactMode",
+          "line": 82
+        },
+        {
+          "name": "RoleReactMode.values",
+          "line": 88
+        },
+        {
+          "name": "RoleContext",
+          "line": 92
+        },
+        {
+          "name": "RoleContext.important_memory",
+          "line": 116
+        },
+        {
+          "name": "RoleContext.history",
+          "line": 121
+        },
+        {
+          "name": "Role",
+          "line": 125
+        },
+        {
+          "name": "Role.validate_role_extra",
+          "line": 162
+        },
+        {
+          "name": "Role._process_role_extra",
+          "line": 166
+        },
+        {
+          "name": "Role.todo",
+          "line": 183
+        },
+        {
+          "name": "Role.set_todo",
+          "line": 187
+        },
+        {
+          "name": "Role.prompt_schema",
+          "line": 194
+        },
+        {
+          "name": "Role.project_name",
+          "line": 199
+        },
+        {
+          "name": "Role.project_name",
+          "line": 203
+        },
+        {
+          "name": "Role.project_path",
+          "line": 207
+        },
+        {
+          "name": "Role.check_addresses",
+          "line": 211
+        },
+        {
+          "name": "Role._reset",
+          "line": 216
+        },
+        {
+          "name": "Role._setting",
+          "line": 221
+        },
+        {
+          "name": "Role._check_actions",
+          "line": 224
+        },
+        {
+          "name": "Role._init_action",
+          "line": 229
+        },
+        {
+          "name": "Role.set_action",
+          "line": 235
+        },
+        {
+          "name": "Role.set_actions",
+          "line": 239
+        },
+        {
+          "name": "Role._set_react_mode",
+          "line": 261
+        },
+        {
+          "name": "Role._watch",
+          "line": 284
+        },
+        {
+          "name": "Role.is_watch",
+          "line": 290
+        },
+        {
+          "name": "Role.set_addresses",
+          "line": 293
+        },
+        {
+          "name": "Role._set_state",
+          "line": 302
+        },
+        {
+          "name": "Role.set_env",
+          "line": 308
+        },
+        {
+          "name": "Role.name",
+          "line": 319
+        },
+        {
+          "name": "Role._get_prefix",
+          "line": 323
+        },
+        {
+          "name": "Role._think",
+          "line": 340
+        },
+        {
+          "name": "Role._act",
+          "line": 381
+        },
+        {
+          "name": "Role._observe",
+          "line": 399
+        },
+        {
+          "name": "Role.publish_message",
+          "line": 429
+        },
+        {
+          "name": "Role.put_message",
+          "line": 448
+        },
+        {
+          "name": "Role._react",
+          "line": 454
+        },
+        {
+          "name": "Role._plan_and_act",
+          "line": 472
+        },
+        {
+          "name": "Role._act_on_task",
+          "line": 498
+        },
+        {
+          "name": "Role.react",
+          "line": 512
+        },
+        {
+          "name": "Role.get_memories",
+          "line": 525
+        },
+        {
+          "name": "Role.run",
+          "line": 530
+        },
+        {
+          "name": "Role.is_idle",
+          "line": 557
+        },
+        {
+          "name": "Role.think",
+          "line": 561
+        },
+        {
+          "name": "Role.act",
+          "line": 570
+        },
+        {
+          "name": "Role.action_description",
+          "line": 579
+        }
+      ]
+    },
+    {
+      "id": "schema",
+      "path": "metagpt/schema.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/schema.py",
+      "sha256": "f21ec5023b0bee58ff658af8db840cb5fd84e2bb5d1822035e9c134d3892d9f2",
+      "lines": 976,
+      "symbols": [
+        {
+          "name": "SerializationMixin",
+          "line": 72
+        },
+        {
+          "name": "SerializationMixin.serialize",
+          "line": 74
+        },
+        {
+          "name": "SerializationMixin.deserialize",
+          "line": 97
+        },
+        {
+          "name": "SerializationMixin.get_serialization_path",
+          "line": 119
+        },
+        {
+          "name": "SimpleMessage",
+          "line": 133
+        },
+        {
+          "name": "Document",
+          "line": 138
+        },
+        {
+          "name": "Document.get_meta",
+          "line": 147
+        },
+        {
+          "name": "Document.root_relative_path",
+          "line": 156
+        },
+        {
+          "name": "Document.__str__",
+          "line": 163
+        },
+        {
+          "name": "Document.__repr__",
+          "line": 166
+        },
+        {
+          "name": "Document.load",
+          "line": 170
+        },
+        {
+          "name": "Documents",
+          "line": 194
+        },
+        {
+          "name": "Documents.from_iterable",
+          "line": 204
+        },
+        {
+          "name": "Documents.to_action_output",
+          "line": 214
+        },
+        {
+          "name": "Resource",
+          "line": 224
+        },
+        {
+          "name": "Message",
+          "line": 232
+        },
+        {
+          "name": "Message.check_id",
+          "line": 246
+        },
+        {
+          "name": "Message.check_instruct_content",
+          "line": 251
+        },
+        {
+          "name": "Message.check_cause_by",
+          "line": 268
+        },
+        {
+          "name": "Message.check_sent_from",
+          "line": 273
+        },
+        {
+          "name": "Message.check_send_to",
+          "line": 278
+        },
+        {
+          "name": "Message.ser_send_to",
+          "line": 282
+        },
+        {
+          "name": "Message.ser_instruct_content",
+          "line": 286
+        },
+        {
+          "name": "Message.__init__",
+          "line": 303
+        },
+        {
+          "name": "Message.__setattr__",
+          "line": 307
+        },
+        {
+          "name": "Message.__str__",
+          "line": 319
+        },
+        {
+          "name": "Message.__repr__",
+          "line": 325
+        },
+        {
+          "name": "Message.rag_key",
+          "line": 328
+        },
+        {
+          "name": "Message.to_dict",
+          "line": 332
+        },
+        {
+          "name": "Message.dump",
+          "line": 336
+        },
+        {
+          "name": "Message.load",
+          "line": 342
+        },
+        {
+          "name": "Message.parse_resources",
+          "line": 358
+        },
+        {
+          "name": "Message.add_metadata",
+          "line": 393
+        },
+        {
+          "name": "Message.create_instruct_value",
+          "line": 397
+        },
+        {
+          "name": "Message.is_user_message",
+          "line": 412
+        },
+        {
+          "name": "Message.is_ai_message",
+          "line": 415
+        },
+        {
+          "name": "UserMessage",
+          "line": 419
+        },
+        {
+          "name": "UserMessage.__init__",
+          "line": 424
+        },
+        {
+          "name": "SystemMessage",
+          "line": 429
+        },
+        {
+          "name": "SystemMessage.__init__",
+          "line": 434
+        },
+        {
+          "name": "AIMessage",
+          "line": 439
+        },
+        {
+          "name": "AIMessage.__init__",
+          "line": 444
+        },
+        {
+          "name": "AIMessage.with_agent",
+          "line": 448
+        },
+        {
+          "name": "AIMessage.agent",
+          "line": 453
+        },
+        {
+          "name": "Task",
+          "line": 457
+        },
+        {
+          "name": "Task.reset",
+          "line": 468
+        },
+        {
+          "name": "Task.update_task_result",
+          "line": 474
+        },
+        {
+          "name": "TaskResult",
+          "line": 480
+        },
+        {
+          "name": "Plan",
+          "line": 496
+        },
+        {
+          "name": "Plan._topological_sort",
+          "line": 505
+        },
+        {
+          "name": "Plan.add_tasks",
+          "line": 524
+        },
+        {
+          "name": "Plan.reset_task",
+          "line": 569
+        },
+        {
+          "name": "Plan._replace_task",
+          "line": 587
+        },
+        {
+          "name": "Plan._append_task",
+          "line": 612
+        },
+        {
+          "name": "Plan.has_task_id",
+          "line": 637
+        },
+        {
+          "name": "Plan._update_current_task",
+          "line": 640
+        },
+        {
+          "name": "Plan.current_task",
+          "line": 654
+        },
+        {
+          "name": "Plan.finish_current_task",
+          "line": 662
+        },
+        {
+          "name": "Plan.finish_all_tasks",
+          "line": 668
+        },
+        {
+          "name": "Plan.is_plan_finished",
+          "line": 673
+        },
+        {
+          "name": "Plan.get_finished_tasks",
+          "line": 677
+        },
+        {
+          "name": "Plan.append_task",
+          "line": 685
+        },
+        {
+          "name": "Plan.replace_task",
+          "line": 702
+        },
+        {
+          "name": "MessageQueue",
+          "line": 713
+        },
+        {
+          "name": "MessageQueue.pop",
+          "line": 720
+        },
+        {
+          "name": "MessageQueue.pop_all",
+          "line": 730
+        },
+        {
+          "name": "MessageQueue.push",
+          "line": 740
+        },
+        {
+          "name": "MessageQueue.empty",
+          "line": 744
+        },
+        {
+          "name": "MessageQueue.dump",
+          "line": 748
+        },
+        {
+          "name": "MessageQueue.load",
+          "line": 771
+        },
+        {
+          "name": "BaseContext",
+          "line": 789
+        },
+        {
+          "name": "BaseContext.loads",
+          "line": 792
+        },
+        {
+          "name": "CodingContext",
+          "line": 797
+        },
+        {
+          "name": "TestingContext",
+          "line": 805
+        },
+        {
+          "name": "RunCodeContext",
+          "line": 811
+        },
+        {
+          "name": "RunCodeResult",
+          "line": 824
+        },
+        {
+          "name": "CodeSummarizeContext",
+          "line": 830
+        },
+        {
+          "name": "CodeSummarizeContext.loads",
+          "line": 837
+        },
+        {
+          "name": "CodeSummarizeContext.__hash__",
+          "line": 848
+        },
+        {
+          "name": "CodePlanAndChangeContext",
+          "line": 852
+        },
+        {
+          "name": "UMLClassMeta",
+          "line": 861
+        },
+        {
+          "name": "UMLClassMeta.name_to_visibility",
+          "line": 866
+        },
+        {
+          "name": "UMLClassAttribute",
+          "line": 876
+        },
+        {
+          "name": "UMLClassAttribute.get_mermaid",
+          "line": 880
+        },
+        {
+          "name": "UMLClassMethod",
+          "line": 899
+        },
+        {
+          "name": "UMLClassMethod.get_mermaid",
+          "line": 903
+        },
+        {
+          "name": "UMLClassView",
+          "line": 916
+        },
+        {
+          "name": "UMLClassView.get_mermaid",
+          "line": 920
+        },
+        {
+          "name": "UMLClassView.load_dot_class_info",
+          "line": 930
+        },
+        {
+          "name": "BaseEnum",
+          "line": 948
+        },
+        {
+          "name": "BaseEnum.__new__",
+          "line": 951
+        },
+        {
+          "name": "LongTermMemoryItem",
+          "line": 971
+        },
+        {
+          "name": "LongTermMemoryItem.rag_key",
+          "line": 975
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "path": "metagpt/actions/action.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action.py",
+      "sha256": "7837c9d9535885634160e3dcf1403e9cd9c2943ae923a0188dd6477ceb060aad",
+      "lines": 119,
+      "symbols": [
+        {
+          "name": "Action",
+          "line": 29
+        },
+        {
+          "name": "Action._update_private_llm",
+          "line": 45
+        },
+        {
+          "name": "Action.prompt_schema",
+          "line": 54
+        },
+        {
+          "name": "Action.project_name",
+          "line": 58
+        },
+        {
+          "name": "Action.project_name",
+          "line": 62
+        },
+        {
+          "name": "Action.project_path",
+          "line": 66
+        },
+        {
+          "name": "Action.set_name_if_empty",
+          "line": 71
+        },
+        {
+          "name": "Action._init_with_instruction",
+          "line": 78
+        },
+        {
+          "name": "Action.set_prefix",
+          "line": 85
+        },
+        {
+          "name": "Action.__str__",
+          "line": 93
+        },
+        {
+          "name": "Action.__repr__",
+          "line": 96
+        },
+        {
+          "name": "Action._aask",
+          "line": 99
+        },
+        {
+          "name": "Action._run_action_node",
+          "line": 103
+        },
+        {
+          "name": "Action.run",
+          "line": 110
+        },
+        {
+          "name": "Action.override_context",
+          "line": 116
+        }
+      ]
+    },
+    {
+      "id": "node",
+      "path": "metagpt/actions/action_node.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/action_node.py",
+      "sha256": "baf4b6b628830d4b1e9399debc96b1b3b6ea32e8a48174dff1a9a1f07ee1c029",
+      "lines": 876,
+      "symbols": [
+        {
+          "name": "ReviewMode",
+          "line": 32
+        },
+        {
+          "name": "ReviseMode",
+          "line": 37
+        },
+        {
+          "name": "FillMode",
+          "line": 46
+        },
+        {
+          "name": "dict_to_markdown",
+          "line": 128
+        },
+        {
+          "name": "ActionNode",
+          "line": 135
+        },
+        {
+          "name": "ActionNode.__init__",
+          "line": 162
+        },
+        {
+          "name": "ActionNode.__str__",
+          "line": 182
+        },
+        {
+          "name": "ActionNode.__repr__",
+          "line": 188
+        },
+        {
+          "name": "ActionNode.add_prev",
+          "line": 191
+        },
+        {
+          "name": "ActionNode.add_next",
+          "line": 195
+        },
+        {
+          "name": "ActionNode.add_child",
+          "line": 199
+        },
+        {
+          "name": "ActionNode.get_child",
+          "line": 203
+        },
+        {
+          "name": "ActionNode.add_children",
+          "line": 206
+        },
+        {
+          "name": "ActionNode.from_children",
+          "line": 212
+        },
+        {
+          "name": "ActionNode._get_children_mapping",
+          "line": 218
+        },
+        {
+          "name": "ActionNode._get_self_mapping",
+          "line": 236
+        },
+        {
+          "name": "ActionNode.get_mapping",
+          "line": 240
+        },
+        {
+          "name": "ActionNode.create_model_class",
+          "line": 248
+        },
+        {
+          "name": "ActionNode.create_class",
+          "line": 284
+        },
+        {
+          "name": "ActionNode._create_children_class",
+          "line": 289
+        },
+        {
+          "name": "ActionNode.to_dict",
+          "line": 295
+        },
+        {
+          "name": "ActionNode._to_dict",
+          "line": 302
+        },
+        {
+          "name": "ActionNode.update_instruct_content",
+          "line": 332
+        },
+        {
+          "name": "ActionNode.keys",
+          "line": 339
+        },
+        {
+          "name": "ActionNode.compile_to",
+          "line": 351
+        },
+        {
+          "name": "ActionNode.tagging",
+          "line": 359
+        },
+        {
+          "name": "ActionNode._compile_f",
+          "line": 364
+        },
+        {
+          "name": "ActionNode.compile_instruction",
+          "line": 369
+        },
+        {
+          "name": "ActionNode.compile_example",
+          "line": 374
+        },
+        {
+          "name": "ActionNode.compile",
+          "line": 382
+        },
+        {
+          "name": "ActionNode._aask_v1",
+          "line": 428
+        },
+        {
+          "name": "ActionNode.get",
+          "line": 454
+        },
+        {
+          "name": "ActionNode.set_recursive",
+          "line": 457
+        },
+        {
+          "name": "ActionNode.set_llm",
+          "line": 462
+        },
+        {
+          "name": "ActionNode.set_context",
+          "line": 465
+        },
+        {
+          "name": "ActionNode.simple_fill",
+          "line": 468
+        },
+        {
+          "name": "ActionNode.get_field_name",
+          "line": 486
+        },
+        {
+          "name": "ActionNode.get_field_names",
+          "line": 500
+        },
+        {
+          "name": "ActionNode.get_field_types",
+          "line": 507
+        },
+        {
+          "name": "ActionNode.xml_compile",
+          "line": 514
+        },
+        {
+          "name": "ActionNode.code_fill",
+          "line": 533
+        },
+        {
+          "name": "ActionNode.single_fill",
+          "line": 546
+        },
+        {
+          "name": "ActionNode.xml_fill",
+          "line": 553
+        },
+        {
+          "name": "ActionNode.fill",
+          "line": 597
+        },
+        {
+          "name": "ActionNode.human_review",
+          "line": 665
+        },
+        {
+          "name": "ActionNode._makeup_nodes_output_with_req",
+          "line": 672
+        },
+        {
+          "name": "ActionNode.auto_review",
+          "line": 680
+        },
+        {
+          "name": "ActionNode.simple_review",
+          "line": 718
+        },
+        {
+          "name": "ActionNode.review",
+          "line": 729
+        },
+        {
+          "name": "ActionNode.human_revise",
+          "line": 752
+        },
+        {
+          "name": "ActionNode._makeup_nodes_output_with_comment",
+          "line": 760
+        },
+        {
+          "name": "ActionNode.auto_revise",
+          "line": 768
+        },
+        {
+          "name": "ActionNode.simple_revise",
+          "line": 808
+        },
+        {
+          "name": "ActionNode.revise",
+          "line": 816
+        },
+        {
+          "name": "ActionNode.from_pydantic",
+          "line": 841
+        },
+        {
+          "name": "ActionNode.is_optional_type",
+          "line": 870
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "path": "metagpt/context.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context.py",
+      "sha256": "c6e357e152525b52110aa322056dd7ff6b36ad6417fffb517a08d0b14543e690",
+      "lines": 127,
+      "symbols": [
+        {
+          "name": "AttrDict",
+          "line": 26
+        },
+        {
+          "name": "AttrDict.__init__",
+          "line": 31
+        },
+        {
+          "name": "AttrDict.__getattr__",
+          "line": 35
+        },
+        {
+          "name": "AttrDict.__setattr__",
+          "line": 38
+        },
+        {
+          "name": "AttrDict.__delattr__",
+          "line": 41
+        },
+        {
+          "name": "AttrDict.set",
+          "line": 47
+        },
+        {
+          "name": "AttrDict.get",
+          "line": 50
+        },
+        {
+          "name": "AttrDict.remove",
+          "line": 53
+        },
+        {
+          "name": "Context",
+          "line": 58
+        },
+        {
+          "name": "Context.new_environ",
+          "line": 70
+        },
+        {
+          "name": "Context._select_costmanager",
+          "line": 77
+        },
+        {
+          "name": "Context.llm",
+          "line": 86
+        },
+        {
+          "name": "Context.llm_with_cost_manager_from_llm_config",
+          "line": 94
+        },
+        {
+          "name": "Context.serialize",
+          "line": 102
+        },
+        {
+          "name": "Context.deserialize",
+          "line": 113
+        }
+      ]
+    },
+    {
+      "id": "context_mixin",
+      "path": "metagpt/context_mixin.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/context_mixin.py",
+      "sha256": "ddbd3335fbd3495f4abbad4fb81e1ea5254594b9792de32d1b50cb990332f5c5",
+      "lines": 101,
+      "symbols": [
+        {
+          "name": "ContextMixin",
+          "line": 17
+        },
+        {
+          "name": "ContextMixin.validate_context_mixin_extra",
+          "line": 36
+        },
+        {
+          "name": "ContextMixin._process_context_mixin_extra",
+          "line": 40
+        },
+        {
+          "name": "ContextMixin.set",
+          "line": 47
+        },
+        {
+          "name": "ContextMixin.set_context",
+          "line": 52
+        },
+        {
+          "name": "ContextMixin.set_config",
+          "line": 56
+        },
+        {
+          "name": "ContextMixin.set_llm",
+          "line": 62
+        },
+        {
+          "name": "ContextMixin.config",
+          "line": 67
+        },
+        {
+          "name": "ContextMixin.config",
+          "line": 74
+        },
+        {
+          "name": "ContextMixin.context",
+          "line": 79
+        },
+        {
+          "name": "ContextMixin.context",
+          "line": 86
+        },
+        {
+          "name": "ContextMixin.llm",
+          "line": 91
+        },
+        {
+          "name": "ContextMixin.llm",
+          "line": 99
+        }
+      ]
+    },
+    {
+      "id": "pm",
+      "path": "metagpt/roles/product_manager.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/product_manager.py",
+      "sha256": "3fdef51a787c6c38cb9107d313c2969b980bbc22e400a11a80847e7deb41453a",
+      "lines": 64,
+      "symbols": [
+        {
+          "name": "ProductManager",
+          "line": 21
+        },
+        {
+          "name": "ProductManager.__init__",
+          "line": 41
+        },
+        {
+          "name": "ProductManager._update_tool_execution",
+          "line": 49
+        },
+        {
+          "name": "ProductManager._think",
+          "line": 53
+        }
+      ]
+    },
+    {
+      "id": "architect",
+      "path": "metagpt/roles/architect.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/architect.py",
+      "sha256": "b72478cad325a350cf4ffdb00a26ee2b9502fe83a0518d9ce54ef397f3756ac1",
+      "lines": 58,
+      "symbols": [
+        {
+          "name": "Architect",
+          "line": 17
+        },
+        {
+          "name": "Architect.__init__",
+          "line": 43
+        },
+        {
+          "name": "Architect._retrieve_experience",
+          "line": 54
+        },
+        {
+          "name": "Architect._update_tool_execution",
+          "line": 57
+        }
+      ]
+    },
+    {
+      "id": "project_manager",
+      "path": "metagpt/roles/project_manager.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/project_manager.py",
+      "sha256": "df4274fd826792044be8623ab446e9e0b7e03d748c5dced74b5304ee4ce61dcf",
+      "lines": 50,
+      "symbols": [
+        {
+          "name": "ProjectManager",
+          "line": 13
+        },
+        {
+          "name": "ProjectManager.__init__",
+          "line": 36
+        },
+        {
+          "name": "ProjectManager._update_tool_execution",
+          "line": 43
+        }
+      ]
+    },
+    {
+      "id": "engineer",
+      "path": "metagpt/roles/engineer.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/engineer.py",
+      "sha256": "8daf8a9f8059b50cd9ca9e3e1ea75d40998f2123c92f1b1de497a5a9578cbd64",
+      "lines": 513,
+      "symbols": [
+        {
+          "name": "Engineer",
+          "line": 73
+        },
+        {
+          "name": "Engineer.__init__",
+          "line": 102
+        },
+        {
+          "name": "Engineer._parse_tasks",
+          "line": 112
+        },
+        {
+          "name": "Engineer._act_sp_with_cr",
+          "line": 116
+        },
+        {
+          "name": "Engineer._act",
+          "line": 152
+        },
+        {
+          "name": "Engineer._act_write_code",
+          "line": 167
+        },
+        {
+          "name": "Engineer._act_summarize",
+          "line": 173
+        },
+        {
+          "name": "Engineer._act_code_plan_and_change",
+          "line": 233
+        },
+        {
+          "name": "Engineer._is_pass",
+          "line": 255
+        },
+        {
+          "name": "Engineer._think",
+          "line": 262
+        },
+        {
+          "name": "Engineer._new_coding_context",
+          "line": 290
+        },
+        {
+          "name": "Engineer._new_coding_doc",
+          "line": 319
+        },
+        {
+          "name": "Engineer._new_code_actions",
+          "line": 328
+        },
+        {
+          "name": "Engineer._new_summarize_actions",
+          "line": 430
+        },
+        {
+          "name": "Engineer._new_code_plan_and_change_action",
+          "line": 455
+        },
+        {
+          "name": "Engineer.action_description",
+          "line": 490
+        },
+        {
+          "name": "Engineer._init_python_folder",
+          "line": 494
+        },
+        {
+          "name": "Engineer._is_fixbug",
+          "line": 504
+        },
+        {
+          "name": "Engineer._get_any_code_plan_and_change",
+          "line": 507
+        }
+      ]
+    },
+    {
+      "id": "qa",
+      "path": "metagpt/roles/qa_engineer.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/qa_engineer.py",
+      "sha256": "cae6ba91c9f756fbfbadcaeff2a6dd952fbafb3c75e783b4b4c06fcda817a320",
+      "lines": 231,
+      "symbols": [
+        {
+          "name": "QaEngineer",
+          "line": 39
+        },
+        {
+          "name": "QaEngineer.__init__",
+          "line": 52
+        },
+        {
+          "name": "QaEngineer._write_test",
+          "line": 62
+        },
+        {
+          "name": "QaEngineer._run_code",
+          "line": 105
+        },
+        {
+          "name": "QaEngineer._debug_error",
+          "line": 150
+        },
+        {
+          "name": "QaEngineer._act",
+          "line": 161
+        },
+        {
+          "name": "QaEngineer._parse_user_requirement",
+          "line": 207
+        },
+        {
+          "name": "QaEngineer._think",
+          "line": 221
+        }
+      ]
+    },
+    {
+      "id": "prepare",
+      "path": "metagpt/actions/prepare_documents.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/prepare_documents.py",
+      "sha256": "cf85f101c5a899df4317fdc082a150fdf4ea4a937bcfe16c983e96dc5f97ec38",
+      "lines": 90,
+      "symbols": [
+        {
+          "name": "PrepareDocuments",
+          "line": 23
+        },
+        {
+          "name": "PrepareDocuments.__init__",
+          "line": 31
+        },
+        {
+          "name": "PrepareDocuments.config",
+          "line": 37
+        },
+        {
+          "name": "PrepareDocuments._init_repo",
+          "line": 40
+        },
+        {
+          "name": "PrepareDocuments.run",
+          "line": 53
+        }
+      ]
+    },
+    {
+      "id": "prd",
+      "path": "metagpt/actions/write_prd.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_prd.py",
+      "sha256": "47457e2d56d2ea926d0ac192b1ebe734ae23be6bf6cfed7628becc16c53fd874",
+      "lines": 325,
+      "symbols": [
+        {
+          "name": "WritePRD",
+          "line": 76
+        },
+        {
+          "name": "WritePRD.run",
+          "line": 86
+        },
+        {
+          "name": "WritePRD._handle_bugfix",
+          "line": 191
+        },
+        {
+          "name": "WritePRD._new_prd",
+          "line": 209
+        },
+        {
+          "name": "WritePRD._handle_new_requirement",
+          "line": 218
+        },
+        {
+          "name": "WritePRD._handle_requirement_update",
+          "line": 232
+        },
+        {
+          "name": "WritePRD._is_bugfix",
+          "line": 238
+        },
+        {
+          "name": "WritePRD.get_related_docs",
+          "line": 244
+        },
+        {
+          "name": "WritePRD._is_related",
+          "line": 249
+        },
+        {
+          "name": "WritePRD._merge",
+          "line": 254
+        },
+        {
+          "name": "WritePRD._update_prd",
+          "line": 263
+        },
+        {
+          "name": "WritePRD._save_competitive_analysis",
+          "line": 273
+        },
+        {
+          "name": "WritePRD._rename_workspace",
+          "line": 285
+        },
+        {
+          "name": "WritePRD._execute_api",
+          "line": 296
+        }
+      ]
+    },
+    {
+      "id": "prd_nodes",
+      "path": "metagpt/actions/write_prd_an.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_prd_an.py",
+      "sha256": "2e9239a5a0fa64e495e2b4691086d56019c325b1dc3927a749f88b258b5c0902",
+      "lines": 223,
+      "symbols": []
+    },
+    {
+      "id": "design",
+      "path": "metagpt/actions/design_api.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/design_api.py",
+      "sha256": "875c95c15e8bee2343b8e8bab0b059e52e51c3f805e431de74eeae3a20c08a60",
+      "lines": 279,
+      "symbols": [
+        {
+          "name": "WriteDesign",
+          "line": 53
+        },
+        {
+          "name": "WriteDesign.run",
+          "line": 64
+        },
+        {
+          "name": "WriteDesign._new_system_design",
+          "line": 177
+        },
+        {
+          "name": "WriteDesign._merge",
+          "line": 181
+        },
+        {
+          "name": "WriteDesign._update_system_design",
+          "line": 187
+        },
+        {
+          "name": "WriteDesign._save_data_api_design",
+          "line": 209
+        },
+        {
+          "name": "WriteDesign._save_seq_flow",
+          "line": 220
+        },
+        {
+          "name": "WriteDesign._save_mermaid_file",
+          "line": 231
+        },
+        {
+          "name": "WriteDesign._execute_api",
+          "line": 238
+        }
+      ]
+    },
+    {
+      "id": "design_nodes",
+      "path": "metagpt/actions/design_api_an.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/design_api_an.py",
+      "sha256": "4d369aab554be580cc9bcb545f6213d0a5afd49e87cfb9c772969b36d75c8409",
+      "lines": 111,
+      "symbols": []
+    },
+    {
+      "id": "tasks",
+      "path": "metagpt/actions/project_management.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/project_management.py",
+      "sha256": "1944d68f4678190d30c4364e3500b9b0a340bb699cb778d4603254299ced3ac2",
+      "lines": 201,
+      "symbols": [
+        {
+          "name": "WriteTasks",
+          "line": 46
+        },
+        {
+          "name": "WriteTasks.run",
+          "line": 52
+        },
+        {
+          "name": "WriteTasks._update_tasks",
+          "line": 134
+        },
+        {
+          "name": "WriteTasks._run_new_tasks",
+          "line": 155
+        },
+        {
+          "name": "WriteTasks._merge",
+          "line": 159
+        },
+        {
+          "name": "WriteTasks._update_requirements",
+          "line": 165
+        },
+        {
+          "name": "WriteTasks._execute_api",
+          "line": 178
+        }
+      ]
+    },
+    {
+      "id": "write_code",
+      "path": "metagpt/actions/write_code.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/write_code.py",
+      "sha256": "b85bfb3a083e947be61cf9fa7ed767d75a2110ba04f26f29a4e76e422601dd90",
+      "lines": 228,
+      "symbols": [
+        {
+          "name": "WriteCode",
+          "line": 88
+        },
+        {
+          "name": "WriteCode.write_code",
+          "line": 95
+        },
+        {
+          "name": "WriteCode.run",
+          "line": 100
+        },
+        {
+          "name": "WriteCode.get_codes",
+          "line": 168
+        }
+      ]
+    },
+    {
+      "id": "run_code",
+      "path": "metagpt/actions/run_code.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/run_code.py",
+      "sha256": "b849e7eb9f1ab5ca3c1b8ab90a9f178034eac1ea47e05dbd20a702add5e44bff",
+      "lines": 173,
+      "symbols": [
+        {
+          "name": "RunCode",
+          "line": 78
+        },
+        {
+          "name": "RunCode.run_text",
+          "line": 83
+        },
+        {
+          "name": "RunCode.run_script",
+          "line": 92
+        },
+        {
+          "name": "RunCode.run",
+          "line": 120
+        },
+        {
+          "name": "RunCode._install_via_subprocess",
+          "line": 150
+        },
+        {
+          "name": "RunCode._install_requirements",
+          "line": 154
+        },
+        {
+          "name": "RunCode._install_pytest",
+          "line": 165
+        },
+        {
+          "name": "RunCode._install_dependencies",
+          "line": 171
+        }
+      ]
+    },
+    {
+      "id": "rz",
+      "path": "metagpt/roles/di/role_zero.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/role_zero.py",
+      "sha256": "072d832e75fc90ed4b36673eea054cfe9f74145b11722312513970399d9090c4",
+      "lines": 491,
+      "symbols": [
+        {
+          "name": "RoleZero",
+          "line": 55
+        },
+        {
+          "name": "RoleZero.set_plan_and_tool",
+          "line": 103
+        },
+        {
+          "name": "RoleZero.set_tool_execution",
+          "line": 119
+        },
+        {
+          "name": "RoleZero.set_longterm_memory",
+          "line": 174
+        },
+        {
+          "name": "RoleZero._update_tool_execution",
+          "line": 195
+        },
+        {
+          "name": "RoleZero._think",
+          "line": 198
+        },
+        {
+          "name": "RoleZero.llm_cached_aask",
+          "line": 268
+        },
+        {
+          "name": "RoleZero._get_prefix",
+          "line": 276
+        },
+        {
+          "name": "RoleZero._act",
+          "line": 280
+        },
+        {
+          "name": "RoleZero._react",
+          "line": 303
+        },
+        {
+          "name": "RoleZero.format_quick_system_prompt",
+          "line": 338
+        },
+        {
+          "name": "RoleZero._quick_think",
+          "line": 342
+        },
+        {
+          "name": "RoleZero._run_commands",
+          "line": 385
+        },
+        {
+          "name": "RoleZero._is_special_command",
+          "line": 417
+        },
+        {
+          "name": "RoleZero._run_special_command",
+          "line": 420
+        },
+        {
+          "name": "RoleZero._retrieve_experience",
+          "line": 449
+        },
+        {
+          "name": "RoleZero.ask_human",
+          "line": 456
+        },
+        {
+          "name": "RoleZero.reply_to_human",
+          "line": 465
+        },
+        {
+          "name": "RoleZero._end",
+          "line": 474
+        }
+      ]
+    },
+    {
+      "id": "leader",
+      "path": "metagpt/roles/di/team_leader.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/team_leader.py",
+      "sha256": "a331cbab502865f53127726dcf97a130727767ac800575b48545ac5f25f3a683",
+      "lines": 90,
+      "symbols": [
+        {
+          "name": "TeamLeader",
+          "line": 23
+        },
+        {
+          "name": "TeamLeader._update_tool_execution",
+          "line": 37
+        },
+        {
+          "name": "TeamLeader._get_team_info",
+          "line": 45
+        },
+        {
+          "name": "TeamLeader._get_prefix",
+          "line": 55
+        },
+        {
+          "name": "TeamLeader._think",
+          "line": 60
+        },
+        {
+          "name": "TeamLeader.publish_message",
+          "line": 64
+        },
+        {
+          "name": "TeamLeader.publish_team_message",
+          "line": 75
+        },
+        {
+          "name": "TeamLeader.finish_current_task",
+          "line": 88
+        }
+      ]
+    },
+    {
+      "id": "engineer2",
+      "path": "metagpt/roles/di/engineer2.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/engineer2.py",
+      "sha256": "30dde1cf4a559af4b5e3d0faf72d401dba24e64d1acec1688f4d1fbb24887f7d",
+      "lines": 171,
+      "symbols": [
+        {
+          "name": "Engineer2",
+          "line": 32
+        },
+        {
+          "name": "Engineer2._think",
+          "line": 57
+        },
+        {
+          "name": "Engineer2._format_instruction",
+          "line": 62
+        },
+        {
+          "name": "Engineer2._update_tool_execution",
+          "line": 75
+        },
+        {
+          "name": "Engineer2._retrieve_experience",
+          "line": 109
+        },
+        {
+          "name": "Engineer2.write_new_code",
+          "line": 112
+        },
+        {
+          "name": "Engineer2._deploy_to_public",
+          "line": 144
+        },
+        {
+          "name": "Engineer2._eval_terminal_run",
+          "line": 157
+        },
+        {
+          "name": "Engineer2._end",
+          "line": 168
+        }
+      ]
+    },
+    {
+      "id": "analyst",
+      "path": "metagpt/roles/di/data_analyst.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_analyst.py",
+      "sha256": "c0e4bf154964b96498eb3f59bb728834ab0a93d20538fb946e9d5aa60b6f01db",
+      "lines": 154,
+      "symbols": [
+        {
+          "name": "DataAnalyst",
+          "line": 26
+        },
+        {
+          "name": "DataAnalyst.set_custom_tool",
+          "line": 50
+        },
+        {
+          "name": "DataAnalyst._update_tool_execution",
+          "line": 54
+        },
+        {
+          "name": "DataAnalyst.write_and_exec_code",
+          "line": 61
+        },
+        {
+          "name": "DataAnalyst._check_data",
+          "line": 127
+        },
+        {
+          "name": "DataAnalyst._run_special_command",
+          "line": 144
+        }
+      ]
+    },
+    {
+      "id": "di",
+      "path": "metagpt/roles/di/data_interpreter.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/roles/di/data_interpreter.py",
+      "sha256": "3dd0d79666e686778ee4e97b4574f7daf6c59765acdaeaeb22959dbcbf017329",
+      "lines": 190,
+      "symbols": [
+        {
+          "name": "DataInterpreter",
+          "line": 36
+        },
+        {
+          "name": "DataInterpreter.set_plan_and_tool",
+          "line": 50
+        },
+        {
+          "name": "DataInterpreter.working_memory",
+          "line": 62
+        },
+        {
+          "name": "DataInterpreter._think",
+          "line": 65
+        },
+        {
+          "name": "DataInterpreter._act",
+          "line": 86
+        },
+        {
+          "name": "DataInterpreter._plan_and_act",
+          "line": 91
+        },
+        {
+          "name": "DataInterpreter._act_on_task",
+          "line": 101
+        },
+        {
+          "name": "DataInterpreter._write_and_exec_code",
+          "line": 107
+        },
+        {
+          "name": "DataInterpreter._write_code",
+          "line": 150
+        },
+        {
+          "name": "DataInterpreter._check_data",
+          "line": 170
+        }
+      ]
+    },
+    {
+      "id": "planner",
+      "path": "metagpt/strategy/planner.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/strategy/planner.py",
+      "sha256": "b244c10de53bda6b0261893c0ea91327cac964488517effde16e0bdc1f0a776e",
+      "lines": 192,
+      "symbols": [
+        {
+          "name": "Planner",
+          "line": 58
+        },
+        {
+          "name": "Planner.__init__",
+          "line": 65
+        },
+        {
+          "name": "Planner.current_task",
+          "line": 70
+        },
+        {
+          "name": "Planner.current_task_id",
+          "line": 74
+        },
+        {
+          "name": "Planner.update_plan",
+          "line": 77
+        },
+        {
+          "name": "Planner.process_task_result",
+          "line": 102
+        },
+        {
+          "name": "Planner.ask_review",
+          "line": 119
+        },
+        {
+          "name": "Planner.confirm_task",
+          "line": 143
+        },
+        {
+          "name": "Planner.get_useful_memories",
+          "line": 155
+        },
+        {
+          "name": "Planner.get_plan_status",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "id": "notebook",
+      "path": "metagpt/actions/di/execute_nb_code.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/actions/di/execute_nb_code.py",
+      "sha256": "c07f36d42fa486262dd974e0c6cadf6790fdffcae098c47488def97a10636ced",
+      "lines": 328,
+      "symbols": [
+        {
+          "name": "RealtimeOutputNotebookClient",
+          "line": 40
+        },
+        {
+          "name": "RealtimeOutputNotebookClient.__init__",
+          "line": 43
+        },
+        {
+          "name": "RealtimeOutputNotebookClient._async_poll_output_msg",
+          "line": 47
+        },
+        {
+          "name": "RealtimeOutputNotebookClient._send_msg",
+          "line": 61
+        },
+        {
+          "name": "ExecuteNbCode",
+          "line": 69
+        },
+        {
+          "name": "ExecuteNbCode.__init__",
+          "line": 78
+        },
+        {
+          "name": "ExecuteNbCode.init_code",
+          "line": 89
+        },
+        {
+          "name": "ExecuteNbCode.set_nb_client",
+          "line": 94
+        },
+        {
+          "name": "ExecuteNbCode.build",
+          "line": 103
+        },
+        {
+          "name": "ExecuteNbCode.terminate",
+          "line": 109
+        },
+        {
+          "name": "ExecuteNbCode.reset",
+          "line": 129
+        },
+        {
+          "name": "ExecuteNbCode.add_code_cell",
+          "line": 138
+        },
+        {
+          "name": "ExecuteNbCode.add_markdown_cell",
+          "line": 141
+        },
+        {
+          "name": "ExecuteNbCode._display",
+          "line": 144
+        },
+        {
+          "name": "ExecuteNbCode.add_output_to_cell",
+          "line": 153
+        },
+        {
+          "name": "ExecuteNbCode.parse_outputs",
+          "line": 160
+        },
+        {
+          "name": "ExecuteNbCode.show_bytes_figure",
+          "line": 199
+        },
+        {
+          "name": "ExecuteNbCode.is_ipython",
+          "line": 213
+        },
+        {
+          "name": "ExecuteNbCode.run_cell",
+          "line": 225
+        },
+        {
+          "name": "ExecuteNbCode.run",
+          "line": 246
+        },
+        {
+          "name": "remove_log_and_warning_lines",
+          "line": 285
+        },
+        {
+          "name": "remove_escape_and_color_codes",
+          "line": 293
+        },
+        {
+          "name": "display_markdown",
+          "line": 301
+        }
+      ]
+    },
+    {
+      "id": "registry",
+      "path": "metagpt/tools/tool_registry.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_registry.py",
+      "sha256": "40c04eebf97dee85fca237d39d2ea3c14f6092254c8923637310ee7a8c329564",
+      "lines": 194,
+      "symbols": [
+        {
+          "name": "ToolRegistry",
+          "line": 27
+        },
+        {
+          "name": "ToolRegistry.register_tool",
+          "line": 31
+        },
+        {
+          "name": "ToolRegistry.has_tool",
+          "line": 71
+        },
+        {
+          "name": "ToolRegistry.get_tool",
+          "line": 74
+        },
+        {
+          "name": "ToolRegistry.get_tools_by_tag",
+          "line": 77
+        },
+        {
+          "name": "ToolRegistry.get_all_tools",
+          "line": 80
+        },
+        {
+          "name": "ToolRegistry.has_tool_tag",
+          "line": 83
+        },
+        {
+          "name": "ToolRegistry.get_tool_tags",
+          "line": 86
+        },
+        {
+          "name": "register_tool",
+          "line": 94
+        },
+        {
+          "name": "make_schema",
+          "line": 121
+        },
+        {
+          "name": "validate_tool_names",
+          "line": 131
+        },
+        {
+          "name": "register_tools_from_file",
+          "line": 166
+        },
+        {
+          "name": "register_tools_from_path",
+          "line": 185
+        }
+      ]
+    },
+    {
+      "id": "tool_convert",
+      "path": "metagpt/tools/tool_convert.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_convert.py",
+      "sha256": "4aef87bce21cb9203be8dac3e845197cc64354b8d4c59ccb51f1b1c62246c25e",
+      "lines": 139,
+      "symbols": [
+        {
+          "name": "convert_code_to_tool_schema",
+          "line": 9
+        },
+        {
+          "name": "convert_code_to_tool_schema_ast",
+          "line": 31
+        },
+        {
+          "name": "function_docstring_to_schema",
+          "line": 41
+        },
+        {
+          "name": "get_class_method_docstring",
+          "line": 68
+        },
+        {
+          "name": "CodeVisitor",
+          "line": 78
+        },
+        {
+          "name": "CodeVisitor.__init__",
+          "line": 81
+        },
+        {
+          "name": "CodeVisitor.visit_ClassDef",
+          "line": 85
+        },
+        {
+          "name": "CodeVisitor.visit_FunctionDef",
+          "line": 96
+        },
+        {
+          "name": "CodeVisitor.visit_AsyncFunctionDef",
+          "line": 99
+        },
+        {
+          "name": "CodeVisitor._visit_function",
+          "line": 102
+        },
+        {
+          "name": "CodeVisitor._get_function_schemas",
+          "line": 109
+        },
+        {
+          "name": "CodeVisitor._get_function_signature",
+          "line": 119
+        },
+        {
+          "name": "CodeVisitor.get_tool_schemas",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "id": "recommender",
+      "path": "metagpt/tools/tool_recommend.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/tool_recommend.py",
+      "sha256": "9929c8aee63144ea6bff92f542ab9646defd0b6572c288c2fdac05d4bbd9820d",
+      "lines": 243,
+      "symbols": [
+        {
+          "name": "ToolRecommender",
+          "line": 54
+        },
+        {
+          "name": "ToolRecommender.validate_tools",
+          "line": 66
+        },
+        {
+          "name": "ToolRecommender.recommend_tools",
+          "line": 77
+        },
+        {
+          "name": "ToolRecommender.get_recommended_tool_info",
+          "line": 111
+        },
+        {
+          "name": "ToolRecommender.recall_tools",
+          "line": 123
+        },
+        {
+          "name": "ToolRecommender.rank_tools",
+          "line": 129
+        },
+        {
+          "name": "TypeMatchToolRecommender",
+          "line": 173
+        },
+        {
+          "name": "TypeMatchToolRecommender.recall_tools",
+          "line": 180
+        },
+        {
+          "name": "BM25ToolRecommender",
+          "line": 195
+        },
+        {
+          "name": "BM25ToolRecommender.__init__",
+          "line": 204
+        },
+        {
+          "name": "BM25ToolRecommender._init_corpus",
+          "line": 208
+        },
+        {
+          "name": "BM25ToolRecommender._tokenize",
+          "line": 213
+        },
+        {
+          "name": "BM25ToolRecommender.recall_tools",
+          "line": 216
+        },
+        {
+          "name": "EmbeddingToolRecommender",
+          "line": 231
+        },
+        {
+          "name": "EmbeddingToolRecommender.__init__",
+          "line": 239
+        },
+        {
+          "name": "EmbeddingToolRecommender.recall_tools",
+          "line": 242
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "path": "metagpt/tools/libs/terminal.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/libs/terminal.py",
+      "sha256": "6818589790eb2e5d5860512f6e795498fefb219bf0ba82c4cd8b45f1a76245a2",
+      "lines": 282,
+      "symbols": [
+        {
+          "name": "Terminal",
+          "line": 17
+        },
+        {
+          "name": "Terminal.__init__",
+          "line": 25
+        },
+        {
+          "name": "Terminal._start_process",
+          "line": 47
+        },
+        {
+          "name": "Terminal._check_state",
+          "line": 60
+        },
+        {
+          "name": "Terminal.run_command",
+          "line": 67
+        },
+        {
+          "name": "Terminal.execute_in_conda_env",
+          "line": 109
+        },
+        {
+          "name": "Terminal.get_stdout_output",
+          "line": 134
+        },
+        {
+          "name": "Terminal._read_and_process_output",
+          "line": 147
+        },
+        {
+          "name": "Terminal.close",
+          "line": 177
+        },
+        {
+          "name": "Bash",
+          "line": 185
+        },
+        {
+          "name": "Bash.__init__",
+          "line": 191
+        },
+        {
+          "name": "Bash.start",
+          "line": 197
+        },
+        {
+          "name": "Bash.run",
+          "line": 201
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "path": "metagpt/tools/libs/editor.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/tools/libs/editor.py",
+      "sha256": "422ea092b540cb1d4f897a98b16bad0b9c3175195783fbc14659437ce1186048",
+      "lines": 1139,
+      "symbols": [
+        {
+          "name": "FileBlock",
+          "line": 73
+        },
+        {
+          "name": "LineNumberError",
+          "line": 80
+        },
+        {
+          "name": "Editor",
+          "line": 102
+        },
+        {
+          "name": "Editor.write",
+          "line": 116
+        },
+        {
+          "name": "Editor.read",
+          "line": 133
+        },
+        {
+          "name": "Editor._is_valid_filename",
+          "line": 161
+        },
+        {
+          "name": "Editor._is_valid_path",
+          "line": 176
+        },
+        {
+          "name": "Editor._create_paths",
+          "line": 183
+        },
+        {
+          "name": "Editor._check_current_file",
+          "line": 191
+        },
+        {
+          "name": "Editor._clamp",
+          "line": 199
+        },
+        {
+          "name": "Editor._lint_file",
+          "line": 202
+        },
+        {
+          "name": "Editor._print_window",
+          "line": 217
+        },
+        {
+          "name": "Editor._cur_file_header",
+          "line": 264
+        },
+        {
+          "name": "Editor._set_workdir",
+          "line": 269
+        },
+        {
+          "name": "Editor.open_file",
+          "line": 279
+        },
+        {
+          "name": "Editor.goto_line",
+          "line": 316
+        },
+        {
+          "name": "Editor.scroll_down",
+          "line": 335
+        },
+        {
+          "name": "Editor.scroll_up",
+          "line": 346
+        },
+        {
+          "name": "Editor.create_file",
+          "line": 357
+        },
+        {
+          "name": "Editor._append_impl",
+          "line": 373
+        },
+        {
+          "name": "Editor._insert_impl",
+          "line": 399
+        },
+        {
+          "name": "Editor._edit_impl",
+          "line": 436
+        },
+        {
+          "name": "Editor._get_indentation_info",
+          "line": 490
+        },
+        {
+          "name": "Editor._edit_file_impl",
+          "line": 509
+        },
+        {
+          "name": "Editor.edit_file_by_replace",
+          "line": 703
+        },
+        {
+          "name": "Editor._edit_file_by_replace",
+          "line": 824
+        },
+        {
+          "name": "Editor.insert_content_at_line",
+          "line": 928
+        },
+        {
+          "name": "Editor.append_file",
+          "line": 975
+        },
+        {
+          "name": "Editor.search_dir",
+          "line": 998
+        },
+        {
+          "name": "Editor.search_file",
+          "line": 1034
+        },
+        {
+          "name": "Editor.find_file",
+          "line": 1068
+        },
+        {
+          "name": "Editor._try_fix_path",
+          "line": 1096
+        },
+        {
+          "name": "Editor.similarity_search",
+          "line": 1105
+        },
+        {
+          "name": "Editor.is_large_file",
+          "line": 1135
+        }
+      ]
+    },
+    {
+      "id": "rz_utils",
+      "path": "metagpt/utils/role_zero_utils.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/role_zero_utils.py",
+      "sha256": "ad368599bb0f6001e365531999871e85d74f090ff46f5933c8a1f8c29286ec2b",
+      "lines": 174,
+      "symbols": [
+        {
+          "name": "parse_browser_actions",
+          "line": 27
+        },
+        {
+          "name": "parse_editor_result",
+          "line": 37
+        },
+        {
+          "name": "parse_images",
+          "line": 56
+        },
+        {
+          "name": "check_duplicates",
+          "line": 68
+        },
+        {
+          "name": "parse_commands",
+          "line": 98
+        },
+        {
+          "name": "get_plan_status",
+          "line": 147
+        },
+        {
+          "name": "format_terminal_output",
+          "line": 169
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "path": "metagpt/memory/memory.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/memory/memory.py",
+      "sha256": "a49c5cf8369e43ef2ac5addefd7e02a5f68e8a90030ed73439b95aff96dbf7ff",
+      "lines": 112,
+      "symbols": [
+        {
+          "name": "Memory",
+          "line": 20
+        },
+        {
+          "name": "Memory.add",
+          "line": 27
+        },
+        {
+          "name": "Memory.add_batch",
+          "line": 37
+        },
+        {
+          "name": "Memory.get_by_role",
+          "line": 41
+        },
+        {
+          "name": "Memory.get_by_content",
+          "line": 45
+        },
+        {
+          "name": "Memory.delete_newest",
+          "line": 49
+        },
+        {
+          "name": "Memory.delete",
+          "line": 59
+        },
+        {
+          "name": "Memory.clear",
+          "line": 67
+        },
+        {
+          "name": "Memory.count",
+          "line": 72
+        },
+        {
+          "name": "Memory.try_remember",
+          "line": 76
+        },
+        {
+          "name": "Memory.get",
+          "line": 80
+        },
+        {
+          "name": "Memory.find_news",
+          "line": 84
+        },
+        {
+          "name": "Memory.get_by_action",
+          "line": 94
+        },
+        {
+          "name": "Memory.get_by_actions",
+          "line": 99
+        },
+        {
+          "name": "Memory.get_by_position",
+          "line": 110
+        }
+      ]
+    },
+    {
+      "id": "long_memory",
+      "path": "metagpt/memory/role_zero_memory.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/memory/role_zero_memory.py",
+      "sha256": "3917c8a5feed0cc1a414759bdb0f265710b33bbbe7290c6753377c92bd4ee4ee",
+      "lines": 201,
+      "symbols": [
+        {
+          "name": "RoleZeroLongTermMemory",
+          "line": 24
+        },
+        {
+          "name": "RoleZeroLongTermMemory.rag_engine",
+          "line": 40
+        },
+        {
+          "name": "RoleZeroLongTermMemory._resolve_rag_engine",
+          "line": 46
+        },
+        {
+          "name": "RoleZeroLongTermMemory.add",
+          "line": 71
+        },
+        {
+          "name": "RoleZeroLongTermMemory.get",
+          "line": 81
+        },
+        {
+          "name": "RoleZeroLongTermMemory._should_use_longterm_memory_for_add",
+          "line": 97
+        },
+        {
+          "name": "RoleZeroLongTermMemory._should_use_longterm_memory_for_get",
+          "line": 102
+        },
+        {
+          "name": "RoleZeroLongTermMemory._transfer_to_longterm_memory",
+          "line": 119
+        },
+        {
+          "name": "RoleZeroLongTermMemory._get_longterm_memory_item",
+          "line": 123
+        },
+        {
+          "name": "RoleZeroLongTermMemory._add_to_longterm_memory",
+          "line": 132
+        },
+        {
+          "name": "RoleZeroLongTermMemory._fetch_longterm_memories",
+          "line": 144
+        },
+        {
+          "name": "RoleZeroLongTermMemory._get_items_from_nodes",
+          "line": 165
+        },
+        {
+          "name": "RoleZeroLongTermMemory._build_longterm_memory_query",
+          "line": 173
+        },
+        {
+          "name": "RoleZeroLongTermMemory._get_the_last_message",
+          "line": 183
+        },
+        {
+          "name": "RoleZeroLongTermMemory._is_last_message_from_user_requirement",
+          "line": 189
+        }
+      ]
+    },
+    {
+      "id": "memory_config",
+      "path": "metagpt/configs/role_zero_config.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/role_zero_config.py",
+      "sha256": "62886183fdf6ef29c7dc4df83800b9136bf8809495c922b69e634df30bc11473",
+      "lines": 11,
+      "symbols": [
+        {
+          "name": "RoleZeroConfig",
+          "line": 6
+        }
+      ]
+    },
+    {
+      "id": "exp_config",
+      "path": "metagpt/configs/exp_pool_config.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/exp_pool_config.py",
+      "sha256": "18581f887417a7f1703a2a2b5e9d2883a6223d0067d12df0e5853a48865e2d3b",
+      "lines": 25,
+      "symbols": [
+        {
+          "name": "ExperiencePoolRetrievalType",
+          "line": 8
+        },
+        {
+          "name": "ExperiencePoolConfig",
+          "line": 13
+        }
+      ]
+    },
+    {
+      "id": "exp_decorator",
+      "path": "metagpt/exp_pool/decorator.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/exp_pool/decorator.py",
+      "sha256": "469b1ee951ae47de2f2900b5abb9b795a641834295145411ba9d2c993acb5a8d",
+      "lines": 227,
+      "symbols": [
+        {
+          "name": "exp_cache",
+          "line": 29
+        },
+        {
+          "name": "ExpCacheHandler",
+          "line": 97
+        },
+        {
+          "name": "ExpCacheHandler.initialize",
+          "line": 118
+        },
+        {
+          "name": "ExpCacheHandler.fetch_experiences",
+          "line": 137
+        },
+        {
+          "name": "ExpCacheHandler.get_one_perfect_exp",
+          "line": 143
+        },
+        {
+          "name": "ExpCacheHandler.execute_function",
+          "line": 153
+        },
+        {
+          "name": "ExpCacheHandler.process_experience",
+          "line": 160
+        },
+        {
+          "name": "ExpCacheHandler.evaluate_experience",
+          "line": 170
+        },
+        {
+          "name": "ExpCacheHandler.save_experience",
+          "line": 175
+        },
+        {
+          "name": "ExpCacheHandler.choose_wrapper",
+          "line": 183
+        },
+        {
+          "name": "ExpCacheHandler._validate_params",
+          "line": 195
+        },
+        {
+          "name": "ExpCacheHandler._generate_tag",
+          "line": 199
+        },
+        {
+          "name": "ExpCacheHandler._build_context",
+          "line": 211
+        },
+        {
+          "name": "ExpCacheHandler._execute_function",
+          "line": 216
+        },
+        {
+          "name": "ExpCacheHandler._log_exp",
+          "line": 224
+        }
+      ]
+    },
+    {
+      "id": "project_repo",
+      "path": "metagpt/utils/project_repo.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/project_repo.py",
+      "sha256": "3386d0bfb8e5349f23002c3c164076e3ee2f8ffee68175c8774eb7c395ce2723",
+      "lines": 163,
+      "symbols": [
+        {
+          "name": "DocFileRepositories",
+          "line": 44
+        },
+        {
+          "name": "DocFileRepositories.__init__",
+          "line": 53
+        },
+        {
+          "name": "ResourceFileRepositories",
+          "line": 65
+        },
+        {
+          "name": "ResourceFileRepositories.__init__",
+          "line": 77
+        },
+        {
+          "name": "ProjectRepo",
+          "line": 92
+        },
+        {
+          "name": "ProjectRepo.__init__",
+          "line": 93
+        },
+        {
+          "name": "ProjectRepo.__str__",
+          "line": 109
+        },
+        {
+          "name": "ProjectRepo.requirement",
+          "line": 116
+        },
+        {
+          "name": "ProjectRepo.git_repo",
+          "line": 120
+        },
+        {
+          "name": "ProjectRepo.workdir",
+          "line": 124
+        },
+        {
+          "name": "ProjectRepo.srcs",
+          "line": 128
+        },
+        {
+          "name": "ProjectRepo.code_files_exists",
+          "line": 133
+        },
+        {
+          "name": "ProjectRepo.with_src_path",
+          "line": 142
+        },
+        {
+          "name": "ProjectRepo.src_relative_path",
+          "line": 151
+        },
+        {
+          "name": "ProjectRepo.search_project_path",
+          "line": 155
+        }
+      ]
+    },
+    {
+      "id": "file_repo",
+      "path": "metagpt/utils/file_repository.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/file_repository.py",
+      "sha256": "e7d7cd93ef7595e1e27e8899bcd7f6b8a524a390a0afb2309aaa8940435b85e6",
+      "lines": 239,
+      "symbols": [
+        {
+          "name": "FileRepository",
+          "line": 23
+        },
+        {
+          "name": "FileRepository.__init__",
+          "line": 34
+        },
+        {
+          "name": "FileRepository.save",
+          "line": 46
+        },
+        {
+          "name": "FileRepository.get_dependency",
+          "line": 66
+        },
+        {
+          "name": "FileRepository.get_changed_dependency",
+          "line": 76
+        },
+        {
+          "name": "FileRepository.get",
+          "line": 91
+        },
+        {
+          "name": "FileRepository.get_all",
+          "line": 106
+        },
+        {
+          "name": "FileRepository.workdir",
+          "line": 126
+        },
+        {
+          "name": "FileRepository.root_path",
+          "line": 134
+        },
+        {
+          "name": "FileRepository.changed_files",
+          "line": 139
+        },
+        {
+          "name": "FileRepository.all_files",
+          "line": 157
+        },
+        {
+          "name": "FileRepository.get_change_dir_files",
+          "line": 167
+        },
+        {
+          "name": "FileRepository.new_filename",
+          "line": 184
+        },
+        {
+          "name": "FileRepository.save_doc",
+          "line": 192
+        },
+        {
+          "name": "FileRepository.save_pdf",
+          "line": 205
+        },
+        {
+          "name": "FileRepository.delete",
+          "line": 224
+        }
+      ]
+    },
+    {
+      "id": "dependency",
+      "path": "metagpt/utils/dependency_file.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/dependency_file.py",
+      "sha256": "74de56268c5387eddf1abb46f0d19b5ed952eea11dd02dcf0fd71e1d0432266f",
+      "lines": 104,
+      "symbols": [
+        {
+          "name": "DependencyFile",
+          "line": 20
+        },
+        {
+          "name": "DependencyFile.__init__",
+          "line": 26
+        },
+        {
+          "name": "DependencyFile.load",
+          "line": 34
+        },
+        {
+          "name": "DependencyFile.save",
+          "line": 43
+        },
+        {
+          "name": "DependencyFile.update",
+          "line": 48
+        },
+        {
+          "name": "DependencyFile.get",
+          "line": 80
+        },
+        {
+          "name": "DependencyFile.delete_file",
+          "line": 97
+        },
+        {
+          "name": "DependencyFile.exists",
+          "line": 102
+        }
+      ]
+    },
+    {
+      "id": "common",
+      "path": "metagpt/utils/common.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/common.py",
+      "sha256": "b67233801663d80b3e9e630c8b1f0864c583db067d59971279808fd8f52f4b7f",
+      "lines": 1243,
+      "symbols": [
+        {
+          "name": "check_cmd_exists",
+          "line": 54
+        },
+        {
+          "name": "require_python_version",
+          "line": 67
+        },
+        {
+          "name": "OutputParser",
+          "line": 73
+        },
+        {
+          "name": "OutputParser.parse_blocks",
+          "line": 75
+        },
+        {
+          "name": "OutputParser.parse_code",
+          "line": 96
+        },
+        {
+          "name": "OutputParser.parse_str",
+          "line": 106
+        },
+        {
+          "name": "OutputParser.parse_file_list",
+          "line": 112
+        },
+        {
+          "name": "OutputParser.parse_python_code",
+          "line": 128
+        },
+        {
+          "name": "OutputParser.parse_data",
+          "line": 142
+        },
+        {
+          "name": "OutputParser.extract_content",
+          "line": 159
+        },
+        {
+          "name": "OutputParser.parse_data_with_mapping",
+          "line": 169
+        },
+        {
+          "name": "OutputParser.extract_struct",
+          "line": 202
+        },
+        {
+          "name": "CodeParser",
+          "line": 250
+        },
+        {
+          "name": "CodeParser.parse_block",
+          "line": 252
+        },
+        {
+          "name": "CodeParser.parse_blocks",
+          "line": 260
+        },
+        {
+          "name": "CodeParser.parse_code",
+          "line": 283
+        },
+        {
+          "name": "CodeParser.parse_str",
+          "line": 298
+        },
+        {
+          "name": "CodeParser.parse_file_list",
+          "line": 305
+        },
+        {
+          "name": "NoMoneyException",
+          "line": 323
+        },
+        {
+          "name": "NoMoneyException.__init__",
+          "line": 326
+        },
+        {
+          "name": "NoMoneyException.__str__",
+          "line": 331
+        },
+        {
+          "name": "print_members",
+          "line": 335
+        },
+        {
+          "name": "get_function_schema",
+          "line": 354
+        },
+        {
+          "name": "parse_recipient",
+          "line": 362
+        },
+        {
+          "name": "remove_comments",
+          "line": 375
+        },
+        {
+          "name": "get_class_name",
+          "line": 390
+        },
+        {
+          "name": "any_to_str",
+          "line": 395
+        },
+        {
+          "name": "any_to_str_set",
+          "line": 405
+        },
+        {
+          "name": "is_send_to",
+          "line": 423
+        },
+        {
+          "name": "any_to_name",
+          "line": 434
+        },
+        {
+          "name": "concat_namespace",
+          "line": 441
+        },
+        {
+          "name": "split_namespace",
+          "line": 451
+        },
+        {
+          "name": "auto_namespace",
+          "line": 464
+        },
+        {
+          "name": "add_affix",
+          "line": 492
+        },
+        {
+          "name": "remove_affix",
+          "line": 513
+        },
+        {
+          "name": "general_after_log",
+          "line": 539
+        },
+        {
+          "name": "read_json_file",
+          "line": 572
+        },
+        {
+          "name": "handle_unknown_serialization",
+          "line": 584
+        },
+        {
+          "name": "write_json_file",
+          "line": 601
+        },
+        {
+          "name": "read_jsonl_file",
+          "line": 612
+        },
+        {
+          "name": "add_jsonl_file",
+          "line": 626
+        },
+        {
+          "name": "read_csv_to_list",
+          "line": 636
+        },
+        {
+          "name": "import_class",
+          "line": 659
+        },
+        {
+          "name": "import_class_inst",
+          "line": 665
+        },
+        {
+          "name": "format_trackback_info",
+          "line": 671
+        },
+        {
+          "name": "serialize_decorator",
+          "line": 675
+        },
+        {
+          "name": "role_raise_decorator",
+          "line": 689
+        },
+        {
+          "name": "aread",
+          "line": 720
+        },
+        {
+          "name": "awrite",
+          "line": 736
+        },
+        {
+          "name": "read_file_block",
+          "line": 744
+        },
+        {
+          "name": "list_files",
+          "line": 761
+        },
+        {
+          "name": "parse_json_code_block",
+          "line": 778
+        },
+        {
+          "name": "remove_white_spaces",
+          "line": 786
+        },
+        {
+          "name": "aread_bin",
+          "line": 790
+        },
+        {
+          "name": "awrite_bin",
+          "line": 811
+        },
+        {
+          "name": "is_coroutine_func",
+          "line": 829
+        },
+        {
+          "name": "load_mc_skills_code",
+          "line": 833
+        },
+        {
+          "name": "encode_image",
+          "line": 843
+        },
+        {
+          "name": "decode_image",
+          "line": 859
+        },
+        {
+          "name": "extract_image_paths",
+          "line": 873
+        },
+        {
+          "name": "extract_and_encode_images",
+          "line": 880
+        },
+        {
+          "name": "log_and_reraise",
+          "line": 888
+        },
+        {
+          "name": "get_mime_type",
+          "line": 899
+        },
+        {
+          "name": "get_markdown_codeblock_type",
+          "line": 934
+        },
+        {
+          "name": "get_project_srcs_path",
+          "line": 961
+        },
+        {
+          "name": "init_python_folder",
+          "line": 971
+        },
+        {
+          "name": "get_markdown_code_block_type",
+          "line": 984
+        },
+        {
+          "name": "to_markdown_code_block",
+          "line": 1025
+        },
+        {
+          "name": "save_json_to_markdown",
+          "line": 1054
+        },
+        {
+          "name": "tool2name",
+          "line": 1090
+        },
+        {
+          "name": "new_transaction_id",
+          "line": 1121
+        },
+        {
+          "name": "log_time",
+          "line": 1134
+        },
+        {
+          "name": "check_http_endpoint",
+          "line": 1166
+        },
+        {
+          "name": "rectify_pathname",
+          "line": 1186
+        },
+        {
+          "name": "generate_fingerprint",
+          "line": 1208
+        },
+        {
+          "name": "download_model",
+          "line": 1228
+        }
+      ]
+    },
+    {
+      "id": "config",
+      "path": "metagpt/config2.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/config2.py",
+      "sha256": "e1ac0c137f04907752d4c048cdbb3238e2953ba359a29cf6e887155e44285d86",
+      "lines": 182,
+      "symbols": [
+        {
+          "name": "CLIParams",
+          "line": 30
+        },
+        {
+          "name": "CLIParams.check_project_path",
+          "line": 41
+        },
+        {
+          "name": "Config",
+          "line": 49
+        },
+        {
+          "name": "Config.from_home",
+          "line": 102
+        },
+        {
+          "name": "Config.default",
+          "line": 110
+        },
+        {
+          "name": "Config.from_llm_config",
+          "line": 126
+        },
+        {
+          "name": "Config.update_via_cli",
+          "line": 139
+        },
+        {
+          "name": "Config.extra",
+          "line": 153
+        },
+        {
+          "name": "Config.extra",
+          "line": 157
+        },
+        {
+          "name": "Config.get_openai_llm",
+          "line": 160
+        },
+        {
+          "name": "Config.get_azure_llm",
+          "line": 166
+        },
+        {
+          "name": "merge_dict",
+          "line": 173
+        }
+      ]
+    },
+    {
+      "id": "llm_config",
+      "path": "metagpt/configs/llm_config.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/configs/llm_config.py",
+      "sha256": "2b3f4c8ff46ea04a4e1bfcb393c66d60931821a3c586a729be65a2455bffaa8c",
+      "lines": 136,
+      "symbols": [
+        {
+          "name": "LLMType",
+          "line": 19
+        },
+        {
+          "name": "LLMType.__missing__",
+          "line": 48
+        },
+        {
+          "name": "LLMConfig",
+          "line": 52
+        },
+        {
+          "name": "LLMConfig.check_llm_key",
+          "line": 118
+        },
+        {
+          "name": "LLMConfig.check_timeout",
+          "line": 135
+        }
+      ]
+    },
+    {
+      "id": "base_llm",
+      "path": "metagpt/provider/base_llm.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/base_llm.py",
+      "sha256": "eadb2ec250316c88017cee64f4db4e56cc3f374b8421909274ce7ff6fd7a8276",
+      "lines": 412,
+      "symbols": [
+        {
+          "name": "BaseLLM",
+          "line": 35
+        },
+        {
+          "name": "BaseLLM.reasoning_content",
+          "line": 53
+        },
+        {
+          "name": "BaseLLM.reasoning_content",
+          "line": 57
+        },
+        {
+          "name": "BaseLLM.__init__",
+          "line": 61
+        },
+        {
+          "name": "BaseLLM._user_msg",
+          "line": 64
+        },
+        {
+          "name": "BaseLLM._user_msg_with_imgs",
+          "line": 71
+        },
+        {
+          "name": "BaseLLM._assistant_msg",
+          "line": 85
+        },
+        {
+          "name": "BaseLLM._system_msg",
+          "line": 88
+        },
+        {
+          "name": "BaseLLM.support_image_input",
+          "line": 91
+        },
+        {
+          "name": "BaseLLM.format_msg",
+          "line": 94
+        },
+        {
+          "name": "BaseLLM._system_msgs",
+          "line": 118
+        },
+        {
+          "name": "BaseLLM._default_system_msg",
+          "line": 121
+        },
+        {
+          "name": "BaseLLM._update_costs",
+          "line": 124
+        },
+        {
+          "name": "BaseLLM.get_costs",
+          "line": 142
+        },
+        {
+          "name": "BaseLLM.mask_base64_data",
+          "line": 147
+        },
+        {
+          "name": "BaseLLM.aask",
+          "line": 179
+        },
+        {
+          "name": "BaseLLM._extract_assistant_rsp",
+          "line": 212
+        },
+        {
+          "name": "BaseLLM.aask_batch",
+          "line": 215
+        },
+        {
+          "name": "BaseLLM.aask_code",
+          "line": 225
+        },
+        {
+          "name": "BaseLLM._achat_completion",
+          "line": 231
+        },
+        {
+          "name": "BaseLLM.acompletion",
+          "line": 235
+        },
+        {
+          "name": "BaseLLM._achat_completion_stream",
+          "line": 246
+        },
+        {
+          "name": "BaseLLM.acompletion_text",
+          "line": 256
+        },
+        {
+          "name": "BaseLLM.get_choice_text",
+          "line": 265
+        },
+        {
+          "name": "BaseLLM.get_choice_delta_text",
+          "line": 272
+        },
+        {
+          "name": "BaseLLM.get_choice_function",
+          "line": 276
+        },
+        {
+          "name": "BaseLLM.get_choice_function_arguments",
+          "line": 307
+        },
+        {
+          "name": "BaseLLM.messages_to_prompt",
+          "line": 316
+        },
+        {
+          "name": "BaseLLM.messages_to_dict",
+          "line": 320
+        },
+        {
+          "name": "BaseLLM.with_model",
+          "line": 324
+        },
+        {
+          "name": "BaseLLM.get_timeout",
+          "line": 329
+        },
+        {
+          "name": "BaseLLM.count_tokens",
+          "line": 332
+        },
+        {
+          "name": "BaseLLM.compress_messages",
+          "line": 340
+        }
+      ]
+    },
+    {
+      "id": "provider_registry",
+      "path": "metagpt/provider/llm_provider_registry.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/llm_provider_registry.py",
+      "sha256": "95db7c3cf720fdb37921399e67a457c8939481561add352b5c404eb01c0b9c7c",
+      "lines": 48,
+      "symbols": [
+        {
+          "name": "LLMProviderRegistry",
+          "line": 12
+        },
+        {
+          "name": "LLMProviderRegistry.__init__",
+          "line": 13
+        },
+        {
+          "name": "LLMProviderRegistry.register",
+          "line": 16
+        },
+        {
+          "name": "LLMProviderRegistry.get_provider",
+          "line": 19
+        },
+        {
+          "name": "register_provider",
+          "line": 24
+        },
+        {
+          "name": "create_llm_instance",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "id": "openai_provider",
+      "path": "metagpt/provider/openai_api.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/provider/openai_api.py",
+      "sha256": "60f35e292ad1a3fb21e488d5baba956cbb33181bbfc4eae7cfd7ce2772d42534",
+      "lines": 327,
+      "symbols": [
+        {
+          "name": "OpenAILLM",
+          "line": 58
+        },
+        {
+          "name": "OpenAILLM.__init__",
+          "line": 61
+        },
+        {
+          "name": "OpenAILLM._init_client",
+          "line": 67
+        },
+        {
+          "name": "OpenAILLM._make_client_kwargs",
+          "line": 74
+        },
+        {
+          "name": "OpenAILLM._get_proxy_params",
+          "line": 83
+        },
+        {
+          "name": "OpenAILLM._achat_completion_stream",
+          "line": 92
+        },
+        {
+          "name": "OpenAILLM._cons_kwargs",
+          "line": 138
+        },
+        {
+          "name": "OpenAILLM._achat_completion",
+          "line": 156
+        },
+        {
+          "name": "OpenAILLM.acompletion",
+          "line": 162
+        },
+        {
+          "name": "OpenAILLM.acompletion_text",
+          "line": 172
+        },
+        {
+          "name": "OpenAILLM._achat_completion_function",
+          "line": 180
+        },
+        {
+          "name": "OpenAILLM.aask_code",
+          "line": 189
+        },
+        {
+          "name": "OpenAILLM._parse_arguments",
+          "line": 205
+        },
+        {
+          "name": "OpenAILLM.get_choice_function_arguments",
+          "line": 230
+        },
+        {
+          "name": "OpenAILLM.get_choice_text",
+          "line": 265
+        },
+        {
+          "name": "OpenAILLM._calc_usage",
+          "line": 269
+        },
+        {
+          "name": "OpenAILLM._get_max_tokens",
+          "line": 282
+        },
+        {
+          "name": "OpenAILLM.amoderation",
+          "line": 290
+        },
+        {
+          "name": "OpenAILLM.atext_to_speech",
+          "line": 294
+        },
+        {
+          "name": "OpenAILLM.aspeech_to_text",
+          "line": 298
+        },
+        {
+          "name": "OpenAILLM.gen_image",
+          "line": 302
+        },
+        {
+          "name": "OpenAILLM.count_tokens",
+          "line": 323
+        }
+      ]
+    },
+    {
+      "id": "cost",
+      "path": "metagpt/utils/cost_manager.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/cost_manager.py",
+      "sha256": "9097f63062186b7dc388b4bd78ec3c21e1c52563193c812299b292a4c333bc1a",
+      "lines": 149,
+      "symbols": [
+        {
+          "name": "Costs",
+          "line": 18
+        },
+        {
+          "name": "CostManager",
+          "line": 25
+        },
+        {
+          "name": "CostManager.update_cost",
+          "line": 35
+        },
+        {
+          "name": "CostManager.get_total_prompt_tokens",
+          "line": 62
+        },
+        {
+          "name": "CostManager.get_total_completion_tokens",
+          "line": 71
+        },
+        {
+          "name": "CostManager.get_total_cost",
+          "line": 80
+        },
+        {
+          "name": "CostManager.get_costs",
+          "line": 89
+        },
+        {
+          "name": "TokenCostManager",
+          "line": 94
+        },
+        {
+          "name": "TokenCostManager.update_cost",
+          "line": 97
+        },
+        {
+          "name": "FireworksCostManager",
+          "line": 111
+        },
+        {
+          "name": "FireworksCostManager.model_grade_token_costs",
+          "line": 112
+        },
+        {
+          "name": "FireworksCostManager.update_cost",
+          "line": 130
+        }
+      ]
+    },
+    {
+      "id": "report",
+      "path": "metagpt/utils/report.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/metagpt/utils/report.py",
+      "sha256": "0ccede93f26fa3daa1229ace12c097465d22fb88bfc288ecdb0173ef01c41d7e",
+      "lines": 330,
+      "symbols": [
+        {
+          "name": "BlockType",
+          "line": 31
+        },
+        {
+          "name": "ResourceReporter",
+          "line": 49
+        },
+        {
+          "name": "ResourceReporter.report",
+          "line": 58
+        },
+        {
+          "name": "ResourceReporter.async_report",
+          "line": 67
+        },
+        {
+          "name": "ResourceReporter.set_report_fn",
+          "line": 77
+        },
+        {
+          "name": "ResourceReporter.set_async_report_fn",
+          "line": 90
+        },
+        {
+          "name": "ResourceReporter._report",
+          "line": 103
+        },
+        {
+          "name": "ResourceReporter._async_report",
+          "line": 112
+        },
+        {
+          "name": "ResourceReporter._format_data",
+          "line": 132
+        },
+        {
+          "name": "ResourceReporter.__enter__",
+          "line": 153
+        },
+        {
+          "name": "ResourceReporter.__exit__",
+          "line": 157
+        },
+        {
+          "name": "ResourceReporter.__aenter__",
+          "line": 161
+        },
+        {
+          "name": "ResourceReporter.__aexit__",
+          "line": 168
+        },
+        {
+          "name": "ResourceReporter._llm_stream_report",
+          "line": 176
+        },
+        {
+          "name": "ResourceReporter.wait_llm_stream_report",
+          "line": 183
+        },
+        {
+          "name": "TerminalReporter",
+          "line": 192
+        },
+        {
+          "name": "TerminalReporter.report",
+          "line": 202
+        },
+        {
+          "name": "TerminalReporter.async_report",
+          "line": 206
+        },
+        {
+          "name": "BrowserReporter",
+          "line": 211
+        },
+        {
+          "name": "BrowserReporter.report",
+          "line": 219
+        },
+        {
+          "name": "BrowserReporter.async_report",
+          "line": 225
+        },
+        {
+          "name": "ServerReporter",
+          "line": 232
+        },
+        {
+          "name": "ServerReporter.report",
+          "line": 237
+        },
+        {
+          "name": "ServerReporter.async_report",
+          "line": 241
+        },
+        {
+          "name": "ObjectReporter",
+          "line": 246
+        },
+        {
+          "name": "ObjectReporter.report",
+          "line": 249
+        },
+        {
+          "name": "ObjectReporter.async_report",
+          "line": 253
+        },
+        {
+          "name": "TaskReporter",
+          "line": 258
+        },
+        {
+          "name": "ThoughtReporter",
+          "line": 264
+        },
+        {
+          "name": "FileReporter",
+          "line": 270
+        },
+        {
+          "name": "FileReporter.report",
+          "line": 277
+        },
+        {
+          "name": "FileReporter.async_report",
+          "line": 286
+        },
+        {
+          "name": "NotebookReporter",
+          "line": 296
+        },
+        {
+          "name": "DocsReporter",
+          "line": 302
+        },
+        {
+          "name": "EditorReporter",
+          "line": 308
+        },
+        {
+          "name": "GalleryReporter",
+          "line": 314
+        },
+        {
+          "name": "GalleryReporter.report",
+          "line": 324
+        },
+        {
+          "name": "GalleryReporter.async_report",
+          "line": 328
+        }
+      ]
+    },
+    {
+      "id": "tests_env",
+      "path": "tests/metagpt/test_environment.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/tests/metagpt/test_environment.py",
+      "sha256": "6d79ec42e9d5aebc4be96a2e4cc3e85995b62ad8e0512831283de1afd6b58ab8",
+      "lines": 139,
+      "symbols": [
+        {
+          "name": "MockEnv",
+          "line": 32
+        },
+        {
+          "name": "MockEnv.publish_message",
+          "line": 33
+        },
+        {
+          "name": "env",
+          "line": 49
+        },
+        {
+          "name": "test_add_role",
+          "line": 55
+        },
+        {
+          "name": "test_get_roles",
+          "line": 63
+        },
+        {
+          "name": "test_publish_and_process_message",
+          "line": 73
+        },
+        {
+          "name": "test_env",
+          "line": 119
+        }
+      ]
+    },
+    {
+      "id": "tests_team",
+      "path": "tests/metagpt/test_team.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/tests/metagpt/test_team.py",
+      "sha256": "c8d07c0b2ac07246af3afde878585db9ced70881d216f82cecc4db0be287e84f",
+      "lines": 13,
+      "symbols": [
+        {
+          "name": "test_team",
+          "line": 9
+        }
+      ]
+    },
+    {
+      "id": "tests_leader",
+      "path": "tests/metagpt/roles/di/test_team_leader.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/tests/metagpt/roles/di/test_team_leader.py",
+      "sha256": "c3ee6d3307f2d21990273b18fa93c2413f5880dd7713a398520fcb05697089e4",
+      "lines": 173,
+      "symbols": [
+        {
+          "name": "env",
+          "line": 17
+        },
+        {
+          "name": "test_plan_for_software_requirement",
+          "line": 41
+        },
+        {
+          "name": "test_plan_for_data_related_requirement",
+          "line": 61
+        },
+        {
+          "name": "test_plan_for_mixed_requirement",
+          "line": 87
+        },
+        {
+          "name": "test_plan_update_and_routing",
+          "line": 114
+        },
+        {
+          "name": "test_reply_to_human",
+          "line": 143
+        }
+      ]
+    },
+    {
+      "id": "tests_recovery",
+      "path": "tests/metagpt/serialize_deserialize/test_team.py",
+      "url": "https://github.com/FoundationAgents/MetaGPT/blob/11cdf466d042aece04fc6cfd13b28e1a70341b1f/tests/metagpt/serialize_deserialize/test_team.py",
+      "sha256": "70f520b6c658d7f2c6dd469fbd646291c0a573610bf7c93777d43f9f758ebba2",
+      "lines": 167,
+      "symbols": [
+        {
+          "name": "test_team_deserialize",
+          "line": 25
+        },
+        {
+          "name": "mock_team_serialize",
+          "line": 50
+        },
+        {
+          "name": "test_team_serdeser_save",
+          "line": 56
+        },
+        {
+          "name": "test_team_recover",
+          "line": 73
+        },
+        {
+          "name": "test_team_recover_save",
+          "line": 99
+        },
+        {
+          "name": "test_team_recover_multi_roles_save",
+          "line": 125
+        },
+        {
+          "name": "test_context",
+          "line": 151
+        }
+      ]
+    }
+  ]
+}

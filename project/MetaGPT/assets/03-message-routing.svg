@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="消息传播有两道门：先投递，再决定是否行动">
+<title>消息传播有两道门：先投递，再决定是否行动</title><desc>Environment.publish_message → Role.msg_buffer → Role._observe；下方给出四种实际语义。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#547084"/></marker></defs>
+<style>text { font-family: 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; fill:#142d44; } .muted {fill:#547084;}</style>
+<rect width="1280" height="720" fill="#f5f8fc"/>
+<rect x="0" y="0" width="12" height="720" fill="#087f8c"/>
+
+<text x="48" y="53" font-size="29" font-weight="700" text-anchor="start" style="fill:#142d44">消息传播有两道门：先投递，再决定是否行动</text>
+<text x="48" y="88" font-size="16" font-weight="400" text-anchor="start" style="fill:#547084">Environment.publish_message → Role.msg_buffer → Role._observe；下方给出四种实际语义。</text>
+<rect x="48" y="145" width="318" height="151" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="159" width="5" height="123" rx="2" fill="#4666cc"/>
+<text x="68" y="179" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">Message</text>
+<text x="68" y="209" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">send_to：接收地址</text>
+<text x="68" y="236" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">cause_by：生产动作类型</text>
+<text x="68" y="263" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">sent_from：发送者</text>
+<rect x="420" y="145" width="357" height="151" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="420" y="159" width="5" height="123" rx="2" fill="#087f8c"/>
+<text x="440" y="179" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">门 1：地址路由</text>
+<text x="440" y="209" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">is_send_to(message, addresses)</text>
+<text x="440" y="236" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">命中角色地址，或含 &lt;all&gt;</text>
+<text x="440" y="263" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">成功 → 放入该角色队列</text>
+<rect x="832" y="145" width="400" height="151" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="832" y="159" width="5" height="123" rx="2" fill="#4666cc"/>
+<text x="852" y="179" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">门 2：行动触发</text>
+<text x="852" y="209" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">cause_by ∈ watch，或名字 ∈ send_to</text>
+<text x="852" y="236" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">并且不在已记住的消息中</text>
+<text x="852" y="263" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">成功 → rc.news → react</text>
+<path d="M 366 220 L 420 220" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 777 220 L 832 220" fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="342" width="571" height="119" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="356" width="5" height="91" rx="2" fill="#087f8c"/>
+<text x="68" y="376" font-size="21" font-weight="700" text-anchor="start" style="fill:#087f8c">广播 + 订阅匹配</text>
+<text x="68" y="406" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">所有角色可收到；只有匹配的角色进入 news。</text>
+<text x="68" y="433" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">例：WritePRD → watch={WritePRD} 的架构师。</text>
+<rect x="655" y="342" width="577" height="119" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="655" y="356" width="5" height="91" rx="2" fill="#4666cc"/>
+<text x="675" y="376" font-size="21" font-weight="700" text-anchor="start" style="fill:#4666cc">定向到角色名字</text>
+<text x="675" y="406" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">显式 send_to={Bob} 可绕过 watch 类型筛选。</text>
+<text x="675" y="433" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">定向到类地址本身不具有这个名字特例。</text>
+<rect x="48" y="497" width="571" height="119" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="48" y="511" width="5" height="91" rx="2" fill="#a56812"/>
+<text x="68" y="531" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56812">仅仅知情</text>
+<text x="68" y="561" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">observe_all_msg_from_buffer=True：保存整批消息。</text>
+<text x="68" y="588" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">未匹配的消息可进入 memory，仍不进入 news。</text>
+<rect x="655" y="497" width="577" height="119" rx="12" fill="white" stroke="#d4e0eb" stroke-width="1.5"/><rect x="655" y="511" width="5" height="91" rx="2" fill="#b74846"/>
+<text x="675" y="531" font-size="21" font-weight="700" text-anchor="start" style="fill:#b74846">去重的边界</text>
+<text x="675" y="561" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">按 Message 对象相等性过滤，不是内容语义去重。</text>
+<text x="675" y="588" font-size="16" font-weight="400" text-anchor="start" style="fill:#142d44">相同文本换一个消息 ID，仍可能成为新事件。</text>
+<text x="48" y="692" font-size="15" font-weight="400" text-anchor="start" style="fill:#547084">本图对应普通 Environment 与基类 _observe；MGX 还会增加 TeamLeader 收件人和公开广播。</text>
+</svg>
