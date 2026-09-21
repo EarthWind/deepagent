@@ -1,0 +1,170 @@
+{
+  "upstreamCommit": "4a56a43f39c2c75f941220989d4c65db006ee531",
+  "node": "v24.18.0",
+  "model": "scripted; no provider requests",
+  "scope": "Unmodified upstream executable bodies after TS erasure/import rewiring; explicit dependency doubles in source-loader.mjs",
+  "tests": [
+    {
+      "name": "streamed JSON → approval → execution → tool result → final answer",
+      "passed": true
+    },
+    {
+      "name": "unlisted tool executes without an approval callback",
+      "passed": true
+    },
+    {
+      "name": "approval absent or denied → no side effect, error fed back to model",
+      "passed": true
+    },
+    {
+      "name": "beforeTool block happens before approval; disabled tool cannot execute",
+      "passed": true
+    },
+    {
+      "name": "adjacent parallel tools overlap, sequential tool is a barrier",
+      "passed": true
+    },
+    {
+      "name": "maxIterations limits turns, successful terminal tool ends without another request",
+      "passed": true
+    },
+    {
+      "name": "malformed tool JSON does not execute; tool exception becomes error result",
+      "passed": true
+    },
+    {
+      "name": "prepareTurn projects model context without rewriting runtime transcript",
+      "passed": true
+    },
+    {
+      "name": "classified overflow retries once with a smaller context",
+      "passed": true
+    },
+    {
+      "name": "restore resets status and retains listeners and tool registrations",
+      "passed": true
+    },
+    {
+      "name": "VS Code forces callback for UI-governed tools; live toggles decide",
+      "passed": true
+    },
+    {
+      "name": "Plan command guard blocks common mutations but is not shell isolation",
+      "passed": true
+    },
+    {
+      "name": "real editor preserves CRLF, rejects ambiguous match, accepts absolute paths",
+      "passed": true
+    }
+  ],
+  "trace": [
+    {
+      "type": "run-started"
+    },
+    {
+      "type": "message-added"
+    },
+    {
+      "type": "turn-started",
+      "iteration": 1
+    },
+    {
+      "type": "message-added"
+    },
+    {
+      "type": "assistant-message",
+      "iteration": 1
+    },
+    {
+      "type": "approval",
+      "tool": "inspect",
+      "approved": true
+    },
+    {
+      "type": "tool-started",
+      "iteration": 1
+    },
+    {
+      "type": "tool-finished",
+      "iteration": 1
+    },
+    {
+      "type": "message-added"
+    },
+    {
+      "type": "turn-finished",
+      "iteration": 1
+    },
+    {
+      "type": "turn-started",
+      "iteration": 2
+    },
+    {
+      "type": "assistant-text-delta",
+      "iteration": 2
+    },
+    {
+      "type": "message-added"
+    },
+    {
+      "type": "assistant-message",
+      "iteration": 2
+    },
+    {
+      "type": "turn-finished",
+      "iteration": 2
+    },
+    {
+      "type": "run-finished"
+    },
+    {
+      "type": "parallel_order",
+      "order": [
+        "readA:start",
+        "readB:start",
+        "readA:end",
+        "readB:end",
+        "write",
+        "after"
+      ]
+    }
+  ],
+  "loadedSources": [
+    {
+      "path": "sdk/packages/shared/src/llms/tokens.ts",
+      "sha256": "2a48aee30d3447043f9bff3223892dee9f089d22f521fb057cfbb070d0445dcf"
+    },
+    {
+      "path": "sdk/packages/shared/src/llms/model-options.ts",
+      "sha256": "dd5c5f9b5bbc3dd944589762220ebe4ca05eca6a9cf9773fca92446e79ec8c81"
+    },
+    {
+      "path": "sdk/packages/shared/src/parse/object.ts",
+      "sha256": "446412a0892ab0d99a205b57f9a02dd448048411d3d54118831079f3c584a854"
+    },
+    {
+      "path": "sdk/packages/shared/src/parse/string.ts",
+      "sha256": "249589d1c8e8372b5885ac14ae685a1c918aa5959c8853cd66fe58908c1a5eb6"
+    },
+    {
+      "path": "sdk/packages/agents/src/agent-runtime.ts",
+      "sha256": "0fbabc1ca5de043ed41fd9c383184de6edd72c2c5beda5bd49332102f2890adf"
+    },
+    {
+      "path": "apps/vscode/src/sdk/sdk-tool-policies.ts",
+      "sha256": "be4aa35885926a6223615a405970d852a3c56be80a8db14a7a852b4156cf0619"
+    },
+    {
+      "path": "sdk/packages/core/src/extensions/tools/command-guard.ts",
+      "sha256": "f56d4deb3e5ba8ea0def770c50ebfa2387d70fe36087765153238746da527132"
+    },
+    {
+      "path": "sdk/packages/core/src/extensions/tools/executors/line-endings.ts",
+      "sha256": "ca4d138602bae6b90c5bb3abeee2a26806275dff2e13213105f3dc3f7cd0ee21"
+    },
+    {
+      "path": "sdk/packages/core/src/extensions/tools/executors/editor.ts",
+      "sha256": "8c787421b28c5abe9cfbcd66a1d8135cd02766ba32c6900bc3327ff240f95986"
+    }
+  ]
+}

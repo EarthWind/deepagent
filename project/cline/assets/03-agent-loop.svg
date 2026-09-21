@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="755" viewBox="0 0 1280 755" role="img" aria-label="AgentRuntime：生成、工具执行与终止条件">
+<title>AgentRuntime：生成、工具执行与终止条件</title><desc>iteration 是循环计数；一次 iteration 内可以包含 provider 重试或 overflow 恢复请求。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#557084"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#152d42}</style>
+<rect width="1280" height="755" fill="#f3f7fa"/>
+<rect width="10" height="755" fill="#087e88"/>
+<text x="48" y="53" font-size="28" font-weight="700" text-anchor="start" style="fill:#152d42">AgentRuntime：生成、工具执行与终止条件</text>
+<text x="48" y="89" font-size="16" font-weight="400" text-anchor="start" style="fill:#557084">iteration 是循环计数；一次 iteration 内可以包含 provider 重试或 overflow 恢复请求。</text>
+<g data-card="true"><rect x="48" y="135" width="342" height="137" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="149" width="5" height="109" rx="2" fill="#4a61ba"/>
+<text x="68" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">开始 run</text>
+<text x="68" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">重置本轮状态与 usage</text>
+<text x="68" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">保留历史；追加输入</text>
+<text x="68" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">beforeRun / run-started</text>
+</g>
+<g data-card="true"><rect x="469" y="135" width="342" height="137" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="469" y="149" width="5" height="109" rx="2" fill="#087e88"/>
+<text x="489" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">准备并请求模型</text>
+<text x="489" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">prepareTurn → beforeModel</text>
+<text x="489" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">stream：文本 / 工具 / usage</text>
+<text x="489" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">完成后组装 assistant message</text>
+</g>
+<g data-card="true"><rect x="890" y="135" width="342" height="137" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="890" y="149" width="5" height="109" rx="2" fill="#a56b16"/>
+<text x="910" y="168" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56b16">检查工具与完成状态</text>
+<text x="910" y="200" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">无工具：结束或追加提醒</text>
+<text x="910" y="227" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">截断 / 空响应：错误分支</text>
+<text x="910" y="254" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">有工具：进入执行管道</text>
+</g>
+<path d="M390 203 L469 203" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M811 203 L890 203" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1060 272 L1060 340" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="890" y="340" width="342" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="890" y="354" width="5" height="116" rx="2" fill="#087e88"/>
+<text x="910" y="373" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">准备与执行工具</text>
+<text x="910" y="405" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">beforeTool → policy → approval</text>
+<text x="910" y="432" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">顺序执行 / 相邻并行组</text>
+<text x="910" y="459" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">异常转换为 tool-result error</text>
+</g>
+<g data-card="true"><rect x="469" y="340" width="342" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="469" y="354" width="5" height="116" rx="2" fill="#4a61ba"/>
+<text x="489" y="373" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">写回结果</text>
+<text x="489" y="405" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">按调用顺序追加 tool results</text>
+<text x="489" y="432" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">再追加 hook 上下文</text>
+<text x="489" y="459" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">非终止工具 → 下一 iteration</text>
+</g>
+<path d="M890 412 L811 412" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M640 340 L640 272" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640.0" y="296.0" font-size="15" font-weight="400" text-anchor="middle" style="fill:#557084">继续</text>
+<g data-card="true"><rect x="48" y="340" width="342" height="144" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="354" width="5" height="116" rx="2" fill="#af4d4b"/>
+<text x="68" y="373" font-size="21" font-weight="700" text-anchor="start" style="fill:#af4d4b">其他停止条件</text>
+<text x="68" y="405" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">abort / hook stop → aborted</text>
+<text x="68" y="432" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">迭代上限 / 不可恢复错 → failed</text>
+<text x="68" y="459" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">成功完成工具 → completed</text>
+</g>
+<g data-card="true"><rect x="48" y="543" width="1184" height="125" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="557" width="5" height="97" rx="2" fill="#a56b16"/>
+<text x="68" y="576" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56b16">本次固定源码的 VS Code 默认</text>
+<text x="68" y="608" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">maxIterations 未设置；不暴露旧式完成工具，最终文字响应可结束本轮。</text>
+<text x="68" y="635" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">completed 只表示运行时完成；需求验收仍需要测试、产物与实际观察。</text>
+</g>
+<text x="48" y="729" font-size="15" font-weight="400" text-anchor="start" style="fill:#557084">离线实验覆盖：参数组装、拒绝、异常、并行屏障、迭代上限、完成工具、投影、恢复与 restore。</text>
+</svg>

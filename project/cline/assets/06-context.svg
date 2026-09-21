@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="765" viewBox="0 0 1280 765" role="img" aria-label="上下文：持久记录、请求投影和压缩各有职责">
+<title>上下文：持久记录、请求投影和压缩各有职责</title><desc>prepareTurn 返回本次模型请求的 messages；它不会直接替换底层 AgentRuntime 的历史消息。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#557084"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#152d42}</style>
+<rect width="1280" height="765" fill="#f3f7fa"/>
+<rect width="10" height="765" fill="#087e88"/>
+<text x="48" y="53" font-size="28" font-weight="700" text-anchor="start" style="fill:#152d42">上下文：持久记录、请求投影和压缩各有职责</text>
+<text x="48" y="89" font-size="16" font-weight="400" text-anchor="start" style="fill:#557084">prepareTurn 返回本次模型请求的 messages；它不会直接替换底层 AgentRuntime 的历史消息。</text>
+<g data-card="true"><rect x="48" y="133" width="354" height="148" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="147" width="5" height="120" rx="2" fill="#4a61ba"/>
+<text x="68" y="166" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">对话记录</text>
+<text x="68" y="198" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">用户 / assistant / tool results</text>
+<text x="68" y="225" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">用于继续运行、回放与审计</text>
+<text x="68" y="252" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">snapshot / restore 管理消息状态</text>
+</g>
+<g data-card="true"><rect x="463" y="133" width="354" height="148" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="463" y="147" width="5" height="120" rx="2" fill="#087e88"/>
+<text x="483" y="166" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">本次请求投影</text>
+<text x="483" y="198" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">prepareTurn → beforeModel</text>
+<text x="483" y="225" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">system + messages + tools</text>
+<text x="483" y="252" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">模型实际看到的输入</text>
+</g>
+<g data-card="true"><rect x="878" y="133" width="354" height="148" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="878" y="147" width="5" height="120" rx="2" fill="#a56b16"/>
+<text x="898" y="166" font-size="21" font-weight="700" text-anchor="start" style="fill:#a56b16">预算判断</text>
+<text x="898" y="198" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">模型输入限制 / 上下文窗口</text>
+<text x="898" y="225" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">字符估算 + 上次真实 input usage</text>
+<text x="898" y="252" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">system / tools 同样消耗预算</text>
+</g>
+<path d="M402 207 L463 207" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M817 207 L878 207" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1055 281 L1055 346" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="668" y="346" width="564" height="156" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="668" y="360" width="5" height="128" rx="2" fill="#087e88"/>
+<text x="688" y="379" font-size="21" font-weight="700" text-anchor="start" style="fill:#087e88">Core 压缩管道（需启用）</text>
+<text x="688" y="411" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">agentic：模型摘要 + 近期内容</text>
+<text x="688" y="438" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">basic：确定性投影 / 裁剪 / 活动摘要</text>
+<text x="688" y="465" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">维护 compaction state；失败有回退路径</text>
+</g>
+<g data-card="true"><rect x="48" y="346" width="564" height="156" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="360" width="5" height="128" rx="2" fill="#af4d4b"/>
+<text x="68" y="379" font-size="21" font-weight="700" text-anchor="start" style="fill:#af4d4b">provider 超限恢复</text>
+<text x="68" y="411" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">每 run 最多一次自动恢复</text>
+<text x="68" y="438" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">请求必须实际变小，再次超限则失败</text>
+<text x="68" y="465" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">系统提示和当前输入过大时可能无历史可压缩</text>
+</g>
+<path d="M668 424 L612 424" fill="none" stroke="#557084" stroke-width="2" marker-end="url(#arrow)"/>
+<g data-card="true"><rect x="48" y="560" width="1184" height="116" rx="12" fill="white" stroke="#d3dfe8" stroke-width="1.5"/><rect x="48" y="574" width="5" height="88" rx="2" fill="#4a61ba"/>
+<text x="68" y="593" font-size="21" font-weight="700" text-anchor="start" style="fill:#4a61ba">预算常量不能直接当作完整算法</text>
+<text x="68" y="625" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">trigger ratio=0.9；普通 target ratio=0.7；近期默认保留预算 20k，实际受目标限制。</text>
+<text x="68" y="652" font-size="16" font-weight="400" text-anchor="start" style="fill:#152d42">压缩有信息损失；限制附件和工具输出、按需读文件仍然必要。</text>
+</g>
+<text x="48" y="739" font-size="15" font-weight="400" text-anchor="start" style="fill:#557084">离线验证了请求投影与已分类 overflow 分支；未调用真实总结模型或供应商 tokenizer。</text>
+</svg>

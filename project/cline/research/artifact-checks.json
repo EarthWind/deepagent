@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "issues": [],
+  "sourceFiles": 48,
+  "diagrams": 8,
+  "chapters": 19,
+  "chineseCharacters": 8858,
+  "localAndRemoteLinksCheckedForLocalResolution": 271,
+  "runtimeTestGroups": 13,
+  "readmeSha256": "42b83a496c51dd8f92fb8e11947d048cd173d71c151fcd0cf0603a53ebe106ce",
+  "htmlSha256": "7e40a9b2f4354251d56e02401dafa9cc48bb046f4ce84d4bf60f6416f9fbed01"
+}
