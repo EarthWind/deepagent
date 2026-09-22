@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860" role="img" aria-labelledby="title desc">
+<title id="title">编辑工具的终点，是宿主确认后的真实文件</title><desc id="desc">IDE 与 CLI 共用部分字符串编辑算法，但审批、写盘和完成时机不同。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="860" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 06</text>
+<text x="44" y="101" font-size="32" font-weight="800">编辑工具的终点，是宿主确认后的真实文件</text>
+<text x="44" y="135" class="small">IDE 与 CLI 共用部分字符串编辑算法，但审批、写盘和完成时机不同。</text>
+<text x="44" y="185" class="label" style="fill:#147a60">IDE 路径</text>
+<rect x="44" y="207" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="247" class="card-title" style="fill:#147a60">读取与计算</text>
+<text x="64" y="284" class="body">重新读取当前文件</text>
+<text x="64" y="313" class="body">重新校验 MultiEdit</text>
+<text x="64" y="342" class="body">计算新内容，提交 apply</text>
+<rect x="466" y="207" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="486" y="247" class="card-title" style="fill:#147a60">ApplyManager</text>
+<text x="486" y="284" class="body">SEARCH/REPLACE → 即时 Diff</text>
+<text x="486" y="313" class="body">代码块 → 确定性 / Diff / LLM</text>
+<text x="486" y="342" class="body">保留原始内容供审阅</text>
+<rect x="888" y="207" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="908" y="247" class="card-title" style="fill:#147a60">Diff 生命周期</text>
+<text x="908" y="284" class="body">streaming → done → closed</text>
+<text x="908" y="313" class="body">接受 / 拒绝 / 自动接受</text>
+<text x="908" y="342" class="body">closed 后写结果，再续跑</text>
+<polyline points="392,288 466,288" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,288 888,288" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="44" y="428" class="label" style="fill:#3462a3">CLI 路径</text>
+<rect x="44" y="450" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="466" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="64" y="490" class="card-title" style="fill:#3462a3">preprocess</text>
+<text x="64" y="527" class="body">路径 realpath + 曾读取检查</text>
+<text x="64" y="556" class="body">在原内容上顺序计算编辑</text>
+<text x="64" y="585" class="body">生成 Diff 预览</text>
+<rect x="466" y="450" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="466" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="486" y="490" class="card-title" style="fill:#a26918">权限检查</text>
+<text x="486" y="527" class="body">允许 / 询问 / 排除</text>
+<text x="486" y="556" class="body">预计算内容等待审批</text>
+<text x="486" y="585" class="body">用户可在等待时改动文件</text>
+<rect x="888" y="450" width="348" height="162" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="466" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="908" y="490" class="card-title" style="fill:#3462a3">run / writeFileSync</text>
+<text x="908" y="527" class="body">写入预计算的新内容</text>
+<text x="908" y="556" class="body">结果写入调用状态</text>
+<text x="908" y="585" class="body">模型进入下一轮</text>
+<polyline points="392,531 466,531" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,531 888,531" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="44" y="658" width="1192" height="89" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="674" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="64" y="698" class="card-title" style="fill:#a26918">二次开发建议：写入前核对版本或内容摘要，并按文件串行化写操作</text>
+<text x="64" y="735" class="body">字符串级 all-or-error 不等于磁盘原子写入、跨文件事务或对并发修改的保护。</text>
+<rect x="44" y="769" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="798" class="small">编辑成功与测试通过是两种证据；应让测试输出和最终 Diff 一起进入任务验收。</text>
+<text x="44" y="842" class="small">原创源码关系图 · 5522c6f44ca0 · S38–S43 / S56–S57 · 非产品截图 / 非性能测量</text>
+</svg>

@@ -1,0 +1,15 @@
+# Structure example only. Replace both placeholders with installed models.
+# No model service was started or evaluated during this research.
+name: Local Engineering Agent
+version: 1.0.0
+schema: v1
+models:
+  - name: Local Chat
+    provider: ollama
+    model: YOUR_TOOL_CAPABLE_MODEL
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+  - name: Local Completion
+    provider: ollama
+    model: YOUR_COMPLETION_MODEL
+    roles: [autocomplete]

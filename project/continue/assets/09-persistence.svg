@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+<title id="title">会话恢复与任务恢复，是不同层次</title><desc id="desc">Continue 保存会话 JSON 与摘要；恢复消息不能自动重建进程、网络请求和文件副作用。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="760" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 09</text>
+<text x="44" y="101" font-size="32" font-weight="800">会话恢复与任务恢复，是不同层次</text>
+<text x="44" y="135" class="small">Continue 保存会话 JSON 与摘要；恢复消息不能自动重建进程、网络请求和文件副作用。</text>
+<rect x="44" y="188" width="348" height="304" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="204" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="228" class="card-title" style="fill:#147a60">持久化的内容</text>
+<text x="64" y="265" class="body">sessionId / title / workspace</text>
+<text x="64" y="294" class="body">history / toolCallStates</text>
+<text x="64" y="323" class="body">conversationSummary</text>
+<text x="64" y="352" class="body">模型信息 / usage（若有）</text>
+<text x="64" y="381" class="body"></text>
+<text x="64" y="410" class="body">单个会话 JSON + sessions.json</text>
+<rect x="466" y="188" width="348" height="304" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="204" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="486" y="228" class="card-title" style="fill:#3462a3">恢复后再次生成</text>
+<text x="486" y="265" class="body">读取历史</text>
+<text x="486" y="294" class="body">依据摘要构造模型视图</text>
+<text x="486" y="323" class="body">重新装配配置和工具</text>
+<text x="486" y="352" class="body">发起新一轮模型请求</text>
+<text x="486" y="381" class="body"></text>
+<text x="486" y="410" class="body">上下文连续性</text>
+<rect x="888" y="188" width="348" height="304" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="204" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="908" y="228" class="card-title" style="fill:#a26918">外部环境要重新确认</text>
+<text x="908" y="265" class="body">文件是否又被修改</text>
+<text x="908" y="294" class="body">终端进程是否仍在运行</text>
+<text x="908" y="323" class="body">命令是否已经执行</text>
+<text x="908" y="352" class="body">MCP 外部操作是否成功</text>
+<text x="908" y="381" class="body"></text>
+<text x="908" y="410" class="body">副作用与幂等性</text>
+<polyline points="392,330 466,330" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,330 888,330" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="831" y="313" class="label">检查</text>
+<rect x="44" y="542" width="1192" height="111" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="558" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="582" class="card-title" style="fill:#147a60">建议的生产增强：执行日志 + 原子会话写入 + 工具幂等键 + 文件版本检查 + 验收记录</text>
+<text x="64" y="619" class="body">这些是本文的工程建议，不应被误读为 Continue 当前已经实现的 durable workflow 能力。</text>
+<rect x="44" y="669" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="698" class="small">观测重点：任务成功率、工具错误率、审批等待、上下文开销、编辑接受率和最终测试结果。</text>
+<text x="44" y="742" class="small">原创源码关系图 · 5522c6f44ca0 · S26–S27 / S53–S55 · 非产品截图 / 非性能测量</text>
+</svg>

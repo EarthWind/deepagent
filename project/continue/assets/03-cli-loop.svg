@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="810" viewBox="0 0 1280 810" role="img" aria-labelledby="title desc">
+<title id="title">CLI Agent：一次 while 迭代的真实结构</title><desc id="desc">每轮重新获取系统提示与工具；压缩发生在请求前、工具后和常规阈值检查处。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="810" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 03</text>
+<text x="44" y="101" font-size="32" font-weight="800">CLI Agent：一次 while 迭代的真实结构</text>
+<text x="44" y="135" class="small">每轮重新获取系统提示与工具；压缩发生在请求前、工具后和常规阈值检查处。</text>
+<rect x="44" y="185" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="201" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="225" class="card-title" style="fill:#147a60">读取运行状态</text>
+<text x="64" y="262" class="body">历史服务 / 当前模式</text>
+<text x="64" y="291" class="body">系统提示 / 本轮工具</text>
+<rect x="466" y="185" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="201" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="486" y="225" class="card-title" style="fill:#3462a3">请求前预算检查</text>
+<text x="486" y="262" class="body">必要时先压缩</text>
+<text x="486" y="291" class="body">校验消息 + system + tools</text>
+<rect x="888" y="185" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="201" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="908" y="225" class="card-title" style="fill:#147a60">生成并组装调用</text>
+<text x="908" y="262" class="body">适配器流 → 内容 / usage</text>
+<text x="908" y="291" class="body">index 与 id 映射参数增量</text>
+<rect x="888" y="410" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="426" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="908" y="450" class="card-title" style="fill:#3462a3">审批与工具执行</text>
+<text x="908" y="487" class="body">逐个检查，获准即启动</text>
+<text x="908" y="516" class="body">并发完成后整理结果</text>
+<rect x="466" y="410" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="426" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="486" y="450" class="card-title" style="fill:#147a60">工具后预算检查</text>
+<text x="486" y="487" class="body">可能压缩，避免结果过大</text>
+<text x="486" y="516" class="body">再进行常规阈值判断</text>
+<rect x="44" y="410" width="348" height="155" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="426" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="64" y="450" class="card-title" style="fill:#3462a3">继续或返回</text>
+<text x="64" y="487" class="body">有工具调用 → 继续</text>
+<text x="64" y="516" class="body">无调用且无续跑 → 返回</text>
+<polyline points="392,263 466,263" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,263 888,263" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="1062,340 1062,410" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="888,487 814,487" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="466,487 392,487" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="218,410 218,340" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="232" y="381" class="label">重新迭代</text>
+<rect x="44" y="610" width="1192" height="92" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="626" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="64" y="650" class="card-title" style="fill:#a26918">压缩后的自动续跑</text>
+<text x="64" y="687" class="body">若本轮发生压缩且原本准备停止，可追加 continue；随后清除标志，防止仅因该标志无限续跑。</text>
+<rect x="44" y="719" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="748" class="small">工具异常通常成为模型可见结果；Headless 若出现工具拒绝，可在该批处理后提前返回。</text>
+<text x="44" y="792" class="small">原创源码关系图 · 5522c6f44ca0 · S13–S15 / S27 · 非产品截图 / 非性能测量</text>
+</svg>

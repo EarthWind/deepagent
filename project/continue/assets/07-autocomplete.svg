@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="770" viewBox="0 0 1280 770" role="img" aria-labelledby="title desc">
+<title id="title">Autocomplete 是独立的低延迟系统</title><desc id="desc">它处理光标前缀与后缀，不经过聊天 Agent 的多步工具循环。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="770" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 07</text>
+<text x="44" y="101" font-size="32" font-weight="800">Autocomplete 是独立的低延迟系统</text>
+<text x="44" y="135" class="small">它处理光标前缀与后缀，不经过聊天 Agent 的多步工具循环。</text>
+<rect x="44" y="190" width="348" height="207" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="206" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="230" class="card-title" style="fill:#147a60">触发与过滤</text>
+<text x="64" y="267" class="body">光标 / 文件 / AbortSignal</text>
+<text x="64" y="296" class="body">安全文件检查 / debounce</text>
+<text x="64" y="325" class="body">HelperVars / prefilter</text>
+<rect x="466" y="190" width="348" height="207" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="206" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="486" y="230" class="card-title" style="fill:#147a60">上下文与预算</text>
+<text x="486" y="267" class="body">导入定义 / 最近编辑和访问</text>
+<text x="486" y="296" class="body">最近打开文件 / 剪贴板</text>
+<text x="486" y="325" class="body">prefix + suffix + snippets</text>
+<rect x="888" y="190" width="348" height="207" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="206" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="908" y="230" class="card-title" style="fill:#147a60">生成与后处理</text>
+<text x="908" y="267" class="body">缓存命中或流式生成</text>
+<text x="908" y="296" class="body">按模型选择补全方式</text>
+<text x="908" y="325" class="body">过滤 / 后处理 / 返回结果</text>
+<polyline points="392,295 466,295" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,295 888,295" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="44" y="446" width="560" height="171" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="462" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="64" y="486" class="card-title" style="fill:#3462a3">当前实际启用边界</text>
+<text x="64" y="523" class="body">主路径调用 getAllSnippetsWithoutRace</text>
+<text x="64" y="552" class="body">ideSnippets 和 diffSnippets 当前关闭</text>
+<text x="64" y="581" class="body">最近打开文件仍有逐文件 80ms 截止</text>
+<rect x="652" y="446" width="584" height="171" rx="14" fill="white" stroke="#ccdcd0"/><rect x="652" y="462" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="672" y="486" class="card-title" style="fill:#a26918">不要混淆 Next Edit</text>
+<text x="672" y="523" class="body">NextEditProvider 预测下一处编辑</text>
+<text x="672" y="552" class="body">结合编辑轨迹、预取与光标跳转</text>
+<text x="672" y="581" class="body">与传统插入式 Tab 补全有独立实现</text>
+<rect x="44" y="679" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="708" class="small">工程取舍：上下文收益必须抵得上读取、检索、组装、首 token 与渲染延迟；本文未进行延迟基准测试。</text>
+<text x="44" y="752" class="small">原创源码关系图 · 5522c6f44ca0 · S02 / S44–S45 · 非产品截图 / 非性能测量</text>
+</svg>
