@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+<title id="title">三个客户端，两条 Agent 编排主线</title><desc id="desc">IDE 复用 GUI + Core；CLI 复用基础模块，但拥有独立的循环、权限和会话服务。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="800" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 01</text>
+<text x="44" y="101" font-size="32" font-weight="800">三个客户端，两条 Agent 编排主线</text>
+<text x="44" y="135" class="small">IDE 复用 GUI + Core；CLI 复用基础模块，但拥有独立的循环、权限和会话服务。</text>
+<rect x="44" y="182" width="340" height="170" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="198" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="222" class="card-title" style="fill:#147a60">VS Code</text>
+<text x="64" y="259" class="body">React Webview / Redux</text>
+<text x="64" y="288" class="body">VsCodeMessenger 消息桥</text>
+<text x="64" y="317" class="body">Core + VsCodeIde 同进程</text>
+<rect x="44" y="382" width="340" height="170" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="398" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="422" class="card-title" style="fill:#147a60">JetBrains</text>
+<text x="64" y="459" class="body">共享 GUI / Kotlin 宿主</text>
+<text x="64" y="488" class="body">IPC → 独立 Core binary</text>
+<text x="64" y="517" class="body">开发模式可使用 TCP</text>
+<rect x="470" y="182" width="340" height="370" rx="14" fill="white" stroke="#ccdcd0"/><rect x="470" y="198" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="490" y="222" class="card-title" style="fill:#3462a3">IDE 执行链</text>
+<text x="490" y="259" class="body">GUI 决定下一轮何时开始</text>
+<text x="490" y="288" class="body">streamNormalInput</text>
+<text x="490" y="317" class="body">工具状态 / 审批 / Diff</text>
+<text x="490" y="346" class="body"></text>
+<text x="490" y="375" class="body">Core 提供服务</text>
+<text x="490" y="404" class="body">模型调用 / 上下文 / 索引</text>
+<text x="490" y="433" class="body">MCP / 工具 / 历史</text>
+<rect x="896" y="182" width="340" height="370" rx="14" fill="white" stroke="#ccdcd0"/><rect x="896" y="198" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="916" y="222" class="card-title" style="fill:#3462a3">CLI · cn</text>
+<text x="916" y="259" class="body">Commander + React / Ink</text>
+<text x="916" y="288" class="body">TUI / Headless</text>
+<text x="916" y="317" class="body"></text>
+<text x="916" y="346" class="body">streamChatResponse</text>
+<text x="916" y="375" class="body">独立 while 循环</text>
+<text x="916" y="404" class="body">服务容器 / 权限 / 压缩</text>
+<text x="916" y="433" class="body">CLI 文件与终端工具</text>
+<polyline points="384,262 470,262" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="384,467 470,467" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="44" y="590" width="1192" height="90" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="606" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="630" class="card-title" style="fill:#147a60">共享基础设施</text>
+<text x="64" y="667" class="body">类型与配置 · openai-adapters · 编辑算法 · 部分 Core 工具函数 · 本地 JSON 历史</text>
+<polyline points="640,552 640,590" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="1066,552 1066,590" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="44" y="709" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="738" class="small">阅读重点：Core 的一次 llm/streamChat 调用，不等于完整 Agent 循环；CLI 也不是 Core 的简单命令行外壳。</text>
+<text x="44" y="782" class="small">原创源码关系图 · 5522c6f44ca0 · S02–S04 / S06 / S13 · 非产品截图 / 非性能测量</text>
+</svg>

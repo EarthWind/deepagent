@@ -1,0 +1,699 @@
+{
+  "repository": "https://github.com/continuedev/continue.git",
+  "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+  "researched_on": "2026-09-23",
+  "commit_time": "2026-07-20T21:00:09-07:00",
+  "method": "Pinned checkout; static call-chain reading and isolated source probes",
+  "sources": [
+    {
+      "id": "S01",
+      "path": "README.md",
+      "line": 17,
+      "symbol": "What is Continue?",
+      "claim": "维护状态、最终版本声明、三个客户端",
+      "lines": 63,
+      "sha256": "054b77f9573011fa4ebf89d960300aabd1ebecc37d8f6f261341ba7d27d885e7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/README.md#L17"
+    },
+    {
+      "id": "S02",
+      "path": "extensions/vscode/src/extension/VsCodeExtension.ts",
+      "line": 265,
+      "symbol": "const inProcessMessenger",
+      "claim": "VS Code 装配 Core 与 IDE",
+      "lines": 649,
+      "sha256": "95a1bb20e0a831022d0f27ea00f3c6864c6ca5179233bf2339229bac8045a6ec",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/vscode/src/extension/VsCodeExtension.ts#L265"
+    },
+    {
+      "id": "S03",
+      "path": "binary/src/index.ts",
+      "line": 19,
+      "symbol": "program.action",
+      "claim": "JetBrains 复用 Core 的独立进程入口",
+      "lines": 48,
+      "sha256": "963da543705f0d779b40c1c33bc2f8405bc2965a73a6af8776b66fff4e2d21e7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/binary/src/index.ts#L19"
+    },
+    {
+      "id": "S04",
+      "path": "core/protocol/messenger/index.ts",
+      "line": 6,
+      "symbol": "export interface Message",
+      "claim": "消息信封与双向协议",
+      "lines": 185,
+      "sha256": "76716dfbd379e3c4acfd8d00e887ef57efd6ec53b62bad1cec43e8b4869c6498",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/protocol/messenger/index.ts#L6"
+    },
+    {
+      "id": "S05",
+      "path": "gui/src/redux/thunks/streamResponse.ts",
+      "line": 18,
+      "symbol": "export const streamResponse",
+      "claim": "IDE 用户输入入口",
+      "lines": 104,
+      "sha256": "88d790ef7346c7a5ecfcf76739b86f9be12a966ce15cc7aef734d4cb07eafd8e",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/streamResponse.ts#L18"
+    },
+    {
+      "id": "S06",
+      "path": "gui/src/redux/thunks/streamNormalInput.ts",
+      "line": 72,
+      "symbol": "export const streamNormalInput",
+      "claim": "IDE 模型流、策略与工具调度",
+      "lines": 398,
+      "sha256": "0e128d790d8f20a8a2882a79fb5205706c6f642ea2f97bfa083fe5c30bc414b5",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/streamNormalInput.ts#L72"
+    },
+    {
+      "id": "S07",
+      "path": "gui/src/redux/thunks/callToolById.ts",
+      "line": 19,
+      "symbol": "export const callToolById",
+      "claim": "客户端与 Core 工具分发",
+      "lines": 150,
+      "sha256": "ae82246fca1f17bd24b01994f49709ccce46b88a61bea8715e259da145ca96e7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/callToolById.ts#L19"
+    },
+    {
+      "id": "S08",
+      "path": "gui/src/redux/thunks/streamResponseAfterToolCall.ts",
+      "line": 17,
+      "symbol": "function areAllToolsDoneStreaming",
+      "claim": "工具批次完成后继续生成",
+      "lines": 88,
+      "sha256": "7ef2660a23f9f182b9d6788b4d197a02f86d67be96836bafb794f61856b77471",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/streamResponseAfterToolCall.ts#L17"
+    },
+    {
+      "id": "S09",
+      "path": "gui/src/redux/selectors/selectActiveTools.ts",
+      "line": 7,
+      "symbol": "export const selectActiveTools",
+      "claim": "Chat/Plan/Agent 工具暴露规则",
+      "lines": 35,
+      "sha256": "80c9f3994a8a0bafc8518be7f87c0391950dc349536604c8a64f633bbd8df760",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/selectors/selectActiveTools.ts#L7"
+    },
+    {
+      "id": "S10",
+      "path": "gui/src/redux/thunks/evaluateToolPolicies.ts",
+      "line": 19,
+      "symbol": "async function evaluateToolPolicy",
+      "claim": "IDE 动态权限收紧与编辑例外",
+      "lines": 121,
+      "sha256": "de3d43ccedd133fa757e427a71b2c89050930057f2122546f1634e20f8fad272",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/evaluateToolPolicies.ts#L19"
+    },
+    {
+      "id": "S11",
+      "path": "core/core.ts",
+      "line": 591,
+      "symbol": "on(\"llm/compileChat\"",
+      "claim": "Core 消息处理：编译、生成、工具、历史",
+      "lines": 1460,
+      "sha256": "e073a7f5bc20d5920e5472b6d434118418deb7207336ff74800ce64b79c8e934",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/core.ts#L591"
+    },
+    {
+      "id": "S12",
+      "path": "core/llm/streamChat.ts",
+      "line": 9,
+      "symbol": "export async function* llmStreamChat",
+      "claim": "Core 一次模型流服务",
+      "lines": 147,
+      "sha256": "674514c3deaba680974331b7e7e6e1553caaa1a1d6b53d9b984bb73b36496180",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/llm/streamChat.ts#L9"
+    },
+    {
+      "id": "S13",
+      "path": "extensions/cli/src/stream/streamChatResponse.ts",
+      "line": 423,
+      "symbol": "export async function streamChatResponse",
+      "claim": "CLI 独立 Agent 循环",
+      "lines": 591,
+      "sha256": "67de037243ea2a29702e4405b85b4553aeb82ae4d640136f2a4cd398b48871de",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/stream/streamChatResponse.ts#L423"
+    },
+    {
+      "id": "S14",
+      "path": "extensions/cli/src/stream/handleToolCalls.ts",
+      "line": 36,
+      "symbol": "export async function handleToolCalls",
+      "claim": "CLI 工具结果写回与可见工具过滤",
+      "lines": 196,
+      "sha256": "0a28e5625cae47bf11907a2929101a74adbc87e5c899a0973a0aba8509220aef",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/stream/handleToolCalls.ts#L36"
+    },
+    {
+      "id": "S15",
+      "path": "extensions/cli/src/stream/streamChatResponse.helpers.ts",
+      "line": 469,
+      "symbol": "export async function executeStreamedToolCalls",
+      "claim": "逐一审批、重叠执行、按索引整理结果",
+      "lines": 649,
+      "sha256": "abc32a1cfef723c9f3913024659a9f37737d2d83e3c3508bd63aedf1c630c139",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/stream/streamChatResponse.helpers.ts#L469"
+    },
+    {
+      "id": "S16",
+      "path": "core/config/ConfigHandler.ts",
+      "line": 31,
+      "symbol": "export class ConfigHandler",
+      "claim": "配置选择、缓存、重载和监听",
+      "lines": 369,
+      "sha256": "7eb24c4872914824592b2ce5cc773808a794b75b90d13fa6d1b22c662ca0e0be",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/config/ConfigHandler.ts#L31"
+    },
+    {
+      "id": "S17",
+      "path": "core/config/yaml/loadYaml.ts",
+      "line": 156,
+      "symbol": "export async function configYamlToContinueConfig",
+      "claim": "YAML 到运行时模型、规则、MCP",
+      "lines": 447,
+      "sha256": "64b364f4b4d6a1293c3fd425d67917b43461778c2f8c0ab404aaad105f206f13",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/config/yaml/loadYaml.ts#L156"
+    },
+    {
+      "id": "S18",
+      "path": "core/config/yaml/models.ts",
+      "line": 50,
+      "symbol": "async function modelConfigToBaseLLM",
+      "claim": "模型角色、参数、能力映射",
+      "lines": 222,
+      "sha256": "08f3014255a60e1136bef911c0f380c7f6fa7b71b98cc955b6bf622061391457",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/config/yaml/models.ts#L50"
+    },
+    {
+      "id": "S19",
+      "path": "gui/src/redux/util/constructMessages.ts",
+      "line": 37,
+      "symbol": "export function constructMessages",
+      "claim": "上下文装配、工具配对、规则、摘要",
+      "lines": 230,
+      "sha256": "4fb5a2022d37a263ba4511b6cd292552b8e9b463d3cd539f7e21b72a54868fad",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/util/constructMessages.ts#L37"
+    },
+    {
+      "id": "S20",
+      "path": "core/llm/rules/getSystemMessageWithRules.ts",
+      "line": 205,
+      "symbol": "export const shouldApplyRule",
+      "claim": "Rules 应用条件与目录匹配",
+      "lines": 369,
+      "sha256": "49064b70d8817a21264c966ca3cdf0be9627f5bb696ae1701dab5e3e9e818f14",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/llm/rules/getSystemMessageWithRules.ts#L205"
+    },
+    {
+      "id": "S21",
+      "path": "core/config/markdown/loadMarkdownSkills.ts",
+      "line": 45,
+      "symbol": "export async function loadMarkdownSkills",
+      "claim": "IDE Skills 发现与校验",
+      "lines": 112,
+      "sha256": "502d651f8e6282cb604efff4d8104f0d7b43f2918e1eef4016798881caa309a7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/config/markdown/loadMarkdownSkills.ts#L45"
+    },
+    {
+      "id": "S22",
+      "path": "core/tools/definitions/readSkill.ts",
+      "line": 5,
+      "symbol": "export const readSkillTool",
+      "claim": "技能摘要写入工具描述",
+      "lines": 34,
+      "sha256": "8614a45af5f7270dd192866b68a23d1ec30019e3d982cad5530e70ecd55a1b6b",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/definitions/readSkill.ts#L5"
+    },
+    {
+      "id": "S23",
+      "path": "core/llm/index.ts",
+      "line": 1095,
+      "symbol": "async *streamChat(",
+      "claim": "BaseLLM 模型统一层",
+      "lines": 1504,
+      "sha256": "1e81cf6e96e415262950f23302562462fc7bf713ca4f2f62ade019a52e6198e6",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/llm/index.ts#L1095"
+    },
+    {
+      "id": "S24",
+      "path": "packages/openai-adapters/src/index.ts",
+      "line": 84,
+      "symbol": "export function constructLlmApi",
+      "claim": "跨供应商 API 适配工厂",
+      "lines": 245,
+      "sha256": "3e1eddf99fa67f95278fe520bec606f5d5b1f7d4ac025a931a154c1061a2f614",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/packages/openai-adapters/src/index.ts#L84"
+    },
+    {
+      "id": "S25",
+      "path": "core/llm/countTokens.ts",
+      "line": 422,
+      "symbol": "function compileChatMessages",
+      "claim": "消息预算、最小输出预留、历史裁剪",
+      "lines": 570,
+      "sha256": "9b059c32b35c4c4562228ef10bd164684cc22ddf4c34bb21e1f479669bcf930d",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/llm/countTokens.ts#L422"
+    },
+    {
+      "id": "S26",
+      "path": "core/util/conversationCompaction.ts",
+      "line": 19,
+      "symbol": "export async function compactConversation",
+      "claim": "IDE 摘要生成和历史标记",
+      "lines": 112,
+      "sha256": "c5689c8cfe978c8b8e77d80397e484f194aa0a745ad2fb3ea581492c38bec6b3",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/util/conversationCompaction.ts#L19"
+    },
+    {
+      "id": "S27",
+      "path": "extensions/cli/src/compaction.ts",
+      "line": 266,
+      "symbol": "export function shouldAutoCompact",
+      "claim": "CLI 压缩阈值、历史裁剪",
+      "lines": 315,
+      "sha256": "d0ef6111106c10073da4eac1d5df8a814b63bd68b67f3ecc8f7d7092426f047e",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/compaction.ts#L266"
+    },
+    {
+      "id": "S28",
+      "path": "core/config/loadContextProviders.ts",
+      "line": 22,
+      "symbol": "export function loadConfigContextProviders",
+      "claim": "默认上下文与 IDE 差异",
+      "lines": 95,
+      "sha256": "41753dd612a79955abe8a877b842c4931556ff7faf2cc29d14989776d2382ffc",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/config/loadContextProviders.ts#L22"
+    },
+    {
+      "id": "S29",
+      "path": "core/indexing/CodebaseIndexer.ts",
+      "line": 146,
+      "symbol": "protected async getIndexesToBuild",
+      "claim": "按依赖构建索引",
+      "lines": 872,
+      "sha256": "08611069f4c88ba6fee313e6df46022e3e9b07cd1f90341e47186e592e704f19",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/indexing/CodebaseIndexer.ts#L146"
+    },
+    {
+      "id": "S30",
+      "path": "core/indexing/refreshIndex.ts",
+      "line": 395,
+      "symbol": "getComputeDeleteAddRemove",
+      "claim": "增量索引和分支标签",
+      "lines": 588,
+      "sha256": "8136fe63540468e38d6bb545329de9e20ec2e471b2cef344c9dcfe8f182379f9",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/indexing/refreshIndex.ts#L395"
+    },
+    {
+      "id": "S31",
+      "path": "core/context/retrieval/retrieval.ts",
+      "line": 9,
+      "symbol": "const DEFAULT_N_FINAL",
+      "claim": "检索参数的实际默认值",
+      "lines": 130,
+      "sha256": "bda6b3fee1698163de63040f2f7af20bd932086eb1c008178980553f078af399",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/context/retrieval/retrieval.ts#L9"
+    },
+    {
+      "id": "S32",
+      "path": "core/context/retrieval/pipelines/RerankerRetrievalPipeline.ts",
+      "line": 12,
+      "symbol": "export default class",
+      "claim": "多路召回、去重与重排",
+      "lines": 197,
+      "sha256": "32cdfcd8311504308f698de3cbdf05dc20b7b01fb1b007b1e02f15e6234099fc",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/context/retrieval/pipelines/RerankerRetrievalPipeline.ts#L12"
+    },
+    {
+      "id": "S33",
+      "path": "core/context/retrieval/pipelines/NoRerankerRetrievalPipeline.ts",
+      "line": 11,
+      "symbol": "export default class",
+      "claim": "无重排路径及非硬上限",
+      "lines": 90,
+      "sha256": "0bfacc0d53f6f4d45603e91a9bf3c6215a3aba890f369aac57dcbe8cdcd5cdec",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/context/retrieval/pipelines/NoRerankerRetrievalPipeline.ts#L11"
+    },
+    {
+      "id": "S34",
+      "path": "core/tools/index.ts",
+      "line": 6,
+      "symbol": "export const getBaseToolDefinitions",
+      "claim": "当前默认和实验工具集合",
+      "lines": 56,
+      "sha256": "b3e6179ec65c10a03caf7f42c5410e066d762c52f800413f678156fd689cfd59",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/index.ts#L6"
+    },
+    {
+      "id": "S35",
+      "path": "core/tools/callTool.ts",
+      "line": 235,
+      "symbol": "export async function callTool",
+      "claim": "内建、HTTP 和 MCP 工具调用",
+      "lines": 280,
+      "sha256": "b2c9184b466a131625b37af8f2f335cedb294fe03adf7a545294a38cfd7f3cb8",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/callTool.ts#L235"
+    },
+    {
+      "id": "S36",
+      "path": "core/context/mcp/MCPConnection.ts",
+      "line": 122,
+      "symbol": "async connectClient",
+      "claim": "MCP 连接、发现、传输和超时",
+      "lines": 625,
+      "sha256": "fe169f9a13d29be6fe61fc983b96624b06b66f82bf1fda28165ea77681e7c165",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/context/mcp/MCPConnection.ts#L122"
+    },
+    {
+      "id": "S37",
+      "path": "core/tools/mcpToolName.ts",
+      "line": 6,
+      "symbol": "export function getToolNameFromMCPServer",
+      "claim": "MCP 名称规范化",
+      "lines": 18,
+      "sha256": "9aacc5951fbfe75c4f1fc60294e0364de4d1117faaffd66940ce235e040cc37e",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/mcpToolName.ts#L6"
+    },
+    {
+      "id": "S38",
+      "path": "gui/src/util/clientTools/multiEditImpl.ts",
+      "line": 8,
+      "symbol": "export const multiEditImpl",
+      "claim": "IDE 编辑前重新读取与校验",
+      "lines": 43,
+      "sha256": "0b80209642aa7580f3aa1a5a2d9285bfb8bf9fbe600b6407239156a37275b7df",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/util/clientTools/multiEditImpl.ts#L8"
+    },
+    {
+      "id": "S39",
+      "path": "extensions/vscode/src/apply/ApplyManager.ts",
+      "line": 28,
+      "symbol": "async applyToFile",
+      "claim": "Apply、即时 Diff 与模型辅助合并",
+      "lines": 330,
+      "sha256": "31f8f6913d40cbb623112e32de9d98eb312e899cf295cf14007e71eafdebc311",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/vscode/src/apply/ApplyManager.ts#L28"
+    },
+    {
+      "id": "S40",
+      "path": "core/edit/lazy/applyCodeBlock.ts",
+      "line": 14,
+      "symbol": "export async function applyCodeBlock",
+      "claim": "确定性匹配、Unified Diff 与生成式应用",
+      "lines": 63,
+      "sha256": "20715b2628bc4ed1f4ab65341147875fb163a2b6c4c8c0048a25e2a3f1ab4857",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/edit/lazy/applyCodeBlock.ts#L14"
+    },
+    {
+      "id": "S41",
+      "path": "gui/src/redux/thunks/handleApplyStateUpdate.ts",
+      "line": 21,
+      "symbol": "export const handleApplyStateUpdate",
+      "claim": "Diff 审阅与 Agent 续跑",
+      "lines": 217,
+      "sha256": "00a68a46f1fd3392d284b6528920f640c894c1c733cae1040ffdcbed31777bf7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/thunks/handleApplyStateUpdate.ts#L21"
+    },
+    {
+      "id": "S42",
+      "path": "core/edit/searchAndReplace/findSearchMatch.ts",
+      "line": 303,
+      "symbol": "const matchingStrategies",
+      "claim": "匹配策略顺序及模糊匹配边界",
+      "lines": 399,
+      "sha256": "7f2c1f33cde9028cf6896edff7c8164926efceb108f3ef587cbe2f9c19891f9b",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/edit/searchAndReplace/findSearchMatch.ts#L303"
+    },
+    {
+      "id": "S43",
+      "path": "core/edit/searchAndReplace/performReplace.ts",
+      "line": 85,
+      "symbol": "export function executeFindAndReplace",
+      "claim": "重复匹配拒绝、缩进修正与顺序多编辑",
+      "lines": 162,
+      "sha256": "bbc31bc9fc6cd88d34a3c2ff188a879d13da9354b585149a228858ff47cd334a",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/edit/searchAndReplace/performReplace.ts#L85"
+    },
+    {
+      "id": "S44",
+      "path": "core/autocomplete/CompletionProvider.ts",
+      "line": 150,
+      "symbol": "public async provideInlineCompletionItems",
+      "claim": "补全专用管道",
+      "lines": 316,
+      "sha256": "d2a0ee0046a239f51dc99acfec2ebdb5ca0c8103eefad75ddf8607ec53215a10",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/autocomplete/CompletionProvider.ts#L150"
+    },
+    {
+      "id": "S45",
+      "path": "core/autocomplete/snippets/getAllSnippets.ts",
+      "line": 220,
+      "symbol": "export const getAllSnippetsWithoutRace",
+      "claim": "补全上下文真实启用项",
+      "lines": 267,
+      "sha256": "adcb1ead108aeb1ce1186acac9ce8b5141fc7fe7a8e621a33b5fe34664c81915",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/autocomplete/snippets/getAllSnippets.ts#L220"
+    },
+    {
+      "id": "S46",
+      "path": "core/tools/policies/fileAccess.ts",
+      "line": 10,
+      "symbol": "export function evaluateFileAccessPolicy",
+      "claim": "工作区内外访问策略",
+      "lines": 26,
+      "sha256": "950515f169e0f7cb586aac24b61ee1f0eab04d7629afcf3071025fc1f4202f14",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/policies/fileAccess.ts#L10"
+    },
+    {
+      "id": "S47",
+      "path": "packages/terminal-security/src/evaluateTerminalCommandSecurity.ts",
+      "line": 32,
+      "symbol": "export function evaluateTerminalCommandSecurity",
+      "claim": "Shell 字符串与 token 安全检查",
+      "lines": 1241,
+      "sha256": "870485972dc59d5d91f58463c9c4ce0204038b1846a39d29d5d6da0fac094171",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/packages/terminal-security/src/evaluateTerminalCommandSecurity.ts#L32"
+    },
+    {
+      "id": "S48",
+      "path": "extensions/cli/src/permissions/defaultPolicies.ts",
+      "line": 7,
+      "symbol": "export function getDefaultToolPolicies",
+      "claim": "CLI 默认、Plan、Auto 权限",
+      "lines": 71,
+      "sha256": "d7bdcd4d9ef8f72e494273e9b8df557d89fbf6df0d703cf970a7baf765873216",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/permissions/defaultPolicies.ts#L7"
+    },
+    {
+      "id": "S49",
+      "path": "extensions/cli/src/permissions/permissionChecker.ts",
+      "line": 128,
+      "symbol": "export function checkToolPermission",
+      "claim": "首个策略命中与动态 disabled 优先",
+      "lines": 181,
+      "sha256": "4f31a1b7430ec26312d8fd79159a6acaa750b685e2c9d2f0c32777eabc01c787",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/permissions/permissionChecker.ts#L128"
+    },
+    {
+      "id": "S50",
+      "path": "extensions/cli/src/subagent/executor.ts",
+      "line": 58,
+      "symbol": "export async function executeSubAgent",
+      "claim": "子 Agent 的共享服务覆盖",
+      "lines": 213,
+      "sha256": "c8c2ad8294c34be82098511ba35dd871265d89878acdb8e64aaa1062de36eab9",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/subagent/executor.ts#L58"
+    },
+    {
+      "id": "S51",
+      "path": "extensions/cli/src/tools/index.tsx",
+      "line": 79,
+      "symbol": "export async function getAllAvailableTools",
+      "claim": "CLI 工具构造与 beta 门控",
+      "lines": 291,
+      "sha256": "2a0f6cddbceb13e5ad5a07bfe87155ef9cfa560c35cf1a7d2829cd3c0cd26635",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/tools/index.tsx#L79"
+    },
+    {
+      "id": "S52",
+      "path": "extensions/cli/src/tools/toolsConfig.ts",
+      "line": 7,
+      "symbol": "let betaSubagentToolEnabled",
+      "claim": "Subagent 默认关闭",
+      "lines": 23,
+      "sha256": "8a75846b64dd3f6fec450ba00541c4bfc39076b32be72b5eedfffd34f297c768",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/tools/toolsConfig.ts#L7"
+    },
+    {
+      "id": "S53",
+      "path": "core/util/history.ts",
+      "line": 111,
+      "symbol": "save(session: Session)",
+      "claim": "JSON 会话与独立索引文件",
+      "lines": 197,
+      "sha256": "6a92114adc4fc74a23259187b199d2c2310739b66cd5afb4f000aa3693ca33a8",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/util/history.ts#L111"
+    },
+    {
+      "id": "S54",
+      "path": "extensions/cli/src/session.ts",
+      "line": 279,
+      "symbol": "export function saveSession",
+      "claim": "CLI 会话保存、恢复、远端 stub",
+      "lines": 603,
+      "sha256": "08f9d93f804fed2b9cb6f153f931d2fbd470466de7ab5f4f040c78e3281e3e2b",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/session.ts#L279"
+    },
+    {
+      "id": "S55",
+      "path": "extensions/cli/src/telemetry/telemetryService.ts",
+      "line": 68,
+      "symbol": "private loadConfig",
+      "claim": "显式 OTEL 配置与本地运行指标",
+      "lines": 618,
+      "sha256": "fa79eaa63b851a73378de9b6e46602d3b5a8e3eb6d77235a51de457b2331dbc6",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/telemetry/telemetryService.ts#L68"
+    },
+    {
+      "id": "S56",
+      "path": "extensions/cli/src/tools/edit.ts",
+      "line": 20,
+      "symbol": "export function validateAndResolveFilePath",
+      "claim": "CLI 先读后改与路径解析",
+      "lines": 193,
+      "sha256": "6e99d7680725b72845236fd9df54b5059ec2a08a60163ec6af984839576cac9c",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/tools/edit.ts#L20"
+    },
+    {
+      "id": "S57",
+      "path": "extensions/cli/src/tools/multiEdit.ts",
+      "line": 105,
+      "symbol": "preprocess: async",
+      "claim": "预计算多编辑及写盘时机",
+      "lines": 182,
+      "sha256": "706bbdac71fc714fe20a699fa178edd51292ef3b1a53bea45fbf3306bc4f51ac",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/tools/multiEdit.ts#L105"
+    },
+    {
+      "id": "S58",
+      "path": "extensions/cli/src/services/ToolPermissionService.ts",
+      "line": 43,
+      "symbol": "export class ToolPermissionService",
+      "claim": "模式策略装配与切换",
+      "lines": 408,
+      "sha256": "82325a92515a4dc05601c05d8f7739034d091736329bc3f488181cbfdb7ee494",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/services/ToolPermissionService.ts#L43"
+    },
+    {
+      "id": "S59",
+      "path": "extensions/cli/src/index.ts",
+      "line": 171,
+      "symbol": "const program",
+      "claim": "CLI 入口和本地命令",
+      "lines": 391,
+      "sha256": "6da369c68bd8ef906385753d43616a8afebdd273250093cf34d28439e8ca59e3",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/index.ts#L171"
+    },
+    {
+      "id": "S60",
+      "path": "extensions/cli/src/tools/skills.ts",
+      "line": 29,
+      "symbol": "export const skillsTool",
+      "claim": "CLI 技能目录与按需加载",
+      "lines": 115,
+      "sha256": "90aa7cf3c38f647f8b4cb9b3f34fef0da4141a979deddd5e0638d5bdcc75f0b1",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/src/tools/skills.ts#L29"
+    },
+    {
+      "id": "S61",
+      "path": "core/llm/toolSupport.ts",
+      "line": 513,
+      "symbol": "export function modelSupportsNativeTools",
+      "claim": "原生工具支持判断",
+      "lines": 523,
+      "sha256": "f3bb2f082c2ef114143d259ef5b8ece2e7449f7044a2cc43e3f37383840533d9",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/llm/toolSupport.ts#L513"
+    },
+    {
+      "id": "S62",
+      "path": "core/tools/systemMessageTools/interceptSystemToolCalls.ts",
+      "line": 24,
+      "symbol": "export async function*",
+      "claim": "文本工具协议拦截",
+      "lines": 119,
+      "sha256": "2ef8ec89cef54c4fc1721959bdaa0e4944f32bb7deddafe7d5aca8b6e147865a",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/systemMessageTools/interceptSystemToolCalls.ts#L24"
+    },
+    {
+      "id": "S63",
+      "path": "core/index.d.ts",
+      "line": 831,
+      "symbol": "export interface IDE",
+      "claim": "宿主、模型、上下文和工具类型契约",
+      "lines": 2022,
+      "sha256": "5efa7ac874bbd18b36ff9629a2d85293f831f8f7eb56036c170924c4792e4ecd",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/index.d.ts#L831"
+    },
+    {
+      "id": "S64",
+      "path": "extensions/vscode/package.json",
+      "line": 5,
+      "symbol": "\"version\"",
+      "claim": "扩展包内版本",
+      "lines": 786,
+      "sha256": "d741a10a3dacca2a8bc8c29ce41e7a4dcdbf215ba50e8c57120b5e64ed0ec3a7",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/vscode/package.json#L5"
+    },
+    {
+      "id": "S65",
+      "path": "extensions/cli/package.json",
+      "line": 3,
+      "symbol": "\"version\"",
+      "claim": "CLI 包内开发版本",
+      "lines": 153,
+      "sha256": "39c30702049984ce973d93bbae6c31c734a56eeb074c00ae20fd9e801f99b67e",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/extensions/cli/package.json#L3"
+    },
+    {
+      "id": "S66",
+      "path": ".nvmrc",
+      "line": 1,
+      "symbol": "v20.20.1",
+      "claim": "源码开发 Node 基线",
+      "lines": 1,
+      "sha256": "3422ad3bbe011b5c7a9bf41998a5e360516773db899d7abad3d104d3599aacec",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/.nvmrc#L1"
+    },
+    {
+      "id": "S67",
+      "path": "core/tools/builtIn.ts",
+      "line": 1,
+      "symbol": "export enum",
+      "claim": "内建工具 ID 与客户端工具清单",
+      "lines": 32,
+      "sha256": "d63ba2c90c4e2e15bb080caaccd65a8dbbf2bb7a9d45808bd8e219c6c59ec8b3",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/tools/builtIn.ts#L1"
+    },
+    {
+      "id": "S68",
+      "path": "core/util/errors.ts",
+      "line": 14,
+      "symbol": "export class ContinueError",
+      "claim": "编辑错误类别",
+      "lines": 71,
+      "sha256": "17067116bb6a1a28cd263bbb943f21f6004d7532107c1dd220f5e431a5594099",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/core/util/errors.ts#L14"
+    },
+    {
+      "id": "S69",
+      "path": "gui/src/redux/slices/uiSlice.ts",
+      "line": 34,
+      "symbol": "export const DEFAULT_TOOL_SETTING",
+      "claim": "IDE 默认审批策略",
+      "lines": 171,
+      "sha256": "df49e2a13d7afe498e9dfe967015838951e197a1e745006103287732dd23bbf4",
+      "url": "https://github.com/continuedev/continue/blob/5522c6f44ca0ac3528b37244818fbfa39b5af470/gui/src/redux/slices/uiSlice.ts#L34"
+    }
+  ]
+}

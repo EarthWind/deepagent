@@ -1,0 +1,159 @@
+{
+  "browser": "Chrome/152.0.7977.75",
+  "pages": [
+    {
+      "name": "desktop",
+      "title": "Continue 源码深读 · Deep Agent",
+      "viewport": 1440,
+      "scrollWidth": 1425,
+      "chapters": 20,
+      "images": [
+        {
+          "src": "assets/01-architecture.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/02-ide-loop.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/03-cli-loop.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/04-context.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/05-retrieval.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/08-permissions.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/06-editing.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/07-autocomplete.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/09-persistence.svg",
+          "loaded": true
+        }
+      ],
+      "badAnchors": [],
+      "responsiveToc": "none",
+      "remoteResources": []
+    },
+    {
+      "name": "mobile",
+      "title": "Continue 源码深读 · Deep Agent",
+      "viewport": 390,
+      "scrollWidth": 375,
+      "chapters": 20,
+      "images": [
+        {
+          "src": "assets/01-architecture.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/02-ide-loop.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/03-cli-loop.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/04-context.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/05-retrieval.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/08-permissions.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/06-editing.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/07-autocomplete.svg",
+          "loaded": true
+        },
+        {
+          "src": "assets/09-persistence.svg",
+          "loaded": true
+        }
+      ],
+      "badAnchors": [],
+      "responsiveToc": "block",
+      "remoteResources": []
+    }
+  ],
+  "diagrams": [
+    {
+      "file": "01-architecture.svg",
+      "title": "三个客户端，两条 Agent 编排主线",
+      "textCount": 31,
+      "issues": []
+    },
+    {
+      "file": "02-ide-loop.svg",
+      "title": "IDE Agent：流式生成与工具状态协同",
+      "textCount": 29,
+      "issues": []
+    },
+    {
+      "file": "03-cli-loop.svg",
+      "title": "CLI Agent：一次 while 迭代的真实结构",
+      "textCount": 26,
+      "issues": []
+    },
+    {
+      "file": "04-context.svg",
+      "title": "上下文是一条编译管道",
+      "textCount": 29,
+      "issues": []
+    },
+    {
+      "file": "05-retrieval.svg",
+      "title": "旧 RAG：增量索引与混合召回",
+      "textCount": 28,
+      "issues": []
+    },
+    {
+      "file": "06-editing.svg",
+      "title": "编辑工具的终点，是宿主确认后的真实文件",
+      "textCount": 33,
+      "issues": []
+    },
+    {
+      "file": "07-autocomplete.svg",
+      "title": "Autocomplete 是独立的低延迟系统",
+      "textCount": 25,
+      "issues": []
+    },
+    {
+      "file": "08-permissions.svg",
+      "title": "模式和审批的实际边界",
+      "textCount": 24,
+      "issues": []
+    },
+    {
+      "file": "09-persistence.svg",
+      "title": "会话恢复与任务恢复，是不同层次",
+      "textCount": 29,
+      "issues": []
+    }
+  ],
+  "screenshots": "/tmp/continue-blog-checks",
+  "failures": []
+}

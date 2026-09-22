@@ -1,0 +1,103 @@
+{
+  "commit": "5522c6f44ca0ac3528b37244818fbfa39b5af470",
+  "runtime": "v24.18.0",
+  "method": "Pinned source functions with explicit dependency injection; no full-product execution",
+  "loaded": [
+    "core/tools/builtIn.ts",
+    "gui/src/redux/slices/uiSlice.ts",
+    "gui/src/redux/selectors/selectActiveTools.ts",
+    "core/tools/policies/fileAccess.ts",
+    "core/edit/searchAndReplace/findSearchMatch.ts",
+    "core/util/errors.ts",
+    "core/edit/searchAndReplace/performReplace.ts",
+    "extensions/cli/src/permissions/defaultPolicies.ts",
+    "extensions/cli/src/permissions/permissionChecker.ts",
+    "extensions/cli/src/compaction.ts",
+    "core/tools/mcpToolName.ts"
+  ],
+  "passed": 13,
+  "failed": 0,
+  "results": [
+    {
+      "name": "IDE Plan only filters built-in write tools",
+      "passed": true,
+      "observation": "Plan exposes an enabled external tool even with readonly=false."
+    },
+    {
+      "name": "IDE explicit tool/group exclusions",
+      "passed": true,
+      "observation": "Explicit disabled and group exclude remove tools before invocation."
+    },
+    {
+      "name": "Workspace boundary tightens file access",
+      "passed": true,
+      "observation": "Outside-workspace changes allow to ask, while disabled remains disabled."
+    },
+    {
+      "name": "Search replacement includes relaxed match strategies",
+      "passed": true,
+      "observation": "Exact, trimmed, case-insensitive and whitespace-ignored strategies are active; Jaro is disabled."
+    },
+    {
+      "name": "Ambiguous replacement is rejected unless replace_all",
+      "passed": true,
+      "observation": "Duplicate matches fail single replacement; replace_all changes both occurrences."
+    },
+    {
+      "name": "MultiEdit applies operations to successive string states",
+      "passed": true,
+      "observation": "Later edits see earlier results; string computation failure returns no new content (no disk atomicity claim)."
+    },
+    {
+      "name": "CLI headless permissions retain earlier write ask rules",
+      "passed": true,
+      "observation": "First match wins: headless Edit=ask, Bash=allow, external fallback=allow."
+    },
+    {
+      "name": "CLI Plan permits Bash and unmatched MCP tools",
+      "passed": true,
+      "observation": "Plan is a tool policy preset, not an OS-level read-only environment."
+    },
+    {
+      "name": "CLI dynamic ask does not override static allow",
+      "passed": true,
+      "observation": "With an injected dynamic evaluator, only disabled overrides the configured allow."
+    },
+    {
+      "name": "CLI auto-compaction uses capped buffer arithmetic",
+      "passed": true,
+      "observation": [
+        {
+          "context": 128000,
+          "output": 4096,
+          "threshold": 108904
+        },
+        {
+          "context": 32000,
+          "output": 4096,
+          "threshold": 22323
+        },
+        {
+          "context": 16000,
+          "output": 4000,
+          "threshold": 8000
+        }
+      ]
+    },
+    {
+      "name": "CLI emergency pruning removes from the tail",
+      "passed": true,
+      "observation": "Tail user/assistant or adjacent assistant-tool pairs can be removed; this differs from IDE head pruning."
+    },
+    {
+      "name": "Compaction view preserves leading system message",
+      "passed": true,
+      "observation": "The LLM view starts from the compaction marker plus a retained leading system message."
+    },
+    {
+      "name": "MCP normalization is not collision-free",
+      "passed": true,
+      "observation": "Different server display names can normalize to the same prefix; use distinct configuration names."
+    }
+  ]
+}

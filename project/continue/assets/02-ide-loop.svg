@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="840" viewBox="0 0 1280 840" role="img" aria-labelledby="title desc">
+<title id="title">IDE Agent：流式生成与工具状态协同</title><desc id="desc">Redux thunk 串联决策；Core 执行服务；编辑工具还要等待宿主 Diff 生命周期。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="840" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 02</text>
+<text x="44" y="101" font-size="32" font-weight="800">IDE Agent：流式生成与工具状态协同</text>
+<text x="44" y="135" class="small">Redux thunk 串联决策；Core 执行服务；编辑工具还要等待宿主 Diff 生命周期。</text>
+<rect x="44" y="180" width="330" height="145" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="196" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="220" class="card-title" style="fill:#147a60">① 构造请求</text>
+<text x="64" y="257" class="body">模式 → 可见工具 → overrides</text>
+<text x="64" y="286" class="body">历史 + Rules → compileChat</text>
+<rect x="474" y="180" width="330" height="145" rx="14" fill="white" stroke="#ccdcd0"/><rect x="474" y="196" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="494" y="220" class="card-title" style="fill:#3462a3">② 消费模型流</text>
+<text x="494" y="257" class="body">原生 tool_calls / 文本协议</text>
+<text x="494" y="286" class="body">增量参数 → generating</text>
+<rect x="904" y="180" width="330" height="145" rx="14" fill="white" stroke="#ccdcd0"/><rect x="904" y="196" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="924" y="220" class="card-title" style="fill:#a26918">③ 预处理与策略</text>
+<text x="924" y="257" class="body">生成完成 → generated</text>
+<text x="924" y="286" class="body">解析参数，再计算权限</text>
+<polyline points="374,251 474,251" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="804,251 904,251" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="904" y="393" width="330" height="174" rx="14" fill="white" stroke="#ccdcd0"/><rect x="904" y="409" width="5" height="30" rx="2" fill="#a26918"/>
+<text x="924" y="433" class="card-title" style="fill:#a26918">④ 执行或等待</text>
+<text x="924" y="470" class="body">自动执行 / 审批等待</text>
+<text x="924" y="499" class="body">Core 工具 / GUI 编辑工具</text>
+<text x="924" y="528" class="body">calling → done / errored</text>
+<rect x="474" y="393" width="330" height="174" rx="14" fill="white" stroke="#ccdcd0"/><rect x="474" y="409" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="494" y="433" class="card-title" style="fill:#3462a3">⑤ 写回工具结果</text>
+<text x="494" y="470" class="body">关联 toolCallId</text>
+<text x="494" y="499" class="body">确认这一批工具都已完成</text>
+<text x="494" y="528" class="body">拒绝后续跑受配置控制</text>
+<rect x="44" y="393" width="330" height="174" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="409" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="433" class="card-title" style="fill:#147a60">⑥ 下一轮 / 停止</text>
+<text x="64" y="470" class="body">有结果 → 再次生成</text>
+<text x="64" y="499" class="body">无工具 → 本轮停止</text>
+<text x="64" y="528" class="body">取消信号可中断生成</text>
+<polyline points="1069,325 1069,393" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="904,480 804,480" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="474,480 374,480" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="209,393 209,325" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="229" y="367" class="label">下一轮</text>
+<rect x="44" y="615" width="1192" height="99" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="631" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="655" class="card-title" style="fill:#147a60">并发与等待的细节</text>
+<text x="64" y="692" class="body">全自动分支可 Promise.all；存在审批时先运行可自动批准的内建只读工具，其余等待。</text>
+<rect x="44" y="749" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="778" class="small">状态结束只说明这一轮停止，不证明代码正确；验证仍需终端测试、Diff 观察和明确的验收条件。</text>
+<text x="44" y="822" class="small">原创源码关系图 · 5522c6f44ca0 · S06–S10 / S41 · 非产品截图 / 非性能测量</text>
+</svg>

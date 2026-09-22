@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+<title id="title">旧 RAG：增量索引与混合召回</title><desc id="desc">@Codebase 已弃用，但索引和检索实现仍保留；当前默认工具链不能等同于这个流程。</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#739487" stroke-width="1.5"/></marker></defs>
+<style>text{font-family:system-ui,'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#16362f}.small{font-size:16px;fill:#58706a}.body{font-size:19px}.label{font-size:17px;font-weight:650}.card-title{font-size:23px;font-weight:750}</style>
+<rect width="1280" height="820" fill="#f5f8f3"/>
+<rect x="0" y="0" width="1280" height="10" fill="#147a60"/>
+<text x="44" y="53" font-size="14" font-weight="750" letter-spacing="2" fill="#147a60">CONTINUE / SOURCE NOTES / 05</text>
+<text x="44" y="101" font-size="32" font-weight="800">旧 RAG：增量索引与混合召回</text>
+<text x="44" y="135" class="small">@Codebase 已弃用，但索引和检索实现仍保留；当前默认工具链不能等同于这个流程。</text>
+<text x="44" y="185" class="label" style="fill:#147a60">离线 / 后台索引</text>
+<rect x="44" y="207" width="348" height="136" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="64" y="247" class="card-title" style="fill:#147a60">文件变更</text>
+<text x="64" y="284" class="body">目录 / 分支 / ignore</text>
+<text x="64" y="313" class="body">内容摘要与缓存键</text>
+<rect x="466" y="207" width="348" height="136" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="486" y="247" class="card-title" style="fill:#147a60">增量操作</text>
+<text x="486" y="284" class="body">compute / delete</text>
+<text x="486" y="313" class="body">addTag / removeTag</text>
+<rect x="888" y="207" width="348" height="136" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="223" width="5" height="30" rx="2" fill="#147a60"/>
+<text x="908" y="247" class="card-title" style="fill:#147a60">按依赖构建</text>
+<text x="908" y="284" class="body">Chunk / FTS / Snippets</text>
+<text x="908" y="313" class="body">LanceDB 向量</text>
+<polyline points="392,275 466,275" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,275 888,275" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="44" y="400" class="label" style="fill:#3462a3">查询时召回</text>
+<rect x="44" y="420" width="348" height="188" rx="14" fill="white" stroke="#ccdcd0"/><rect x="44" y="436" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="64" y="460" class="card-title" style="fill:#3462a3">候选来源</text>
+<text x="64" y="497" class="body">最近编辑 + 关键词 FTS</text>
+<text x="64" y="526" class="body">可选向量召回</text>
+<text x="64" y="555" class="body">Repo map 请求文件</text>
+<rect x="466" y="420" width="348" height="188" rx="14" fill="white" stroke="#ccdcd0"/><rect x="466" y="436" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="486" y="460" class="card-title" style="fill:#3462a3">过滤与排序</text>
+<text x="486" y="497" class="body">目录过滤 → 去重</text>
+<text x="486" y="526" class="body">有 reranker：打分取前 nFinal</text>
+<text x="486" y="555" class="body">无 reranker：直接返回候选</text>
+<rect x="888" y="420" width="348" height="188" rx="14" fill="white" stroke="#ccdcd0"/><rect x="888" y="436" width="5" height="30" rx="2" fill="#3462a3"/>
+<text x="908" y="460" class="card-title" style="fill:#3462a3">ContextItem</text>
+<text x="908" y="497" class="body">文件路径 / 行号 / 内容</text>
+<text x="908" y="526" class="body">放入后续模型上下文</text>
+<text x="908" y="555" class="body">不保证全仓完整覆盖</text>
+<polyline points="392,514 466,514" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="814,514 888,514" fill="none" stroke="#739487" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="1062,343 1062,376 218,376 218,420" fill="none" stroke="#739487" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<rect x="44" y="729" width="1192" height="45" rx="8" fill="#e4eee4"/>
+<text x="62" y="758" class="small">当前 nFinal 默认 min(25, C / 512 / 2)；启用重排时 nRetrieve 默认 2 × nFinal，勿套用旧文档 25 → 5。</text>
+<text x="44" y="802" class="small">原创源码关系图 · 5522c6f44ca0 · S29–S34 · 非产品截图 / 非性能测量</text>
+</svg>
